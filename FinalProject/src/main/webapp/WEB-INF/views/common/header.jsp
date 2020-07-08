@@ -7,12 +7,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/reset.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/swiper-bundle.min.css" />" rel="stylesheet">
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script src="http://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="<c:url value="/resources/js/action.js" />"></script>
+<script src="<c:url value="/resources/js/swiper-bundle.min.js" />"></script>
 </head>
 <body>
    <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
     <div id="headWrap">
         <header id="header" class="cb">
-            <h1 class="logo"><img src="${contextPath}/images/logo.png"></h1>
+            <h1 class="logo"><img src="<c:url value="/resources/images/logo.png" />"></h1>
             <div class="logSection">
                 <!-- 로그인하지 않았을 때 -->
                 <div class="log-out cf">
