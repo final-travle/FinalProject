@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,18 +24,46 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	@RequestMapping(value = "memberJoin.do", method = RequestMethod.GET)
+	public String home(Locale locale, Model model, HttpSession session) {
+
 		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		return "member/memberJoin";
 	}
+	@RequestMapping(value = "login.do", method = RequestMethod.GET)
+	public String login(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/login";
+	}
+	@RequestMapping(value = "searchPwd.do", method = RequestMethod.GET)
+	public String searchPwd(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/searchPwd";
+	}
+	
+	@RequestMapping(value = "searchId.do", method = RequestMethod.GET)
+	public String searchId(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/searchId";
+	}
+	@RequestMapping(value = "change.do", method = RequestMethod.GET)
+	public String change(Locale locale, Model model, HttpSession session) {
+
+		
+		return "change";
+	}
+	
+	@RequestMapping(value = "ex1.do", method = RequestMethod.GET)
+	public String ex1(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/ex1";
+	}
+	
+	
+	
 	
 }
