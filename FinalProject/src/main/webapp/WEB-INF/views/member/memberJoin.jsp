@@ -372,7 +372,7 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check2" name="agree_chk" class="infoBox">
                         <label>(필수)개인정보 수집 및 이용</label>
-                        <lable><a href="memberJoinAgreement.jsp">전체보기</a></lable>
+                        <lable><a href="javascript:windowopenPopup2();">전체보기</a></lable>
                     </li>
                     <br>
                    
@@ -380,19 +380,19 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check3" name="agree_chk" class="infoBox" >
                         <label>(필수)14세 이상입니다. *회원가입은 만 14세 이상부터 가능합니다.</label>
-                         <lable><a href="memberJoinAgreement.jsp">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup3();">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check4" value="N" name="alarm_YN" class="infoBox">
                         <label>(선택)정보/이벤트 메일 수신에 동의합니다.</label>
-                         <lable><a href="memberJoinAgreement.jsp">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup4();">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check5" value="N" name="agree_chk" class="infoBox">
                         <label>(선택)정보/이벤트 SMS 수신에 동의합니다.</label>
-                         <lable><a href="memberJoinAgreement.jsp">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup5();">전체보기</a></lable>
                     </li>
                     <br>
                     <dev style="font-size: 10px; color: lightgray;">*선택 약관 미동의시 포인트, 할인 혜택 등 추가 정보 수신 불가</dev>
@@ -486,9 +486,20 @@
              <%}%>
             --%>
             function windowopenPopup(){
-                 window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no');
+                 window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
             }
-            
+            function windowopenPopup2(){
+                window.open('ex2.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no,resizable=no');
+           }
+            function windowopenPopup3(){
+                window.open('ex3.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no,resizable=no');
+           }
+            function windowopenPopup4(){
+                window.open('ex4.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no,resizable=no');
+           }
+            function windowopenPopup5(){
+                window.open('ex5.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no,resizable=no');
+           } 
 
             function idCheck(){
                  var userid = document.getElementById("userId").value;

@@ -97,7 +97,7 @@ public class MemberController {
 			
 			if(result != null) {
 				model.addAttribute("loginUser",result);
-				return "home";
+				return "member/searchResultPwd";
 			}else {
 				throw new MemberException("로그인 실패!");
 				
@@ -121,7 +121,7 @@ public class MemberController {
 			
 			if(result != null) {
 				model.addAttribute("loginUser",result);
-				return "home";
+				return "member/searchResultId";
 			}else {
 				throw new MemberException("로그인 실패!");
 				
@@ -169,6 +169,9 @@ public class MemberController {
 	         
 	         
 	      }
+	    
+	    
+	    
 	    @RequestMapping(value="logout.do", method=RequestMethod.GET)
 		public String logout(HttpSession session){
 		session.invalidate();

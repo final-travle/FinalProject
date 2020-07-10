@@ -62,6 +62,42 @@ public class HomeController {
 		
 		return "member/ex1";
 	}
+	@RequestMapping(value = "ex2.do", method = RequestMethod.GET)
+	public String ex2(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/ex2";
+	}
+	@RequestMapping(value = "ex3.do", method = RequestMethod.GET)
+	public String ex3(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/ex3";
+	}
+	@RequestMapping(value = "ex4.do", method = RequestMethod.GET)
+	public String ex4(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/ex4";
+	}
+	@RequestMapping(value = "ex5.do", method = RequestMethod.GET)
+	public String ex5(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/ex5";
+	}
+	@RequestMapping(value = "searchResultId.do", method = RequestMethod.GET)
+	public String searchResultId(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/searchResultId";
+	}
+	@RequestMapping(value = "searchResultPwd.do", method = RequestMethod.GET)
+	public String searchResultPwd(Locale locale, Model model, HttpSession session) {
+
+		
+		return "member/searchResultPwd";
+	}
 	
 	
 	
