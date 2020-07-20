@@ -5,7 +5,7 @@
 		<id property="id" column="USER_ID"/>
 		<result property="pwd" column="PWD"/>
 		<result property="name" column="NAME"/>
-		<result property="nicname" column="NICNAME"/>
+		<result property="nicname" column="NICKNAME"/>
 		<result property="birth" column="BIRTH"/>
 		<result property="email" column="EMAIL"/>
 		<result property="phone" column="PHONE"/>
@@ -52,4 +52,37 @@
 		INSERT INTO PREF_STYLE
 		VALUES(#{sye},#{id})
 	</insert>
+	
+	
+	
+	<select id="friendsInfo" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{string}
+	</select>
+	
+	
+	<select id="allMember" parameterType="FriendsPage" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID != #{userId} AND NAME = #{search}
+	</select>
+	
+	<select id="allMember2" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID != #{string}
+	</select>
+	
+	<select id="allMemberCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID != #{string} 
+	</select>
+	
+	<select id="allMemberCount2" parameterType="FriendsPage" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER WHERE NAME =#{search} AND USER_ID != #{userId}
+	</select>
+	
 </mapper>

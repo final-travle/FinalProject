@@ -24,6 +24,13 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@RequestMapping(value = "home.do", method = RequestMethod.GET)
+	public String home123(Locale locale, Model model, HttpSession session) {
+
+		
+		return "home";
+	}
+
 	@RequestMapping(value = "memberJoin.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 

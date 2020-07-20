@@ -8,9 +8,13 @@
 	<typeAliases>
 		<typeAlias type="com.kh.FinalProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.FinalProject.member.model.vo.Ttype" alias="Ttype"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.Friends" alias="Friends"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.PageInfo" alias="PageInfo"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.FriendsPage" alias="FriendsPage"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/friends-mapper.xml"/>
 	</mappers>
 </configuration>

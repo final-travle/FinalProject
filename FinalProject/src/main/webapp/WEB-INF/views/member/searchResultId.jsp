@@ -34,7 +34,7 @@
     <div id="hansol1">
     <h1 id="h1">SEARCH RESULT</h2>
     <div id="hansol2">
-       <h3 id="h3"><c:out value="${loginUser.name }님의 아이디는 ${loginUser.id}입니다"/></h3>
+       <h3 id="h3"><c:out value="${result.name }님의 아이디는 ${result.id}입니다"/></h3>
     </div>
     <button id="home" onclick="location.href='home.do'">홈으로 </button> <button id="searchPwd" onclick="location.href='searchPwd.do'">비밀번호찾기 </button>
     </div>

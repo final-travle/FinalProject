@@ -37,8 +37,7 @@
 	</style>
 </head>
 <body>
-	<div style="padding: 20px; background: lightgray; margin: 0 auto; text-align: center; font-size: 25px;">
-		비밀번호 찾기</div>
+	
 	 <br>
      <br>
      <br>

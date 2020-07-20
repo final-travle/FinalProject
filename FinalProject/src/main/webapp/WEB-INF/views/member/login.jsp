@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<style>
-            
+            p, input, span, div { padding:0; margin:0; }
             #h2{
                 text-align: center;
             }
@@ -18,6 +18,8 @@
            .p{
 				    vertical-align: middle;
             }
+            
+            td.p span { width:28%; display:inline-block; }
             a{
                 text-decoration:none;
                 color:  lightgray;
@@ -34,16 +36,17 @@
             }
             .log1{
                 height: 30px;
-                width: 400px; 
-                border-radius: 8px;
+                width: 70%; 
+                box-sizing:border-box;
+                border-radius: 4px;
             }
             #btn{
                 height: 100px; 
                 width: 180px; 
                 color: white; 
                 font-size: 16px; 
-                border-radius: 8px; 
-                background: darkgrey;
+                border-radius: 4px; 
+                background: black;
             }
             #check1{
                 float: left;
@@ -59,7 +62,7 @@
                 width: 600px; 
                 text-align: center; 
                 height: 80px; 
-                border-radius: 8px; 
+                border-radius: 4px; 
                 font-size: 16px;
             }
             
@@ -80,9 +83,7 @@
     </style>
 </head>
 <body>	
-	<div id="div1">
-            LOGIN
-        </div>
+	
         <br>
         <br>
         <br>
@@ -90,13 +91,13 @@
         
         
         <form id="loginform" method="post" action="mlogin.do">
-            <h2 id="h2">회원 로그인</h2>
+            <h2 id="h2">Login</h2>
             <hr>
             <br>
             <table id="logintable">
                 <tr class="p">
                     <td class = "p">
-                        <input type="text" class="log1" name="id" id="userId" placeholder="이름을 입력해주세요">
+                      <span>ID :</span>  <input type="text" class="log1" name="id" id="userId" placeholder="이름을 입력해주세요">
                     </td>
                     <td rowspan="2">
                         <input type="submit" id="btn" value="LOGIN">
@@ -104,8 +105,8 @@
                     
                 </tr>
                 <tr>
-                    <td>
-                        <input type="password" class="log1" name="pwd" id="userPwd" placeholder="비밀번호를 입력해주세요">
+                    <td class = "p">
+                      <span>Passward :</span>  <input type="password" class="log1" name="pwd" id="userPwd" placeholder="비밀번호를 입력해주세요">
                     </td>
                 </tr>
             </table>
@@ -118,9 +119,8 @@
                 
             </div>
             <br>
-            <hr>
             <br>
-            <input type="button" id="memberJoin" value="회원가입">
+          <!--    <input type="button" id="memberJoin" value="회원가입">-->
             <br>
             <br>
             <hr>

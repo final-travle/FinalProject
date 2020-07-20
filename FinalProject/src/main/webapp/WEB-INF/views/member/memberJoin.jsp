@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -188,7 +189,7 @@
                         <label>성별<span style="color: orange;">*</span></label>
                     </td>
                     <td id="inp" class="ltd">
-                        <input type="text" id="sex" name="gender" required placeholder="한글로 2글자 이상">
+                      	남자  <input type="radio" id="sex" name="gender" value="M"> 여자  <input type="radio" id="sex" name="gender" value="F">
                     </td>
                 </tr>
                 
