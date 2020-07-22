@@ -22,15 +22,21 @@
             <div class="logSection">
                 <!-- 로그인하지 않았을 때 -->
                 <div class="log-out cf">
-                    <p class="btn colorBtn"><a href="#none">회원가입</a></p>
-                    <p class="btn"><a href="#none">로그인</a></p>
+             
+                <c:if test="${empty sessionScope.loginUser}">
+                    <p class="btn colorBtn"><a href="memberJoin.do">회원가입</a></p>
+                    <p class="btn"><a href="login.do">로그인</a></p>
+                    </c:if>
                 </div>
                 <!-- 로그인했을 때 -->
                 <div class="log-in cf">
-                    <p class="btn"><a href="#none">로그아웃</a></p>
-                    <p class="btn colorBtn"><a href="#none">마이페이지</a></p>
+                <c:if test="${!empty sessionScope.loginUser}">
+                	<p><c:out value="${loginUser.name }님"/></p>
+                    <p class="btn"><a href="logout.do">로그아웃</a></p>
+                    <p class="btn colorBtn"><a href="friends.do">마이페이지</a></p>
+                    </c:if>
                     <div class="userRound">
-                        <p>한솔찡</p><!-- user nickname 들어갈 부분 -->
+                        <p><c:out value="${loginUser.nicname }"/> </p><!-- user nickname 들어갈 부분 -->
                     </div>
                 </div>
             </div>

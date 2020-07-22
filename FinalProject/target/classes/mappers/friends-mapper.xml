@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="friends">
+	<resultMap type="Member" id="memberResultSet">
+		<id property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nicname" column="NICNAME"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="job" column="JOB"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="withd_yn" column="WITHD_YN"/>
+		<result property="join_date" column="JOIN_DATE"/>
+		<result property="field" column="FIELD"/>
+	</resultMap>
+	
+	<resultMap type="Friends" id="friendsResultSet">
+		<id property="fNo" column="FR_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="fId" column="FR_ID"/>
+		<result property="acceptYn" column="ACCEPT_YN"/>
+	</resultMap>
+	
+	
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES(#{id}, #{pwd}, #{name}, #{nicname}, #{birth},#{gender}, #{job}, #{email},
+				#{phone}, #{withd_yn}, SYSDATE, SYSDATE)
+	</insert>
+	
+	
+	<select id="selectMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE ID=#{id} AND PWD=#{pwd}
+	</select>
+	
+	<select id="searchPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE ID=#{id} AND EMAIL=#{email}
+	</select>
+	
+	<select id="searchId" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE NAME=#{name} AND EMAIL=#{email}
+	</select>
+	<select id="checkIdDup" parameterType="string" >
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE ID=#{id}
+	</select>
+	
+	<select id="friends" parameterType="string" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{id} OR USER_ID=#{id}) AND ACCEPT_YN ='Y'
+	</select>
+	
+	<select id="friends2" parameterType="FriendsPage" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN ='Y' 		
+    AND (USER_ID LIKE '%'||#{search}||'%' OR FR_ID LIKE '%'||#{search}||'%')
+
+	</select>
+	
+	<insert id="addFriends" parameterType="Friends">
+		INSERT INTO FRIEND_YN
+		VALUES(3,#{userId}, #{fId},#{acceptYn})
+	</insert>
+	<select id="friendsadd" parameterType="Friends" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE FR_ID=#{userId}  AND ACCEPT_YN=#{acceptYn}
+	</select>
+	
+	<select id="friendsacc" parameterType="Friends" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE FR_ID=#{userId} AND USER_ID=#{fId} AND ACCEPT_YN=#{acceptYn}
+	</select>
+	<update id="accfriends" parameterType="Friends" >
+		UPDATE FRIEND_YN SET ACCEPT_YN=#{acceptYn}  WHERE FR_ID= #{fId} AND USER_ID=#{userId}
+	</update>
+	
+	<select id="getListCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN='Y'
+	</select>
+	<select id="getListCount2" parameterType="FriendsPage" resultType="int">
+		SELECT COUNT(*)
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN='Y' AND (FR_ID=#{search} OR USER_ID=#{search})
+	</select>
+	
+	
+
+	
+	<select id="okfriendsCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM FRIEND_YN
+		WHERE FR_ID=#{string} AND ACCEPT_YN ='N'
+	</select>
+	
+	
+	<delete id="dltfriends" parameterType="FriendsPage">
+	DELETE FROM FRIEND_YN
+	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId}
+	</delete>
+</mapper>

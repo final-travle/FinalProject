@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.Ttype" alias="Ttype"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.Friends" alias="Friends"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.PageInfo" alias="PageInfo"/>
+		<typeAlias type="com.kh.FinalProject.member.model.vo.FriendsPage" alias="FriendsPage"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/friends-mapper.xml"/>
+	</mappers>
+</configuration>

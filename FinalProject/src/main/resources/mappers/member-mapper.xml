@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+	<resultMap type="Member" id="memberResultSet">
+		<id property="id" column="USER_ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nicname" column="NICKNAME"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="gender" column="GENDER"/>	
+		<result property="job" column="JOB"/>
+		<result property="withd_yn" column="WITHD_YN"/>
+		<result property="join_date" column="JOIN_DATE"/>
+		<result property="field" column="FIELD"/>
+	</resultMap>
+	
+	
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES(#{id}, #{pwd}, #{name}, #{nicname}, #{birth}, #{email},#{phone},#{gender}, #{job}
+				, #{withd_yn}, SYSDATE, SYSDATE)
+	</insert>
+	
+	
+	<select id="selectMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{id} AND PWD=#{pwd}
+	</select>
+	
+	<select id="searchPwd" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{id} AND EMAIL=#{email}
+	</select>
+	
+	<select id="searchId" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE NAME=#{name} AND EMAIL=#{email}
+	</select>
+	<select id="checkIdDup" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID=#{id}
+	</select>
+	
+	<insert id="insertTtype" parameterType="Ttype">
+		INSERT INTO PREF_STYLE
+		VALUES(#{sye},#{id})
+	</insert>
+	
+	
+	
+	<select id="friendsInfo" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{string}
+	</select>
+	
+	
+	<select id="allMember" parameterType="FriendsPage" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID != #{userId} AND NAME = #{search}
+	</select>
+	
+	<select id="allMember2" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID != #{string}
+	</select>
+	
+	<select id="allMemberCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID != #{string} 
+	</select>
+	
+	<select id="allMemberCount2" parameterType="FriendsPage" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER WHERE NAME =#{search} AND USER_ID != #{userId}
+	</select>
+	
+</mapper>
