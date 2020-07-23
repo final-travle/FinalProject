@@ -20,15 +20,39 @@ public class Member implements Serializable{
 	private String nicname;
 	private String birth;
 	private String gender;
-	private String job;
+	private String job;//
 	private String email;
 	private String phone;
-	private String withd_yn;
-	private Date join_date;
-	private Date field;
+	private String withd_yn;//
+	private Date join_date;//
+	private Date field;//
+	private String time;
 	
 	
 	
+	public Member(String id, String pwd, String name, String nicname, String birth, String gender, String job,
+			String email, String phone, String withd_yn, Date join_date, Date field, String time) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.nicname = nicname;
+		this.birth = birth;
+		this.gender = gender;
+		this.job = job;
+		this.email = email;
+		this.phone = phone;
+		this.withd_yn = withd_yn;
+		this.join_date = join_date;
+		this.field = field;
+		this.time = time;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public Member() {
 		super();
 	}
@@ -138,8 +162,8 @@ public class Member implements Serializable{
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", pwd=" + pwd + ", name=" + name + ", nicname=" + nicname + ", birth=" + birth
-				+ ", gender=" + gender + ", job=" + job + ", email=" + email + "," + " phone=" + phone
-				+ ", withd_yn=" + withd_yn + ", join_date=" + join_date + ", field=" + field + "]";
+				+ ", gender=" + gender + ", job=" + job + ", email=" + email + ", phone=" + phone + ", withd_yn="
+				+ withd_yn + ", join_date=" + join_date + ", field=" + field + ", time=" + time + "]";
 	}
 	
 	

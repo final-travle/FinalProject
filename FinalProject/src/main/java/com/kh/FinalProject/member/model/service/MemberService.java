@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.member.model.vo.PageInfo;
+import com.kh.FinalProject.member.model.vo.Time;
 import com.kh.FinalProject.member.model.vo.Ttype;
 
 public interface MemberService {
@@ -17,7 +18,7 @@ public interface MemberService {
 
 	Member searchId(Member m);
 
-	int change(Member m);
+	int change(Member m, Member mb);
 
 	int checkIdDup(String id);
 
@@ -50,5 +51,21 @@ public interface MemberService {
 	ArrayList<Friends> friendsacc(String id, String string);
 
 	int dltfriends(String id, String string);
+
+	int dltmember(String id, String pwd);
+
+	int fCount(String id);
+
+	ArrayList<Friends> realfriends(String id, String search, PageInfo pi);
+
+	int loginTime(String id);
+
+	int setloginTime(String id);
+
+	Integer friendsTime(String id);
+
+	void changeTtype(String parameter, String string, Ttype tp);
+
+	void deleteTtype(String id);
 
 }

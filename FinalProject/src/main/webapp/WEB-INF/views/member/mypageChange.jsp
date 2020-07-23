@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title></title>
@@ -173,7 +174,7 @@
 <div id="hansol">
 <hr>
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
-<h2>친구 : <span style="color: orange;"> ${ listCount }</span>명<br>
+<h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
 글 수 <span style="color: orange;"> 15</span>개</h2>
 <hr>
 </div>
@@ -183,14 +184,13 @@
     
     <a href="#">내 가 쓴 글</a>
     <a href="#">내가 좋아한 글</a>
-    <a href="#">내 정보 수정</a>
+    <a href="memberChange.do">내 정보 수정</a>
     <a href="friends.do">친구정보</a>
     <a href="friendsadd.do">친구추가</a>
     <a href="accfriends.do">친구수락</a>
-     <a href="#">회원탈퇴</a>
+    <a href="mypageDelete.do">회원탈퇴</a>
     <hr>
-  </div>
-   
+  </div>   
   <form method="post" action="mchange.do">
   <div id="h">
   <table id="logintable">
@@ -199,7 +199,7 @@
             <label>ID<span style="color: orange;">*</span></label>
         </td>
         <td id="inp" class="ltd">
-            <input type="text" id="userId" name="userId" value="${member.id}" required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
+            <input type="text" id="userId" name="id" value="${member.id}" required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
         </td>
     </tr>
     <tr>
@@ -207,7 +207,7 @@
             <label>비밀번호<span style="color: orange;">*</span></label>
         </td>
         <td id="inp" class="ltd"> 
-            <input type="password" id="userPwd" name="userPwd" required="" placeholder="6글자 이상 18글자 이하 영문자(소문자)와 숫자">
+            <input type="password" id="userPwd" name="pwd" required="" placeholder="6글자 이상 18글자 이하 영문자(소문자)와 숫자">
         </td>
     </tr>
     <tr>
@@ -223,7 +223,7 @@
             <label>이름<span style="color: orange;">*</span></label>
         </td>
         <td id="inp" class="ltd">
-            <input type="text" id="userName" name="userName" value="${member.name}" required="" placeholder="?쒓?濡?2湲 ???댁긽">
+            <input type="text" id="userName" name="name" value="${member.name}" required="" placeholder="?쒓?濡?2湲 ???댁긽">
         </td>
     </tr>
     <tr>
@@ -231,21 +231,27 @@
           <label>닉네임</label>
       </td>
       <td id="inp" class="ltd">
-          <input type="text" id="reference" name="reference" value="${member.nicname}">
+          <input type="text" id="reference" name="nicname" value="${member.nicname}">
       </td>
   </tr>
-  <tr>
-    <td id="lab" class="ltd"> 
-        <label>여행스타일<span style="color: orange;">*</span></label>
-    </td>
-    <td id="inp" class="ltd"> 
-      <select id="sye" name="sye" required="">
-        <option value="혼자">혼자여행가기</option>
-        <option value="둘이">둘이여행가기</option>
-        <option value="셋이">셋이여행가기</option>
-        </select>
-    </td>
-</tr>
+    <tr>
+             <td id="lab" class="ltd"> 
+                 <label>여행스타일<span style="color: orange;">*</span></label>
+             </td>
+             <td id="inp" class="ltd"> 
+              	호캉스<input type="checkbox" name="tType" value="호캉스"/>
+                FLEX<input type="checkbox" name="tType" value="FLEX"/>
+              	힐링<input type="checkbox" name="tType" value="힐링"/>
+              	효도관광<input type="checkbox" name="tType" value="효도관광"/>
+              	이벤트<input type="checkbox" name="tType" value="이벤트"/>
+              	직장인휴가<input type="checkbox" name="tType" value="직장인휴가"/><br>
+              	문화재탐방<input type="checkbox" name="tType" value="문화재탐방"/>
+              	짠내투어<input type="checkbox" name="tType" value="짠내투어"/>
+              	쇼핑관광<input type="checkbox" name="tType" value="쇼핑관광"/>
+              	한달살이<input type="checkbox" name="tType" value="한달살이"/>
+             </td>
+            </tr>
+           
     <tr>
         <td id="lab" class="ltd">
             <label>이메일<span style="color: orange;">*</span></label>
@@ -399,9 +405,9 @@
           <td id="inp" class="ltd">
             <span class="sortOptions">
             <label for="sex">남</label>
-            <input type="radio" name="sex" id="sex" value="남">
+            <input type="radio" name="gender" id="sex" value="M">
             <label for="sex">여</label>
-            <input type="radio" name="sex" id="sex" value="여">
+            <input type="radio" name="gender" id="sex" value="Y">
             </span>
             
         </td>

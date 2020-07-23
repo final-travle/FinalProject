@@ -11,176 +11,46 @@
 
 </head>
 <style>
-     #hansol{
-          width: 4000px;
-      }
-
-      body {
-    font-family: "Lato", sans-serif;
-}
-#h{
-    right: 250px;
-}
-.sidenav {
-    height: 150;
-    width: 100;
-    position: fixed;
-    z-index: 0;
-    top: 150;
-    left: 0;
-   right: 10;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    margin-right:20px ;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-#joinForm{
-                width: 850px;
-                margin: 0 auto;
-            }
-            #logintable{
-                margin: 10px;
-                padding:0;
-                width: 700px;
-                border-top: 1px solid #444444;
-                border-collapse: collapse;
-            }
-            .ltd {
-                border-bottom: 1px solid #444444;
-                padding: 10px;
-            }
-            #lab{
-                background-color:white;
-                color: black;
-                text-align: center;
-                padding: 10px;   
-            }
-            #inp{
-               padding: 10px;
-               padding-left: 110px;
-               padding-right: 100px;
-            }
-            tr td input{
-                border-radius: 5px;
-                height: 30px;
-                width: 280px;
-            }
-            #sye{
-              border-radius: 5px;
-                height: 30px;
-                width: 280px;
-            }
-            #checkAll{
-               zoom: 2.0;
-            }
-           div select{
-              height: 30px;
-              border-radius: 5px;
-              width: 80px;
-              float: left;
-              margin-left: 3px ;
-           }
-           #h2{
-               margin-left: 20px;
-               text-align: center;
-           }
-           #h3{
-               float: left;
-               margin-left: 20px;
-           }
-           #hh5{
-               float:right;
-               margin-bottom: 0;
-               color: lightgray;
-           }
-           #agr{
-               
-               margin-left: 20px;
-           }
-           .text{
-             float: right;
-           }
-           .container {
-                width: 100%;
-                height: 140px;
-                overflow: auto;
-                border: 1px solid black;
-                border-radius: 10px;
-            }
-            .container::-webkit-scrollbar {
-                width: 10px;
-            }
-            .container::-webkit-scrollbar-thumb {
-                background-color: #2f3542;
-                border-radius: 10px;
-                background-clip: padding-box;
-                border: 2px solid transparent;
-            }
-            .container::-webkit-scrollbar-track {
-                background-color: grey;
-                border-radius: 10px;
-                box-shadow: inset 0px 0px 5px white;
-            }
-            input::-webkit-input-placeholder { 
-                color: lightgray; 
-            }
-            input[type=radio] {
-            width:              150px;
-            height:             20px;
-        }
-
-#logintable{
-    
-
-                margin: 0 auto;
-                padding:0;
-                width: 750px;
-                border-top: 1px solid #444444;
-                border-collapse: collapse;
-            }
-            tr td input{
-                border-radius: 5px;
-                height: 30px;
-                width: 280px;
-            }
-            #sye{
-              border-radius: 5px;
-                height: 30px;
-                width: 280px;
-            }
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+#hansol{width: 4000px;}
+body {font-family: "Lato", sans-serif;}
+#h{right: 250px;}
+.sidenav {height: 150;width: 100;position: fixed;z-index: 0;top: 150; left: 0;right: 10;
+			overflow-x: hidden;transition: 0.5s;padding-top: 60px;margin-right:20px ;}
+.sidenav a {padding: 8px 8px 8px 32px;text-decoration: none; font-size: 25px;
+    color: #818181;display: block;transition: 0.3s;}
+#joinForm{width: 850px;margin: 0 auto;}
+#logintable{margin: 10px;padding:0;width: 700px;border-top: 1px solid #444444;border-collapse: collapse;}
+.ltd {border-bottom: 1px solid #444444;padding: 10px;}
+#lab{background-color:white;color: black;text-align: center;padding: 10px;   }
+#inp{padding: 10px;padding-left: 110px; padding-right: 100px;}
+tr td input{border-radius: 5px;height: 30px;width: 280px;}
+#sye{border-radius: 5px;height: 30px; width: 280px;}
+#checkAll{zoom: 2.0;}
+div select{height: 30px;border-radius: 5px;width: 80px;float: left;margin-left: 3px ;}
+#h2{margin-left: 20px;text-align: center;}
+#h3{float: left;margin-left: 20px;}
+#hh5{float:right;margin-bottom: 0;color: lightgray;}
+#agr{margin-left: 20px;}
+.text{float: right;}
+.container {width: 100%;height: 140px;overflow: auto;border: 1px solid black;border-radius: 10px;}
+.container::-webkit-scrollbar {width: 10px;}
+.container::-webkit-scrollbar-thumb {background-color: #2f3542;border-radius: 10px;background-clip: padding-box;border: 2px solid transparent}
+.container::-webkit-scrollbar-track {background-color: grey;border-radius: 10px;box-shadow: inset 0px 0px 5px white;}
+input::-webkit-input-placeholder { color: lightgray; }
+input[type=radio] {width:              150px;height:             20px;}
+#logintable{    margin: 0 auto;padding:0;width: 750px;border-top: 1px solid #444444;border-collapse: collapse;}
+tr td input{border-radius: 5px;height: 30px;width: 280px;}
+#sye{border-radius: 5px;height: 30px;width: 280px;}
+.sidenav a:hover {color: #f1f1f1;}
+.sidenav .closebtn {position: absolute;top: 0;right: 25px;font-size: 36px;margin-left: 50px;}
+@media screen and (max-height: 450px) {.sidenav {padding-top: 15px;}.sidenav a {font-size: 18px;}}
 </style>
 
 <body>
 <div id="hansol">
 <hr>
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
-<h2>친구 : <span style="color: orange;"> ${ listCount }</span>명<br>
+<h2>친구 : <span style="color: orange;"> ${fCount}</span>명<br>
 글 수 <span style="color: orange;"> 15</span>개</h2>
 <hr>
 </div>
@@ -191,10 +61,11 @@
     
     <a href="#">내 가 쓴 글</a>
     <a href="#">내가 좋아한 글</a>
-    <a href="#">내 정보 수정</a>
+    <a href="memberChange.do">내 정보 수정</a>
     <a href="friends.do">친구정보</a>
     <a href="friendsadd.do">친구추가</a>
     <a href="accfriends.do">친구수락</a>
+    <a href="mypageDelete.do">회원탈퇴</a>
     <hr>
   </div>
 
@@ -213,11 +84,10 @@
 <table align="center" width="600" border="1" cellspacing="0"
          style="claer:right;" id="td">
       <tr bgcolor="#99ccff">
-         <th>번호</th>
-         <th>제목</th>
-         <th>작성자</th>
-         <th>올린날짜</th>
-         <th>첨부파일</th>
+         <th>이름</th>
+         <th>닉네임</th>
+         <th>성별</th>
+         <th>이메일</th>
       </tr>
       <c:if test="${empty friends }">
             <tr>
@@ -231,8 +101,9 @@
             <td align="center">${n.name }</td>
             <td align="center">${n.nicname }</td>
             <td align="center">${n.gender }</td>
-            <td align="center">${n.phone }</td>
             <td align="center">${n.email }</td>
+            <td align="center">${n.time }</td>
+            
         </tr>   
       </c:forEach>
    </table>
@@ -240,7 +111,7 @@
    </form>
    
    
-   
+   <div id="paging" align="center" width="600" border="1">
    <!-- [이전] -->
 			<c:if test="${pi.currentPage eq 1 }">
 				[이전]&nbsp;
@@ -283,7 +154,7 @@
    
    
    
-
+</div>
 
 </body>
 </html>

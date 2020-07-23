@@ -5,6 +5,7 @@ public class Friends {
 	private String userId;
 	private String fId;
 	private String acceptYn;
+	
 	public Friends(int fNo, String userId, String fId, String acceptYn) {
 		super();
 		this.fNo = fNo;

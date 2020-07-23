@@ -12,6 +12,7 @@ import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.FriendsPage;
 import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.member.model.vo.PageInfo;
+import com.kh.FinalProject.member.model.vo.Time;
 import com.kh.FinalProject.member.model.vo.Ttype;
 
 @Repository("mDao")
@@ -45,7 +46,7 @@ public class MemberDao {
 
 	public int change(Member m) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.update("memberMapper.searchId",m);
+		return sqlSessionTemplate.update("memberMapper.change",m);
 	}
 
 	public int checkIdDup(String id) {
@@ -160,6 +161,52 @@ public class MemberDao {
 	public int dltfriends(Friends fr) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.delete("friends.dltfriends",fr);
+	}
+
+	public int dltmember(Member m) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.dltmember",m);
+	}
+
+	public int fCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("friends.fCount",id);
+	}
+
+	public ArrayList<Friends> realfriends(FriendsPage fp) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp);
+	}
+
+	public ArrayList<Friends> realfriends(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends2",id);
+	}
+
+	public int loginTime(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.loginTime",id); //업데이트안되면 넣기
+	}
+
+	public int setloginTime(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("memberMapper.setloginTime",id);
+	}
+
+	public Integer friendsTime(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.friendsTime",id);
+	}
+
+	public void changeTtype(Ttype tp) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.update("memberMapper.changeTtype",tp);
+	}
+
+	public void deleteTtype(String id) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("memberMapper.deleteTtype",id);
+		
 	}
 
 	
