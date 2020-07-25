@@ -341,6 +341,37 @@ public class MemberServiceImpl implements MemberService {
 		mDao.deleteTtype(id);
 	}
 
+
+	@Override
+	public int refusefriends(String id, String id2) {
+		// TODO Auto-generated method stub
+		Friends fr = new Friends();
+		fr.setUserId(id2);
+		fr.setfId(id);
+		return mDao.refusefriends(fr);
+	}
+
+
+	@Override
+	public int logoutTime(String id) {
+		// TODO Auto-generated method stub
+		return mDao.logoutTime(id);
+	}
+
+
+	@Override
+	public int setlogoutTime(String id) {
+		// TODO Auto-generated method stub
+		return mDao.setlogoutTime(id);
+	}
+
+
+	@Override
+	public Integer friendsLoginTime(String id) {
+		// TODO Auto-generated method stub
+		return mDao.friendsLoginTime(id);
+	}
+
 	}
 
 

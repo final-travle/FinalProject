@@ -102,7 +102,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 					<c:url value="accfriends.do" var="url">
 					  <c:param name="id" value="${n.userId }" />
 					</c:url>
-					<c:url value="dltfriends.do" var="urldt">
+					<c:url value="dltaccfriends.do" var="urldt">
 					  <c:param name="id" value="${n.userId }" />
 					</c:url>
 					<td>

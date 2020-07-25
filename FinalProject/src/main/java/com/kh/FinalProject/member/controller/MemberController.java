@@ -78,8 +78,6 @@ public class MemberController {
 		System.out.println(m);
 		Member loginUser = mService.loginMember(m);
 		
-		
-		//시간 넣는것  update
 		int timeupdate =mService.loginTime(m.getId());
 		int success =0;
 		if(timeupdate<1) { //업데이트할게없으면 인서트해라
@@ -87,6 +85,8 @@ public class MemberController {
 		}
 		
 		System.out.println("성공"+success);
+		//시간 넣는것  update
+		
 		System.out.println(loginUser);
 		if(loginUser != null) {
 			model.addAttribute("loginUser",loginUser);
@@ -160,9 +160,11 @@ public class MemberController {
 			
 			Member mb = (Member) session.getAttribute("loginUser");
 			Member loginUser = mService.loginMember(mb);
+			int fCount = mService.fCount(mb.getId());
 			System.out.println(loginUser);
 			if(loginUser != null) {
 				model.addAttribute("member",loginUser);
+				model.addAttribute("fCount",fCount);
 				return "member/mypageChange";
 			}else {
 				model.addAttribute("member",mb);
@@ -170,6 +172,7 @@ public class MemberController {
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('정보를 확인해주세요.'); </script>");
 				out.flush();
+				model.addAttribute("fCount",fCount);
 				return "member/mypageChange";
 				
 			}
@@ -185,20 +188,23 @@ public class MemberController {
 			m.setBirth(request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"));
 			int result = mService.change(m,mb);
 			mService.deleteTtype(mb.getId());
+			int fCount = mService.fCount(mb.getId());
 			for(int i=0; i<request.getParameterValues("tType").length;i++) {
 				mService.insertTtype(mb.getId(),request.getParameterValues("tType")[i],tp);
 				}
 			System.out.println(result);
 				if(result > 0) {
 					model.addAttribute("result",result);
+					model.addAttribute("fCount",fCount);
 					return "home";
 				}else {
 					model.addAttribute("member",mb);
+					model.addAttribute("fCount",fCount);
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
 					out.println("<script>alert('정보를 확인해주세요.'); </script>");
 					out.flush();
-					return "mypageChange";			
+					return "member/mypageChange";			
 				}
 			
 			
@@ -226,8 +232,14 @@ public class MemberController {
 	    
 	    
 	    @RequestMapping(value="logout.do", method=RequestMethod.GET)
-		public String logout(SessionStatus status){
-		status.setComplete();
+		public String logout(HttpSession session,SessionStatus status){
+	    	Member m = (Member) session.getAttribute("loginUser");
+
+	    	int a =mService.logoutTime(m.getId());
+			
+			
+			
+			status.setComplete();
 			
 			return "home";
 		}
@@ -279,36 +291,42 @@ public class MemberController {
 			}
 			
 			ArrayList<Integer> time = new ArrayList<Integer>();
+			ArrayList<Integer> logintime = new ArrayList<Integer>();
 			ArrayList<String> timeresult = new ArrayList<String>();
 			for(int i=0;i<mal.size();i++) {
 				time.add(mService.friendsTime(mal.get(i).getId()));
+				logintime.add(mService.friendsLoginTime(mal.get(i).getId())); //로그아웃시간 - 로그인시간
 			}
+			System.out.println(logintime);
 			for(int i=0;i<time.size();i++) {
-				if(time.get(i)>=518400) {
-					timeresult.add("1년이상");
+				if(logintime.get(i)>=0) {
+					if(time.get(i)>=518400) {
+						timeresult.add("1년이상");
+					}
+					if(518400>time.get(i)&&time.get(i)>=43200) {
+						timeresult.add("한달이상");
+					}
+					if(43200>time.get(i)&&time.get(i)>=1440) {
+						timeresult.add("하루이상");
+					}
+					if(1440>time.get(i) && time.get(i)>=60) {
+						String hour =String.valueOf((time.get(i)/60));
+						timeresult.add(hour+"시간이상");
+					}
+					if(60>time.get(i)&& time.get(i)>4) {
+						String min =String.valueOf(time.get(i));
+						timeresult.add(min+"분이상");
+					}
+					
+					if(time.get(i)==0||time.get(i)<=4){
+							timeresult.add("최근까지 접속");
+					}
+					if(time.get(i)==null) {
+						timeresult.add("접속기록없음");
+					}
+				}else {
+					timeresult.add("온라인");
 				}
-				if(518400>time.get(i)&&time.get(i)>=43200) {
-					timeresult.add("한달이상");
-				}
-				if(43200>time.get(i)&&time.get(i)>=1440) {
-					timeresult.add("하루이상");
-				}
-				if(1440>time.get(i) && time.get(i)>=60) {
-					String hour =String.valueOf((time.get(i)/60));
-					timeresult.add(hour+"시간이상");
-				}
-				if(60>time.get(i)&& time.get(i)>4) {
-					String min =String.valueOf(time.get(i));
-					timeresult.add(min+"분이상");
-				}
-				
-				if(time.get(i)==0||time.get(i)<=4){
-						timeresult.add("최근까지 접속");
-				}
-				if(time.get(i)==null) {
-					timeresult.add("접속기록없음");
-				}
-				
 			}
 			if(mal.size()==timeresult.size()) {
 				for(int i =0;i<mal.size();i++) {
@@ -459,8 +477,8 @@ public class MemberController {
 	        
 	        
 	        
-	            @RequestMapping("dltfriends.do")
-    		public ModelAndView dltfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	            @RequestMapping("dltaccfriends.do")
+    		public ModelAndView dltaccfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
     		
     			Member m = (Member) session.getAttribute("loginUser");
     			int fCount = mService.fCount(m.getId());
@@ -477,17 +495,18 @@ public class MemberController {
 				}
 				return model;   	        				
     	}
-	            @RequestMapping("dltmember.do")
+	            @RequestMapping("dltmember.do") //회원 탈퇴
 	    		public String dltmember(ModelAndView model,HttpServletResponse response,HttpSession session,String pwd) throws IOException {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int fCount = mService.fCount(m.getId());
 	    			int fal = 0;
+	    			
 	    			if(m.getPwd().equals(pwd)) {
 	    			fal = mService.dltmember(m.getId(),pwd);	
 	    			} 
 					if(fal > 0) {
-						
+						model.addObject("fCount",fCount);
 						System.out.println("하 사위벌");
 						return "logout.do";
 					}else {
@@ -496,4 +515,34 @@ public class MemberController {
 					}
 					   	        				
 	    	}
+	            @RequestMapping("mypageDelete.do") //회원 탈퇴
+	    		public String mypageDelete(ModelAndView model,HttpServletResponse response,HttpSession session,String pwd) throws IOException {
+	    		
+	            	Member m = (Member) session.getAttribute("loginUser");
+	    			int fCount = mService.fCount(m.getId());
+	    			
+
+						model.addObject("fCount",fCount);
+						return "member/mypageDelete";		   	        				
+	    	}
+	        
+	            @RequestMapping("refusefriends.do") //친구신청거절
+	    		public ModelAndView refusefriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	    		
+	    			Member m = (Member) session.getAttribute("loginUser");
+					int fal = mService.refusefriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
+					ArrayList<Friends> fall = mService.friendsadd(id,m.getId());
+					int fCount = mService.fCount(m.getId());
+					System.out.println(fall);
+					System.out.println(fal);
+					if(fal > 0) {
+						System.out.println("하 사위벌");
+						model.addObject("falll",fall);
+						model.addObject("fCount",fCount);
+						model.setViewName("/member/accfriends");
+						
+					}
+					return model;   	        				
+	    	}
+	            
 }

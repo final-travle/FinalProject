@@ -111,17 +111,29 @@
 	</update>
 	
 	<update id="loginTime" parameterType="string" >
-	UPDATE TIME SET USER_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+	UPDATE TIME SET USER_LOGIN_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
 					 WHERE USER_ID=#{id} 
 	</update>
 	
 	<insert id="setloginTime" parameterType="string">
 		INSERT INTO TIME
-		VALUES(#{id},TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')) 
+		VALUES(#{id},TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),0) 
 	</insert>
+	
+	<update id="logoutTime" parameterType="string" >
+		UPDATE TIME SET USER_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+					 WHERE USER_ID=#{id} 
+	</update>
+	
 	<select id="friendsTime" parameterType="string" resultType="_int">
 		SELECT TRUNC((TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),'YYYYMMDDHH24MISS')-TO_DATE(USER_TIME,'YYYYMMDDHH24MISS'))*24*60) FROM TIME WHERE USER_ID = #{id}  
 	</select>
+	
+	<select id="friendsLoginTime" parameterType="string" resultType="_int">
+		SELECT TRUNC((TO_DATE(USER_TIME,'YYYYMMDDHH24MISS')-TO_DATE(USER_LOGIN_TIME,'YYYYMMDDHH24MISS'))*24*60*60) FROM TIME WHERE USER_ID = #{id}  
+	</select>
+	
+	
 	
 		<update id="changeTtype" parameterType="Ttype" >
 	UPDATE PREF_STYLE SET 

@@ -132,12 +132,18 @@
 	<select id="fCount" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM FRIEND_YN
-		WHERE FR_ID=#{string} AND ACCEPT_YN ='Y'
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN ='Y'
 	</select>
 	
 	
 	<delete id="dltfriends" parameterType="FriendsPage">
 	DELETE FROM FRIEND_YN
-	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId}
+	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId} AND USER_ID=#{fId}
 	</delete>
+	
+	<delete id="refusefriends" parameterType="FriendsPage">
+	DELETE FROM FRIEND_YN
+	WHERE ACCEPT_YN ='Y' AND FR_ID= #{userId} AND USER_ID=#{fId}
+	</delete>
+	
 </mapper>

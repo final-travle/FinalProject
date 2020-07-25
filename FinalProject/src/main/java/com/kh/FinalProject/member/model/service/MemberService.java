@@ -68,4 +68,12 @@ public interface MemberService {
 
 	void deleteTtype(String id);
 
+	int refusefriends(String id, String id2);
+
+	int logoutTime(String id);
+
+	int setlogoutTime(String id);
+
+	Integer friendsLoginTime(String id);
+
 }

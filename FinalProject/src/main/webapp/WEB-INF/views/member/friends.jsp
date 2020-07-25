@@ -88,6 +88,8 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
          <th>닉네임</th>
          <th>성별</th>
          <th>이메일</th>
+         <th>최근접속일</th>
+         <th>삭제여부</th>
       </tr>
       <c:if test="${empty friends }">
             <tr>
@@ -103,7 +105,12 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
             <td align="center">${n.gender }</td>
             <td align="center">${n.email }</td>
             <td align="center">${n.time }</td>
-            
+            <td>
+		            <c:url value="refusefriends.do" var="url">
+					<c:param name="deleteid" value="${n.id }" />
+					</c:url>
+		            <a href="${url}">삭제하기</a>
+		            </td>
         </tr>   
       </c:forEach>
    </table>

@@ -36,10 +36,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "mypageDelete.do", method = RequestMethod.GET)
-	public String mypageDelete(Locale locale, Model model, HttpSession session) {
-		return "member/mypageDelete";
-	}
 	
 	
 	@RequestMapping(value = "memberJoin.do", method = RequestMethod.GET)

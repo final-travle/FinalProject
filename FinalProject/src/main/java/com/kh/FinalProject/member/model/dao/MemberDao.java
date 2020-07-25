@@ -209,6 +209,26 @@ public class MemberDao {
 		
 	}
 
+	public int refusefriends(Friends fr) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("friends.refusefriends",fr);
+	}
+
+	public int logoutTime(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.logoutTime",id);
+	}
+
+	public int setlogoutTime(String id) {
+		// TODO Auto-generated method stub
+		return  sqlSessionTemplate.insert("memberMapper.setlogoutTime",id);
+	}
+
+	public Integer friendsLoginTime(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.friendsLoginTime",id);
+	}
+
 	
 
 }
