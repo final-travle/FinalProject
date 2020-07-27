@@ -589,4 +589,20 @@ public class MemberController {
 					}
 	    			   	        				
 	    	}
+	            
+	            @RequestMapping("adminMemberinfo.do")
+	    		public ModelAndView adminMemberinfo(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	        		Member m = mService.memberinfo(id);
+	        		ArrayList<String> als = mService.memberinfoType(id);
+	        		//여기해야됨
+	        		String a = "";
+	        		for(int i =0; i<als.size();i++) {
+	        			a+=als.get(i);
+	        			a+=",";
+	        		}
+	        		model.addObject("member",m);
+	        		model.addObject("type",a);
+    				model.setViewName("/member/adminMemberinfo");
+	            	return model;
+	    	}    
 }

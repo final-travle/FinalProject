@@ -43,6 +43,11 @@
 		WHERE NAME=#{name} AND EMAIL=#{email}  AND WITHD_YN='N'
 	</select>
 	
+	<select id="memberinfo" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{id} AND WITHD_YN='N'
+	</select>
 	
 	<update id="change" parameterType="Member" >
 	UPDATE MEMBER SET USER_ID = #{id},
@@ -150,5 +155,8 @@
 	UPDATE MEMBER SET WITHD_YN ='Y'  
 					 WHERE USER_ID=#{id} AND WITHD_YN='N'
 	</update>
-			
+	
+	<select id="memberinfoType" parameterType="string" resultType="string">
+	SELECT * FROM	PREF_STYLE WHERE USER_ID =#{id}  
+	</select>		
 </mapper>

@@ -104,7 +104,11 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
             <c:set var="loop" value="false" />
            
          <tr>
-            <td align="center">${n.id }</td>
+            <td align="center">
+            <c:url value="adminMemberinfo.do" var="url2">
+				<c:param name="id" value="${n.id }" />
+			</c:url>
+           <a href="${url2}"> ${n.id }</a></td>
             <td align="center">${n.name }</td>
             <td align="center">${n.nicname }</td>
             <td align="center">${n.phone }</td>

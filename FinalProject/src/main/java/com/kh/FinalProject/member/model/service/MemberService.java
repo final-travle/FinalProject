@@ -82,4 +82,8 @@ public interface MemberService {
 
 	void dltTime(String id);
 
+	Member memberinfo(String id);
+
+	ArrayList<String> memberinfoType(String id);
+
 }

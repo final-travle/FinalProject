@@ -390,7 +390,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void dltTime(String id) {
 		// TODO Auto-generated method stub
-		
+		mDao.dltTime(id);
+	}
+
+
+	@Override
+	public Member memberinfo(String id) {
+		// TODO Auto-generated method stub
+		return mDao.memberinfo(id);
+	}
+
+
+	@Override
+	public ArrayList<String> memberinfoType(String id) {
+		// TODO Auto-generated method stub
+		return mDao.memberinfoType(id);
 	}
 
 	}

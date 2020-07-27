@@ -242,6 +242,16 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.delete("friends.dltmemberfriends",id);
 	}
+
+	public Member memberinfo(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.memberinfo",id);
+	}
+
+	public ArrayList<String> memberinfoType(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.memberinfoType",id);
+	}
 	
 	
 }
