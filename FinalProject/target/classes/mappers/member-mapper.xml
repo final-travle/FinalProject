@@ -143,7 +143,12 @@
 	
 	<delete id="deleteTtype" parameterType="string">
 	DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
-	
+	c
 	</delete>
 	
+	<update id="adminMemberDelete" parameterType="string" >
+	UPDATE MEMBER SET WITHD_YN ='Y'  
+					 WHERE USER_ID=#{id} AND WITHD_YN='N'
+	</update>
+			
 </mapper>

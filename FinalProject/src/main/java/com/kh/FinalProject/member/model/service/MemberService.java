@@ -76,4 +76,10 @@ public interface MemberService {
 
 	Integer friendsLoginTime(String id);
 
+	int adminMemberDelete(String id);
+
+	void dltmemberfriends(String id);
+
+	void dltTime(String id);
+
 }

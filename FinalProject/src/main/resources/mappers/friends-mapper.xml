@@ -141,9 +141,21 @@
 	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId} AND USER_ID=#{fId}
 	</delete>
 	
+	<delete id="dltmemberfriends" parameterType="string">
+	DELETE FROM FRIEND_YN
+	WHERE FR_ID= #{id} OR USER_ID=#{id}
+	</delete>
+	
+	
+	
 	<delete id="refusefriends" parameterType="FriendsPage">
 	DELETE FROM FRIEND_YN
 	WHERE ACCEPT_YN ='Y' AND FR_ID= #{userId} AND USER_ID=#{fId}
+	</delete>
+	
+	<delete id="dltTime" parameterType="string">
+	DELETE FROM TIME
+	WHERE USER_ID=#{id}
 	</delete>
 	
 </mapper>

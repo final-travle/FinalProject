@@ -56,9 +56,29 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 </div>
    <br><br><br>
   
+  
+  
+  
+  
+  
    <div id="mySidenav" class="sidenav">
+    <c:if test="${sessionScope.loginUser.id eq 'master'}">
     <hr>
-    
+    <a href="#">내 가 쓴 글</a>
+    <a href="#">내가 좋아한 글</a>
+    <a href="memberChange.do">내 정보 수정</a>
+    <a href="friends.do">친구정보</a>
+    <a href="friendsadd.do">친구추가</a>
+    <a href="accfriends.do">친구수락</a>
+    <a href="mypageDelete.do">회원탈퇴</a>
+    <a href="adminMember.do">회원관리</a>
+    <a href="#">회원 글 관리</a>
+    <hr>
+    </c:if>
+    </div>
+    <div id="mySidenav" class="sidenav">
+    <c:if test="${ sessionScope.loginUser.id ne 'master'}">
+    <hr>
     <a href="#">내 가 쓴 글</a>
     <a href="#">내가 좋아한 글</a>
     <a href="memberChange.do">내 정보 수정</a>
@@ -67,6 +87,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
     <a href="accfriends.do">친구수락</a>
     <a href="mypageDelete.do">회원탈퇴</a>
     <hr>
+    </c:if>
   </div>
 
 
@@ -74,7 +95,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 
 <form method="post" action="friends.do">
 <select name="search">
-    <option value="">직업선택</option>
+    <option value="">아이디로검색</option>
     <option value="name">이름</option>
     <option value="nicname">별명</option>
     <option value="sex">성별</option>

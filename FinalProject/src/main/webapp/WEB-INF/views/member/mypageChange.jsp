@@ -180,8 +180,23 @@
 </div>
    <br><br><br>
    <div id="mySidenav" class="sidenav">
+    <c:if test="${sessionScope.loginUser.id eq 'master'}">
     <hr>
-    
+    <a href="#">내 가 쓴 글</a>
+    <a href="#">내가 좋아한 글</a>
+    <a href="memberChange.do">내 정보 수정</a>
+    <a href="friends.do">친구정보</a>
+    <a href="friendsadd.do">친구추가</a>
+    <a href="accfriends.do">친구수락</a>
+    <a href="mypageDelete.do">회원탈퇴</a>
+    <a href="adminMember.do">회원관리</a>
+    <a href="#">회원 글 관리</a>
+    <hr>
+    </c:if>
+    </div>
+    <div id="mySidenav" class="sidenav">
+    <c:if test="${ sessionScope.loginUser.id ne 'master'}">
+    <hr>
     <a href="#">내 가 쓴 글</a>
     <a href="#">내가 좋아한 글</a>
     <a href="memberChange.do">내 정보 수정</a>
@@ -190,6 +205,7 @@
     <a href="accfriends.do">친구수락</a>
     <a href="mypageDelete.do">회원탈퇴</a>
     <hr>
+    </c:if>
   </div>   
   <form method="post" action="mchange.do">
   <div id="h">

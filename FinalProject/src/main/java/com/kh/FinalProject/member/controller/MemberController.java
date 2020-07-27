@@ -247,10 +247,7 @@ public class MemberController {
 	    @RequestMapping("friends.do")
 		public ModelAndView friends(ModelAndView model ,HttpSession session,@RequestParam(value="page",
 							required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
-		
 			Member m = (Member) session.getAttribute("loginUser");
-			
-			
 			System.out.println("search : " +search);
 			String Search = noticeSearch;
 			if(Search != null ||Search!="") {
@@ -259,11 +256,7 @@ public class MemberController {
 			 if(noticeSearch==null ||noticeSearch=="") {
 		    	 Search = search;
 		    }
-		   
-			
-			
-//			System.out.println(listCount);
-			int currentPage = 1;
+			 int currentPage = 1;
 			if(page != null) {
 				currentPage = page;
 			}
@@ -272,9 +265,7 @@ public class MemberController {
 			System.out.println("listCount"+listCount);
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 			System.out.println(pi);
-
 			ArrayList<Friends> fal = mService.realfriends(m.getId(),Search,pi); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴
-			
 			ArrayList<String> al = new ArrayList<String>();//목록중 친구이름을 다뽑아옴
 			for(int i=0;i<fal.size();i++) {
 				if(fal.get(i).getfId().equals(m.getId())) {
@@ -289,7 +280,7 @@ public class MemberController {
 			for(int i =0;i<al.size();i++) {
 				mal.add(mService.friendsInfo(al.get(i)));
 			}
-			
+			System.out.println("mal : "+mal);
 			ArrayList<Integer> time = new ArrayList<Integer>();
 			ArrayList<Integer> logintime = new ArrayList<Integer>();
 			ArrayList<String> timeresult = new ArrayList<String>();
@@ -307,7 +298,8 @@ public class MemberController {
 						timeresult.add("한달이상");
 					}
 					if(43200>time.get(i)&&time.get(i)>=1440) {
-						timeresult.add("하루이상");
+						String day =String.valueOf((time.get(i)/1440));
+						timeresult.add(day+"일이상");
 					}
 					if(1440>time.get(i) && time.get(i)>=60) {
 						String hour =String.valueOf((time.get(i)/60));
@@ -334,10 +326,6 @@ public class MemberController {
 				}
 				
 			}
-			
-			//여기서 타임 조건문 쓰면됨
-			
-			
 			
 				model.addObject("listCount",listCount);
 				model.addObject("fCount",fCount);
@@ -506,6 +494,8 @@ public class MemberController {
 	    			fal = mService.dltmember(m.getId(),pwd);	
 	    			} 
 					if(fal > 0) {
+						mService.dltmemberfriends(m.getId());
+						mService.dltTime(m.getId());
 						model.addObject("fCount",fCount);
 						System.out.println("하 사위벌");
 						return "logout.do";
@@ -544,5 +534,59 @@ public class MemberController {
 					}
 					return model;   	        				
 	    	}
+	    
+	          
+	            @RequestMapping("adminMember.do")
+	    		public ModelAndView adminMember(ModelAndView model ,HttpSession session,@RequestParam(value="page",
+	    				required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
+	    		
+	    			Member m = (Member) session.getAttribute("loginUser");
+	    			int fCount = mService.fCount(m.getId());
+	    	    	String Search = noticeSearch;
+	    			if(Search != null || Search!="") {
+	    				model.addObject("search", Search);	
+	    		    }
+	    			 if(noticeSearch==null ||Search=="") {
+	    		    	 Search = null;
+	    		    }
+	    			 
+	    			 System.out.println(Search);
+	    			 int currentPage = 1;
+	    				if(page != null) {
+	    					currentPage = page;
+	    				}
+	    			int listCount = mService.getaddListCount(Search,m.getId());
+	    			System.out.println("listCount : "+listCount);
+	    			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+	    			System.out.println(pi);
+	    			ArrayList<Member> mb = mService.allMember(m.getId(),Search,pi);//자기 자신을 제외한 나머지 회원을 불러옴
+	    		
+	    			if(mb != null) {
+	    				model.addObject("fCount",fCount);
+	    				model.addObject("listCount",listCount);
+	    				model.addObject("allmember",mb);
+	    				model.setViewName("/member/adminMember");
+	    				model.addObject("pi",pi);
+	    			}
+	    			return model;				
+	    	}   
 	            
+	            
+	            @RequestMapping("adminMemberDelete.do")
+	    		public String adminMemberDelete(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	        		System.out.println(id);
+	        		int count = mService.adminMemberDelete(id); //친구 요청보냄
+	        		mService.dltmemberfriends(id);
+	        		mService.dltTime(id);
+	        		if(count >0) {
+	        			return "redirect:/adminMember.do";			
+	    			}else {
+						response.setContentType("text/html; charset=UTF-8");
+						PrintWriter out = response.getWriter();
+						out.println("<script>alert('정보를 확인해주세요.'); </script>");
+						out.flush();
+						return "member/friendsadd?id"+id;
+					}
+	    			   	        				
+	    	}
 }

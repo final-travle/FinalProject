@@ -208,7 +208,12 @@ public class MemberDao {
 		sqlSessionTemplate.delete("memberMapper.deleteTtype",id);
 		
 	}
-
+	public void dltTime(String id) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("friends.dltTime",id);
+		
+	}
+	
 	public int refusefriends(Friends fr) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.delete("friends.refusefriends",fr);
@@ -229,7 +234,15 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.friendsLoginTime",id);
 	}
 
+	public int adminMemberDelete(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.adminMemberDelete",id);
+	}
+	public int dltmemberfriends(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("friends.dltmemberfriends",id);
+	}
 	
-
+	
 }
 

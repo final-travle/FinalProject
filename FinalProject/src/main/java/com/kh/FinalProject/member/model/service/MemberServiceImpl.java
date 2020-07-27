@@ -372,6 +372,27 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.friendsLoginTime(id);
 	}
 
+
+	@Override
+	public int adminMemberDelete(String id) {
+		// TODO Auto-generated method stub
+		return mDao.adminMemberDelete(id);
+	}
+
+
+	@Override
+	public void dltmemberfriends(String id) {
+		// TODO Auto-generated method stub
+		 mDao.dltmemberfriends(id);
+	}
+
+
+	@Override
+	public void dltTime(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	}
 
 
