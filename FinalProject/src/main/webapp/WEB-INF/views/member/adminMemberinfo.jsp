@@ -41,7 +41,7 @@
 <body>
 	
 	
-	<h1 align="center">주문관리</h1>
+	<h1 align="center">회원관리</h1>
     <div id="order_manage">
         <table id="order_table">
        		 <tr>
@@ -81,7 +81,7 @@
                 <td><c:out value="${member.gender}"/></td>
             </tr>
         </table>
-		<button id="backBtn" onclick="location.href='<%=request.getContextPath() %>/admin/orderInfo'">돌아가기</button>	
+			
 	</div>
 
 </body>

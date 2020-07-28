@@ -65,7 +65,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
     </c:if>
     </div>
     <div id="mySidenav" class="sidenav">
-    <c:if test="${! sessionScope.loginUser.id eq 'master'}">
+    <c:if test="${ sessionScope.loginUser.id ne 'master'}">
     <hr>
     <a href="#">내 가 쓴 글</a>
     <a href="#">내가 좋아한 글</a>
@@ -110,12 +110,23 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
             <c:set var="loop_flag" value="false" />
 	            <c:forEach var="nb" items="${allfriends }">
 	            <c:if test="${not loop_flag }">
-					<c:if test="${nb eq n.id}">
-					<td>
-					<c:set var="loop_flag" value="true" />
-		            <c:out value="신청불가" />
-		            <c:set var="loop" value="true" />
-		            </td>
+					<c:if test="${nb.userId eq n.id}">
+					<c:choose>
+						<c:when test="${nb.acceptYn eq 'Y'}">
+							<td>
+								<c:set var="loop_flag" value="true" />
+					            <c:out value="이미친구" />
+					            <c:set var="loop" value="true" />
+				            </td>
+						</c:when>
+						<c:when test="${nb.acceptYn eq 'N'}">
+							<td>
+								<c:set var="loop_flag" value="true" />
+					            <c:out value="응답대기중" />
+					            <c:set var="loop" value="true" />
+				            </td>
+						</c:when>
+					</c:choose>
 					</c:if>
 				</c:if>
 				</c:forEach>

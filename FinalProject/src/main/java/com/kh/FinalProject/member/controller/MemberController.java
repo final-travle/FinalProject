@@ -363,15 +363,21 @@ public class MemberController {
 			System.out.println(pi);
 			ArrayList<Member> mb = mService.allMember(m.getId(),Search,pi);//자기 자신을 제외한 나머지 회원을 불러옴
 			ArrayList<Friends> fal = mService.friends(m.getId()); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴
-			ArrayList<String> al = new ArrayList<String>();//목록중 친구이름을 다뽑아옴
-			
+			ArrayList<Friends> al = new ArrayList<Friends>();//목록중 친구이름을 다뽑아옴
+	
 			
 			System.out.println("ffff"+fal);
 			for(int i=0;i<fal.size();i++) {
 				if(fal.get(i).getfId().equals(m.getId())) {
-					al.add(fal.get(i).getUserId());
+					Friends fs = new Friends();
+					fs.setAcceptYn(fal.get(i).getAcceptYn());
+					fs.setUserId(fal.get(i).getfId());
+					al.add(fs);
 				}else if(fal.get(i).getUserId().equals(m.getId())) {
-					al.add(fal.get(i).getfId());
+					Friends fs = new Friends();
+					fs.setAcceptYn(fal.get(i).getAcceptYn());
+					fs.setUserId(fal.get(i).getfId());
+					al.add(fs);
 				}
 			}
 			
@@ -598,7 +604,7 @@ public class MemberController {
 	        		String a = "";
 	        		for(int i =0; i<als.size();i++) {
 	        			a+=als.get(i);
-	        			a+=",";
+	        			a+=", ";
 	        		}
 	        		model.addObject("member",m);
 	        		model.addObject("type",a);
