@@ -32,8 +32,6 @@ public interface MemberService {
 
 	ArrayList<Member> allMember(String string);
 
-	int addFriends(String id, String string);
-
 	ArrayList<Friends> friendsadd(String string, String id);
 
 	int accfriends(String id, String string);
@@ -85,5 +83,7 @@ public interface MemberService {
 	Member memberinfo(String id);
 
 	ArrayList<String> memberinfoType(String id);
+
+	int addFriends(Member id, String id2);
 
 }

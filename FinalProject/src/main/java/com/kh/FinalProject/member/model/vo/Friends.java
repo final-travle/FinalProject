@@ -5,7 +5,27 @@ public class Friends {
 	private String userId;
 	private String fId;
 	private String acceptYn;
+	private String fnickname;
+	private String fprofile;
 	
+	
+	
+	public String getFnickname() {
+		return fnickname;
+	}
+
+	public void setFnickname(String fnickname) {
+		this.fnickname = fnickname;
+	}
+
+	public String getFprofile() {
+		return fprofile;
+	}
+
+	public void setFprofile(String fprofile) {
+		this.fprofile = fprofile;
+	}
+
 	public Friends(int fNo, String userId, String fId, String acceptYn) {
 		super();
 		this.fNo = fNo;

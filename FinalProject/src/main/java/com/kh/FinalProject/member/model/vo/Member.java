@@ -27,9 +27,16 @@ public class Member implements Serializable{
 	private Date join_date;//
 	private Date field;//
 	private String time;
+	private String profile;
 	
 	
 	
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	public Member(String id, String pwd, String name, String nicname, String birth, String gender, String job,
 			String email, String phone, String withd_yn, Date join_date, Date field, String time) {
 		super();

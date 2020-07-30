@@ -399,15 +399,11 @@ public class MemberController {
 	    
 	    
 	        @RequestMapping("hansolhansol.do")
-	    		public String hansolhansol(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	    		public String hansolhansol(ModelAndView model,HttpServletResponse response,HttpSession session,Member id) throws IOException {
 	    			//받아온 아이디가 상대쪽아이디
 	    			Member m = (Member) session.getAttribute("loginUser");
-	    			
 					System.out.println(id);
-				
-	        		
-	        		int count = mService.addFriends(id,m.getId()); //친구 요청보냄
-	    		
+	        		int count = mService.addFriends(id,m.getId()); //친구 요청보냄 
 	        		if(count >0) {
 	        			return "redirect:/friendsadd.do";			
 	    			}else {

@@ -139,16 +139,6 @@ public class MemberServiceImpl implements MemberService {
 	
 
 
-	@Override
-	public int addFriends(String id, String myid) {
-		// TODO Auto-generated method stub
-		Friends fr = new Friends();
-		fr.setfId(id);
-		fr.setUserId(myid);
-		fr.setAcceptYn("N");
-		return mDao.addFriends(fr);
-	}
-
 
 	@Override
 	public ArrayList<Friends> friendsadd(String id, String string) {
@@ -405,6 +395,19 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<String> memberinfoType(String id) {
 		// TODO Auto-generated method stub
 		return mDao.memberinfoType(id);
+	}
+
+
+	@Override
+	public int addFriends(Member id, String id2) {
+		// TODO Auto-generated method stub
+		Friends fr = new Friends();
+		fr.setfId(id.getId());
+		fr.setUserId(id2);
+		fr.setFprofile(id.getProfile());
+		fr.setFnickname(id.getNicname());
+		fr.setAcceptYn("N");
+		return mDao.addFriends(fr);
 	}
 
 	}

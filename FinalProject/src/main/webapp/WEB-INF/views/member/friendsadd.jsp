@@ -133,7 +133,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 				<c:if test="${not loop }">
 		            <td>
 		            <c:url value="hansolhansol.do" var="url">
-					  <c:param name="id" value="${n.id }" />
+					  <c:param name="id" value="${n }" />
 					</c:url>
 		            <a href="${url}">신청하기</a>
 		            </td>
