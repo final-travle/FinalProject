@@ -36,7 +36,7 @@
                     <p class="btn colorBtn"><a href="friends.do">마이페이지</a></p>
                     </c:if>
                     <div class="userRound">
-                        <p><c:out value="${loginUser.nicname }"/> </p><!-- user nickname 들어갈 부분 -->
+                        <p><c:out value="${loginUser.nickname }"/> </p><!-- user nickname 들어갈 부분 -->
                     </div>
                 </div>
             </div>

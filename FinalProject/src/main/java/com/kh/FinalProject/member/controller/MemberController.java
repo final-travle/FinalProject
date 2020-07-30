@@ -44,7 +44,7 @@ public class MemberController {
 		Member m = new Member(request.getParameter("id"),
 							  request.getParameter("pwd"),
 							  request.getParameter("name"),
-							  request.getParameter("nicname"),
+							  request.getParameter("nickname"),
 							  request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"),
 							  request.getParameter("sex"),
 							  request.getParameter("job"),
@@ -197,8 +197,9 @@ public class MemberController {
 		}
 	   
 	    @RequestMapping("friends.do")
-		public ModelAndView friends(ModelAndView model ,HttpSession session,@RequestParam(value="page",
-							required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
+		public ModelAndView friends(ModelAndView model ,HttpSession session,
+													   @RequestParam(value="page",required=false) Integer page,String noticeSearch,
+													   @RequestParam(value="search", required=false) String search) {
 		
 			Member m = (Member) session.getAttribute("loginUser");
 			

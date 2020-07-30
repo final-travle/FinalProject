@@ -5,7 +5,7 @@
 		<id property="id" column="ID"/>
 		<result property="pwd" column="PWD"/>
 		<result property="name" column="NAME"/>
-		<result property="nicname" column="NICNAME"/>
+		<result property="nickname" column="NICKNAME"/>
 		<result property="birth" column="BIRTH"/>
 		<result property="gender" column="GENDER"/>
 		<result property="job" column="JOB"/>
@@ -14,12 +14,15 @@
 		<result property="withd_yn" column="WITHD_YN"/>
 		<result property="join_date" column="JOIN_DATE"/>
 		<result property="field" column="FIELD"/>
+		<result property="profile" column="PROFILE"/>
 	</resultMap>
 	
 	<resultMap type="Friends" id="friendsResultSet">
 		<id property="fNo" column="FR_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="fId" column="FR_ID"/>
+		<result property="fnickname" column="FR_NICKNAME"/>
+		<result property="fprofile" column="FR_PROFILE"/>
 		<result property="acceptYn" column="ACCEPT_YN"/>
 	</resultMap>
 	
@@ -27,7 +30,7 @@
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES(#{id}, #{pwd}, #{name}, #{nicname}, #{birth},#{gender}, #{job}, #{email},
+		VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{birth},#{gender}, #{job}, #{email},
 				#{phone}, #{withd_yn}, SYSDATE, SYSDATE)
 	</insert>
 	

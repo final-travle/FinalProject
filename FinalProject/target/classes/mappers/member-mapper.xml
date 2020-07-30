@@ -5,22 +5,23 @@
 		<id property="id" column="USER_ID"/>
 		<result property="pwd" column="PWD"/>
 		<result property="name" column="NAME"/>
-		<result property="nicname" column="NICKNAME"/>
+		<result property="nickname" column="NICKNAME"/>
 		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="job" column="JOB"/>
 		<result property="email" column="EMAIL"/>
 		<result property="phone" column="PHONE"/>
-		<result property="gender" column="GENDER"/>	
-		<result property="job" column="JOB"/>
 		<result property="withd_yn" column="WITHD_YN"/>
 		<result property="join_date" column="JOIN_DATE"/>
 		<result property="field" column="FIELD"/>
+		<result property="profile" column="PROFILE"/>
 	</resultMap>
 	
 	
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER
-		VALUES(#{id}, #{pwd}, #{name}, #{nicname}, #{birth}, #{email},#{phone},#{gender}, #{job}
+		VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{birth}, #{email},#{phone},#{gender}, #{job}
 				, #{withd_yn}, SYSDATE, SYSDATE)
 	</insert>
 	

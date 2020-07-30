@@ -229,7 +229,7 @@
        
          <tr>
             <td align="center">${n.name }</td>
-            <td align="center">${n.nicname }</td>
+            <td align="center">${n.nickname }</td>
             <td align="center">${n.gender }</td>
             <td align="center">${n.phone }</td>
             <td align="center">${n.email }</td>

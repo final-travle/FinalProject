@@ -17,7 +17,7 @@ public class Member implements Serializable{
 	private String id;
 	private String pwd;
 	private String name;
-	private String nicname;
+	private String nickname;
 	private String birth;
 	private String gender;
 	private String job;
@@ -26,19 +26,83 @@ public class Member implements Serializable{
 	private String withd_yn;
 	private Date join_date;
 	private Date field;
+	private String profile;
 	
-	
+	private String chatroom_no;
 	
 	public Member() {
 		super();
 	}
-	public Member(String id, String pwd, String name, String nicname, String birth, String gender, String job,
+	
+	
+	public Member(String id, String pwd, String name, String nickname, String birth, String gender, String job,
+			String email, String phone, String withd_yn, Date join_date, Date field, String profile,
+			String chatroom_no) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.nickname = nickname;
+		this.birth = birth;
+		this.gender = gender;
+		this.job = job;
+		this.email = email;
+		this.phone = phone;
+		this.withd_yn = withd_yn;
+		this.join_date = join_date;
+		this.field = field;
+		this.profile = profile;
+		this.chatroom_no = chatroom_no;
+	}
+
+
+	public Member(String profile, String nickname) {
+		super();
+		this.nickname = nickname;
+		this.profile = profile;
+	}
+
+
+	public Member(String id, String pwd, String name, String nickname, String birth, String gender, String job,
+			String email, String phone, String withd_yn, Date join_date, Date field, String profile) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.nickname = nickname;
+		this.birth = birth;
+		this.gender = gender;
+		this.job = job;
+		this.email = email;
+		this.phone = phone;
+		this.withd_yn = withd_yn;
+		this.join_date = join_date;
+		this.field = field;
+		this.profile = profile;
+	}
+	public Member(String id, String pwd, String name, String nickname, String birth, String gender, String job,
+			String email, String phone, String withd_yn, Date join_date, Date field) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.nickname = nickname;
+		this.birth = birth;
+		this.gender = gender;
+		this.job = job;
+		this.email = email;
+		this.phone = phone;
+		this.withd_yn = withd_yn;
+		this.join_date = join_date;
+		this.field = field;
+	}
+	public Member(String id, String pwd, String name, String nickname, String birth, String gender, String job,
 			String email, String phone, String withd_yn) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
 		this.name = name;
-		this.nicname = nicname;
+		this.nickname = nickname;
 		this.birth = birth;
 		this.gender = gender;
 		this.job = job;
@@ -64,11 +128,11 @@ public class Member implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getNicname() {
-		return nicname;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setNicname(String nicname) {
-		this.nicname = nicname;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getBirth() {
 		return birth;
@@ -119,27 +183,25 @@ public class Member implements Serializable{
 	public void setField(Date field) {
 		this.field = field;
 	}
-	public Member(String id, String pwd, String name, String nicname, String birth, String gender, String job,
-			String email, String phone, String withd_yn, Date join_date, Date field) {
-		super();
-		this.id = id;
-		this.pwd = pwd;
-		this.name = name;
-		this.nicname = nicname;
-		this.birth = birth;
-		this.gender = gender;
-		this.job = job;
-		this.email = email;
-		this.phone = phone;
-		this.withd_yn = withd_yn;
-		this.join_date = join_date;
-		this.field = field;
+	public String getProfile() {
+		return profile;
 	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	public String getChatroom_no() {
+		return chatroom_no;
+	}
+	public void setChatroom_no(String chatroom_no) {
+		this.chatroom_no = chatroom_no;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", pwd=" + pwd + ", name=" + name + ", nicname=" + nicname + ", birth=" + birth
+		return "Member [id=" + id + ", pwd=" + pwd + ", name=" + name + ", nickname=" + nickname + ", birth=" + birth
 				+ ", gender=" + gender + ", job=" + job + ", email=" + email + "," + " phone=" + phone
-				+ ", withd_yn=" + withd_yn + ", join_date=" + join_date + ", field=" + field + "]";
+				+ ", withd_yn=" + withd_yn + ", join_date=" + join_date + ", field=" + field + ", profile=" + profile + ",chatroom_no=" + chatroom_no+ "]";
 	}
 	
 	

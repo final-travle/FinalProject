@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatmapper">
+	<resultMap type="Member" id="memberResultSet">
+		<id property="id" column="USER_ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="nickname" column="NICKNAME"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="gender" column="GENDER"/>
+		<result property="job" column="JOB"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="withd_yn" column="WITHD_YN"/>
+		<result property="join_date" column="JOIN_DATE"/>
+		<result property="field" column="FIELD"/>
+		<result property="profile" column="PROFILE"/>
+	</resultMap>
+	
+	<resultMap type="Friends" id="friendsResultSet">
+		<id property="fNo" column="FR_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="fId" column="FR_ID"/>
+		<result property="fnickname" column="FR_NICKNAME"/>
+		<result property="fprofile" column="FR_PROFILE"/>
+		<result property="acceptYn" column="ACCEPT_YN"/>
+	</resultMap>
+	
+	<resultMap type="Chatroom" id="chatroomResultSet">
+		<id property="chatroom_no" column="CR_NO"/>
+		<result property="chatroomname" column="CR_NAME"/>
+		<result property="chatroomdetail" column="CR_DETAIL"/>
+		<result property="creater" column="CR_ID"/>
+		<result property="current_no" column="CR_CURRENT"/>
+		<result property="createdate" column="CR_CREATE_DATE"/>
+	</resultMap>
+	
+	
+	<select id="friendList" parameterType="string" resultMap="friendsResultSet" >
+		SELECT FR_PROFILE, FR_NICKNAME
+		FROM MEMBER
+		JOIN FRIEND_YN ON (FRIEND_YN.USER_ID = MEMBER.USER_ID)
+		WHERE FRIEND_YN.USER_ID = #{id}
+	</select>
+	
+	<select id="chatroomList" resultMap="chatroomResultSet">
+		SELECT *
+  		FROM CHATROOM
+  		ORDER BY CR_NO ASC
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

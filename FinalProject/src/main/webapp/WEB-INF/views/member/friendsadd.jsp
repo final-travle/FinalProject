@@ -220,7 +220,7 @@
          <tr>
             <td align="center">${n.id }</td>
             <td align="center">${n.name }</td>
-            <td align="center">${n.nicname }</td>
+            <td align="center">${n.nickname }</td>
             <td align="center">${n.phone }</td>
             <c:set var="loop_flag" value="false" />
 	            <c:forEach var="nb" items="${allfriends }">

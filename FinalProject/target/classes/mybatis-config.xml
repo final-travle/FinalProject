@@ -11,10 +11,12 @@
 		<typeAlias type="com.kh.FinalProject.member.model.vo.Friends" alias="Friends"/>
 		<typeAlias type="com.kh.FinalProject.member.model.vo.PageInfo" alias="PageInfo"/>
 		<typeAlias type="com.kh.FinalProject.member.model.vo.FriendsPage" alias="FriendsPage"/>
+		<typeAlias type="com.kh.FinalProject.chat.model.vo.Chatroom" alias="Chatroom"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/friends-mapper.xml"/>
+		<mapper resource="/mappers/chat-mapper.xml"/>
 	</mappers>
 </configuration>

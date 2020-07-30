@@ -231,7 +231,7 @@
           <label>닉네임</label>
       </td>
       <td id="inp" class="ltd">
-          <input type="text" id="reference" name="reference" value="${member.nicname}">
+          <input type="text" id="reference" name="reference" value="${member.nickname}">
       </td>
   </tr>
   <tr>

@@ -11,7 +11,13 @@
 <jsp:include page="common/header.jsp" />
    <!-- 메인 컨텐츠 영역 start -->
    
-   
+   <!-- 임시로 만든 버튼 -->
+   <div class="chatSec">
+            <p class="chatBtn" >
+                <a href="javascript:openChat('chat');">지역채팅 바로가기</a>
+            </p>
+        </div>		
+   <!-- 임시로 만든 버튼 -->
    
     <!-- 이미지 슬라이드 영역 -->
     <div class="mainSlide">
@@ -199,11 +205,18 @@
 
         </div><!-- // content end -->
         <div class="chatSec">
-            <p class="chatBtn">
-                <a href="#none">지역채팅 바로가기</a>
+            <p class="chatBtn" >
+                <a href="javascript:openChat('chat');">지역채팅 바로가기</a>
             </p>
         </div>
     </div><!-- // container end -->
+    <script>
+    	function openChat(name){
+    		var url = "friendList.do";
+    		var options = 'top=100, left=300, width=500, height=600, status=no, menubar=no';
+    		window.open(url, name, options);
+    	}
+    </script>
    
    
    
