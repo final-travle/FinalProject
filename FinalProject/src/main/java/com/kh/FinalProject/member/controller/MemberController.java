@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +37,7 @@ import net.sf.json.JSONObject;
 
 
 @Controller
-public class MemberController {
+public class MemberController  {
 	
 	@Autowired
 	private MemberService mService;
@@ -244,6 +246,8 @@ public class MemberController {
 			return "home";
 		}
 	   
+	    
+	    
 	    @RequestMapping("friends.do")
 		public ModelAndView friends(ModelAndView model ,HttpSession session,@RequestParam(value="page",
 							required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
@@ -386,6 +390,8 @@ public class MemberController {
 			
 			System.out.println("aaaa"+al);
 		
+			
+			
 			if(mb != null) {
 				model.addObject("fCount",fCount);
 				model.addObject("listCount",listCount);
@@ -606,5 +612,7 @@ public class MemberController {
 	        		model.addObject("type",a);
     				model.setViewName("/member/adminMemberinfo");
 	            	return model;
-	    	}    
+	    	}
+
+				
 }

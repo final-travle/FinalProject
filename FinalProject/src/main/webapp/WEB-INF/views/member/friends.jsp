@@ -179,10 +179,26 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 				</c:url>
 				<a href="${blistEnd }">[다음]</a>
 			</c:if>
-   
+   			<script>
+   			var cnt =parsetInt(60);
+   			function counter_init(){
+   				tid = setInterval("counter_run()",1000);
+   			}
+   			
+   			function counter_run(){
+   				cnt--;
+   				if(cnt < 0 ){
+   					clearInterval(tid);
+   					self.location = "logout.do";
+   				}
+   			}
+   			</script>
    
    
 </div>
+
+
+
 
 </body>
 </html>

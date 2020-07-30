@@ -89,8 +89,9 @@
 	
 	<insert id="addFriends" parameterType="Friends">
 		INSERT INTO FRIEND_YN
-		VALUES(3,#{userId}, #{fId},#{acceptYn},{fnickname},{fprofile})
+		VALUES(3,#{userId}, #{fId},#{acceptYn},#{fnickname},#{fprofile})
 	</insert>
+	
 	<select id="friendsadd" parameterType="Friends" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
