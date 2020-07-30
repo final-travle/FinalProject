@@ -269,17 +269,17 @@ public class MemberController  {
 			System.out.println("listCount"+listCount);
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 			System.out.println(pi);
-			ArrayList<Friends> fal = mService.realfriends(m.getId(),Search,pi); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴
-			ArrayList<String> al = new ArrayList<String>();//목록중 친구이름을 다뽑아옴
+			ArrayList<Friends> fal = mService.realfriends(m.getId(),Search,pi); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
+			ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 			for(int i=0;i<fal.size();i++) {
-				if(fal.get(i).getfId().equals(m.getId())) {
+				if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
 					al.add(fal.get(i).getUserId());
-				}else if(fal.get(i).getUserId().equals(m.getId())) {
+				}else if(fal.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
 					al.add(fal.get(i).getfId());
 				}
 			}
 			System.out.println("aaaa"+al);
-			ArrayList<Member> mal =new ArrayList<Member>();
+			ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
 			
 			for(int i =0;i<al.size();i++) {
 				mal.add(mService.friendsInfo(al.get(i)));
