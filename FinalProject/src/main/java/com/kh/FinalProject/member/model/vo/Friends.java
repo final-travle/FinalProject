@@ -4,18 +4,14 @@ public class Friends {
 	private int fNo;
 	private String userId;
 	private String fId;
-	private String fnickname;
-	private String fprofile;
 	private String acceptYn;
 	
 	public Friends() {}
-	public Friends(int fNo, String userId, String fId, String fnickname, String fprofile, String acceptYn) {
+	public Friends(int fNo, String userId, String fId, String acceptYn) {
 		super();
 		this.fNo = fNo;
 		this.userId = userId;
 		this.fId = fId;
-		this.fnickname = fnickname;
-		this.fprofile = fprofile;
 		this.acceptYn = acceptYn;
 	}
 	public int getfNo() {
@@ -36,18 +32,6 @@ public class Friends {
 	public void setfId(String fId) {
 		this.fId = fId;
 	}
-	public String getFnickname() {
-		return fnickname;
-	}
-	public void setFnickname(String fnickname) {
-		this.fnickname = fnickname;
-	}
-	public String getFprofile() {
-		return fprofile;
-	}
-	public void setFprofile(String fprofile) {
-		this.fprofile = fprofile;
-	}
 	public String getAcceptYn() {
 		return acceptYn;
 	}
@@ -56,10 +40,9 @@ public class Friends {
 	}
 	@Override
 	public String toString() {
-		return "Friends [fNo=" + fNo + ", userId=" + userId + ", fId=" + fId + ", fnickname=" + fnickname
-				+ ", fprofile=" + fprofile + ", acceptYn=" + acceptYn + "]";
+		return "Friends [fNo=" + fNo + ", userId=" + userId + ", fId=" + fId + ", acceptYn=" + acceptYn + "]";
 	}
-	
+
 	
 	
 }

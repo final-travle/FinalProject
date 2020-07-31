@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.member.model.vo.PageInfo;
+import com.kh.FinalProject.member.model.vo.Time;
 import com.kh.FinalProject.member.model.vo.Ttype;
 
 public interface MemberService {
@@ -17,7 +18,7 @@ public interface MemberService {
 
 	Member searchId(Member m);
 
-	int change(Member m);
+	int change(Member m, Member mb);
 
 	int checkIdDup(String id);
 
@@ -30,8 +31,6 @@ public interface MemberService {
 	Member friendsInfo(String string);
 
 	ArrayList<Member> allMember(String string);
-
-	int addFriends(String id, String string);
 
 	ArrayList<Friends> friendsadd(String string, String id);
 
@@ -50,5 +49,41 @@ public interface MemberService {
 	ArrayList<Friends> friendsacc(String id, String string);
 
 	int dltfriends(String id, String string);
+
+	int dltmember(String id, String pwd);
+
+	int fCount(String id);
+
+	ArrayList<Friends> realfriends(String id, String search, PageInfo pi);
+
+	int loginTime(String id);
+
+	int setloginTime(String id);
+
+	Integer friendsTime(String id);
+
+	void changeTtype(String parameter, String string, Ttype tp);
+
+	void deleteTtype(String id);
+
+	int refusefriends(String id, String id2);
+
+	int logoutTime(String id);
+
+	int setlogoutTime(String id);
+
+	Integer friendsLoginTime(String id);
+
+	int adminMemberDelete(String id);
+
+	void dltmemberfriends(String id);
+
+	void dltTime(String id);
+
+	Member memberinfo(String id);
+
+	ArrayList<String> memberinfoType(String id);
+
+	int addFriends(Member id, String id2);
 
 }

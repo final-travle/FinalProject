@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title></title>
-   
-   
 <style>
 #hansol{width: 4000px;}
 body {font-family: "Lato", sans-serif;}
@@ -42,12 +40,11 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 @media screen and (max-height: 450px) {.sidenav {padding-top: 15px;}.sidenav a {font-size: 18px;}}
 </style>
 
-
 <body>
 <div id="hansol">
 <hr>
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
-<h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
+<h2>친구 : <span style="color: orange;"> ${fCount}</span>명<br>
 글 수 <span style="color: orange;"> 15</span>개</h2>
 <hr>
 </div>
@@ -79,15 +76,16 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
     <a href="mypageDelete.do">회원탈퇴</a>
     <hr>
     </c:if>
-  </div>   
-    <form method="post" action="membersearchId.do">
-    <select name="search">
-    <option value="">직업선택</option>
+  </div>
+   
+   <form method="post" action="adminMember.do">
+   <select name="search">
+    <option value="">이름선택</option>
     <option value="name">이름</option>
     <option value="nicname">별명</option>
     <option value="sex">성별</option>
     <option value="birth">생년월일</option>
-</select>
+	</select>
             <input type="text" id="search" name="noticeSearch"  placeholder="검색어를 입력해주세요"> <input type="submit" id="searchBtn" value="SEARCH">
             
             
@@ -96,41 +94,78 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
                         <th>NO</th> <th>제목</th> <th>작성자</th> <th>날짜</th> <th>친구추가</th>
                     </tr>
 
-			  <c:if test="${empty falll }">
+            <c:if test="${empty allmember  }">
             <tr>
             
             <td>리스트가없습니다</td>
             </tr>
-            </c:if>
-            <c:if test="${not empty falll}">          
-            <c:forEach var="n" items="${falll }">
-           
-            <c:set var="Y" value="Y" />
+            </c:if>      
+            <c:forEach var="n" items="${allmember }">
+            <c:set var="loop" value="false" />
            
          <tr>
-         <td align="center">${n.userId }</td>
-            <td align="center">${n.fId }</td>
-	            
-	            
-					
-					
-					<c:url value="accfriends.do" var="url">
-					  <c:param name="id" value="${n.userId }" />
+            <td align="center">
+            <c:url value="adminMemberinfo.do" var="url2">
+				<c:param name="id" value="${n.id }" />
+			</c:url>
+           <a href="${url2}"> ${n.id }</a></td>
+            <td align="center">${n.name }</td>
+            <td align="center">${n.nicname }</td>
+            <td align="center">${n.phone }</td>
+           <td>
+		            <c:url value="adminMemberDelete.do" var="url">
+					  <c:param name="id" value="${n.id }" />
 					</c:url>
-					<c:url value="dltaccfriends.do" var="urldt">
-					  <c:param name="id" value="${n.userId }" />
-					</c:url>
-					<td>
-		            <a href="${url}">승낙하기</a></td>
-		            <td><a href="${urldt}">거절하기</a></td>
-		            
-		            
-					
+		            <a href="${url}">삭제하기</a>
+		            </td>
+				
         </tr>   
       </c:forEach>
-                </c:if>   
+                   
             </table>
-            </form> 
+            </form>
+            
+       <div id="paging" align="center" width="600" border="1">
+   <!-- [이전] -->
+			<c:if test="${pi.currentPage eq 1 }">
+				[이전]&nbsp;
+			</c:if>
+			
+			<c:if test="${pi.currentPage gt 1 }">
+				<c:url var="blistBack" value="adminMember.do">
+					<c:param name="page" value="${pi.currentPage -1 }"/>
+					<c:param name="search" value="${search}"/>
+				</c:url>
+				<a href="${blistBack }">[이전]</a>
+			</c:if>
+			<!-- [번호들] -->
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+				<c:if test="${p eq pi.currentPage }">
+					<font color="red" size="4"><b>[${p }]</b></font>
+				</c:if>
+				
+				<c:if test="${p ne pi.currentPage }">
+					<c:url var="blistCheck" value="adminMember.do">
+						<c:param name="page" value="${p }"/>
+						<c:param name="search" value="${search}"/>
+					</c:url>
+					<a href="${blistCheck }">${p }</a>
+				</c:if>
+			</c:forEach>
+			
+			<!-- [다음] -->
+			<c:if test="${pi.currentPage eq pi.maxPage }">
+				&nbsp;[다음]
+			</c:if>
+			
+			<c:if test="${pi.currentPage lt pi.maxPage }">
+				<c:url var="blistEnd" value="adminMember.do">
+					<c:param name="page" value="${pi.currentPage + 1 }"/>
+					<c:param name="search" value="${search}"/>
+				</c:url>
+				<a href="${blistEnd }">[다음]</a>
+			</c:if>
+    </div>
    <script>
 
    </script>

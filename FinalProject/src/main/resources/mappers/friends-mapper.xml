@@ -21,8 +21,6 @@
 		<id property="fNo" column="FR_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="fId" column="FR_ID"/>
-		<result property="fnickname" column="FR_NICKNAME"/>
-		<result property="fprofile" column="FR_PROFILE"/>
 		<result property="acceptYn" column="ACCEPT_YN"/>
 	</resultMap>
 	
@@ -61,10 +59,25 @@
 	<select id="friends" parameterType="string" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
-		WHERE (FR_ID=#{id} OR USER_ID=#{id}) AND ACCEPT_YN ='Y'
+		WHERE (FR_ID=#{id} OR USER_ID=#{id})
 	</select>
 	
 	<select id="friends2" parameterType="FriendsPage" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId})  		
+    AND (USER_ID LIKE '%'||#{search}||'%' OR FR_ID LIKE '%'||#{search}||'%')
+
+	</select>
+	
+	
+	<select id="realfriends" parameterType="string" resultMap="friendsResultSet" >
+		SELECT *
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{id} OR USER_ID=#{id}) AND ACCEPT_YN ='Y' 
+	</select>
+	
+	<select id="realfriends2" parameterType="FriendsPage" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
 		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN ='Y' 		
@@ -72,10 +85,14 @@
 
 	</select>
 	
+	
+	
+	
 	<insert id="addFriends" parameterType="Friends">
 		INSERT INTO FRIEND_YN
 		VALUES(3,#{userId}, #{fId},#{acceptYn})
 	</insert>
+	
 	<select id="friendsadd" parameterType="Friends" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
@@ -96,6 +113,9 @@
 		FROM FRIEND_YN
 		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN='Y'
 	</select>
+	
+	
+	
 	<select id="getListCount2" parameterType="FriendsPage" resultType="int">
 		SELECT COUNT(*)
 		FROM FRIEND_YN
@@ -111,9 +131,33 @@
 		WHERE FR_ID=#{string} AND ACCEPT_YN ='N'
 	</select>
 	
+	<select id="fCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN ='Y'
+	</select>
+	
 	
 	<delete id="dltfriends" parameterType="FriendsPage">
 	DELETE FROM FRIEND_YN
-	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId}
+	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId} AND USER_ID=#{fId}
 	</delete>
+	
+	<delete id="dltmemberfriends" parameterType="string">
+	DELETE FROM FRIEND_YN
+	WHERE FR_ID= #{id} OR USER_ID=#{id}
+	</delete>
+	
+	
+	
+	<delete id="refusefriends" parameterType="FriendsPage">
+	DELETE FROM FRIEND_YN
+	WHERE ACCEPT_YN ='Y' AND FR_ID= #{userId} AND USER_ID=#{fId}
+	</delete>
+	
+	<delete id="dltTime" parameterType="string">
+	DELETE FROM TIME
+	WHERE USER_ID=#{id}
+	</delete>
+	
 </mapper>

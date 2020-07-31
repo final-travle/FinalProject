@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,7 +91,7 @@
         <br>
         
         
-        <form id="loginform" method="post" action="mlogin.do">
+        <form id="loginform" method="post" name="loginInfo" action="mlogin.do" onsubmit="return checkValue()">
             <h2 id="h2">Login</h2>
             <hr>
             <br>
@@ -120,7 +121,7 @@
             </div>
             <br>
             <br>
-          <!--    <input type="button" id="memberJoin" value="회원가입">-->
+             <!-- <input type="button" id="klogin" value="klog  -->
             <br>
             <br>
             <hr>
@@ -132,16 +133,13 @@
                 <br>
                 <br>
                 <br>
-                <label style="color:lightgray;">카카오 아이디 로그인</label>
+                <a href="kakaologin.do">카카오</a>
                 	
             </div>
-
-        </form>
-        <script>
-      
             
-           		 
-           		
+      		
+        </form>
+        <script>       		
             	// 아이디
                 $("#userId").change(function(){
                     var value = $("#userId").val();
@@ -167,8 +165,10 @@
                 	location.href="<%=request.getContextPath()%>/views/member/memberJoin.jsp";
                 });
                 
-            	
-            	
+                $("#klogin").click(function(){
+                	location.href="<%=request.getContextPath()%>/views/member/kLogin.jsp";
+                });
+                
             	
             	
             	
@@ -226,6 +226,25 @@
             }
             // 아이디 저장 코드 end
             
+            
+         function checkValue()    {
+            inputForm = eval("document.loginInfo");
+            if(!inputForm.id.value)
+            {
+                alert("아이디를 입력하세요");    
+                inputForm.id.focus();
+                return false;
+            }
+            if(!inputForm.pwd.value)
+            {
+                alert("비밀번호를 입력하세요");    
+                inputForm.pwd.focus();
+                return false;
+            }
+        }
+ }
+
+
         </script>
         
        

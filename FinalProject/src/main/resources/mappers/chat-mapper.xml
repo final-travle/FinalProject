@@ -21,8 +21,6 @@
 		<id property="fNo" column="FR_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="fId" column="FR_ID"/>
-		<result property="fnickname" column="FR_NICKNAME"/>
-		<result property="fprofile" column="FR_PROFILE"/>
 		<result property="acceptYn" column="ACCEPT_YN"/>
 	</resultMap>
 	
