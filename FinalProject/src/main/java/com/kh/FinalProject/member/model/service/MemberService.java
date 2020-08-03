@@ -84,6 +84,10 @@ public interface MemberService {
 
 	ArrayList<String> memberinfoType(String id);
 
-	int addFriends(Member id, String id2);
+	int addFriends(String id, String id2);
+
+	Member search(String member);
+
+	int membercount(Member m);
 
 }

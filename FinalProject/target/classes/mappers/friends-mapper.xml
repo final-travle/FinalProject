@@ -71,13 +71,13 @@
 	</select>
 	
 	
-	<select id="realfriends" parameterType="string" resultMap="friendsResultSet" >
+	<select id="realfriends2" parameterType="string" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
 		WHERE (FR_ID=#{id} OR USER_ID=#{id}) AND ACCEPT_YN ='Y' 
 	</select>
 	
-	<select id="realfriends2" parameterType="FriendsPage" resultMap="friendsResultSet" >
+	<select id="realfriends" parameterType="FriendsPage" resultMap="friendsResultSet" >
 		SELECT *
 		FROM FRIEND_YN
 		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN ='Y' 		

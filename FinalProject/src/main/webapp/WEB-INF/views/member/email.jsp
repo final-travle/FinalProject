@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -43,28 +44,21 @@
      <br>
 
 	<div class="cont">
-		<form method="post" action="auth.do">
-            <h2>비밀번호 찾기</h2>
+		<form method="post" action="join_injeung.do">
+            <h2>이메일인증</h2>
             <hr style="height: 5px; background: black;">
             <br>
-            <div>아이디 입력</div>
-            <div style="font-size: 12px; color: darkgray;">비밀번호를 찾고자 하는 아이디를 입력해 주세요.</div>
+            <div>코드 입력</div>
+            <div style="font-size: 12px; color: darkgray;">인증코드를 적어주세요.</div> 제한시간 : <B><span id="timer"></span></B> <br>
             <br>
-            <input type="text" id="userId" name="id" style="width: 600px; height: 30px; border-radius: 8px; " placeholder="아이디를 입력해주세요">
-            <br>     
-            <div>이메일 입력</div>
-            <div style="font-size: 12px; color: darkgray;">비밀번호를 찾고자 하는 이메일을 입력해 주세요.</div>
-            <br>
-            <input type="text" id="userEmail" name="email" style="width: 600px; height: 30px; border-radius: 8px; " placeholder="이메일을 입력해주세요">
-            <br>
-            
-            
-            
-            
+            <input type="text" id="userId" name="email_injeung" style="width: 600px; height: 30px; border-radius: 8px; " placeholder="아이디를 입력해주세요">
+            <br>    
+            <input type="hidden" name="dice" value=${dice } />
+  			<input type="hidden" name="member" value=${member.id } />
             <br>
             <div style="font-size: 12px; color: darkgrey">
             	아이디를 모르시나요?
-            <a href="searchId.do">아이디 찾기</a>
+            <a href="searchPwd.do">재전송</a>
             </div>
             <br>
             <hr>
@@ -76,15 +70,47 @@
 
 	<script>
 	
-		// 아이디 
-        /*  $("#userid").change(function(){
-                    var value = $("#userid").val();
-                    var reg = /^[a-z0-9]{4,12}$/;
-                    if(!reg.test(value)){
-                        alert("영문자와 숫자로 4글자 이상 12글자 이하여야 합니다.");
-                        $("#userid").focus().val('');
-                    }
-         }); */
+		var iSecond;
+		var timerchecker =null;
+		
+		window.onload= function(){
+			fncClearTime();
+			initTimer();
+		}
+		
+		function fncClearTime(){
+			iSecond=300;
+		}
+		
+		Lpad = function(str,len){
+			str = str+"";
+			while(str.length< len){
+				str="0"+str;
+			}
+			return str;
+		}
+		
+		initTimer = function(){
+			var timer = document.getElementById("timer");
+			rMinute = parseInt(iSecond / 60);
+			rMinute = rMinute % 60;
+			rSecond = iSecond % 60;
+			if(iSecond > 0){
+				timer.innerHTML = "&nbsp;"+Lpad(rMinute,2)+"분" +Lpad(rSecond,2)+"초";
+				iSecond--;
+				timerchecker = setTimeout("initTimer()",1000);
+			}else{
+				TimeOver();
+			}
+		
+		}
+		function TimeOver(){
+			clearTimeout(timerchecker);
+			alert('시간이 초과되었습니다.');
+			window.history.go(-1);
+		}
+		
+	
          </script>
 		<%-- // 비밀번호 변경 성공 시
          $(function(){

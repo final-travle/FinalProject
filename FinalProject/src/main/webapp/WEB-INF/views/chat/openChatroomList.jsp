@@ -286,68 +286,6 @@ input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
-.myprofile_detail_modal {
-  position:absolute;
-  display:block;
-  z-index:92;
-  width:320px;
-  height:350px;
-  top:20%;
-  left:20%;
- /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
- background:white;
-  border:4px solid black;
-  overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
-  visibility: collapse;
-  opacity: 1;
-  filter: alpha(opacity=60);
-  -webkit-transition: all .0s ease;
-  transition: all .0s ease;
-  -webkit-transform: scale(0, 0);
-  -ms-transform: scale(0, 0);
-  transform: scale(0, 0);
-}
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
-input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
-  visibility: visible;
-  -webkit-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-.friend_profile_detail {
-  position:absolute;
-  display:block;
-  z-index:92;
-  width:320px;
-  height:350px;
-  top:20%;
-  left:20%;
- /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
- background:white;
-  border:4px solid black;
-  overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
-  visibility: collapse;
-  opacity: 1;
-  filter: alpha(opacity=60);
-  -webkit-transition: all .0s ease;
-  transition: all .0s ease;
-  -webkit-transform: scale(0, 0);
-  -ms-transform: scale(0, 0);
-  transform: scale(0, 0);
-}
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
-input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
-  visibility: visible;
-  -webkit-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-
-
 #makeopenchat_modal{
 	display:none;
 }
@@ -422,68 +360,39 @@ textarea:focus{
 	
 	<img src="${pageContext.request.contextPath}/resources/images/friendlist.png"  
 	style="height:60px; width:60px; margin-left:5px; margin-top:70px;cursor:pointer;"
-	onclick="openFriendListModal();" title="친구">
+	onclick="openFriendListModal();">
 	
 	
 	<img src="${pageContext.request.contextPath}/resources/images/chatroomlist.png"  
 	style="height:40px; width:40px; margin-left:15px; margin-top:20px;cursor:pointer;"
-	onclick="openChatroomListModal();" title="1대1채팅">
+	onclick="openChatroomListModal();">
 	
 	
 	<img src="${pageContext.request.contextPath}/resources/images/openchatroomlist.png"  
 	style="height:60px; width:60px; margin-left:5px; margin-top:20px;cursor:pointer;"
-	onclick="openOpenChatroomListModal();" title="오픈채팅">
+	onclick="openOpenChatroomListModal();">
 	
 </div>
 
-<input type="checkbox" id="head_modal1" checked>
+<input type="checkbox" id="head_modal1">
 <div class="friendmodalheader">
  		<h1 style="margin-top:30px; margin-left:10px;">친구</h1>
   	  <input type="text" id="friendSearch"  placeholder="친구 검색">
   	  <br>
   	  <div id="myprofile">
   	  <c:if test="${empty loginUser.profile }">
-  	  <img src="${pageContext.request.contextPath}/resources/images/noprofile.png"  onclick="myprofile_detail();"
-  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
+  	  <img src="${pageContext.request.contextPath}/resources/images/noprofile.png" 
+  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;">
   	  </c:if>
   	  <c:if test="${!empty loginUser.profile }">
-  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" onclick="myprofile_detail();"
-  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
+  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" 
+  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;">
   	  	</c:if>
   	  	<p style="font-size:20px;margin-left:15px;float:left">${loginUser.nickname}</p>
   	  </div>
  </div>
- <input type="checkbox" id="myprofile_detail_modal">
- <div class="myprofile_detail_modal">
- 	<c:if test="${empty loginUser.profile }">
-  	  <img src="${pageContext.request.contextPath}/resources/images/noprofile.png"
-  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
-  	  </c:if>
-  	  <c:if test="${!empty loginUser.profile }">
-  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"
-  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
-  	  	</c:if>
-  	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png"
-  	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
-  	  <form action ="updateprofile.do" method="post" enctype="multipart/form-data">
-	  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
-	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;" onclick="updateprofile();">
-  	  </form>
- </div>
  
- <script>
- 	function myprofile_detail(){
- 		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", true);	
- 		$("#myprofile_detail_modal").prop("checked", true);
- 	}
- 	function close_myprofile_detail(){
- 		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", false);	
- 		$("#myprofile_detail_modal").prop("checked", false);
- 	}
- </script>
- 
- 
- <input type="checkbox" id="head_modal2">
+ <input type="checkbox" id="head_modal2" checked>
  <div class="chatmodalheader">
  <table style="width:100%">
  <tr>
@@ -494,7 +403,7 @@ textarea:focus{
  	
  	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
  	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
- 	onclick="makeOpenChatroom();" title="새로운 오픈채팅">
+ 	onclick="makeOpenChatroom();">
  	</td>
  	</tr>
  	</table>
@@ -566,7 +475,7 @@ textarea:focus{
  
  
 
-<input type="checkbox" id="modal1" checked>
+<input type="checkbox" id="modal1">
 <div class="friend_modal">
 
 	<table>
@@ -575,14 +484,12 @@ textarea:focus{
 			<tr>
 				<td align="center">
 				<c:if test="${empty friendList.profile }">
-				<img src="${pageContext.request.contextPath}/resources/images/noprofile.png"  id="friend_profile"
-				class="friend_profile"
-				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;cursor:pointer;">
+				<img src="${pageContext.request.contextPath}/resources/images/noprofile.png" 
+				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;">
 				</c:if>
 				<c:if test="${!empty friendList.profile }">
-				<img src="${pageContext.request.contextPath}/resources/profile/${friendList.profile}" id="friend_profile"
-				class="friend_profile"
-				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;cursor:pointer">
+				<img src="${pageContext.request.contextPath}/resources/profile/${friendList.profile}" 
+				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;">
 				</c:if>
 				</td>
 				<td align="left"><p style="font-size:20px;margin-left:10px;">${friendList.nickname}</p></td>
@@ -592,45 +499,6 @@ textarea:focus{
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
-<script>
- 		$(function(){
- 			$(".friend_profile").click(function(){
- 				var img = $(this).attr("src");
- 				var friend_profile = img.substring(img.lastIndexOf("/")+1);
- 				console.log("이미지 경로 : " + img);
- 				console.log("이미지 이름 : " + friend_profile);
- 				$(".friendsprofile_detail").attr("src",img);
- 				friend_profile_detail();
- 			})
- 		})
- 	</script>
-
-<input type="checkbox" id="friend_profile_detail">
- <div class="friend_profile_detail"> 
- 	
-	<img class="friendsprofile_detail" src="" 
-	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
- 	
-  	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png"
-  	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_friend_profile_detail();">
-  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
-  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;">
- </div>
- 
- <script>
- 	function friend_profile_detail(){
- 		$("input:checkbox[id='friend_profile_detail']").prop("checked", true);	
- 		$("#friend_profile_detail").prop("checked", true);
- 	}
- 	function close_friend_profile_detail(){
- 		$("input:checkbox[id='friend_profile_detail']").prop("checked", false);	
- 		$("#friend_profile_detail").prop("checked", false);
- 	}
- 	
- 	$('#friend_profile').click(function(){
- 	   $(this).attr
- 	});
- </script>
 
 <input type="checkbox" id="modal2">
 <div class="chatroom_modal">
@@ -640,7 +508,7 @@ textarea:focus{
 	<br><br><br><br>
 </div>
 
-<input type="checkbox" id="modal3">
+<input type="checkbox" id="modal3" checked>
 <div class="openchatroom_modal">
 	<div class="container">
 	
