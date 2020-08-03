@@ -455,19 +455,21 @@ textarea:focus{
  </div>
  <input type="checkbox" id="myprofile_detail_modal">
  <div class="myprofile_detail_modal">
- 	<c:if test="${empty loginUser.profile }">
-  	  <img src="${pageContext.request.contextPath}/resources/images/noprofile.png"
+ 
+  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"  class="current_myProfile"
   	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
-  	  </c:if>
-  	  <c:if test="${!empty loginUser.profile }">
-  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"
-  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
-  	  	</c:if>
+  	  	
   	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png"
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
-  	  <form action ="updateprofile.do" method="post" enctype="multipart/form-data">
-	  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
-	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;" onclick="updateprofile();">
+  	  
+  	  <label for="update_myprofile">
+  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
+	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;">
+	  </label>
+  	  <form id="updateProfileForm" action ="updateprofile.do" method="post" enctype="multipart/form-data">
+  	  
+	  	  <input id="update_myprofile" type="file" style="display:none;" accept="image/*">
+	  	  
   	  </form>
  </div>
  
@@ -477,10 +479,35 @@ textarea:focus{
  		$("#myprofile_detail_modal").prop("checked", true);
  	}
  	function close_myprofile_detail(){
+ 		
+ 		$(".current_myProfile").attr("src","${pageContext.request.contextPath}/resources/profile/${loginUser.profile}");
+ 		
  		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", false);	
  		$("#myprofile_detail_modal").prop("checked", false);
  	}
+ 	
+ 	function updateprofile_submit(){
+ 		$("#updateProfileForm").submit();
+ 	}
  </script>
+ <script>
+ function readURL(input){
+	 if(input.files&&input.files[0]){
+		 var reader = new FileReader();
+		 reader.onload = function(e){
+			 $(".current_myProfile").attr("src",e.target.result);
+			 console.log(e.target.result);
+		 }
+		 
+		 reader.readAsDataURL(input.files[0]);
+	 }
+ }
+ $("#update_myprofile").change(function(){
+	 readURL(this);
+ });
+ </script>
+ 
+ 
  
  
  <input type="checkbox" id="head_modal2">
@@ -574,16 +601,11 @@ textarea:focus{
 		<c:forEach var="friendList" items="${friendList }">
 			<tr>
 				<td align="center">
-				<c:if test="${empty friendList.profile }">
-				<img src="${pageContext.request.contextPath}/resources/images/noprofile.png"  id="friend_profile"
-				class="friend_profile"
-				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;cursor:pointer;">
-				</c:if>
-				<c:if test="${!empty friendList.profile }">
+				
 				<img src="${pageContext.request.contextPath}/resources/profile/${friendList.profile}" id="friend_profile"
 				class="friend_profile"
 				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;cursor:pointer">
-				</c:if>
+				
 				</td>
 				<td align="left"><p style="font-size:20px;margin-left:10px;">${friendList.nickname}</p></td>
 			</tr>
