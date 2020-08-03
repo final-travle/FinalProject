@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="travelMapper">
+	<resultMap type="Board" id="boardResultSet">
+		<id property="postNo" column="POST_NO"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="thumbnail" column="THUMBNAIL" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="postContents" column="POST_CONTENTS" />
+		<result property="hits" column="HITS" />
+		<result property="wirteDate" column="WRITE_DATE" />
+		<result property="postDelYn" column="POST_DEL_YN" />
+		<result property="FileName" column="FILE_NAME" />
+	</resultMap>
+
+	<resultMap type="Tag" id="tagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+	
+	</resultMap>
+
+
+
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_DEL_YN = 'N'
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<insert id="insertPlanB" parameterType="Board">
+		INSERT INTO POST VALUES (
+		'3'
+		, SEQ_MAP.NEXTVAL
+		, NULL
+		, #{userId}
+		, #{title}
+		, NULL
+		, 0
+		, SYSDATE
+		, 'N'
+		, NULL
+		)
+	</insert>
+	
+	<insert id="insertLT">
+		INSERT INTO MAP_BOARD VALUES(
+		'3'
+		, SEQ_MAP.CURRVAL
+		, 0
+		, 0
+		)
+	</insert>
+	
+	<insert id="insertDay" parameterType="_int">
+		
+		INSERT INTO MAP_INFO VALUES(
+		#{i}
+		, '3'
+		, SEQ_MAP.CURRVAL
+		)
+	</insert>
+	
+	<insert id="insertPoint" parameterType="Travel">
+		INSERT INTO TRAVEL VALUES(
+		#{tCode}
+		, '3'
+		, SEQ_MAP.CURRVAL
+		, #{night}
+		, #{tName}
+		, #{txpoint}
+		, #{typoint}
+		)
+	</insert>
+	
+	<select id="getTagList" resultMap="tagResultSet">
+		SELECT TAG_NAME, TAG_TYPE
+		FROM TAG
+	</select>
+	
+	<insert id="insertTag" parameterType="Tag">
+		INSERT INTO POST_TAG VALUES (
+		#{tagType}
+		, #{tagName}
+		, '3'
+		, SEQ_MAP.CURRVAL
+		)
+	</insert>
+	
+</mapper>
