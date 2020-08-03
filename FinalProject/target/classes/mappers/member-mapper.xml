@@ -32,6 +32,23 @@
 		WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
 	</select>
 	
+	<select id="search" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_ID=#{member}
+	</select>
+	
+	
+	<select id="membercount" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID=#{id} AND EMAIL = #{email}
+	</select>
+	
+	
+	
+	
+	
 	<select id="searchPwd" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER

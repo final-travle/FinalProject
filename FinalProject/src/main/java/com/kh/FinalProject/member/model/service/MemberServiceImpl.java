@@ -404,10 +404,22 @@ public class MemberServiceImpl implements MemberService {
 		Friends fr = new Friends();
 		fr.setfId(id.getId());
 		fr.setUserId(id2);
-		fr.setFprofile(id.getProfile());
-		fr.setFnickname(id.getNicname());
 		fr.setAcceptYn("N");
 		return mDao.addFriends(fr);
+	}
+
+
+	@Override
+	public Member search(String member) {
+		// TODO Auto-generated method stub
+		return mDao.search(member);
+	}
+
+
+	@Override
+	public int membercount(Member m) {
+		// TODO Auto-generated method stub
+		return mDao.membercount(m);
 	}
 
 	}

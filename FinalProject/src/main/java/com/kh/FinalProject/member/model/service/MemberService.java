@@ -86,4 +86,8 @@ public interface MemberService {
 
 	int addFriends(Member id, String id2);
 
+	Member search(String member);
+
+	int membercount(Member m);
+
 }
