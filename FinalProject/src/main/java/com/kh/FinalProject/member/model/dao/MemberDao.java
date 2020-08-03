@@ -252,6 +252,16 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.memberinfoType",id);
 	}
+
+	public Member search(String member) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.search",member);
+	}
+
+	public int membercount(Member m) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.membercount",m);
+	}
 	
 	
 }

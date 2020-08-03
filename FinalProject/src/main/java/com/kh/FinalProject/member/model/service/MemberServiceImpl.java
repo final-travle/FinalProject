@@ -408,6 +408,20 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.addFriends(fr);
 	}
 
+
+	@Override
+	public Member search(String member) {
+		// TODO Auto-generated method stub
+		return mDao.search(member);
+	}
+
+
+	@Override
+	public int membercount(Member m) {
+		// TODO Auto-generated method stub
+		return mDao.membercount(m);
+	}
+
 	}
 
 

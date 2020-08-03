@@ -467,7 +467,7 @@ textarea:focus{
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
   	  <form action ="updateprofile.do" method="post" enctype="multipart/form-data">
 	  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
-	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;" onclick="updateprofile.do">
+	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;" onclick="updateprofile();">
   	  </form>
  </div>
  
