@@ -50,6 +50,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 <div id="hansol">
 <hr>
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
+<button type="button" onclick="location.href='home.do'">메인으로</button>
 <h2>친구 : <span style="color: orange;"> ${fCount}</span>명<br>
 글 수 <span style="color: orange;"> 15</span>개</h2>
 <hr>

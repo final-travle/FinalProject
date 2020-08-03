@@ -272,6 +272,7 @@ public class MemberController  {
 			System.out.println("listCount"+listCount);
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 			System.out.println(pi);
+			
 			ArrayList<Friends> fal = mService.realfriends(m.getId(),Search,pi); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 			ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 			for(int i=0;i<fal.size();i++) {
@@ -408,7 +409,7 @@ public class MemberController  {
 	    
 	    
 	        @RequestMapping("hansolhansol.do")
-	    		public String hansolhansol(ModelAndView model,HttpServletResponse response,HttpSession session,Member id) throws IOException {
+	    		public String hansolhansol(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
 	    			//받아온 아이디가 상대쪽아이디
 	    			Member m = (Member) session.getAttribute("loginUser");
 					System.out.println(id);

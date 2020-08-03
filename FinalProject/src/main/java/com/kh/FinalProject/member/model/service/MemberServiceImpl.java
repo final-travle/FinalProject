@@ -399,13 +399,11 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int addFriends(Member id, String id2) {
+	public int addFriends(String id, String id2) {
 		// TODO Auto-generated method stub
 		Friends fr = new Friends();
-		fr.setfId(id.getId());
+		fr.setfId(id);
 		fr.setUserId(id2);
-		fr.setFprofile(id.getProfile());
-		fr.setFnickname(id.getNicname());
 		fr.setAcceptYn("N");
 		return mDao.addFriends(fr);
 	}

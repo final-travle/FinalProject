@@ -123,7 +123,7 @@
 	
 	<insert id="setloginTime" parameterType="string">
 		INSERT INTO TIME
-		VALUES(#{id},TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),0) 
+		VALUES(#{id},TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')) 
 	</insert>
 	
 	<update id="logoutTime" parameterType="string" >

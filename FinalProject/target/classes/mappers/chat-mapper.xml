@@ -35,10 +35,15 @@
 	
 	
 	<select id="friendList" parameterType="string" resultMap="friendsResultSet" >
-		SELECT FR_PROFILE, FR_NICKNAME
+		SELECT *
+		FROM FRIEND_YN
+		WHERE (FR_ID=#{id} OR USER_ID=#{id}) AND ACCEPT_YN ='Y' 
+	</select>
+	
+	<select id="friendsInfo" parameterType="string" resultMap="memberResultSet">
+		SELECT *
 		FROM MEMBER
-		JOIN FRIEND_YN ON (FRIEND_YN.USER_ID = MEMBER.USER_ID)
-		WHERE FRIEND_YN.USER_ID = #{id}
+		WHERE USER_ID=#{string} AND WITHD_YN='N'
 	</select>
 	
 	<select id="chatroomList" resultMap="chatroomResultSet">
@@ -46,6 +51,23 @@
   		FROM CHATROOM
   		ORDER BY CR_NO ASC
 	</select>
+	
+	<insert id="makeOpenChatroom" parameterType="Chatroom">
+		INSERT INTO CHATROOM VALUES
+  								(SEQ_CID.NEXTVAL
+  								, #{chatroomname}
+  								, #{chatroomdetail}
+  								, #{creater}
+  								, 0
+  								, SYSDATE)
+	</insert>
+	
+	 <select id="selectOpenChatroom" parameterType="string" resultMap="chatroomResultSet">
+  		SELECT *
+  		FROM CHATROOM
+  		WHERE CR_NAME = #{chatroomname}
+  </select>
+	
 	
 </mapper>
 
