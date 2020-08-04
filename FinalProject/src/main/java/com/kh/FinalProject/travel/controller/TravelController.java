@@ -439,11 +439,16 @@ public class TravelController {
 		
 		String userId = mb.getId();
 		
+		
+		// json에 붙어 온 firstImg 를 저장한다.
+		String firstImg = (String) posex.remove(9);
+		
 		// json에 붙어온 제목 가져와 잘라내 저장한다.
 		String mtitle = (String)posex.remove(8);
 		
 		// json에 붙어온 tagList를 저장한다.
 		ArrayList tagList = (ArrayList) posex.remove(7);
+		
 		
 		ArrayList tTypeArr = (ArrayList) tagList.get(0);
 		ArrayList tNameArr = (ArrayList) tagList.get(1);
@@ -453,6 +458,7 @@ public class TravelController {
 
 		b.setTitle(mtitle);
 		b.setUserId(userId);
+		b.setThumbnail(firstImg);
 		
 		result = ts.planInsert(b);
 		

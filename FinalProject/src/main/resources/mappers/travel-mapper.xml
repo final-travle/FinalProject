@@ -54,9 +54,9 @@
 		INSERT INTO POST VALUES (
 		'3'
 		, SEQ_MAP.NEXTVAL
-		, NULL
-		, #{userId}
 		, #{title}
+		, #{userId}
+		, #{thumbnail}
 		, NULL
 		, 0
 		, SYSDATE

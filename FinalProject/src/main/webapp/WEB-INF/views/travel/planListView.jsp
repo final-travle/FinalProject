@@ -21,7 +21,7 @@
 				<c:forEach var="pl" items="${list }">
 	                <li>
 	                    <p class="img">
-	                        <a href="#none"><img src="images/adImg.jpg" /></a>
+	                        <a href="#none"><img src="${pl.thumbnail }" /></a>
 	                    </p>
 	                    <p class="title">${pl.title }</p>
 	                    <p>${pl.userId }</p>
@@ -37,10 +37,12 @@
 	                    </p>
 	                </li>
                 </c:forEach>
-               </ul>
+               </ul>             
+            <c:if test="${!empty sessionScope.loginUser}">
             <div class="insertBtns cf">
                 <a href="planInsertView.do" class="insert colorBtn btn">글쓰기</a>
             </div>
+            </c:if>
 
             <div class="pagination">
 				<!-- [prev] -->
