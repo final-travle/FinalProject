@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.travel.model.vo.PageInfo;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Board;
@@ -26,5 +27,7 @@ public interface TravelService {
 	ArrayList<Tag> getTagList();
 
 	int insertTag(Tag tg);
+
+	ArrayList<PostTag> selectListTag();
 
 }

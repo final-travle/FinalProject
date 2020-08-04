@@ -18,7 +18,13 @@
 	<resultMap type="Tag" id="tagResultSet">
 		<id property="tagName" column="TAG_NAME"/>
 		<result property="tagType" column="TAG_TYPE" />
+	</resultMap>
 	
+	<resultMap type="PostTag" id="postTagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
 	</resultMap>
 
 
@@ -36,6 +42,12 @@
 		WHERE POST_TYPE = '3'
 		AND POST_DEL_YN = 'N'
 		ORDER BY POST_NO DESC
+	</select>
+	
+	
+	<select id="selectListTag" resultMap="postTagResultSet">
+		SELECT *
+		FROM POST_TAG
 	</select>
 	
 	<insert id="insertPlanB" parameterType="Board">
@@ -96,5 +108,6 @@
 		, SEQ_MAP.CURRVAL
 		)
 	</insert>
+	
 	
 </mapper>

@@ -31,6 +31,7 @@ import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 
@@ -55,7 +56,14 @@ public class TravelController {
 		
 		ArrayList<Board> list = ts.selectList(pi2);
 		
+		ArrayList<PostTag> tl = ts.selectListTag();
+		
+		System.out.println(tl);
+		System.out.println(list);
+		
+		
 		if(list != null) {
+			mv.addObject("tl", tl);
 			mv.addObject("list", list);
 			mv.addObject("pi", pi2);
 			mv.setViewName("travel/planListView");

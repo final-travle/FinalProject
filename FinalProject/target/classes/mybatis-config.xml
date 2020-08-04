@@ -16,6 +16,7 @@
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Travel" alias="Travel"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Tag" alias="Tag"/>
+		<typeAlias type="com.kh.FinalProject.travel.model.vo.PostTag" alias="PostTag"/>
 	</typeAliases>
 	
 	<mappers>

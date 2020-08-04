@@ -25,7 +25,16 @@
 	                    </p>
 	                    <p class="title">${pl.title }</p>
 	                    <p>${pl.userId }</p>
-	                    <p class="cont">#2박3일 #힐링 #호캉스</p>
+	                    <p class="cont">
+	                    	<c:set var="liPostNo" value="${pl.postNo }" />
+	                    	<c:forEach var="tl" items = "${tl }">
+		                    	<c:if test = "${tl.postNo eq liPostNo}">
+			                    		<c:out value="# ${tl.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>
+	                    
+	                    
+	                    </p>
 	                </li>
                 </c:forEach>
                </ul>

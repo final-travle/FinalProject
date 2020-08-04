@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.travel.model.vo.PageInfo;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.dao.TravelDao;
@@ -54,6 +55,11 @@ public class TravelServiceImpl implements TravelService {
 	@Override
 	public int insertTag(Tag tg) {
 		return td.insertTag(tg);
+	}
+
+	@Override
+	public ArrayList<PostTag> selectListTag() {
+		return td.selectListTag();
 	}
 
 }
