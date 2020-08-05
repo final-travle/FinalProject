@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -536,8 +537,6 @@ public class TravelController {
 					    	msg = "글이 정상적으로 등록되었습니다.";
 					    	
 			    		}
-				    	
-				    	
 			    		
 			    	}
 
@@ -552,5 +551,52 @@ public class TravelController {
 		 
 		 return msg;
 	    
+	}
+	
+	
+	@RequestMapping("planDetail.do")
+	public ModelAndView planDetail(ModelAndView mv, int postNo, @RequestParam("page") Integer page) {
+		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println(postNo);
+		
+		// 조회수 올려준다.
+		int result = ts.hitsUp(postNo);
+		
+		if(result > 0) {
+			Board b = ts.selectPostView(postNo);
+			
+			if(b != null){
+				ArrayList<Travel> t = ts.selectTravelList(postNo);
+
+				Travel tLast = t.get(t.size() - 1);
+				
+				System.out.println(tLast.getNight());
+				
+				int dayNum = tLast.getNight();
+				
+				
+				for(int i = 0; i < t.size(); i ++) {
+					Travel tlist = t.get(i);
+					
+					System.out.println(tlist);
+					
+					
+				}
+				
+				mv.addObject("board", b).addObject("travel", t).addObject("currentPage", currentPage).addObject("dayNum", dayNum).setViewName("travel/planDetail");
+				
+			}
+			
+			
+		}else {
+			
+		}
+		
+		return mv;
 	}
 }

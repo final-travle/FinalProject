@@ -19,9 +19,13 @@
 			<p class="piCount">총 개시글 갯수 : ${pi.listCount }</p>
             <ul class="grid grid3 cf">
 				<c:forEach var="pl" items="${list }">
+					<c:url var="planDetail" value="planDetail.do">
+						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="page" value="${pi.currentPage }" />
+					</c:url>
 	                <li>
 	                    <p class="img">
-	                        <a href="#none"><img src="${pl.thumbnail }" /></a>
+	                        <a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
 	                    </p>
 	                    <p class="title">${pl.title }</p>
 	                    <p>${pl.userId }</p>

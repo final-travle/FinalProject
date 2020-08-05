@@ -62,4 +62,19 @@ public class TravelServiceImpl implements TravelService {
 		return td.selectListTag();
 	}
 
+	@Override
+	public int hitsUp(int postNo) {
+		return td.hitsUp(postNo);
+	}
+
+	@Override
+	public Board selectPostView(int postNo) {
+		return td.selectPostView(postNo);
+	}
+
+	@Override
+	public ArrayList<Travel> selectTravelList(int postNo) {
+		return td.selectTravelList(postNo);
+	}
+
 }

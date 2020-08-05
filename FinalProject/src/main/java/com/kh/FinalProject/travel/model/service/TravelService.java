@@ -30,4 +30,10 @@ public interface TravelService {
 
 	ArrayList<PostTag> selectListTag();
 
+	int hitsUp(int postNo);
+
+	Board selectPostView(int postNo);
+
+	ArrayList<Travel> selectTravelList(int postNo);
+
 }

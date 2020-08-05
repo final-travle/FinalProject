@@ -59,5 +59,17 @@ public class TravelDao {
 		return (ArrayList)sqlSessionTemplate.selectList("travelMapper.selectListTag");
 	}
 
+	public int hitsUp(int postNo) {
+		return sqlSessionTemplate.update("travelMapper.hitsUp", postNo);
+	}
+
+	public Board selectPostView(int postNo) {
+		return sqlSessionTemplate.selectOne("travelMapper.selectPostView", postNo);
+	}
+
+	public ArrayList<Travel> selectTravelList(int postNo) {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.selectTravelList", postNo);
+	}
+
 
 }
