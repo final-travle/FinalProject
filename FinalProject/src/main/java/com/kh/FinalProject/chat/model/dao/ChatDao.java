@@ -41,4 +41,9 @@ public class ChatDao {
 		return sqlSessionTemplate.selectOne("chatmapper.selectOpenChatroom", chatroomname);
 	}
 
+	public int updateProfile(Member m) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateProfile",m);
+	}
+
 }

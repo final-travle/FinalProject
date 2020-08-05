@@ -164,7 +164,7 @@
                         <label>별명<span style="color: orange;">*</span></label>
                     </td>
                     <td id="inp" class="ltd">
-                        <input type="text" id="userNic" name="nicname" required placeholder="한글로 2글자 이상">
+                        <input type="text" id="userNic" name="nickname" required placeholder="한글로 2글자 이상">
                     </td>
                 </tr>
              <tr>

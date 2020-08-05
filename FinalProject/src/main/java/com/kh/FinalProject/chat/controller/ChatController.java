@@ -1,5 +1,7 @@
 package com.kh.FinalProject.chat.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.FinalProject.chat.model.service.ChatService;
@@ -173,7 +176,85 @@ public class ChatController {
 			
 		}
 	 
+	 @RequestMapping("updateprofile.do")
+	 public String updateProfile(HttpServletRequest request,Member m, HttpSession session,
+			 									@RequestParam(value="update_myprofile", required=false) MultipartFile file) {
+		 
+		 System.out.println("사진 = " + m.getProfile());
+			 if(m.getProfile() != "noprofile.png") {
+				 deleteFile(m.getProfile(), request);
+			 }
+		 
+		 
+		 String profileFileName = saveFile(file, request);
+		 
+		 if(profileFileName != null) {
+			 m.setProfile(profileFileName);
+		 }
+		 
+		 int result = cService.updateProfile(m);
+		 
+		 Member m2 = (Member) session.getAttribute("loginUser");
+		 
+		 m2.setProfile(profileFileName);
+		 
+		 session.setAttribute("loginUser", m2);
+		 
+		 if(result > 0) {
+			 System.out.println("프로필 수정 성공");
+			  return "redirect:friendList.do";
+		 }
+		 else {
+			System.out.println("수정 실패");
+			return "redirect:friendList.do";
+		 }
+		
+	 }
 	 
+	 public void deleteFile(String fileName, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			
+			String savePath = root + "\\profile";
+			
+			File f = new File(savePath + "\\" + fileName);
+			if(f.exists()) {
+				f.delete();
+			}
+			
+		}
+	 public String saveFile(MultipartFile file, HttpServletRequest request) {
+			//파일이 저장될 경로를 설정하는 메소드
+			
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			
+			String savePath = root + "//profile";
+			
+			File folder = new File(savePath);
+			//java.io.File로 import 하자
+			
+			if(!folder.exists()) {
+				folder.mkdirs();
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originFileName = file.getOriginalFilename();
+			String profileFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()))+
+					"." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			
+			String filePath = folder + "\\" + profileFileName;
+			
+			try {
+				file.transferTo(new File(filePath));		//이 때 파일이 저장된다.
+				//이 상태로는 파일 업로드가 되지 않는다.
+				//왜냐하면 파일 제한크기에 대한 설정이 없기 때문이다.
+				//그래서 파일 크기 지정을 root-context.xml에서 해준다.
+			} catch (Exception e) {
+				System.out.println("파일 전송 에러" + e.getMessage());
+			}	
+			
+			
+			return profileFileName;
+		}
 }
 
 
