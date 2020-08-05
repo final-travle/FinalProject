@@ -48,5 +48,11 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.selectOpenChatroom(chatroomname);
 	}
 
+	@Override
+	public int updateProfile(Member m) {
+		// TODO Auto-generated method stub
+		return cDao.updateProfile(m);
+	}
+
 	
 }

@@ -12,6 +12,9 @@
      h1{
 		font-family: 'Poor Story', cursive;
       }
+      h2{
+      font-family: 'Poor Story', cursive;
+      }
       p{
       	font-family: 'Gamja Flower', cursive;
       }
@@ -297,6 +300,7 @@ input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
  background:white;
   border:4px solid black;
+  border-radius:5%;
   overflow:hidden;
   /* 아래 부분은 애니메이션 효과를 위한 부분 */
   visibility: collapse;
@@ -316,6 +320,44 @@ input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
+.saveprofile_modal {
+  position:absolute;
+  display:block;
+  z-index:93;
+  width:80px;
+  height:50px;
+  top:67%;
+  left:43%;
+ /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
+background-color:transparent;
+ border:0px;
+  overflow:hidden;
+  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+/* 모달 윈도우가 팝업되는 코어 소스 */
+input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+#saveprofile_button{
+	width:100%;
+	height:100%;
+	background-color:transparent;
+	border:0px;
+	outline:0px;
+}
+
 .friend_profile_detail {
   position:absolute;
   display:block;
@@ -327,6 +369,7 @@ input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
  background:white;
   border:4px solid black;
+  border-radius:5%;
   overflow:hidden;
   /* 아래 부분은 애니메이션 효과를 위한 부분 */
   visibility: collapse;
@@ -346,6 +389,7 @@ input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
+
 
 
 #makeopenchat_modal{
@@ -442,14 +486,9 @@ textarea:focus{
   	  <input type="text" id="friendSearch"  placeholder="친구 검색">
   	  <br>
   	  <div id="myprofile">
-  	  <c:if test="${empty loginUser.profile }">
-  	  <img src="${pageContext.request.contextPath}/resources/images/noprofile.png"  onclick="myprofile_detail();"
+  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" onclick="myprofile_detail();" id="savedMyProfile"
   	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
-  	  </c:if>
-  	  <c:if test="${!empty loginUser.profile }">
-  	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" onclick="myprofile_detail();"
-  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
-  	  	</c:if>
+  	  	
   	  	<p style="font-size:20px;margin-left:15px;float:left">${loginUser.nickname}</p>
   	  </div>
  </div>
@@ -459,22 +498,32 @@ textarea:focus{
   	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"  class="current_myProfile"
   	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
   	  	
-  	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png"
+  	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
   	  
+  	  
   	  <label for="update_myprofile">
-  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
+  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" title="프로필 등록"
 	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;">
 	  </label>
-  	  <form id="updateProfileForm" action ="updateprofile.do" method="post" enctype="multipart/form-data">
-  	  
-	  	  <input id="update_myprofile" type="file" style="display:none;" accept="image/*">
+  	  <form name="updateProfileForm" action ="updateprofile.do" method="post" enctype="multipart/form-data">
+  	  	<input type="hidden" name="id" value="${loginUser.id }">
+  	  	<input type="hidden" name="profile" value="${loginUser.profile }">
+	  	  <input id="update_myprofile" name="update_myprofile" type="file" style="display:none;" accept="image/*">
 	  	  
   	  </form>
  </div>
  
+ <input type="checkbox" id="saveprofile_modal">
+ <div class="saveprofile_modal">
+ 	<button type="submit" onclick="updateprofile_submit();" id="saveprofile_button" style="cursor:pointer;"><h1>저장</h1></button>
+ </div>
+ 
+
  <script>
  	function myprofile_detail(){
+ 		 var inputprofile = $("#update_myprofile").value;
+ 		 console.log(inputprofile);
  		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", true);	
  		$("#myprofile_detail_modal").prop("checked", true);
  	}
@@ -485,11 +534,13 @@ textarea:focus{
  		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", false);	
  		$("#myprofile_detail_modal").prop("checked", false);
  	}
- 	
- 	function updateprofile_submit(){
- 		$("#updateProfileForm").submit();
- 	}
  </script>
+ <script>
+ function updateprofile_submit(){
+	 updateProfileForm.submit();
+}
+ </script>
+
  <script>
  function readURL(input){
 	 if(input.files&&input.files[0]){
@@ -504,10 +555,10 @@ textarea:focus{
  }
  $("#update_myprofile").change(function(){
 	 readURL(this);
+	 $("input:checkbox[id='saveprofile_modal']").prop("checked", true);	
+		$("#saveprofile_modal").prop("checked", true);
  });
  </script>
- 
- 
  
  
  <input type="checkbox" id="head_modal2">
@@ -531,7 +582,7 @@ textarea:focus{
  
  <input type="checkbox" id="makeopenchat_modal">
  <div class="makeOpenchatForm_modal">
- 	<h1 style="text-align:center;">채팅방 생성</h1>
+ 	<h1 style="text-align:center;">오픈채팅방 생성</h1>
 <form name="makeOpenChatroomForm" action="makeOpenChatroom.do" method="post">
 	<table align="center">
 		<tr>	

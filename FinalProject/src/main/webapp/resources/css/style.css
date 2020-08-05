@@ -146,7 +146,7 @@ h2.title { text-align:center; font-size:26px; margin-bottom:60px; }
 .leftSelBox { float:left; width:26%; line-height:2.4; box-sizing:border-box; }
 .leftSelBox .tit { border:1px solid #ddd; border-right:0; border-left:0; padding-left:10px; }
 
-.leftSelBox .spot { height:180px; overflow-y:scroll; border-bottom:1px solid #ddd; }
+/* .leftSelBox .spot { height:442px; overflow-y:scroll; border-bottom:1px solid #ddd; } */
 .leftSelBox .spot li { border-bottom:1px solid #ddd; padding-left:20px; background:#f3f3f3; }
 .leftSelBox .spot li:hover { background:#bd9dec; color:#fff; cursor:pointer; }
 

@@ -68,6 +68,11 @@
   		WHERE CR_NAME = #{chatroomname}
   </select>
 	
+	<update id="updateProfile" parameterType="Member">
+		UPDATE MEMBER
+		SET PROFILE = #{profile}
+		WHERE USER_ID = #{id}
+	</update>
 	
 </mapper>
 

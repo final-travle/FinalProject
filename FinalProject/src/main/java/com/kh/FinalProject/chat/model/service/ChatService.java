@@ -18,4 +18,6 @@ public interface ChatService {
 
 	Chatroom selectOpenChatroom(String chatroomname);
 
+	int updateProfile(Member m);
+
 }
