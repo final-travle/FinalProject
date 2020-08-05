@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.FinalProject.travel.model.dao.TravelDao;
+import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
-import com.kh.FinalProject.travel.model.dao.TravelDao;
-import com.kh.FinalProject.travel.model.vo.Board;
 
 @Service("ts")
 public class TravelServiceImpl implements TravelService {
@@ -75,6 +76,16 @@ public class TravelServiceImpl implements TravelService {
 	@Override
 	public ArrayList<Travel> selectTravelList(int postNo) {
 		return td.selectTravelList(postNo);
+	}
+
+	@Override
+	public MapBoard likeVoteView(int postNo) {
+		return td.likeVoteView(postNo);
+	}
+
+	@Override
+	public Board selectPlan(int postNo) {
+		return td.selectPlan(postNo);
 	}
 
 }

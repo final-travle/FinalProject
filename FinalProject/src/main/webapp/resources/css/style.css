@@ -162,7 +162,7 @@ h2.title { text-align:center; font-size:26px; margin-bottom:60px; }
 /* bottom select */
 
 /* map */
-.rightMapBox { float:right; width:74%; border-left:1px solid #aaa; box-sizing:border-box; }
+.rightMapBox { position:relative; float:right; width:74%; border-left:1px solid #aaa; box-sizing:border-box; }
 .rightMapBox img { width:100%; }
 
 /* review insert */

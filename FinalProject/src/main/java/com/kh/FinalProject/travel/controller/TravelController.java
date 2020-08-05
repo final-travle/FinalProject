@@ -6,12 +6,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +31,7 @@ import com.kh.FinalProject.travel.model.service.TravelService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -567,6 +568,10 @@ public class TravelController {
 		// 조회수 올려준다.
 		int result = ts.hitsUp(postNo);
 		
+		MapBoard mb = ts.likeVoteView(postNo);
+		
+		System.out.println(mb);
+		
 		if(result > 0) {
 			Board b = ts.selectPostView(postNo);
 			
@@ -580,15 +585,12 @@ public class TravelController {
 				int dayNum = tLast.getNight();
 				
 				
-				for(int i = 0; i < t.size(); i ++) {
-					Travel tlist = t.get(i);
-					
-					System.out.println(tlist);
-					
-					
-				}
-				
-				mv.addObject("board", b).addObject("travel", t).addObject("currentPage", currentPage).addObject("dayNum", dayNum).setViewName("travel/planDetail");
+				mv.addObject("board", b)
+				.addObject("travel", t)
+				.addObject("currentPage", currentPage)
+				.addObject("dayNum", dayNum)
+				.addObject("mapList", mb)
+				.setViewName("travel/planDetail");
 				
 			}
 			
@@ -596,6 +598,17 @@ public class TravelController {
 		}else {
 			
 		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("planModifyForm.do")
+	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) {
+		
+		Board planOne = ts.selectPlan(postNo);
+		
+		mv.addObject("plan", planOne).setViewName("travel/planModify");
+		
 		
 		return mv;
 	}

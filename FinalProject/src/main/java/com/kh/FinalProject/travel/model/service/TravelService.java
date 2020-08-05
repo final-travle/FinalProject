@@ -9,6 +9,7 @@ import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 
 public interface TravelService {
 
@@ -35,5 +36,9 @@ public interface TravelService {
 	Board selectPostView(int postNo);
 
 	ArrayList<Travel> selectTravelList(int postNo);
+
+	MapBoard likeVoteView(int postNo);
+
+	Board selectPlan(int postNo);
 
 }
