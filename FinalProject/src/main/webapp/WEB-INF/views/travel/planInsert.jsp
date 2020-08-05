@@ -204,6 +204,7 @@
 			$(this).addClass("on");
 			$(".travelAWrap").css({"height": 921, "overflow-y" : "scroll"});
 			
+			
 			var ctCode = $(this).children("input").val();
 			
 			$.ajax({
@@ -304,6 +305,13 @@
 			
 		});
 		
+		// 누른 값의 첫번째만 실행되는 함수 // 처음 누른 값의 이미지만 뽑는다.
+        $(document).one("click", ".travelAWrap .rTravel li", function() {
+			firstImg = $(this).children("img").attr("src");
+			
+			console.log(firstImg);
+		});
+		
          $(document).on("click", ".travelAWrap .rTravel li", function() {
         	 // dayNight 의 마지막 li의 값을 뽑아온다
  			var lastli = $(".dayNight").find(".dn").eq(dnClick).find("li").last().html();
@@ -312,8 +320,7 @@
 			XP = parseFloat($(this).find(".xpoint").val());
 			YP = parseFloat($(this).find(".ypoint").val());
 			tcode = $(this).find(".tcode").val();
-			
-			console.log(tcode);
+
 			
 			var $li = $("<li>");
 			
@@ -440,7 +447,6 @@
         });
         
      	$(".rightBox .btns .apply").on("click", function(){
-     		
      		var chkType = [];
      		var chkName = [];
      		var chkArr = [chkType, chkName];
@@ -450,17 +456,14 @@
      			chkType.push($(this).attr("class"));
      		});
      		
-     		console.log(chkArr);
-     		
      		posex.push(chkArr);
+     		posex.push(firstImg);
      		
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		
      		posex.push(mtitle);
 
-     		console.log(posex);
-     		
      		 $.ajax({
      	        type: "POST",
      	        url: "pInsert.do",

@@ -31,6 +31,7 @@ import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 
@@ -55,7 +56,14 @@ public class TravelController {
 		
 		ArrayList<Board> list = ts.selectList(pi2);
 		
+		ArrayList<PostTag> tl = ts.selectListTag();
+		
+		System.out.println(tl);
+		System.out.println(list);
+		
+		
 		if(list != null) {
+			mv.addObject("tl", tl);
 			mv.addObject("list", list);
 			mv.addObject("pi", pi2);
 			mv.setViewName("travel/planListView");
@@ -431,11 +439,16 @@ public class TravelController {
 		
 		String userId = mb.getId();
 		
+		
+		// json에 붙어 온 firstImg 를 저장한다.
+		String firstImg = (String) posex.remove(9);
+		
 		// json에 붙어온 제목 가져와 잘라내 저장한다.
 		String mtitle = (String)posex.remove(8);
 		
 		// json에 붙어온 tagList를 저장한다.
 		ArrayList tagList = (ArrayList) posex.remove(7);
+		
 		
 		ArrayList tTypeArr = (ArrayList) tagList.get(0);
 		ArrayList tNameArr = (ArrayList) tagList.get(1);
@@ -445,6 +458,7 @@ public class TravelController {
 
 		b.setTitle(mtitle);
 		b.setUserId(userId);
+		b.setThumbnail(firstImg);
 		
 		result = ts.planInsert(b);
 		

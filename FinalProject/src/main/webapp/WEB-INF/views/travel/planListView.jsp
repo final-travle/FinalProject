@@ -21,17 +21,28 @@
 				<c:forEach var="pl" items="${list }">
 	                <li>
 	                    <p class="img">
-	                        <a href="#none"><img src="images/adImg.jpg" /></a>
+	                        <a href="#none"><img src="${pl.thumbnail }" /></a>
 	                    </p>
 	                    <p class="title">${pl.title }</p>
 	                    <p>${pl.userId }</p>
-	                    <p class="cont">#2박3일 #힐링 #호캉스</p>
+	                    <p class="cont">
+	                    	<c:set var="liPostNo" value="${pl.postNo }" />
+	                    	<c:forEach var="tl" items = "${tl }">
+		                    	<c:if test = "${tl.postNo eq liPostNo}">
+			                    		<c:out value="# ${tl.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>
+	                    
+	                    
+	                    </p>
 	                </li>
                 </c:forEach>
-               </ul>
+               </ul>             
+            <c:if test="${!empty sessionScope.loginUser}">
             <div class="insertBtns cf">
                 <a href="planInsertView.do" class="insert colorBtn btn">글쓰기</a>
             </div>
+            </c:if>
 
             <div class="pagination">
 				<!-- [prev] -->

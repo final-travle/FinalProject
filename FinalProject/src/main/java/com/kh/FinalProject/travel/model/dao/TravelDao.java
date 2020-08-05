@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 
@@ -52,6 +53,10 @@ public class TravelDao {
 
 	public int insertTag(Tag tg) {
 		return sqlSessionTemplate.insert("travelMapper.insertTag", tg);
+	}
+
+	public ArrayList<PostTag> selectListTag() {
+		return (ArrayList)sqlSessionTemplate.selectList("travelMapper.selectListTag");
 	}
 
 

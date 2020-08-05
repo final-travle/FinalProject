@@ -71,7 +71,7 @@
 	UPDATE MEMBER SET USER_ID = #{id},
 					 PWD = #{pwd},
 					 NAME = #{name},
-					 NICKNAME = #{nicname},
+					 NICKNAME = #{nickname},
 					 BIRTH = #{birth},
 					 GENDER = #{gender},
 					 JOB = #{job},
@@ -166,7 +166,6 @@
 	
 	<delete id="deleteTtype" parameterType="string">
 	DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
-	c
 	</delete>
 	
 	<update id="adminMemberDelete" parameterType="string" >
