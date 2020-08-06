@@ -14,6 +14,18 @@
 		<result property="postDelYn" column="POST_DEL_YN" />
 		<result property="FileName" column="FILE_NAME" />
 	</resultMap>
+	
+	<resultMap type="Travel" id="travelResultSet">
+		<id property="tCode" column="T_CODE"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+		<result property="night" column="NIGHT" />
+		<result property="tName" column="T_NAME" />
+		<result property="txpoint" column="T_XPOINT" />
+		<result property="typoint" column="T_YPOINT" />
+	
+	</resultMap>
 
 	<resultMap type="Tag" id="tagResultSet">
 		<id property="tagName" column="TAG_NAME"/>
@@ -25,6 +37,14 @@
 		<result property="tagType" column="TAG_TYPE" />
 		<result property="postType" column="POST_TYPE" />
 		<result property="postNo" column="POST_NO" />
+	</resultMap>
+	
+	
+	<resultMap type="MapBoard" id="mapBoardResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="voteTotal" column="VOTE_TOTAL" />
+		<result property="likeTotal" column="LIKE_TOTAL" />
 	</resultMap>
 
 
@@ -109,5 +129,38 @@
 		)
 	</insert>
 	
+	<update id="hitsUp"  parameterType="Board">
+		UPDATE POST
+		SET HITS = HITS + 1
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</update>
 	
+	<select id="selectPostView" parameterType="_int" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectTravelList" resultMap="travelResultSet">
+		SELECT *
+		FROM TRAVEL
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="likeVoteView" parameterType="_int" resultMap="mapBoardResultSet">
+		SELECT *
+		FROM MAP_BOARD
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectPlan" parameterType="_int" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</select>
 </mapper>

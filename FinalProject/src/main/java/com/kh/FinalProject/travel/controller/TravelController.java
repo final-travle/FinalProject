@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,7 @@ import com.kh.FinalProject.travel.model.service.TravelService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -536,8 +538,6 @@ public class TravelController {
 					    	msg = "글이 정상적으로 등록되었습니다.";
 					    	
 			    		}
-				    	
-				    	
 			    		
 			    	}
 
@@ -552,5 +552,64 @@ public class TravelController {
 		 
 		 return msg;
 	    
+	}
+	
+	
+	@RequestMapping("planDetail.do")
+	public ModelAndView planDetail(ModelAndView mv, int postNo, @RequestParam("page") Integer page) {
+		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println(postNo);
+		
+		// 조회수 올려준다.
+		int result = ts.hitsUp(postNo);
+		
+		MapBoard mb = ts.likeVoteView(postNo);
+		
+		System.out.println(mb);
+		
+		if(result > 0) {
+			Board b = ts.selectPostView(postNo);
+			
+			if(b != null){
+				ArrayList<Travel> t = ts.selectTravelList(postNo);
+
+				Travel tLast = t.get(t.size() - 1);
+				
+				System.out.println(tLast.getNight());
+				
+				int dayNum = tLast.getNight();
+				
+				
+				mv.addObject("board", b)
+				.addObject("travel", t)
+				.addObject("currentPage", currentPage)
+				.addObject("dayNum", dayNum)
+				.addObject("mapList", mb)
+				.setViewName("travel/planDetail");
+				
+			}
+			
+			
+		}else {
+			
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("planModifyForm.do")
+	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) {
+		
+		Board planOne = ts.selectPlan(postNo);
+		
+		mv.addObject("plan", planOne).setViewName("travel/planModify");
+		
+		
+		return mv;
 	}
 }
