@@ -1,12 +1,14 @@
 package com.kh.FinalProject.chat.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.OneToOne;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
 
@@ -44,6 +46,16 @@ public class ChatDao {
 	public int updateProfile(Member m) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("chatmapper.updateProfile",m);
+	}
+
+	public OneToOne selectOneToOneRoom(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("chatmapper.selectOneToOneRoom",map);
+	}
+
+	public int insertOneToOneRoom(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("chatmapper.insertOneToOneRoom", map);
 	}
 
 }

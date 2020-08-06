@@ -496,7 +496,7 @@ textarea:focus{
  <div class="myprofile_detail_modal">
  
   	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"  class="current_myProfile"
-  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
+  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
   	  	
   	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
@@ -652,11 +652,10 @@ textarea:focus{
 		<c:forEach var="friendList" items="${friendList }">
 			<tr>
 				<td align="center">
-				
 				<img src="${pageContext.request.contextPath}/resources/profile/${friendList.profile}" id="friend_profile"
 				class="friend_profile"
 				style="width:50px;height:50px;border-radius:45%; margin-bottom:5px;margin-top:10px;margin-left:10px;cursor:pointer">
-				
+				<input type="hidden" value="${friendList.id }" id="friendId" class="friendId">
 				</td>
 				<td align="left"><p style="font-size:20px;margin-left:10px;">${friendList.nickname}</p></td>
 			</tr>
@@ -666,6 +665,8 @@ textarea:focus{
 	<br><br><br><br>
 </div>
 <script>
+	 var friendId = "";
+
  		$(function(){
  			$(".friend_profile").click(function(){
  				var img = $(this).attr("src");
@@ -673,6 +674,10 @@ textarea:focus{
  				console.log("이미지 경로 : " + img);
  				console.log("이미지 이름 : " + friend_profile);
  				$(".friendsprofile_detail").attr("src",img);
+ 				
+ 				friendId = $(this).siblings(".friendId").val();
+ 				console.log("친구 아이디 = " + friendId);
+ 				
  				friend_profile_detail();
  			})
  		})
@@ -682,12 +687,28 @@ textarea:focus{
  <div class="friend_profile_detail"> 
  	
 	<img class="friendsprofile_detail" src="" 
-	style="width:280px;height:280px;margin-left:17px;margin-top:10px;">
+	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
  	
-  	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png"
-  	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_friend_profile_detail();">
-  	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" 
-  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;">
+  	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
+  	  style="width:60px;height:50px;margin-left:40px;cursor:pointer;" onclick="close_friend_profile_detail();">
+  	  
+  	  <img src="${pageContext.request.contextPath}/resources/images/makeOnetoOneChatroom.png" 
+  	  style="width:60px;height:50px;margin-left:100px;cursor:pointer;" title="1대1채팅"
+  	  onclick="insertOneToOneChatroom();">
+  	  <script>
+  	  	function insertOneToOneChatroom(){
+  	  		console.log("fr_id = " + friendId);
+  	  		
+  	  		window.open("insertOneToOneChatroom.do?friendId="+friendId, "1대1채팅", "top=100, left=300, width=400, height=500, status=no, menubar=no");
+  	  		
+  	  		/* location.href="insertOneToOneChatroom.do?friendId="+friendId; */
+  	  	}
+  	  </script>
+  	  
+  	  <%-- <form action="insertOneToOneChatroom.do" name="insertOneToOneForm">
+  	  		<input type="hidden" name="myId" value="${loginUser.id }">
+  	  		<input type="hidden" name="friendId" value="">
+  	  </form> --%>
  </div>
  
  <script>

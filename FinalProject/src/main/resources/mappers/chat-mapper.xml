@@ -33,6 +33,13 @@
 		<result property="createdate" column="CR_CREATE_DATE"/>
 	</resultMap>
 	
+	<resultMap type="OneToOne" id="otoResultSet">
+		<id property="co_no" column="CO_NO"/>
+		<result property="myId" column="MY_ID"/>
+		<result property="friendId" column="FRIEND_ID"/>
+	</resultMap>
+	
+	
 	
 	<select id="friendList" parameterType="string" resultMap="friendsResultSet" >
 		SELECT *
@@ -73,6 +80,19 @@
 		SET PROFILE = #{profile}
 		WHERE USER_ID = #{id}
 	</update>
+	
+	<select id="selectOneToOneRoom" parameterType="HashMap" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE MY_ID=#{myId} AND FRIEND_ID=#{friendId}
+	</select>
+	
+	<insert id="insertOneToOneRoom" parameterType="HashMap">
+		INSERT INTO ONETOONE_ROOM VALUES(SEQ_OTO.NEXTVAL
+																			 , #{myId}
+																			 , #{friendId})
+	</insert>
+	
 	
 </mapper>
 

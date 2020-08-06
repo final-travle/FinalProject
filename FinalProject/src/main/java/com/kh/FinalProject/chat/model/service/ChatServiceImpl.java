@@ -1,12 +1,14 @@
 package com.kh.FinalProject.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.chat.model.dao.ChatDao;
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.OneToOne;
 import com.kh.FinalProject.member.model.dao.MemberDao;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
@@ -52,6 +54,18 @@ public class ChatServiceImpl implements ChatService{
 	public int updateProfile(Member m) {
 		// TODO Auto-generated method stub
 		return cDao.updateProfile(m);
+	}
+
+	@Override
+	public OneToOne selectOneToOneRoom(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOneToOneRoom(map);
+	}
+
+	@Override
+	public int insertOneToOneRoom(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.insertOneToOneRoom(map);
 	}
 
 	
