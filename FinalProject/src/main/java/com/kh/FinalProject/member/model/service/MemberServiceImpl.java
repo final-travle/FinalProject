@@ -422,6 +422,37 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.membercount(m);
 	}
 
+
+	@Override
+	public ArrayList<Friends> rlfriends(String id) {
+		// TODO Auto-generated method stub
+		return mDao.rlfriends(id);
+	}
+
+
+	@Override
+	public ArrayList<Friends> realfriendsShared(String id, String search) {
+		
+		ArrayList<Friends> al = new ArrayList<Friends>();
+		if(search !=null  || search=="") {
+			FriendsPage fp = new FriendsPage();
+			fp.setSearch(search);
+			fp.setUserId(id);
+			al =mDao.realfriendsShared(fp);			
+		}else {
+			al=mDao.realfriendsShared(id);
+		}
+		
+		return al;
+	}
+
+
+	@Override
+	public ArrayList<String> sharedfd(Integer postNo, String postType, String id) {
+		// TODO Auto-generated method stub
+		return mDao.sharedfd(postNo,postType,id);
+	}
+
 	}
 
 

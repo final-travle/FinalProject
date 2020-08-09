@@ -14,6 +14,7 @@ import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.member.model.vo.PageInfo;
 import com.kh.FinalProject.member.model.vo.Time;
 import com.kh.FinalProject.member.model.vo.Ttype;
+import com.kh.FinalProject.postShared.model.vo.PostShared;
 
 @Repository("mDao")
 public class MemberDao {
@@ -261,6 +262,30 @@ public class MemberDao {
 	public int membercount(Member m) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("memberMapper.membercount",m);
+	}
+
+	public ArrayList<Friends> rlfriends(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.rlfriends",id);
+	}
+
+	public ArrayList<Friends> realfriendsShared(FriendsPage fp) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriendsShared",fp);
+	}
+
+	public ArrayList<Friends> realfriendsShared(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriendsShared2",id);
+	}
+
+	public ArrayList<String> sharedfd(Integer postNo, String postType, String id) {
+		// TODO Auto-generated method stub
+		PostShared ps = new PostShared();
+		ps.setPost_no(postNo);
+		ps.setPost_type(postType);
+		ps.setUser_id(id);
+		return (ArrayList)sqlSessionTemplate.selectList("friends.sharedfd",ps);
 	}
 	
 	

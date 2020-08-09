@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="travelMapper">
 	<resultMap type="Board" id="boardResultSet">
-		<id property="postNo" column="POST_NO"/>
-		
+		<id property="postNo" column="POST_NO"/>		
 		<result property="postType" column="POST_TYPE" />
 		<result property="thumbnail" column="THUMBNAIL" />
 		<result property="userId" column="USER_ID" />
@@ -47,6 +46,13 @@
 		<result property="likeTotal" column="LIKE_TOTAL" />
 	</resultMap>
 
+	<resultMap type="PostShared" id="PostSharedResultSet">
+		<id property="share_id" column="SHARE_ID" />
+		<result property="post_type" column="POST_TYPE" />
+		<result property="post_no" column="POST_NO" />
+		<result property="user_id" column="USER_ID" />
+	</resultMap>
+
 
 
 	<select id="getListCount" resultType="_int">
@@ -56,6 +62,29 @@
 		AND POST_DEL_YN = 'N'
 	</select>
 	
+	<insert id="sharedInsert" parameterType="PostShared">
+	INSERT INTO SHARED VALUES(#{share_id}, #{post_type}, #{post_no}, #{user_id})
+	
+	</insert>	
+	
+	<select id="memberselectList" parameterType="string" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_DEL_YN = 'N'
+		AND USER_ID = #{id}
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<select id="selectShare" parameterType="string" resultMap="PostSharedResultSet">
+		SELECT *
+		FROM SHARED
+		WHERE SHARE_ID = #{id}
+		</select>
+	
+	
+	
+	
 	<select id="selectList" resultMap="boardResultSet">
 		SELECT *
 		FROM POST
@@ -63,6 +92,22 @@
 		AND POST_DEL_YN = 'N'
 		ORDER BY POST_NO DESC
 	</select>
+	
+	
+	<select id="selectsharedList" parameterType="PostShared" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE USER_ID = #{user_id}
+		AND POST_NO = #{post_no}
+		AND POST_TYPE = #{post_type}
+	</select>
+	
+	
+	
+	<delete id="deleteShared" parameterType="PostShared">
+	DELETE FROM SHARED
+	
+	</delete>
 	
 	
 	<select id="selectListTag" resultMap="postTagResultSet">

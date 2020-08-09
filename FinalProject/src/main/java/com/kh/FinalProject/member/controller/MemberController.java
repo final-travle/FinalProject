@@ -3,6 +3,7 @@ package com.kh.FinalProject.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -21,10 +22,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.FinalProject.common.Pagination;
 import com.kh.FinalProject.member.model.exception.MemberException;
 import com.kh.FinalProject.member.model.service.MemberService;
@@ -218,7 +221,38 @@ public class MemberController  {
         }
 		
 		
-		
+	    @RequestMapping(value = "hansolyy.do", method = RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	    @ResponseBody
+		public String friendsNameSearch(Locale locale,Model model ,HttpSession session,
+													   @RequestParam(value="page",required=false) Integer page,String noticeSearch,
+													   @RequestParam(value="search", required=false) String search) {
+	 
+	    	
+	    	Member m = (Member) session.getAttribute("loginUser");
+	    	ArrayList<Friends> fal = mService.rlfriends(m.getId()); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
+			ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+			for(int i=0;i<fal.size();i++) {
+				if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+					al.add(fal.get(i).getUserId());
+				}else if(fal.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+					al.add(fal.get(i).getfId());
+				}
+			}
+			System.out.println("aaaa"+al);
+			ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
+			for(int i =0;i<al.size();i++) {
+				mal.add(mService.friendsInfo(al.get(i)));
+			}
+			String[] array = new String[mal.size()]; //친구 이름 담김
+			for(int i =0; i< mal.size();i++) {
+				array[i] = (mal.get(i).getName());
+			}
+			Gson gson = new Gson();
+	    	return gson.toJson(array);  	
+	    	}
+	    
+	    
+	    
 		
 		@RequestMapping(value = "join_injeung.do", method = RequestMethod.POST)
 	    public ModelAndView join_injeung(String member,String email_injeung, String dice, HttpServletResponse response_equals) throws IOException {
@@ -397,7 +431,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "home";
+			return "redirect:home.do";
 		}
 	   
 	    
