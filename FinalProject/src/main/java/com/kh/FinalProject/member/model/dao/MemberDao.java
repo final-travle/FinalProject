@@ -287,6 +287,11 @@ public class MemberDao {
 		ps.setUser_id(id);
 		return (ArrayList)sqlSessionTemplate.selectList("friends.sharedfd",ps);
 	}
+
+	public ArrayList<Member> allMember2(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.allMember2",id);
+	}
 	
 	
 }

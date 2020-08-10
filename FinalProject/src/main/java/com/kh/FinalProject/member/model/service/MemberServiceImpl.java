@@ -453,6 +453,13 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.sharedfd(postNo,postType,id);
 	}
 
+
+	@Override
+	public ArrayList<Member> allMember2(String id) {
+		// TODO Auto-generated method stub
+		return mDao.allMember2(id);
+	}
+
 	}
 
 

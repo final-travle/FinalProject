@@ -96,4 +96,6 @@ public interface MemberService {
 
 	ArrayList<String> sharedfd(Integer postNo, String postType, String id);
 
+	ArrayList<Member> allMember2(String id);
+
 }

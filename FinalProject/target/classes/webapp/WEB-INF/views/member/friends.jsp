@@ -45,6 +45,10 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 .sidenav .closebtn {position: absolute;top: 0;right: 25px;font-size: 36px;margin-left: 50px;}
 @media screen and (max-height: 450px) {.sidenav {padding-top: 15px;}.sidenav a {font-size: 18px;}}
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://unpkg.com/hangul-js" type="text/javascript"></script>
 
 <body>
 <div id="hansol">
@@ -95,14 +99,8 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 
 
 <form method="post" action="friends.do">
-<select name="search">
-    <option value="">아이디로검색</option>
-    <option value="name">이름</option>
-    <option value="nicname">별명</option>
-    <option value="sex">성별</option>
-    <option value="birth">생년월일</option>
-</select>
-<input type="text" id="search" name="noticeSearch"  placeholder="검색어를 입력해주세요"> <input type="submit" id="searchBtn" value="SEARCH">
+<label for="search"> 아이디로검색 :</label> 
+<input align="center" type="text" id="search" name="noticeSearch"  placeholder="아이디를 입력해주세요"> <input type="submit" id="searchBtn" value="SEARCH">
 <table align="center" width="600" border="1" cellspacing="0"
          style="claer:right;" id="td">
       <tr bgcolor="#99ccff">
@@ -195,6 +193,59 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
    			}
    			</script>
    
+   <script>
+	$(function() { 
+
+		//화면 다 뜨면 시작
+		//DB쿼리 조작 없이 초성 검색을 하기 위해서는 우선 DB에 있는 항목들을 다 가지고 와야한다.
+		//즉 너무 많은 수가 있으면 클라이언트 측이 느려질 수 있다는 점.
+		//하지만 DB쿼리를 조작해서 서버에서 초성검색을 하는 방식에 비해 서버에는 무리가 없다.
+		// ajax로 미리 검색어 목록을 다 가지고 온다.
+		$.ajax({
+			type : 'get',
+			url : "friendshansolyy.do",
+			dataType : "json",
+			//request.term = $("#autocomplete").val()
+			//data: {"param":"param"},
+			success : function(data) {
+				let source = $.map(data, function(item) { //json[i] 번째 에 있는게 item 임.
+					chosung = "";
+					Hangul.d(item, true).forEach(function(strItem, index) {
+						if(strItem[0] != " "){	//띄어 쓰기가 아니면
+							chosung += strItem[0];//초성 추가
+						}
+					});
+					return {
+						label : chosung + "|" +item, //실제 검색어랑 비교 대상 ㄱㅊㅂㅇㅂ|김치 볶음밥 이 저장된다.
+						value : item, //김치 볶음밥
+						chosung : chosung	//ㄱㅊㅂㅇㅂ
+					}
+				});
+				
+				
+				$("#search").autocomplete({
+					source : source,	// source 는 자동 완성 대상
+					select : function(event, ui) {	//아이템 선택시
+						console.log(ui.item.label + " 선택 완료");	
+						
+					},
+					focus : function(event, ui) {	//포커스 가면
+						return false;//한글 에러 잡기용도로 사용됨
+					}
+				}).autocomplete( "instance" )._renderItem = function( ul, item ) {	
+				//.autocomplete( "instance" )._renderItem 설절 부분이 핵심
+			      return $( "<li>" )	//기본 tag가 li로 되어 있음 
+			        .append( "<div>" + item.value + "</div>" )	//여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
+			        .appendTo( ul );	//웹 상으로 보이는 건 정상적인 "김치 볶음밥" 인데 내부에서는 ㄱㅊㅂㅇㅂ,김치 볶음밥 에서 검색을 함.
+			    };
+			}
+		});
+
+	});
+	
+	
+	
+</script>
    
 </div>
 
