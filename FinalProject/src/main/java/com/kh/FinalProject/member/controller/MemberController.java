@@ -567,7 +567,7 @@ public class MemberController  {
 				if(fal.get(i).getfId().equals(m.getId())) {
 					Friends fs = new Friends();
 					fs.setAcceptYn(fal.get(i).getAcceptYn());
-					fs.setUserId(fal.get(i).getfId());
+					fs.setUserId(fal.get(i).getUserId());
 					al.add(fs);
 				}else if(fal.get(i).getUserId().equals(m.getId())) {
 					Friends fs = new Friends();
@@ -706,22 +706,25 @@ public class MemberController  {
 					   	        				
 	    	}
 	            @RequestMapping("mypageDelete.do") //회원 탈퇴
-	    		public String mypageDelete(ModelAndView model,HttpServletResponse response,HttpSession session,String pwd) throws IOException {
+	    		public ModelAndView mypageDelete(ModelAndView model,HttpServletResponse response,HttpSession session,String pwd) throws IOException {
 	    		
 	            	Member m = (Member) session.getAttribute("loginUser");
 	    			int fCount = mService.fCount(m.getId());
 	    			
-
-						model.addObject("fCount",fCount);
-						return "member/mypageDelete";		   	        				
-	    	}
+	    				System.out.println("시소 : "+ fCount);
+	    				model.addObject("fCount",fCount);
+	    				model.setViewName("/member/accfriends");
+	    				return model;		
+				}
+				   	        				
+			
 	        
 	            @RequestMapping("refusefriends.do") //친구신청거절
-	    		public ModelAndView refusefriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
+	    		public ModelAndView refusefriends(ModelAndView model,HttpServletResponse response,HttpSession session,String deleteid) throws IOException {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
-					int fal = mService.refusefriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
-					ArrayList<Friends> fall = mService.friendsadd(id,m.getId());
+					int fal = mService.refusefriends(m.getId(),deleteid); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
+					ArrayList<Friends> fall = mService.friendsadd(deleteid,m.getId());
 					int fCount = mService.fCount(m.getId());
 					System.out.println(fall);
 					System.out.println(fal);

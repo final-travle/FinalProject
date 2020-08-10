@@ -58,7 +58,7 @@
             </tr>
              <tr>
                 <th>닉네임</th>
-                <td><c:out value="${member.nicname}"/></td>
+                <td><c:out value="${member.nickname}"/></td>
             </tr>
              <tr>
                 <th>여행스타일</th>

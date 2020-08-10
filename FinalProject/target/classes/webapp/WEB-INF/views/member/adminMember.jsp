@@ -110,7 +110,7 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
 			</c:url>
            <a href="${url2}"> ${n.id }</a></td>
             <td align="center">${n.name }</td>
-            <td align="center">${n.nicname }</td>
+            <td align="center">${n.nickname }</td>
             <td align="center">${n.phone }</td>
            <td>
 		            <c:url value="adminMemberDelete.do" var="url">

@@ -180,7 +180,7 @@
 	
 	<delete id="refusefriends" parameterType="FriendsPage">
 	DELETE FROM FRIEND_YN
-	WHERE ACCEPT_YN ='Y' AND FR_ID= #{userId} AND USER_ID=#{fId}
+	WHERE ACCEPT_YN ='Y' AND( FR_ID= #{userId} AND USER_ID=#{fId}) OR ( FR_ID= #{fId} AND USER_ID=#{userId}) 
 	</delete>
 	
 	<delete id="dltTime" parameterType="string">
