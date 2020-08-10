@@ -115,11 +115,13 @@ public class PostSharedController {
 			Integer postNo,String postType,String id,
 			HttpSession session,ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {						
 		
+		String idd =id.replace(" ","");
 		PostShared ps = new PostShared();
 		ps.setPost_no(postNo);
 		ps.setPost_type(postType);
-		ps.setShare_id(id);
+		ps.setShare_id(idd);
 		System.out.println(ps);
+		System.out.println(idd+"ll");
 		int sibal =pService.deleteShared(ps);		
 		System.out.println("asdf : "+sibal);
 		Member m = (Member) session.getAttribute("loginUser");
@@ -195,6 +197,8 @@ public class PostSharedController {
 		for(int i =0;i<sharedfd.size();i++) {
 			mal2.add(mService.friendsInfo(sharedfd.get(i)));
 		}
+		System.out.println(mal);
+		System.out.println(mal2);
 		
 		mv.addObject("freindsshared",mal2);
 		mv.addObject("postNo",postNo);

@@ -106,7 +106,9 @@
 	
 	<delete id="deleteShared" parameterType="PostShared">
 	DELETE FROM SHARED
-	
+	WHERE POST_TYPE = #{post_type}
+	AND POST_NO= #{post_no}
+	AND SHARE_ID = #{share_id} 
 	</delete>
 	
 	

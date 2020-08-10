@@ -113,7 +113,7 @@
                 <c:url value="memberdeleteShared.do" var="url12">
 						<c:param name="postNo" value="${postNo }" />
 						<c:param name="postType" value="${postType }" />
-					  <c:param name="id" value="${nb.id } " />
+					  	<c:param name="id" value="${nb.id} " />
 					</c:url>
 		         <a href="${url12}">${nb.name }</a>
                  
