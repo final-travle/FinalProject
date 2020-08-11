@@ -25,13 +25,11 @@ public class MemberDao {
 	
 	public int insertMember(Member m) {
 		// TODO Auto-generated method stub
-		System.out.println("member : "+m);
 		return sqlSessionTemplate.insert("memberMapper.insertMember",m);
 	}
 
 	public Member loginMember(Member m) {
 		// TODO Auto-generated method stub
-		System.out.println("member : "+m);
 		return sqlSessionTemplate.selectOne("memberMapper.selectMember",m);
 	}
 
@@ -52,7 +50,6 @@ public class MemberDao {
 
 	public int checkIdDup(String id) {
 		// TODO Auto-generated method stub
-		System.out.println(id);
 		return sqlSessionTemplate.selectOne("memberMapper.checkIdDup",id);
 	}
 
@@ -89,7 +86,6 @@ public class MemberDao {
 
 	public ArrayList<Friends> friendsadd(Friends fr) {
 		// TODO Auto-generated method stub
-		System.out.println("쉬이벌 여기까진 와야지");
 		return (ArrayList)sqlSessionTemplate.selectList("friends.friendsadd",fr);
 	}
 
@@ -100,7 +96,6 @@ public class MemberDao {
 
 	public int getListCount(String userId) {
 		// TODO Auto-generated method stub
-		System.out.println("그럼 쉬벌 여기까지도와야지");
 		return	sqlSessionTemplate.selectOne("friends.getListCount",userId);
 	}
 

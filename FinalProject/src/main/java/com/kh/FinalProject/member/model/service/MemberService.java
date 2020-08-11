@@ -30,8 +30,6 @@ public interface MemberService {
 	
 	Member friendsInfo(String string);
 
-	ArrayList<Member> allMember(String string);
-
 	ArrayList<Friends> friendsadd(String string, String id);
 
 	int accfriends(String id, String string);

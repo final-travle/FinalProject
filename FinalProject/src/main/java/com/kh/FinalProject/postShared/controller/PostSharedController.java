@@ -51,16 +51,11 @@ public class PostSharedController {
 		}
 		
 		int listCount = ts.getListCount();
-		System.out.println(listCount);
 		
 		PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
 		
 		ArrayList<Board> list = pService.selectList(pi2,mb.getId());
 		ArrayList<PostTag> tl = pService.selectListTag();
-		
-		System.out.println(tl);
-		System.out.println(list);
-		
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
@@ -85,8 +80,7 @@ public class PostSharedController {
 		ArrayList<PostShared> psd = pService.selectShare(mb.getId());
 				
 		
-		int listCount = ts.getListCount();
-		System.out.println(listCount);
+//		int listCount = ts.getListCount();
 		ArrayList<Board> list = new ArrayList<Board>(); 
 				for(int i =0;i<psd.size();i++) {
 					list.add(pService.selectsharedList(psd.get(i)) );
@@ -94,10 +88,6 @@ public class PostSharedController {
 				}
 				
 		ArrayList<PostTag> tl = pService.selectListTag();
-		
-		System.out.println(tl);
-		System.out.println(list);
-		
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
@@ -120,13 +110,8 @@ public class PostSharedController {
 		ps.setPost_no(postNo);
 		ps.setPost_type(postType);
 		ps.setShare_id(idd);
-		System.out.println(ps);
-		System.out.println(idd+"ll");
-		int sibal =pService.deleteShared(ps);		
-		System.out.println("asdf : "+sibal);
+		pService.deleteShared(ps);		
 		Member m = (Member) session.getAttribute("loginUser");
-		System.out.println("postNo : "+ postNo);
-		System.out.println("postType : "+ postType);
 		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 		ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 		ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
@@ -142,7 +127,6 @@ public class PostSharedController {
 		
 		
 		
-		System.out.println("aaaa"+al);
 		ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
 		ArrayList<Member> mal2 =new ArrayList<Member>(); //공유된 친구의 정보값 
 		for(int i =0;i<al.size();i++) {
@@ -152,13 +136,13 @@ public class PostSharedController {
 			mal2.add(mService.friendsInfo(sharedfd.get(i)));
 		}
 		
-		mv.addObject("freindsshared",mal2);
+		mv.addObject("friendsshared",mal2);
 		mv.addObject("postNo",postNo);
 		mv.addObject("postType",postType);
 		mv.addObject("allshared",sharedfd);
 		mv.addObject("friends",mal);
 		mv.setViewName("member/myPageSharedpost");
-//		공유해야됨 쉬이벌 그거 뭐냐 그거 해야됨 공유되는 테이블에서 공유되는 것을 가져와야됨
+//		공유되는 테이블에서 공유되는 것을 가져와야됨
 			
 		return mv;
 		
@@ -171,8 +155,6 @@ public class PostSharedController {
 			HttpSession session,ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
 		
 		Member m = (Member) session.getAttribute("loginUser");
-		System.out.println("postNo : "+ postNo);
-		System.out.println("postType : "+ postType);
 		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 		ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 		ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
@@ -188,7 +170,6 @@ public class PostSharedController {
 		
 		
 		
-		System.out.println("aaaa"+al);
 		ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
 		ArrayList<Member> mal2 =new ArrayList<Member>(); //공유된 친구의 정보값 
 		for(int i =0;i<al.size();i++) {
@@ -197,8 +178,6 @@ public class PostSharedController {
 		for(int i =0;i<sharedfd.size();i++) {
 			mal2.add(mService.friendsInfo(sharedfd.get(i)));
 		}
-		System.out.println(mal);
-		System.out.println(mal2);
 		
 		mv.addObject("freindsshared",mal2);
 		mv.addObject("postNo",postNo);
@@ -206,7 +185,7 @@ public class PostSharedController {
 		mv.addObject("allshared",sharedfd);
 		mv.addObject("friends",mal);
 		mv.setViewName("member/myPageSharedpost");
-//		공유해야됨 쉬이벌 그거 뭐냐 그거 해야됨 공유되는 테이블에서 공유되는 것을 가져와야됨
+//		공유되는 테이블에서 공유되는 것을 가져와야됨
 			
 		return mv;
 		
@@ -218,8 +197,6 @@ public class PostSharedController {
 			Integer postNo,String postType,String id,
 			HttpSession session,ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
 		
-		System.out.println("postNo : "+postNo);
-		System.out.println("postType : " + postType);
 		
 		Member m = (Member) session.getAttribute("loginUser");
 	
@@ -243,8 +220,7 @@ public class PostSharedController {
 			}
 			
 			
-			
-			System.out.println("aaaa"+al);
+		
 			ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
 			ArrayList<Member> mal2 =new ArrayList<Member>(); //공유된 친구의 정보값 
 			for(int i =0;i<al.size();i++) {
@@ -260,8 +236,8 @@ public class PostSharedController {
 			mv.addObject("allshared",sharedfd);
 			mv.addObject("friends",mal);
 			mv.setViewName("member/myPageSharedpost");
-		}else {mv.setViewName("member/myPageSharedpost");
-			
+		}else {
+			mv.setViewName("member/myPageSharedpost");
 		}
 		return mv;
 	}

@@ -106,10 +106,10 @@
 	</form>
  
  <div>
- <c:if test="${empty freindsshared  }">
+ <c:if test="${empty friendsshared  }">
             <h3>공유된 친구가없습니다 .</h3>
             </c:if>
-	 <c:forEach var="nb" items="${freindsshared }">
+	 <c:forEach var="nb" items="${friendsshared }">
                 <c:url value="memberdeleteShared.do" var="url12">
 						<c:param name="postNo" value="${postNo }" />
 						<c:param name="postType" value="${postType }" />
