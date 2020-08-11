@@ -23,7 +23,7 @@
             td.p span { width:28%; display:inline-block; }
             a{
                 text-decoration:none;
-                color:  lightgray;
+                color:  #bd9dec;
             }
             input::-webkit-input-placeholder { 
                 color: lightgray; 
@@ -31,7 +31,7 @@
             #div1{
                 padding: 20px; 
                 font-size: 25px; 
-                background: lightgray; 
+                background: #bd9dec; 
                 margin: 0 auto; 
                 text-align: center;
             }
@@ -47,18 +47,18 @@
                 color: white; 
                 font-size: 16px; 
                 border-radius: 4px; 
-                background: black;
+                background: #bd9dec;
             }
             #check1{
                 float: left;
                 
             }
             #idsave{
-                color: lightgray;
+                color: #bd9dec;
                 float:left
             }
             #memberJoin{
-                background: darkgrey; 
+                background: #bd9dec; 
                 color: white; 
                 width: 600px; 
                 text-align: center; 
@@ -126,16 +126,6 @@
             <br>
             <hr>
             <br>
-            <div style="text-align: center;">
-            	<label style="color:lightgray;">준비중 입니당</label><br>
-                <label style="color:lightgray;">SNS 로그인</label>
-                <br>
-                <br>
-                <br>
-                <br>
-                <a href="kakaologin.do">카카오</a>
-                	
-            </div>
             
       		
         </form>

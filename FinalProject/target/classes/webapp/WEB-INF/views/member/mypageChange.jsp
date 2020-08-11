@@ -5,7 +5,7 @@
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title></title>
 <style>
-     #hansol{
+     #memberinfo{
           width: 4000px;
       }
 
@@ -171,7 +171,7 @@
 </style>
 
 <body>
-<div id="hansol">
+<div id="memberinfo">
 <hr>
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
