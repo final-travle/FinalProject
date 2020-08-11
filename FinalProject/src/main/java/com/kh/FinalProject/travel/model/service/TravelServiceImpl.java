@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.travel.model.dao.TravelDao;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
@@ -87,5 +88,56 @@ public class TravelServiceImpl implements TravelService {
 	public Board selectPlan(int postNo) {
 		return td.selectPlan(postNo);
 	}
+
+	@Override
+	public ArrayList<PostTag> getPostTagList(int postNo) {
+		return td.getPostTagList(postNo);
+	}
+
+	@Override
+	public int planModifyB(int postNo) {
+		return td.planModifyB(postNo);
+	}
+
+	@Override
+	public int planModifyPT(int postNo) {
+		return td.planModifyPT(postNo);
+	}
+	
+	@Override
+	public int ModifyTag(PostTag tg) {
+		return td.ModifyTag(tg);
+	}
+
+	@Override
+	public int planModifyPost(Board b) {
+		return td.planModifyPost(b);
+	}
+
+	@Override
+	public int planMoidfyPoint(Travel tv) {
+		return td.planMoidfyPoint(tv);
+	}
+
+	@Override
+	public int likeUp(LikedPost lp) {
+		return td.likeUp(lp);
+	}
+
+	@Override
+	public LikedPost likedView(LikedPost lp) {
+		return td.likedView(lp);
+	}
+
+	@Override
+	public int likeUpdate(LikedPost lp) {
+		return td.likeUpdate(lp);
+	}
+
+	@Override
+	public int insertLike(LikedPost lp) {
+		return td.insertLike(lp);
+	}
+
 
 }
