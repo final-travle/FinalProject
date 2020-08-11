@@ -12,6 +12,7 @@
 		<typeAlias type="com.kh.FinalProject.member.model.vo.PageInfo" alias="PageInfo"/>
 		<typeAlias type="com.kh.FinalProject.member.model.vo.FriendsPage" alias="FriendsPage"/>
 		<typeAlias type="com.kh.FinalProject.chat.model.vo.Chatroom" alias="Chatroom"/>
+		<typeAlias type="com.kh.FinalProject.chat.model.vo.OneToOne" alias="OneToOne"/>
 		
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Travel" alias="Travel"/>

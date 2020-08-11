@@ -1,8 +1,10 @@
 package com.kh.FinalProject.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.OneToOne;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
 
@@ -19,5 +21,9 @@ public interface ChatService {
 	Chatroom selectOpenChatroom(String chatroomname);
 
 	int updateProfile(Member m);
+
+	OneToOne selectOneToOneRoom(HashMap<String, String> map);
+
+	int insertOneToOneRoom(HashMap<String, String> map);
 
 }

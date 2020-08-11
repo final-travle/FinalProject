@@ -3,6 +3,7 @@ package com.kh.FinalProject.chat.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.FinalProject.chat.model.service.ChatService;
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.OneToOne;
 import com.kh.FinalProject.member.model.service.MemberService;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
@@ -54,6 +56,7 @@ public class ChatController {
 			for(int i =0;i<al.size();i++) {
 				mal.add(cService.friendsInfo(al.get(i)));
 			}
+			System.out.println("친구 정보" + mal);
 		 
 		 ArrayList<Chatroom> chatroomList = new ArrayList();
 		 chatroomList = cService.selectChatroomList();
@@ -255,6 +258,40 @@ public class ChatController {
 			
 			return profileFileName;
 		}
+	 
+		
+		  @RequestMapping("insertOneToOneChatroom.do")
+		  public ModelAndView insertOneToOneChatroom(ModelAndView mv, HttpServletRequest request, HttpSession session,
+				  																	@RequestParam(value="friendId", required=false) String friendId) {
+			  
+			  Member loginUser = (Member)session.getAttribute("loginUser");
+			  
+			  HashMap <String, String> map = new HashMap<>();
+			  map.put("myId", loginUser.getId());
+			  map.put("friendId", friendId);
+			  
+			  OneToOne oto = new OneToOne();
+			  oto = cService.selectOneToOneRoom(map);
+			  System.out.println("1대1방 검색 결과 : " + oto);
+			  
+			  if(oto == null) {
+				  int result = cService.insertOneToOneRoom(map);
+				  
+				  oto=cService.selectOneToOneRoom(map);
+				  if(result > 0) {
+					  session.setAttribute("co_no", oto.getCo_no());
+					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+				  }
+				  
+			  }else {
+				  session.setAttribute("co_no", oto.getCo_no());
+				  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+			  }
+			  
+			  return mv;
+		  }
+		 
+		  
 }
 
 
