@@ -27,12 +27,13 @@
 	<context:component-scan base-package="com.kh.FinalProject" />
 	
 	<beans:bean id="echoHandler" class="com.kh.FinalProject.EchoHandler"/>
-	<beans:bean id="echoRoomHandler" class="com.kh.FinalProject.EchoRoomHandler"></beans:bean>
-	
+	<beans:bean id="echoRoomHandler" class="com.kh.FinalProject.EchoRoomHandler"/>
+	<beans:bean id="OneToOneHandler" class="com.kh.FinalProject.OneToOneHandler"/>
 	
 	<websocket:handlers>
 		<websocket:mapping handler="echoHandler" path="/echo"/>
 		<websocket:mapping handler="echoRoomHandler" path="/echoroom"/>
+		<websocket:mapping handler="OneToOneHandler" path="/onetoone"/>
 		
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />

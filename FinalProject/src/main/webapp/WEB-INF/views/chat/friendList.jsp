@@ -289,6 +289,37 @@ input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
+.updateNickname {
+  position:absolute;
+  display:block;
+  z-index:93;
+  width:300px;
+  height:120px;
+  top:25%;
+  left:20%;
+  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg");
+  border:1px #BCA9F5;
+  border-radius:10px;
+  overflow:hidden;
+  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+/* 모달 윈도우가 팝업되는 코어 소스 */
+input#updateNickname[type=checkbox]:checked ~ .updateNickname {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
 .myprofile_detail_modal {
   position:absolute;
   display:block;
@@ -390,6 +421,37 @@ input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   transform: scale(1, 1);
 }
 
+.friend_profile_detail2 {
+  position:absolute;
+  display:block;
+  z-index:92;
+  width:320px;
+  height:350px;
+  top:20%;
+  left:20%;
+ /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
+ background:white;
+  border:4px solid black;
+  border-radius:5%;
+  overflow:hidden;
+  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+/* 모달 윈도우가 팝업되는 코어 소스 */
+input#friend_profile_detail2[type=checkbox]:checked ~ .friend_profile_detail2 {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
 
 
 #makeopenchat_modal{
@@ -469,14 +531,15 @@ textarea:focus{
 	onclick="openFriendListModal();" title="친구">
 	
 	
-	<img src="${pageContext.request.contextPath}/resources/images/chatroomlist.png"  
-	style="height:40px; width:40px; margin-left:15px; margin-top:20px;cursor:pointer;"
+	<img src="${pageContext.request.contextPath}/resources/images/onetooneList.png"  
+	style="height:50px; width:50px; margin-left:10px; margin-top:20px;cursor:pointer;"
 	onclick="openChatroomListModal();" title="1대1채팅">
 	
 	
 	<img src="${pageContext.request.contextPath}/resources/images/openchatroomlist.png"  
 	style="height:60px; width:60px; margin-left:5px; margin-top:20px;cursor:pointer;"
 	onclick="openOpenChatroomListModal();" title="오픈채팅">
+	
 	
 </div>
 
@@ -490,8 +553,64 @@ textarea:focus{
   	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
   	  	
   	  	<p style="font-size:20px;margin-left:15px;float:left">${loginUser.nickname}</p>
+  	  	<img src="${pageContext.request.contextPath}/resources/images/updatenickname.png" onclick="updateNickname();"
+  	  	style="width:30px;height:30px;float:left;margin-top:12px;margin-left:2px;cursor:pointer;">
   	  </div>
  </div>
+ <input type="checkbox" id="updateNickname">
+ <div class="updateNickname">
+ 	<p style="text-align:center;">변경할 닉네임</p>
+ 	<form action="updateNickname.do" name="updateNicknameForm" id="updateNicknameForm">
+ 		<input type="text" id="inputNickname" name="inputNickname" autocomplete="off" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+ 		<br>
+ 		<button type="button" onclick="close_updateNicknameForm();">취소</button>
+ 		<button type="button" onclick="submit_updateNicknameForm();">확인</button>
+ 	</form>
+ </div>
+ <script>
+ 	function noSpaceForm(obj){
+ 		if(obj.value == " "){
+ 			alert("첫 글자는 띄어쓰기 불가능합니다");
+ 			obj.focus();
+ 			obj.value = obj.value.replace(' ','');
+ 			return false;
+ 		}
+ 	}
+ 	function updateNickname(){
+ 		$("input:checkbox[id='updateNickname']").prop("checked", true);	
+ 		$("#updateNickname").prop("checked", true);
+ 	}
+ 	function close_updateNicknameForm(){
+ 		$("#inputNickname").val('');
+ 		
+ 		$("input:checkbox[id='updateNickname']").prop("checked", false);	
+ 		$("#updateNickname").prop("checked", false);
+ 	}
+ 	
+ 	
+ 	$(function (){
+ 		$("#inputNickname").keydown(function(key){
+ 			if(key.keyCode == 13){
+ 				var nickname = $("#inputNickname").val();
+ 				console.log("nickname1 = " + nickname);
+ 				if(nickname == ""){
+ 					alert("새로운 별명을 입력해주세요");
+ 					event.preventDefault();
+ 				}else{
+ 					updateNicknameForm.submit();
+ 				}
+ 			}
+ 		})
+ 	})
+ 	function submit_updateNicknameForm(){
+ 		if(nickname == ""){
+				alert("새로운 별명을 입력해주세요");
+			}else{
+				updateNicknameForm.submit();
+			}
+ 	}
+ </script>
+ 
  <input type="checkbox" id="myprofile_detail_modal">
  <div class="myprofile_detail_modal">
  
@@ -682,6 +801,19 @@ textarea:focus{
  			})
  		})
  	</script>
+ 	<script>
+ 		var friendId=""
+ 		
+ 		$(function(){
+ 			$(".chat_friend_profile_detail").click(function(){
+ 				var img = $(this).attr("src");
+ 				var friend_profile = img.substring(img.lastIndexOf("/")+1);
+ 				$(".friendsprofile_detail").attr("src",img);
+ 				
+ 				friend_profile_detail2();
+ 			})
+ 		})
+ 	</script>
 
 <input type="checkbox" id="friend_profile_detail">
  <div class="friend_profile_detail"> 
@@ -705,10 +837,21 @@ textarea:focus{
   	  	}
   	  </script>
   	  
+  	  
   	  <%-- <form action="insertOneToOneChatroom.do" name="insertOneToOneForm">
   	  		<input type="hidden" name="myId" value="${loginUser.id }">
   	  		<input type="hidden" name="friendId" value="">
   	  </form> --%>
+ </div>
+ 
+ <input type="checkbox" id="friend_profile_detail2">
+ <div class="friend_profile_detail2"> 
+ 	
+	<img class="friendsprofile_detail" src="" 
+	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
+	
+	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
+  	  style="width:60px;height:50px;margin-left:127px;cursor:pointer;" onclick="close_friend_profile_detail2();">
  </div>
  
  <script>
@@ -720,6 +863,14 @@ textarea:focus{
  		$("input:checkbox[id='friend_profile_detail']").prop("checked", false);	
  		$("#friend_profile_detail").prop("checked", false);
  	}
+ 	function friend_profile_detail2(){
+ 		$("input:checkbox[id='friend_profile_detail2']").prop("checked", true);	
+ 		$("#friend_profile_detail2").prop("checked", true);
+ 	}
+ 	function close_friend_profile_detail2(){
+ 		$("input:checkbox[id='friend_profile_detail2']").prop("checked", false);	
+ 		$("#friend_profile_detail2").prop("checked", false);
+ 	}
  	
  	$('#friend_profile').click(function(){
  	   $(this).attr
@@ -728,10 +879,37 @@ textarea:focus{
 
 <input type="checkbox" id="modal2">
 <div class="chatroom_modal">
-	채팅
+	<div class="container">
 	
+		<table class="table table-striped table-bordered table-hover">
+		
+		<c:forEach var="onetooneList" items="${onetooneList }">
+			<tr>
+				<td align="left" style="width:500px;">
+				<div style="float:left;height:80px;">
+					<img src="${pageContext.request.contextPath}/resources/profile/${onetooneList.profile}" 
+  	  				style="margin-left:10px;width:50px;height:50px;border-radius:40%;cursor:pointer;"class="chat_friend_profile_detail">
+				</div>
+				<div style="float:left;height:50px;width:280px;overflow:hidden;">
+					<c:url var="chatroom" value="enterOneToOneChatroom.do">
+						<c:param name="co_no" value="${onetooneList.co_no}"/>
+					</c:url>
+					<p style="font-size:30px;margin-left:20px;margin-top:-6px;">
+						<a href="#" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
+						style="color:black;text-decoration:none;" >${onetooneList.nickname }</a>
+					</p>
+					<p style="margin-top:-30px;margin-left:20px;">
+						${onetooneList.message_cont }
+					</p>
+				</div>
+			
+				</td>
+			</tr>
+			</c:forEach>
+	</table>
 	<br><br><br><br><br>
 	<br><br><br><br>
+</div>
 </div>
 
 <input type="checkbox" id="modal3">
