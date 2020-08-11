@@ -33,7 +33,7 @@
 	.travelAWrap ul li p.addr { color:#666; font-size:12px; }
 	
 	.rightBox { float:left; width:90%; height:100%; position:relative; }
-	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 160px; padding:20px; background:rgba(255,255,255,.7);}
+	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7);}
 	#map { width:100%; height:921px; }
 	
 	.tagWrap input { display:none; }
@@ -48,9 +48,10 @@
 <!-- day night 값 입력 받는 폼 -->
 
 <div id="container" class="cf">
-	<div class="titleInput">
-		<input type="text" name="mtitle" id="mtitle" placeholder="제목을 입력하세요"/>
-	</div>
+	<div class="inputWrap cf">
+		<div class="titleInput">
+			<input type="text" name="mtitle" id="mtitle" placeholder="제목을 입력하세요"/>
+		</div>
 		<div class="leftSelBox">
 			<div class="stateWrap">
 				<ul class="state">
@@ -84,12 +85,12 @@
 				<button class="btn">취소</button>
 			</div>
 		</div>
-
-<div class="tagWrap">
-<c:forEach var="tag" items="${tag }">
-	<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"><label for="${tag.tagName }"># ${tag.tagName }</label>
-</c:forEach>
-</div>
+	</div>
+	<div class="tagWrap">
+	<c:forEach var="tag" items="${tag }">
+		<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"><label for="${tag.tagName }"># ${tag.tagName }</label>
+	</c:forEach>
+	</div>
 </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
@@ -408,12 +409,9 @@
        	// 좌측 경로 삭제
          $(document).on("click", ".stateWrap .dayNight .dnCont", function() {
         	 // dayNight 의 마지막 li의 값을 뽑아온다
-  			var lastli = $(".dayNight").find(".dn").eq(dnClick).find("li").last().html();
+  			var lastli = $(this).parents(".dn").children("li").last().html();
         	var thisli = $(this).html();
-        	 
-        	 console.log(lastli);
-        	 console.log(thisli);
-        	 
+        	
         	ck = $(this).parent().index();
         	number = $(this).index();
         	

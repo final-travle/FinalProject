@@ -1,20 +1,23 @@
 package com.kh.FinalProject.travel.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +34,7 @@ import com.kh.FinalProject.travel.model.service.TravelService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
@@ -556,7 +560,7 @@ public class TravelController {
 	
 	
 	@RequestMapping("planDetail.do")
-	public ModelAndView planDetail(ModelAndView mv, int postNo, @RequestParam("page") Integer page) {
+	public ModelAndView planDetail(HttpSession session, ModelAndView mv, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
 		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
 		int currentPage = 1;
 		if(page != null) {
@@ -568,9 +572,19 @@ public class TravelController {
 		// 조회수 올려준다.
 		int result = ts.hitsUp(postNo);
 		
+		// 로그인 된 유저 아이디 가져온다.
+		Member m = (Member) session.getAttribute("loginUser");
+		if(m != null) {
+			lp.setUserId(m.getId());
+			lp.setPostNo(postNo);
+		
+		}
+		LikedPost liked = ts.likedView(lp);
+		
+		
 		MapBoard mb = ts.likeVoteView(postNo);
 		
-		System.out.println(mb);
+		System.out.println(liked);
 		
 		if(result > 0) {
 			Board b = ts.selectPostView(postNo);
@@ -589,6 +603,7 @@ public class TravelController {
 				.addObject("travel", t)
 				.addObject("currentPage", currentPage)
 				.addObject("dayNum", dayNum)
+				.addObject("liked", liked)
 				.addObject("mapList", mb)
 				.setViewName("travel/planDetail");
 				
@@ -602,14 +617,332 @@ public class TravelController {
 		return mv;
 	}
 	
-	@RequestMapping("planModifyForm.do")
-	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) {
+	
+	@RequestMapping("likeUp.do")
+	public void likeUp(HttpServletResponse response,
+						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postNo") int postNo,
+						LikedPost lp) throws IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+
+		JSONObject jso = new JSONObject();
 		
+		
+		String msg = "";
+		
+		if(userId.isEmpty()) {
+			msg = "error";
+		}else {
+			msg = "success";
+			
+			lp.setUserId(userId);
+			lp.setPostNo(postNo);
+
+			int lc = 0;
+			int vc = 0;
+			String userLiked = null;
+
+			LikedPost lpList = ts.likedView(lp);
+			
+			if(lpList == null) {
+				int lur = 0;
+				lur = ts.insertLike(lp);
+
+				lp.setLikeYn("Y");
+				
+			}else {
+				
+				lp.setLikeYn(lpList.getLikeYn());
+				
+				System.out.println("lpList : " + lpList);
+				System.out.println("lpList YN : " + lpList.getLikeYn());
+				
+				int lpr = 0;
+				
+				lpr = ts.likeUp(lp);
+				if(lpList.getLikeYn().equals("Y")) {					
+					lp.setLikeYn("N");
+				}else {
+					lp.setLikeYn("Y");
+				}
+				
+			}
+			
+			System.out.println("* lp : " + lp);
+			int result = 0;
+
+			result = ts.likeUpdate(lp);
+			//////
+			LikedPost lpv = new LikedPost();
+			MapBoard mb = new MapBoard();
+			
+			lpv = ts.likedView(lp);
+			userLiked = lp.getLikeYn();
+			
+			System.out.println("* userLiked : " + userLiked);
+			
+			
+			lp.setLikeYn(userLiked);
+			lp.setPostNo(postNo);
+			
+			mb = new MapBoard();
+			
+			mb = ts.likeVoteView(postNo);
+			
+			lc = mb.getLikeTotal();
+			vc = mb.getVoteTotal();
+
+			jso.put("lc", lc);
+			jso.put("vc", vc);
+			
+			jso.put("userLiked", userLiked);
+			
+			response.setContentType("text/html; charset=utf-8");
+				
+		}
+			
+
+		jso.put("msg", msg);
+		
+		PrintWriter out = response.getWriter();
+		out.print(jso.toString());
+		out.flush();
+		
+		
+	}
+	
+	
+
+	@RequestMapping("planModifyForm.do")
+	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) throws Exception {
+
+        StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D (URL - Encode)", "UTF-8")); /*공공데이터포털에서 발급받은 인증키*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("20", "UTF-8")); /*한 페이지 결과수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+//        urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*지역코드, 시군구코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        
+        // 총 갯수 찾기
+        Pattern pattern = Pattern.compile("<totalCount>(.+?)</totalCount>");
+        Matcher matcher = pattern.matcher(sb);
+        matcher.find();
+        
+        // String > int 변환
+        String total = matcher.group(1);        
+        int tt =Integer.parseInt(total);
+        
+        System.out.println(sb);
+        
+        String[] nameArr = new String[tt];
+        String[] codeArr = new String[tt];
+        
+        
+//        System.out.println(tt);
+        
+    	// 이름값
+        Pattern nameTag = Pattern.compile("<name>(.+?)</name>");
+        Matcher ctname = nameTag.matcher(sb);
+        
+        // 지역코드
+        Pattern codeTag = Pattern.compile("<code>(.+?)</code>");
+        Matcher codeNo = codeTag.matcher(sb);
+
+        
+        int matchCount = 0;
+        
+        // 지역명 배열에 담기
+        while (ctname.find()) {
+        	String name = ctname.group(1);
+        	
+        	nameArr[matchCount] = name;
+        	
+//            System.out.println(matchCount + " : " + name);
+            matchCount++;
+        }
+
+        // 지역명 배열에 담기
+        matchCount = 0;	// 카운트 리셋
+        while (codeNo.find()) {
+        	String code = codeNo.group(1);
+        	
+        	codeArr[matchCount] = code;
+        	
+            matchCount++;
+        }
+        
+        ArrayList<City> city = new ArrayList<City>();
+        
+        for(int i = 0; i < nameArr.length; i++) {
+        	City ct = new City(nameArr[i],codeArr[i]);
+        	city.add(ct);
+        } 
+        
+       // 태그
+        ArrayList<Tag> tag = ts.getTagList();
+        
+        // 선택했던 여행지 얻어오기
+        ArrayList<Travel> tv = ts.selectTravelList(postNo);
+
+		Travel tLast = tv.get(tv.size() - 1);
+		
+		System.out.println(tLast.getNight());
+		
+		int dayNum = tLast.getNight();
+        // 선택한 태그 값 얻어오기
+        ArrayList<PostTag> pt = ts.getPostTagList(postNo);
+        
 		Board planOne = ts.selectPlan(postNo);
 		
-		mv.addObject("plan", planOne).setViewName("travel/planModify");
+		mv.addObject("plan", planOne);
+        mv.addObject("tag", tag);
+        mv.addObject("pt", pt);
+        mv.addObject("tlist", tv);
+        mv.addObject("dayNum", dayNum);
+		mv.addObject("city", city);
+		mv.setViewName("travel/planModify");
 		
 		
 		return mv;
 	}
+
+	
+
+	@RequestMapping(value = "pModify.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String planModify(HttpServletResponse response, HttpSession session, @RequestBody List<Object> posex, Board b, Travel tv, PostTag tg) {
+		response.setContentType("aplication/json; charset=utf-8");
+
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
+		
+		String userId = mb.getId();
+
+		// json에 붙어 온 postNo 를 저장한다.
+		int postNo = (int) posex.remove(10);
+		
+		System.out.println("postNo : " + postNo);
+		
+		// json에 붙어 온 firstImg 를 저장한다.
+		String firstImg = (String) posex.remove(9);
+		
+		// json에 붙어온 제목 가져와 잘라내 저장한다.
+		String mtitle = (String)posex.remove(8);
+		
+		// json에 붙어온 tagList를 저장한다.
+		ArrayList tagList = (ArrayList) posex.remove(7);
+		
+		
+		ArrayList tTypeArr = (ArrayList) tagList.get(0);
+		ArrayList tNameArr = (ArrayList) tagList.get(1);
+
+		b.setPostNo(postNo);
+		b.setTitle(mtitle);
+		b.setUserId(userId);
+		b.setThumbnail(firstImg);
+
+		int result = 0;
+
+		// 제목 수정
+		result = ts.planModifyPost(b);
+		
+		// 해당 postNo에 있는 travel 좌표들을 삭제한다.
+		int mr = 0;
+		mr = ts.planModifyB(postNo);
+		
+		if(mr > 0) {
+				// 넘어온 json object를 배열 단위로 풀어준다.
+			    for(int i = 0; i < posex.size(); i ++) {
+
+			    	// 배열값이 비었는지 확인하기 위하여 먼저 배열화함
+			    	ArrayList testli = (ArrayList) posex.get(i);
+
+			    	if(testli.isEmpty() == false) {
+			    
+				    	List<Object> mList = (List<Object>) posex.get(i);
+	
+				    	
+				    	// 날짜별 지역을 찍어준다.
+				    	for(int j = 0; j < mList.size(); j ++) {
+					    	int piResult = 0;
+				    		
+				    		// title과 latlng, code 나누기 위한 map 선언
+				    		Map<String, Object> mlInfo = (Map<String, Object>) mList.get(j);
+			
+				    		String pTitle = (String) mlInfo.get("title");
+			//	    		System.out.println(pTitle);
+			
+				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//System.out.println(ptcode);
+				    		
+				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
+				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
+			
+				    		double xpoint = (Double) latlng.get("Ga");
+				    		double ypoint = (Double) latlng.get("Ha");
+			//	    		System.out.println(xpoint + ", " + ypoint);
+					    		
+					    	tv.setNight(i);
+					    	tv.setPostNo(postNo);
+					    	tv.settCode(ptcode);
+					    	tv.settName(pTitle);
+					    	tv.setTxpoint(xpoint);
+					    	tv.setTypoint(ypoint);
+					    	
+					    	piResult = ts.planMoidfyPoint(tv);
+					    	
+					    	
+			    		}
+			    		
+			    	}
+
+		    	}
+			
+		}
+		
+		// POST TAG 삭제
+		int ptr = 0;
+		ptr = ts.planModifyPT(postNo);
+
+		if(ptr > 0) {
+			// post tag 테이블에 추가
+			for(int i = 0; i < tTypeArr.size(); i ++) {
+				int tResult = 0;
+				
+				String tagType = (String) tTypeArr.get(i);
+				String tagName = (String) tNameArr.get(i);
+				
+				tg.setTagType(tagType);
+				tg.setTagName(tagName);
+				tg.setPostNo(postNo);
+				
+				tResult = ts.ModifyTag(tg);
+				
+			}
+		}
+		
+		 return null;
+	    
+	}
+	
 }

@@ -33,7 +33,7 @@
 	.travelAWrap ul li p.addr { color:#666; font-size:12px; }
 	
 	.rightBox { float:left; width:90%; height:100%; position:relative; }
-	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7);}
+	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 160px; padding:20px; background:rgba(255,255,255,.7);}
 	#map { width:100%; height:921px; }
 	
 	.tagWrap input { display:none; }
@@ -49,10 +49,9 @@
 <!-- day night 값 입력 받는 폼 -->
 
 <div id="container" class="cf">
-	<div class="inputWrap cf">
-		<div class="titleInput">
-			<input type="text" name="mtitle" id="mtitle" placeholder="제목을 입력하세요" value="${plan.title }"/>
-		</div>
+	<div class="titleInput">
+		<input type="text" name="mtitle" id="mtitle" placeholder="제목을 입력하세요" value="${plan.title }"/>
+	</div>
 		<div class="leftSelBox">
 			<div class="stateWrap">
 				<ul class="state">
@@ -78,6 +77,7 @@
 			</div>
 		</div>
 	
+	
 		<div class="rightBox">
 			<div id="map"></div>
 			<div class="btns">
@@ -85,19 +85,19 @@
 				<button class="btn">취소</button>
 			</div>
 		</div>
-	</div>
-	
-	<div class="tagWrap">
-		<c:forEach var="tag" items="${tag }">
-			<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"
-			<c:forEach var="pt" items="${pt }">
-				<c:if test="${pt.tagName eq tag.tagName }">
-				checked="checked"
-				</c:if>
-			</c:forEach>
-			><label for="${tag.tagName }" ># ${tag.tagName }</label>
-	</c:forEach>
-	</div>
+
+<div class="tagWrap">
+	<c:forEach var="tag" items="${tag }">
+		<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"
+		<c:forEach var="pt" items="${pt }">
+			<c:if test="${pt.tagName eq tag.tagName }">
+			checked="checked"
+			</c:if>
+		</c:forEach>
+		><label for="${tag.tagName }" ># ${tag.tagName }</label>
+</c:forEach>
+<br/>
+</div>
 </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
@@ -172,6 +172,7 @@
 		dnOption = ${dayNum} + 1;
 		var dnText = (${dayNum} + 1) + '박 ' + (${dayNum} + 2) + '일';
 		
+		console.log(dnOption + "/" + dnText);
 		$(".daySelectWrap").hide();
 		
 		
@@ -201,12 +202,11 @@
 			var XP = "${tv.txpoint}";
 			var YP = "${tv.typoint}";
 			var tvDataTit = "${tv.tName}";
-			var tcode = "${tv.tCode}";
 			
 			var night = "${tv.night}";
           		
         // 배열 추가 설정
-			str = {title: tvDataTit, latlng: new kakao.maps.LatLng(YP, XP), tcode : tcode};
+			var str = {title: tvDataTit, latlng: new kakao.maps.LatLng(YP, XP)};
 			switch(night){
 				case '0' : pea.push(str); break;
 				case '1' : peb.push(str); break;
@@ -258,6 +258,8 @@
 			    lineLine[i].push(polyline);
 
 	   			mapPointView();
+	   			console.log(posArr);
+	   			console.log(lineLine);
 			}
 
 		}
@@ -500,7 +502,7 @@
          function pointDelete(map){
         	console.log(ck - 1);
         	console.log(number - 1);
-        	
+        	 
   			posArr[(ck - 1)][(number - 1)].setMap(map);
   			lineLine[(ck - 1)][(number - 1)].setMap(map);
   			
@@ -526,31 +528,23 @@
      		var chkType = [];
      		var chkName = [];
      		var chkArr = [chkType, chkName];
-     		
-     		var firstImg = "${plan.thumbnail}";
-     		var postNo = ${plan.postNo};
-     		
-     		console.log(firstImg);
-     		
      		$('input:checkbox[name=tag]:checked').each(function () {
-     			chkArr.push($(this).val());
+     			//chkArr.push($(this).val());
      			chkName.push($(this).val());
      			chkType.push($(this).attr("class"));
      		});
      		
      		posex.push(chkArr);
+     		posex.push(firstImg);
      		
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		
      		posex.push(mtitle);
-     		
-     		posex.push(firstImg);
-     		posex.push(postNo);
 
      		 $.ajax({
      	        type: "POST",
-     	        url: "pModify.do",
+     	        url: "pInsert.do",
      	        data: JSON.stringify(posex),
      	        contentType:'application/json; charset=UTF-8',
      	        dataType:"text",
