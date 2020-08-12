@@ -869,7 +869,7 @@ public class TravelController {
 		// 해당 postNo에 있는 travel 좌표들을 삭제한다.
 		int mr = 0;
 		mr = ts.planModifyB(postNo);
-		
+		String msg = "글이 정상적으로 수정되었습니다.";
 		if(mr > 0) {
 				// 넘어온 json object를 배열 단위로 풀어준다.
 			    for(int i = 0; i < posex.size(); i ++) {
@@ -941,8 +941,16 @@ public class TravelController {
 			}
 		}
 		
-		 return null;
+		 return msg;
 	    
 	}
 	
+	@RequestMapping("planDelete.do")
+	public String planDelete(@RequestParam("postNo") int postNo) {
+		int result = 0;
+		result = ts.planDelete(postNo);
+		
+		return "redirect:planList.do";
+		
+	}
 }

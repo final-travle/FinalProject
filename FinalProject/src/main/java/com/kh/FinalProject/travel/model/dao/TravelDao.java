@@ -121,6 +121,10 @@ public class TravelDao {
 		return sqlSessionTemplate.update("travelMapper.insertLike", lp);
 	}
 
+	public int planDelete(int postNo) {
+		return sqlSessionTemplate.update("travelMapper.planDelete", postNo);
+	}
+
 
 
 }

@@ -63,6 +63,8 @@ public interface TravelService {
 
 	int insertLike(LikedPost lp);
 
+	int planDelete(int postNo);
+
 
 
 }

@@ -46,7 +46,7 @@
                 <li><a href="#none">홈</a></li>
                 <li><a href="planList.do">플랜</a></li>
                 <li><a href="#none">탐색</a></li>
-                <li><a href="#none">리뷰</a></li>
+                <li><a href="reviewListView.do">리뷰</a></li>
                 <li><a href="#none">이벤트</a></li>
             </ul>
         </nav>

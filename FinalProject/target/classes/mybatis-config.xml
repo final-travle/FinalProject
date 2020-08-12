@@ -27,5 +27,6 @@
 		<mapper resource="/mappers/friends-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/travel-mapper.xml"/>
+		<mapper resource="/mappers/review-mapper.xml"/>
 	</mappers>
 </configuration>

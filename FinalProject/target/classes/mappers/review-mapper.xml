@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+	<resultMap type="Board" id="boardResultSet">
+		<id property="postNo" column="POST_NO"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="thumbnail" column="THUMBNAIL" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="postContents" column="POST_CONTENTS" />
+		<result property="hits" column="HITS" />
+		<result property="wirteDate" column="WRITE_DATE" />
+		<result property="postDelYn" column="POST_DEL_YN" />
+		<result property="FileName" column="FILE_NAME" />
+	</resultMap>
+	
+	<resultMap type="PostTag" id="postTagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+	</resultMap>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE POST_TYPE = '4'
+		AND POST_DEL_YN = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '4'
+		AND POST_DEL_YN = 'N'
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<select id="selectListTag" resultMap="postTagResultSet">
+		SELECT *
+		FROM POST_TAG
+	</select>
+</mapper>

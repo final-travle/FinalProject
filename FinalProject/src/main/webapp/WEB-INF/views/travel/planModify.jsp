@@ -501,11 +501,14 @@
         	console.log(ck - 1);
         	console.log(number - 1);
         	
+        	console.log(linePath);
+        	
   			posArr[(ck - 1)][(number - 1)].setMap(map);
   			lineLine[(ck - 1)][(number - 1)].setMap(map);
   			
       		posArr[(ck - 1)].splice((number - 1), 1);
       		lineLine[(ck - 1)].splice((number - 1), 1);
+      		
       		posex[(ck - 1)].splice((number - 1), 1);
 
          }

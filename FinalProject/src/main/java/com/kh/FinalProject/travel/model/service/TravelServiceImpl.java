@@ -139,5 +139,10 @@ public class TravelServiceImpl implements TravelService {
 		return td.insertLike(lp);
 	}
 
+	@Override
+	public int planDelete(int postNo) {
+		return td.planDelete(postNo);
+	}
+
 
 }

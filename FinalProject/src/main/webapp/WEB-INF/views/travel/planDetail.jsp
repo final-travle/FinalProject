@@ -15,6 +15,7 @@
 	.leftBox {  }
 	div.rightBox { float:left; width:74%; height:100%; position:relative; }
 	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7); }
+	.rightBox .btns .delete {color : #bd9dec; font-weight:700; }
 	.ltSec span:hover { cursor:pointer; }
 	
 	.btns a { display:inline-block; }
@@ -62,12 +63,27 @@
 					</c:url>
 				<div class="btns">
 					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="#none" class="btn delete">삭제</a>
 				</div>
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
     </div><!-- // container end -->
 <script>
+
+	$(".btns .delete").on("click", function(){
+		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
+		if(result){
+			<c:url var="planDelete" value="planDelete.do">
+				<c:param name="postNo" value="${board.postNo }"/>
+			</c:url>
+			location.href="${planDelete }";
+		    alert("삭제되었습니다.");
+		}else{
+		    
+		}
+	});
+
 	userId = "${loginUser.id}";
 	postNo = ${board.postNo };
 	like = "${liked.likeYn }";
