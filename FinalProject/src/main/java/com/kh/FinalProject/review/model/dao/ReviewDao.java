@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.Tag;
 
 @Repository("rd")
 public class ReviewDao {
@@ -31,6 +32,14 @@ public class ReviewDao {
 
 	public ArrayList<PostTag> selectListTag() {
 		return (ArrayList)sqlSessionTemplate.selectList("reviewMapper.selectListTag");
+	}
+
+	public ArrayList<Tag> getTagList() {
+		return (ArrayList)sqlSessionTemplate.selectList("travelMapper.getTagList");
+	}
+
+	public int reviewInsert(Board b) {
+		return sqlSessionTemplate.insert("reviewMapper.insertReivew", b);
 	}
 	
 }

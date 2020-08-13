@@ -44,6 +44,7 @@
 </style>
 </head>
 <body>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <jsp:include page="../common/header.jsp" />
 <!-- day night 값 입력 받는 폼 -->
 
@@ -80,17 +81,24 @@
 	
 		<div class="rightBox">
 			<div id="map"></div>
-			<div class="btns">
-				<button type="submit" class="btn colorBtn apply">등록</button>
-				<button class="btn">취소</button>
-			</div>
 		</div>
 	</div>
+	
+ <form method="post">
+ 	<textarea id="summernote" name="editordata"></textarea>
+ </form>
+	
 	<div class="tagWrap">
 	<c:forEach var="tag" items="${tag }">
 		<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"><label for="${tag.tagName }"># ${tag.tagName }</label>
 	</c:forEach>
 	</div>
+	
+<div class="btns">
+	<c:url var="rInsert" value="rInsert.do"/>
+	<button type="submit" class="btn colorBtn apply">등록</button>
+	<button class="btn">취소</button>
+</div>
 </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
@@ -107,7 +115,6 @@
 					<option value="6">5박 6일</option>
 					<option value="7">6박 7일</option>
 				</select>
-				<c:url var="pInsert" value="pInsert.do"/>
 				<div class="btns">
 					<button type="button" class="btn colorBtn apply">확인</button>
 					<button type="button" class="btn close">취소</button>
@@ -118,7 +125,43 @@
 		</div>
 		
 	<script>
+
+	$(function(){
+        $('#summernote').summernote({
+            height: 500,                 // 에디터 높이
+            minHeight: null,             // 최소 높이
+            maxHeight: null,             // 최대 높이
+            focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",					// 한글 설정
+            placeholder: '여행 후기를 입력해주세요 ;)',			
+			callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+		            for (var i = files.length - 1; i >= 0; i--) {
+		            	sendFile(files[i], this);
+		            }
+		        }
+			}
+		});
+	});
 	
+
+	function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: "POST",
+        	url: 'reviewImgSave.do',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+        		
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});
+  	};
 	
     // 지도
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -448,7 +491,7 @@
         	   
         });
         
-     	$(".rightBox .btns .apply").on("click", function(){
+     	$(".btns .apply").on("click", function(){
      		var chkType = [];
      		var chkName = [];
      		var chkArr = [chkType, chkName];
@@ -459,16 +502,24 @@
      		});
      		
      		posex.push(chkArr);
-     		posex.push(firstImg);
+     		
      		
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		
      		posex.push(mtitle);
 
+     		posex.push(firstImg);
+
+     		
+     		var test = $("#summernote").text();
+     		posex.push(mtitle);
+     		
+     		console.log(test);
+
      		 $.ajax({
      	        type: "POST",
-     	        url: "pInsert.do",
+     	        url: "rInsert.do",
      	        data: JSON.stringify(posex),
      	        contentType:'application/json; charset=UTF-8',
      	        dataType:"text",

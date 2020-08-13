@@ -214,5 +214,6 @@ h3.tit { font-size:26px; text-align:center; margin:30px 0; }
 
 /**/
 
-	.rightBox { float:left; width:90%; height:100%; position:relative; }
-	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7);}
+.rightBox { float:left; width:90%; height:100%; position:relative; }
+.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7);}
+.piCount { text-align:right; margin-bottom:16px; }

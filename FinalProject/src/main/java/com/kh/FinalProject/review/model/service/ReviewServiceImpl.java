@@ -9,6 +9,7 @@ import com.kh.FinalProject.review.model.dao.ReviewDao;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.Tag;
 
 @Service("rs")
 public class ReviewServiceImpl implements ReviewService {
@@ -29,6 +30,16 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public ArrayList<PostTag> selectListTag() {
 		return rd.selectListTag();
+	}
+
+	@Override
+	public ArrayList<Tag> getTagList() {
+		return rd.getTagList();
+	}
+
+	@Override
+	public int reviewInsert(Board b) {
+		return rd.reviewInsert(b);
 	}
 
 }

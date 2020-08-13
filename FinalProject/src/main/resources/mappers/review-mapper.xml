@@ -41,4 +41,19 @@
 		SELECT *
 		FROM POST_TAG
 	</select>
+	
+	<insert id="insertPlanB" parameterType="Board">
+		INSERT INTO POST VALUES (
+		'4'
+		, SEQ_MAP.NEXTVAL
+		, #{title}
+		, #{userId}
+		, #{thumbnail}
+		, NULL
+		, 0
+		, SYSDATE
+		, 'N'
+		, NULL
+		)
+	</insert>
 </mapper>
