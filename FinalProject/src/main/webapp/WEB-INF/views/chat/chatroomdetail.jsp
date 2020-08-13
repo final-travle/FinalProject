@@ -33,7 +33,7 @@ body {
 		}
 		#mymsg:after, #mymsg:before {
 			left: 100%;
-			top: 50%;
+			top: 10px;
 			border: solid transparent;
 			content: " ";
 			height: 0;
@@ -75,7 +75,7 @@ body {
 		}
 		#othermsg:after, #othermsg:before {
 			right: 100%;
-			top: 50%;
+			top: 10px;
 			border: solid transparent;
 			content: " ";
 			height: 0;
@@ -282,11 +282,40 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
  
 <div id="container">
 	<div id="chat" class="chat">
+	
+		<c:forEach var="crmsg" items="${crmsg }">
+			<c:if test="${loginUser.id  eq crmsg.chat_id }">
+				<div>
+					<div class='interval'>
+						<img src="${pageContext.request.contextPath}/resources/profile/${crmsg.profile}"
+						 style='float:right;width:40px;height:40px;border-radius:40%'>
+						<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
+						&nbsp;${crmsg.chat_content }&nbsp;</strong>
+					</div>
+				</div>
+				<br clear='both'>
+			</c:if>
+			<c:if test="${loginUser.id  ne crmsg.chat_id }">
+				<div>
+					<div class='interval'>
+						<img src="${pageContext.request.contextPath}/resources/profile/${crmsg.profile}"
+						style='width:40px;height:40px;border-radius:40%;float:left;'>
+						<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;${crmsg.nickname }</p>
+						<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+						${crmsg.chat_content }&nbsp;&nbsp;</strong>
+					</div>
+				</div>
+				<br clear='both'>
+			</c:if>
+	</c:forEach>
+	
+	
 		<div id="chatdata">
 			<input type="hidden" value="${loginUser.id }" id="userid">
 			<input type="hidden" value="${loginUser.nickname }" id="nickname">
 			<input type="hidden" value="${cr.chatroom_no }" id="chatroom_no">
 			<input type="hidden" value="${cr.chatroomname } " id="chatroomname">
+			<input type="hidden" value="${loginUser.profile }" id="profile">
 		</div>
 	</div>
 		<form id="chatForm">
@@ -378,6 +407,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 	   /* --------------------------------------------------------------------------------------------------------------- */
 	function sendMessage(){
 		var msgData = {
+				user_profile : $("#profile").val(),
 				user_nickname : $("#nickname").val(),
 				chatroom_no : $("#chatroom_no").val(),
 				msg : $("#message").val()
@@ -392,36 +422,13 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		var sessionid = null;
 		var message = null;
 		var chatroom = null;
+		var profile = null;
 		
-		
-		/* var nickname = $("#nickname").val(); */
 		
 		console.log("데이타 : " + data);
 		
 		
 		
-		/* if(chatroom == currentchatroom){
-			if(nickname == data){
-				var printHTML = "<div>";
-				printHTML += "<div>";
-				printHTML += "<strong>"+nickname+"</strong>";
-				printHTML += "</div>";
-				printHTML += "</div>";
-				
-				$("#chatRoomUserList").append(printHTML);
-			}else if(nickname ^= data){
-				var printHTML = "<div>";
-				printHTML += "<div>";
-				printHTML += "<strong>"+data+"</strong>";
-				printHTML += "</div>";
-				printHTML += "</div>";
-				
-				$("#chatRoomUserList").append(printHTML);
-			}
-		}  */
-		
-		
-		//여기보다가 end
 		var strArray = data.split("|");
 		
 		for(var i=0; i<strArray.length;i++){
@@ -433,11 +440,13 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		
 		//1. 채팅방번호  2.세션아이디 3.메세지내용
 		chatroom = strArray[0];
-		sessionid = strArray[1];
-		message = strArray[2];
+		profile = strArray[1];
+		sessionid = strArray[2];
+		message = strArray[3];
 		console.log("chatroom :" + chatroom);
 		console.log("currentchatroom" + currentchatroom);
 		console.log("message : " + message);
+		console.log("profile : " + profile);
 		
 		if(message == "null"){
 			userEnter();
@@ -467,7 +476,10 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 			if(sessionid == currentuser_session){
 				var printHTML = "<div>";
 				printHTML += "<div class='interval'>";
-				printHTML += "<strong class='a' style='float:right;' id='mymsg'>&nbsp;"+message+"&nbsp;</strong>";
+				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/" + profile 
+										+ "' style='float:right;width:40px;height:40px;border-radius:40%'>"
+										+" <strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>&nbsp;"+message
+										+"&nbsp;</strong>";
 				printHTML += "</div>";
 				printHTML += "</div>";
 				printHTML += "<br clear='both'>";
@@ -476,9 +488,14 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 			}else{
 				var printHTML = "<div>";
 				printHTML += "<div class='interval'>";
-				printHTML += "&nbsp;&nbsp;<strong class='a'  id='othermsg'>&nbsp;"+sessionid+" :   "+message+"&nbsp;&nbsp;</strong>";
+				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
+										+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
+										+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+										+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+										+message+"&nbsp;&nbsp;</strong>";
 				printHTML += "</div>";
 				printHTML += "</div>";
+				printHTML += "<br clear='both'>";
 				$("#chat").append(printHTML);
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
 			} 

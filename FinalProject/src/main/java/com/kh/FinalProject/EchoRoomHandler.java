@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,14 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.FinalProject.chat.model.service.ChatService;
+import com.kh.FinalProject.member.model.vo.Member;
 
 @Component
 @Controller
 public class EchoRoomHandler extends TextWebSocketHandler{
+	
+	@Autowired ChatService cService;
 	
 	// (<"bang_id", 방ID>, <"session", 세션>) - (<"bang_id", 방ID>, <"session", 세션>) - (<"bang_id", 방ID>, <"session", 세션>) 형태 
 		private List<Map<String, Object>> sessionList = new ArrayList<Map<String, Object>>();
@@ -75,29 +80,7 @@ public class EchoRoomHandler extends TextWebSocketHandler{
 			   //JSON --> MAP으로 변환
 			   ObjectMapper objectMapper = new ObjectMapper();
 			   Map<String, String> mapReceive = objectMapper.readValue(message.getPayload(), Map.class);
-			   
-//			   if(mapReceive.get("msg") == "퇴장") {
-//				   System.out.println("들어오니?");
-//				   for(int i=0; i<sessionList.size(); i++) {
-//						Map<String, Object> mapSessionList = sessionList.get(i);
-//						
-//						//sessionList에 담긴 Map에 값 가져옴 
-//						String chatroom_no = (String)mapSessionList.get("chatroom_no");
-//						WebSocketSession sess = (WebSocketSession)mapSessionList.get("session");
-//						
-//						Map<String,Object> userNicknamemap = session.getAttributes();
-//						
-//		                  String nickname = (String)userNicknamemap.get("nickname");
-//
-//						
-//						String jsonStr2 = chatroom_no + "|" + nickname + "|" + mapReceive.get("msg");
-//						
-////						String jsonStr = objectMapper.writeValueAsString(mapToSend);
-//						System.out.println("확인 에욱" + jsonStr2);
-//						sess.sendMessage(new TextMessage(jsonStr2));
-//				   }
-//				   
-//			   }
+
 			
 			   
 			   Map<String, Object> map = new HashMap<String, Object>();
@@ -105,8 +88,6 @@ public class EchoRoomHandler extends TextWebSocketHandler{
 			   map.put("session", session);
 			   System.out.println(" 닉네임 확인 : " + session.getAttributes().get("nickname"));
 			   
-			   //이쪽부분때문에 메세지를 전송할떄마다 저장을해서 문제가 생긴다 이것을 고쳐주자
-			   //1) override 클라이언트 연결될떄를 받아서 나눠주는법 2)if 로 예외처리하기
 		
 			   
 			   for(int i=0; i<sessionList.size(); i++) {
@@ -120,25 +101,36 @@ public class EchoRoomHandler extends TextWebSocketHandler{
 
 					//만약 Map값을 불러왔는데 방번호가 같다면?
 					if(chatroom_no.equals(mapReceive.get("chatroom_no"))) {
-//						Map<String, String> mapToSend = new HashMap<String, String>();
-//						mapToSend.put("chatroom_no", chatroom_no);
-//						mapToSend.put("msg", session.getId() + "" + mapReceive.get("msg"));
-//					
-//						System.out.println("확인" + mapToSend.get("chatroom_no"));
-//						System.out.println("확인" + mapToSend.get("msg"));
-						
-//						//이쪽부분에서 session교체를 해주면 되지않을까? http와 socket 
 						
 						Map<String,Object> userNicknamemap = session.getAttributes();
+		                  Member m = (Member)userNicknamemap.get("loginUser");
 						
-		                  String nickname = (String)userNicknamemap.get("nickname");
+		                  String nickname = m.getNickname();
+		                  String id = m.getId();
+		                  String profile = m.getProfile();
+		                  
+		                  HashMap<String,Object> dbmap = new HashMap<String,Object>();
+		                  dbmap.put("chatroom_no", chatroom_no);
+		                  dbmap.put("id", id);
+		                  dbmap.put("message", mapReceive.get("msg"));
+		                  
+		                  int result = cService.insertOpenchatMsg(dbmap);
+		                  
+		                  if(result > 0) {
+		                	  	String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
+						
+								System.out.println("디비저장 성공 : " + jsonStr2);
+								sess.sendMessage(new TextMessage(jsonStr2));
+		                  }else {
+		                	  String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
+		                	  
+		                	  System.out.println("디비저장실패");
+		                	  sess.sendMessage(new TextMessage(jsonStr2));
+		                  }
+		                
 
 						
-						String jsonStr2 = chatroom_no + "|" + nickname + "|" + mapReceive.get("msg");
 						
-//						String jsonStr = objectMapper.writeValueAsString(mapToSend);
-						System.out.println("확인 에욱" + jsonStr2);
-						sess.sendMessage(new TextMessage(jsonStr2));
 					}
 			   }
 			   

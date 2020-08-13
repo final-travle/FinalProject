@@ -33,10 +33,26 @@
 		<result property="createdate" column="CR_CREATE_DATE"/>
 	</resultMap>
 	
+	<resultMap type="ChatroomMsg" id="chatroommessageResultSet">
+		<id property="message_no" column="CM_NO"/>
+		<result property="cr_no" column="CR_NO"/>
+		<result property="chat_id" column="CM_ID"/>
+		<result property="chat_content" column="CM_CONT"/>
+	</resultMap>
+	
 	<resultMap type="OneToOne" id="otoResultSet">
 		<id property="co_no" column="CO_NO"/>
 		<result property="myId" column="MY_ID"/>
 		<result property="friendId" column="FRIEND_ID"/>
+	</resultMap>
+	
+	<resultMap type="OneToOneMsg" id="otomsgResultSet">
+		<id property="message_no" column="MESSAGE_NO"/>
+		<result property="co_no" column="CO_NO"/>
+		<result property="chatId" column="CHAT_ID"/>
+		<result property="content" column="MESSAGE_CONT"/>
+		<result property="sentDate" column="SENT_DATE"/>
+		<result property="read_yn" column="READ_YN"/>
 	</resultMap>
 	
 	
@@ -61,7 +77,7 @@
 	
 	<insert id="makeOpenChatroom" parameterType="Chatroom">
 		INSERT INTO CHATROOM VALUES
-  								(SEQ_CID.NEXTVAL
+  								(SEQ_CR.NEXTVAL
   								, #{chatroomname}
   								, #{chatroomdetail}
   								, #{creater}
@@ -86,6 +102,11 @@
 		FROM ONETOONE_ROOM
 		WHERE MY_ID=#{myId} AND FRIEND_ID=#{friendId}
 	</select>
+	<select id="selectOneToOneRoom2" parameterType="HashMap" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE MY_ID=#{friendId} AND FRIEND_ID=#{myId}
+	</select>
 	
 	<insert id="insertOneToOneRoom" parameterType="HashMap">
 		INSERT INTO ONETOONE_ROOM VALUES(SEQ_OTO.NEXTVAL
@@ -93,6 +114,96 @@
 																			 , #{friendId})
 	</insert>
 	
+	<insert id="insertOneToOnemsg" parameterType="HashMap">
+		INSERT INTO ONETOONE_MESSAGE VALUES(SEQ_OTOMSG.NEXTVAL
+																					  , #{co_no}
+																					  , #{id}
+																					  , #{message}
+																					  , SYSDATE
+																					  , 'N')
+	</insert>
+	
+	<select id="OneToOneList" resultMap="otoResultSet" >
+		SELECT ORM.CO_NO,M.NICKNAME,ORM.FRIEND_ID,M.PROFILE, OM.MESSAGE_NO, OM.MESSAGE_CONT
+		FROM ONETOONE_ROOM ORM
+		JOIN MEMBER M ON (M.USER_ID = ORM.FRIEND_ID)
+		JOIN ONETOONE_MESSAGE OM ON (OM.CO_NO = ORM.CO_NO)
+		WHERE ORM.MY_ID = #{id} AND OM.MESSAGE_NO IN(
+		SELECT MAX(MESSAGE_NO)
+		FROM ONETOONE_MESSAGE 
+		GROUP BY CO_NO
+		)
+		UNION
+		SELECT ORM.CO_NO, M.NICKNAME, ORM.MY_ID, M.PROFILE, OM.MESSAGE_NO, OM.MESSAGE_CONT
+		FROM ONETOONE_ROOM ORM
+		JOIN MEMBER M ON (M.USER_ID = ORM.MY_ID)
+		JOIN ONETOONE_MESSAGE OM ON (OM.CO_NO = ORM.CO_NO)
+		WHERE ORM.FRIEND_ID = #{id}  AND OM.MESSAGE_NO IN(
+		SELECT MAX(MESSAGE_NO)
+		FROM ONETOONE_MESSAGE 
+		GROUP BY CO_NO
+		)
+		ORDER BY MESSAGE_NO DESC 
+	</select>
+	
+	<select id="selectMessageList" resultMap="otomsgResultSet">
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE,M.PROFILE,M.NICKNAME
+		FROM ONETOONE_MESSAGE OM
+		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
+		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
+		ORDER BY MESSAGE_NO ASC
+	</select>
+	
+	<select id="selectMessageList2" resultMap="otomsgResultSet">
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE,M.PROFILE,M.NICKNAME
+		FROM ONETOONE_MESSAGE OM
+		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
+		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
+		ORDER BY MESSAGE_NO ASC
+	</select>
+	
+	<select id="checkNickname" parameterType="string" resultType="_int">
+		SELECT COUNT(NICKNAME)
+		FROM MEMBER
+		WHERE NICKNAME=#{nickname}
+	</select>
+	
+	<update id="updateNickname" parameterType="HashMap">
+		UPDATE MEMBER
+		SET NICKNAME = #{nickname}
+		WHERE USER_ID = #{id}
+	</update>
+	
+	<insert id="insertOpenchatMsg" parameterType="HashMap">
+		INSERT INTO CHATROOM_MESSAGE VALUES(SEQ_CRMSG.NEXTVAL
+																					  , #{chatroom_no}
+																					  , #{id}
+																					  , #{message}
+																					  )
+	</insert>
+	
+	<select id="selectOpenMessageList" resultMap="chatroommessageResultSet">
+		SELECT CM.CM_NO, CM.CR_NO, CM.CM_ID, CM.CM_CONT, M.PROFILE, M.NICKNAME
+		FROM CHATROOM_MESSAGE CM
+		JOIN MEMBER M ON (M.USER_ID = CM.CM_ID)
+		WHERE CM.CR_NO = #{cr_no} AND CM_CONT != 'null'
+		ORDER BY CM_NO ASC
+	</select>
+	
+	<insert id="insertOneToOnemsg2"  parameterType="HashMap">
+				INSERT INTO ONETOONE_MESSAGE VALUES(SEQ_OTOMSG.NEXTVAL
+																					  , #{co_no}
+																					  , #{id}
+																					  , #{message}
+																					  , SYSDATE
+																					  , 'Y')
+	</insert>
+	
+	<update id="updateReadYN"  parameterType="HashMap">
+		UPDATE ONETOONE_MESSAGE
+		SET READ_YN = 'Y'
+		WHERE CHAT_ID != #{id} AND CO_NO = #{co_no}
+	</update>
 	
 </mapper>
 

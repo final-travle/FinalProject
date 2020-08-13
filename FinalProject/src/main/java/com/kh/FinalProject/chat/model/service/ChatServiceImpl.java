@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.chat.model.dao.ChatDao;
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.ChatroomMsg;
 import com.kh.FinalProject.chat.model.vo.OneToOne;
+import com.kh.FinalProject.chat.model.vo.OneToOneMsg;
 import com.kh.FinalProject.member.model.dao.MemberDao;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
@@ -67,6 +69,75 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return cDao.insertOneToOneRoom(map);
 	}
+
+	@Override
+	public int insertOneToOnemsg(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOneToOnemsg(dbmap);
+	}
+
+	@Override
+	public ArrayList<OneToOne> OneToOneList(String id) {
+		// TODO Auto-generated method stub
+		return cDao.OneToOneList(id);
+	}
+
+	@Override
+	public OneToOne selectOneToOneRoom2(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOneToOneRoom2(map);
+	}
+
+	@Override
+	public ArrayList<OneToOneMsg> selectMessageList(String co_no) {
+		// TODO Auto-generated method stub
+		return cDao.selectMessageList(co_no);
+	}
+
+	@Override
+	public ArrayList<OneToOneMsg> selectMessageList2(String co_no) {
+		// TODO Auto-generated method stub
+		return cDao.selectMessageList2(co_no);
+	}
+
+	@Override
+	public int checkNickname(String nickname) {
+		// TODO Auto-generated method stub
+		return cDao.checkNickname(nickname);
+	}
+
+	@Override
+	public int updateNickname(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateNickname(map);
+	}
+
+	@Override
+	public int insertOpenchatMsg(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOpenchatMsg(dbmap);
+	}
+
+	@Override
+	public ArrayList<ChatroomMsg> selectOpenMessageList(String cr_no) {
+		// TODO Auto-generated method stub
+		return cDao.selectOpenMessageList(cr_no);
+	}
+
+	@Override
+	public int insertOneToOnemsg2(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOneToOnemsg2(dbmap);
+	}
+
+	@Override
+	public int updateReadYN(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateReadYN(map);
+	}
+
+	
+
 
 	
 }

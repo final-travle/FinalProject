@@ -1,11 +1,14 @@
 package com.kh.FinalProject.chat.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.FinalProject.chat.model.service.ChatService;
 import com.kh.FinalProject.chat.model.vo.Chatroom;
+import com.kh.FinalProject.chat.model.vo.ChatroomMsg;
 import com.kh.FinalProject.chat.model.vo.OneToOne;
+import com.kh.FinalProject.chat.model.vo.OneToOneMsg;
 import com.kh.FinalProject.member.model.service.MemberService;
 import com.kh.FinalProject.member.model.vo.Friends;
 import com.kh.FinalProject.member.model.vo.Member;
@@ -38,7 +43,8 @@ public class ChatController {
 		Member m =  (Member)session.getAttribute("loginUser");
 		String id =  m.getId();
 		
-		 System.out.println(id);
+		
+		System.out.println("111" + id);
 //		 ArrayList<Member> friendList = new ArrayList();
 //		 friendList = cService.friendList(id);
 //		 System.out.println("친구 목록 : " + friendList);
@@ -60,7 +66,10 @@ public class ChatController {
 		 
 		 ArrayList<Chatroom> chatroomList = new ArrayList();
 		 chatroomList = cService.selectChatroomList();
-		 System.out.println("채팅방 목록 : ");
+		 
+		 ArrayList<OneToOne> onetooneList = new ArrayList();
+		 onetooneList = cService.OneToOneList(id);
+		 System.out.println("1대1 채팅방 목록" + onetooneList);
 		 
 		 if(mal != null) {
 			 mv.addObject("friendList", mal);
@@ -77,6 +86,14 @@ public class ChatController {
 				mv.addObject("chatroomList",chatroomList);
 				mv.setViewName("chat/friendList");
 			}
+		 
+		 if(onetooneList != null) {
+			 mv.addObject("onetooneList", onetooneList);
+			 mv.setViewName("chat/friendList");
+		 }else {
+			 mv.addObject("onetooneList", onetooneList);
+			 mv.setViewName("chat/friendList");
+		 }
 		 
 		 
 		 return mv;
@@ -143,7 +160,11 @@ public class ChatController {
 			System.out.println("방번호  : " + cr.getChatroom_no());
 			System.out.println("방 이름 : " + cr.getChatroomname());
 			
+			ArrayList<ChatroomMsg> crmsg = new ArrayList();
+			crmsg = cService.selectOpenMessageList(chatroomnumber);
+			
 			mv.addObject("cr", cr).setViewName("chat/chatroomdetail");
+			mv.addObject("crmsg", crmsg).setViewName("chat/chatroomdetail");
 			
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			loginUser.setChatroom_no(chatroomnumber);
@@ -184,7 +205,8 @@ public class ChatController {
 			 									@RequestParam(value="update_myprofile", required=false) MultipartFile file) {
 		 
 		 System.out.println("사진 = " + m.getProfile());
-			 if(m.getProfile() != "noprofile.png") {
+		 
+			 if(!m.getProfile().equals("noprofile.png")) {
 				 deleteFile(m.getProfile(), request);
 			 }
 		 
@@ -274,23 +296,133 @@ public class ChatController {
 			  oto = cService.selectOneToOneRoom(map);
 			  System.out.println("1대1방 검색 결과 : " + oto);
 			  
-			  if(oto == null) {
+			  OneToOne oto2 = new OneToOne();
+			  oto2 = cService.selectOneToOneRoom2(map);
+			  System.out.println("1대1방 검색 결과2 : " + oto2);
+			  
+			  
+			  if(oto == null && oto2 == null) {
 				  int result = cService.insertOneToOneRoom(map);
 				  
 				  oto=cService.selectOneToOneRoom(map);
+				  oto2=cService.selectOneToOneRoom2(map);
 				  if(result > 0) {
-					  session.setAttribute("co_no", oto.getCo_no());
-					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+					  if(oto2 == null) {
+						  session.setAttribute("co_no", oto.getCo_no());
+						  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+					  }else if(oto == null) {
+						  session.setAttribute("co_no", oto2.getCo_no());
+						  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
+					  }
 				  }
 				  
 			  }else {
-				  session.setAttribute("co_no", oto.getCo_no());
-				  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+				  if(oto2 == null) {
+					  ArrayList<OneToOneMsg> otomsg = new ArrayList();
+					  otomsg=cService.selectMessageList(oto.getCo_no());
+					  
+					  session.setAttribute("co_no", oto.getCo_no());
+					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
+					  mv.addObject("otomsg", otomsg).setViewName("chat/oneToOneDetail");
+				  }else if(oto == null) {
+					  ArrayList<OneToOneMsg> otomsg2 = new ArrayList();
+					  otomsg2=cService.selectMessageList2(oto2.getCo_no());
+					  
+					  session.setAttribute("co_no", oto2.getCo_no());
+					  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
+					  mv.addObject("otomsg", otomsg2).setViewName("chat/oneToOneDetail");
+				  }
 			  }
 			  
 			  return mv;
 		  }
 		 
+		  @RequestMapping("enterOneToOneChatroom.do")
+		  public ModelAndView enterOneToOneChatroom(ModelAndView mv,HttpSession session,
+					@RequestParam(value = "co_no", required = false) String co_no) {
+			 
+			  Member loginUser = (Member)session.getAttribute("loginUser");
+			  HashMap <String, String> map = new HashMap<>();
+			  map.put("id", loginUser.getId());
+			  map.put("co_no", co_no);
+			  
+			  int result = cService.updateReadYN(map);
+			  
+			  OneToOne oto = new OneToOne();
+			  ArrayList<OneToOneMsg>  otomsg = new ArrayList();
+			  otomsg=cService.selectMessageList(co_no);
+			  
+			  oto.setCo_no(co_no);
+				System.out.println("방번호  : " + oto.getCo_no());
+				
+				mv.addObject("oto", oto).setViewName("chat/oneToOneDetail");
+				mv.addObject("otomsg",otomsg).setViewName("chat/oneToOneDetail");
+				
+				loginUser.setChatroom_no(co_no);
+				
+				session.setAttribute("co_no", loginUser.getChatroom_no());
+				session.setAttribute("nickname", loginUser.getNickname());
+				session.setAttribute("profile", loginUser.getProfile());
+			 
+			 return mv;
+		  }
+		  
+		  @RequestMapping("updateNickname.do")
+		  public ModelAndView updateNickname(HttpServletResponse response,HttpSession session,ModelAndView mv,
+				  										@RequestParam(value="inputNickname", required=false) String nickname) {
+			  System.out.println("넘어옴?" + nickname);
+			  
+			  int check = cService.checkNickname(nickname);
+			  
+			  System.out.println("check = " + check);
+			  
+			  if(check == 0) {
+				  Member loginUser = (Member)session.getAttribute("loginUser");
+				  String id = loginUser.getId();
+				  
+				  HashMap <String, String> map = new HashMap<>();
+				  map.put("nickname", nickname);
+				  map.put("id", id);
+				  System.out.println("nickname, id = " +nickname + "," + id);
+				  
+				  int result = cService.updateNickname(map);
+				  
+				  if(result > 0) {
+					  Member m2 = (Member) session.getAttribute("loginUser");
+						 
+						 m2.setNickname(nickname);
+						 
+						 session.setAttribute("loginUser", m2);
+					  
+					  mv.setViewName("redirect:friendList.do");
+					  return mv;
+				  }else {
+					  response.setContentType("text/html; charset=UTF-8");
+			            PrintWriter out;
+						try {
+							out = response.getWriter();
+							out.println("<script>alert('닉네임 변경 실패'); history.go(-1);</script>");
+							out.flush();
+							out.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+				  }
+			  }else{
+				  response.setContentType("text/html; charset=UTF-8");
+		            PrintWriter out;
+					try {
+						out = response.getWriter();
+						out.println("<script>alert('이미 사용중인 닉네임입니다'); history.go(-1);</script>");
+						out.flush();
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+			  }
+			  return mv;
+		  }
 		  
 }
 

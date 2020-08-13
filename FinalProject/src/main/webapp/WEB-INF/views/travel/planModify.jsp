@@ -16,6 +16,7 @@
 	.titleInput input { width:98%; height:50px; font-size:26px; }
 	 
 	.daySelectWrap {  }
+	.daySelectWrap .textBox { margin-bottom:20px; }
 	.daySelectWrap .cover { width:100%; height:100%; position:fixed; top:0; left:0;  background:rgba(0,0,0,.7); z-index:10; }
 	.daySelectWrap .daySelectBox { position:absolute; top:40%; left:50%; z-index:11; width: 400px; background:#fff; text-align:center; padding:20px 0; margin-left:-200px; }
 	.daySelectWrap .daySelectBox select { width:300px; height:30px; font-size:16px; margin:20px 0; }
@@ -102,9 +103,24 @@
 
 <jsp:include page="../common/footer.jsp" />
 
+		<div class="daySelectWrap">
+			<div class="daySelectBox">
+				<h3 class="title">수정 공지</h3>
+				<div class="textBox">
+					현재 수정은 경로 추가만 가능합니다.<br/>
+					빠른 시일 내에 수정하겠습니다.
+				</div>
+				<div class="btns">
+					<button type="button" class="btn colorBtn apply">확인</button>
+				</div>
+			</div>
+		<div class="cover"></div>
+		</div>
 	<script>
 
-	
+	$(".daySelectWrap .apply").on("click", function(){
+		$(this).parents(".daySelectWrap").hide();
+	});
 
 	XP = 0;
 	YP = 0;
@@ -171,8 +187,6 @@
 
 		dnOption = ${dayNum} + 1;
 		var dnText = (${dayNum} + 1) + '박 ' + (${dayNum} + 2) + '일';
-		
-		$(".daySelectWrap").hide();
 		
 		
 		// title에 input hidden으로 value 값을 붙여준다.
@@ -482,36 +496,8 @@
      	// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
        	// 좌측 경로 삭제
          $(document).on("click", ".stateWrap .dayNight .dnCont", function() {
-        	 // dayNight 의 마지막 li의 값을 뽑아온다
-  			var lastli = $(this).parents(".dn").children("li").last().html();
-        	var thisli = $(this).html();
-        	
-        	ck = $(this).parent().index();
-        	number = $(this).index();
-        	
-        	if(thisli == lastli){
-	       		pointDelete();
-				$(this).remove();
-        	}else {
-        		alert("마지막 선택한 관광지부터 삭제해주세요!");
-        	}
+        	alert("수정은 추가만 가능합니다.");
          });
-         
-         function pointDelete(map){
-        	console.log(ck - 1);
-        	console.log(number - 1);
-        	
-        	console.log(linePath);
-        	
-  			posArr[(ck - 1)][(number - 1)].setMap(map);
-  			lineLine[(ck - 1)][(number - 1)].setMap(map);
-  			
-      		posArr[(ck - 1)].splice((number - 1), 1);
-      		lineLine[(ck - 1)].splice((number - 1), 1);
-      		
-      		posex[(ck - 1)].splice((number - 1), 1);
-
-         }
          
 
          
