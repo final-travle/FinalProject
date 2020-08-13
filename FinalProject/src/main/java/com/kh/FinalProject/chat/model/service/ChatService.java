@@ -2,6 +2,7 @@ package com.kh.FinalProject.chat.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.kh.FinalProject.chat.model.vo.Chatroom;
 import com.kh.FinalProject.chat.model.vo.ChatroomMsg;
@@ -49,5 +50,9 @@ public interface ChatService {
 	int insertOneToOnemsg2(HashMap<String, Object> dbmap);
 
 	int updateReadYN(HashMap<String, String> map);
+
+	List<OneToOne> selectMyChatRoomNo(String loginUserid);
+
+	ArrayList<OneToOneMsg> ReadYNCountList();
 
 }

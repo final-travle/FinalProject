@@ -290,7 +290,10 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 						<img src="${pageContext.request.contextPath}/resources/profile/${otomsg.profile}"
 						 style='float:right;width:40px;height:40px;border-radius:40%'>
 						<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
-						&nbsp;${otomsg.content }&nbsp;</strong>
+						&nbsp;${otomsg.content }&nbsp;</strong>&nbsp;
+						<c:if test="${otomsg.read_yn eq 'N'}">
+							<strong style="float:right;margin-right:10px;margin-top:20px;color:yellow;font-size:12px;" class='readyn'>1</strong>
+						</c:if>
 					</div>
 				</div>
 				<br clear='both'>
@@ -302,7 +305,10 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 						style='width:40px;height:40px;border-radius:40%;float:left;'>
 						<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;${otomsg.nickname }</p>
 						<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
-						${otomsg.content }&nbsp;&nbsp;</strong>
+						${otomsg.content }&nbsp;</strong>&nbsp;
+						<c:if test="${otomsg.read_yn eq 'N'}">
+							<strong style='float:left;margin-left:10px;margin-top:20px;color:yellow;font-size:12px;' class='readyn'>1</strong>
+						</c:if>
 					</div>
 				</div>
 				<br clear='both'>
@@ -315,6 +321,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 			<input type="hidden" value="${loginUser.id }" id="userid">
 			<input type="hidden" value="${loginUser.nickname }" id="nickname">
 			<input type="hidden" value="${oto.co_no }" id="chatroom_no">
+			<input type="hidden" value="${oto.friendId}" id="friendid" >
 			<input type="hidden" value="${loginUser.profile }" id="profile">
 		</div>
 	</div>
@@ -337,12 +344,12 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 	<script type="text/javascript">
 	//소켓 연결
 	 let sock = new SockJS("<c:url value='/onetoone'/>");
-
+	 let sock2 = new SockJS("<c:url value='/echolist'/>");
 		
 	 
 	 
 	   //소켓연결
-	   sock.onopen =onOpen;
+	  sock.onopen =onOpen;
 
 	
 	//메세지전송
@@ -374,14 +381,28 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 
 	   /* --------------------------------------------------------------------------------------------------------------- */
 	function sendMessage(){
+		   
+		var friendid = $("#friendid").val();   
+		console.log("friendid = " + friendid);
+		
 		var msgData = {
 				user_profile : $("#profile").val(),
 				user_nickname : $("#nickname").val(),
 				chatroom_no : $("#chatroom_no").val(),
 				msg : $("#message").val()
 		};
+		 var msgData2 ={
+		            friendid : $("#friendid").val(),
+		            co_no : $("#chatroom_no").val(),
+		            msg : $("#message").val()
+		      };
+		 
+
 		var jsonData = JSON.stringify(msgData);//JSON.stringify란 자바스크립트의 값을 JSON 문자열로 변환한다. 
-		sock.send(jsonData);
+		 var jsonData2 = JSON.stringify(msgData2);
+	      sock.send(jsonData);
+	      sock2.send(jsonData2);
+
 	}
 	
 	/* --------------------------------------------------------------------------------------------------------------- */
@@ -391,6 +412,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		var message = null;
 		var chatroom = null;
 		var profile = null;
+		var readyn = null;
 		
 		
 		
@@ -405,6 +427,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		}
 		var currentuser_session = $("#nickname").val();
 		var currentchatroom = $("#chatroom_no").val();
+		var loginId = $("#nickname").val();
 		console.log("current_session_nickname : " + currentuser_session);
 		
 		//1. 채팅방번호  2.세션아이디 3.메세지내용
@@ -412,12 +435,19 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		profile = strArray[1];
 		sessionid = strArray[2];
 		message = strArray[3];
+		readyn = strArray[4];
 		console.log("chatroom :" + chatroom);
 		console.log("currentchatroom" + currentchatroom);
 		console.log("message : " + message);
 		console.log("profile : " + profile);
+		console.log("readyn : " + readyn);
+		console.log("sessionid : " + sessionid);
+		console.log("loginId : " + loginId);
 		
 		if(message == "null"){
+			if(sessionid != loginId){
+				$(".readyn").text('');
+			}
 			userEnter();
 			var printHTML = "<div>";
 			printHTML += "<div class='intervalgreet'>";
@@ -447,7 +477,8 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/" + profile 
 										+ "' style='float:right;width:40px;height:40px;border-radius:40%'>"
 										+" <strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>&nbsp;"+message
-										+"&nbsp;</strong>";
+										+"&nbsp;</strong>&nbsp;<strong style='float:right;margin-right:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
+										+readyn+"</strong>";
 				printHTML += "</div>";
 				printHTML += "</div>";
 				printHTML += "<br clear='both'>";
@@ -460,7 +491,8 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 										+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
 										+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
 										+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
-										+message+"&nbsp;&nbsp;</strong>";
+										+message+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
+										+readyn+"</strong>";
 				printHTML += "</div>";
 				printHTML += "</div>";
 				printHTML += "<br clear='both'>";
@@ -493,7 +525,6 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		
 		console.log("오나?");
 		var roomnumber = $("#chatroom_no").val();
-		
 		
 		$.ajax({
 			url:"enteruserlist.do",

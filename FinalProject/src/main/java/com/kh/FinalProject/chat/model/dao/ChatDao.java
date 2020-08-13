@@ -2,6 +2,7 @@ package com.kh.FinalProject.chat.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,16 @@ public class ChatDao {
 	public int updateReadYN(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("chatmapper.updateReadYN",map);
+	}
+
+	public List<OneToOne> selectMyChatRoomNo(String loginUserid) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("chatmapper.selectMyChatRoomNo",loginUserid);
+	}
+
+	public ArrayList<OneToOneMsg> ReadYNCountList() {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.ReadYNCount");
 	}
 
 }

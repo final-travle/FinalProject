@@ -10,7 +10,7 @@ public class OneToOneMsg implements Serializable{
 	private static final long serialVersionUID = -4699136130996987162L;
 	
 	private int message_no;
-	private int co_no;
+	private String co_no;
 	private String chatId;
 	private String content;
 	private String sentDate;
@@ -18,11 +18,12 @@ public class OneToOneMsg implements Serializable{
 	
 	private String profile;
 	private String nickname;
+	private int count;
 	
 	public OneToOneMsg() {}
 
-	public OneToOneMsg(int message_no, int co_no, String chatId, String content, String sentDate, String read_yn,
-			String profile, String nickname) {
+	public OneToOneMsg(int message_no, String co_no, String chatId, String content, String sentDate, String read_yn,
+			String profile, String nickname, int count) {
 		super();
 		this.message_no = message_no;
 		this.co_no = co_no;
@@ -32,6 +33,7 @@ public class OneToOneMsg implements Serializable{
 		this.read_yn = read_yn;
 		this.profile = profile;
 		this.nickname = nickname;
+		this.count = count;
 	}
 
 	public int getMessage_no() {
@@ -42,11 +44,11 @@ public class OneToOneMsg implements Serializable{
 		this.message_no = message_no;
 	}
 
-	public int getCo_no() {
+	public String getCo_no() {
 		return co_no;
 	}
 
-	public void setCo_no(int co_no) {
+	public void setCo_no(String co_no) {
 		this.co_no = co_no;
 	}
 
@@ -98,11 +100,19 @@ public class OneToOneMsg implements Serializable{
 		this.nickname = nickname;
 	}
 
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	@Override
 	public String toString() {
 		return "OneToOneMsg [message_no=" + message_no + ", co_no=" + co_no + ", chatId=" + chatId + ", content="
 				+ content + ", sentDate=" + sentDate + ", read_yn=" + read_yn + ", profile=" + profile + ", nickname="
-				+ nickname + "]";
+				+ nickname + ", count=" + count + "]";
 	}
 	
 }
