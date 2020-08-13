@@ -47,7 +47,12 @@
 		<result property="likeTotal" column="LIKE_TOTAL" />
 	</resultMap>
 
-
+	<resultMap type="LikedPost" id="likedPostResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="likeYn" column="LIKE_YN" />
+	</resultMap>
 
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -163,4 +168,110 @@
 		WHERE POST_TYPE = '3'
 		AND POST_NO = #{postNo}
 	</select>
-</mapper>
+	
+	<select id="getPostTagList" parameterType="_int" resultMap="postTagResultSet">
+		SELECT *
+		FROM POST_TAG
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectPlanOne" parameterType="_int" resultMap="boardResultSet">
+		SELECT *
+		FROM TRAVEL
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}	
+	</select>
+	
+	<delete id="planModifyB" parameterType="_int">
+		DELETE FROM TRAVEL
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</delete>
+	
+	<delete id="planModifyPT" parameterType="_int">
+		DELETE FROM POST_TAG
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</delete>
+	
+	<insert id="modifyTag" parameterType="Tag">
+		INSERT INTO POST_TAG VALUES (
+		#{tagType}
+		, #{tagName}
+		, '3'
+		, #{postNo}
+		)
+	</insert>
+	
+	<insert id="modifyPoint" parameterType="Travel">
+		INSERT INTO TRAVEL VALUES(
+		#{tCode}
+		, '3'
+		, #{postNo}
+		, #{night}
+		, #{tName}
+		, #{txpoint}
+		, #{typoint}
+		)
+	</insert>
+	
+	<update id="planModifyPost" parameterType="Board">
+		UPDATE POST
+		SET TITLE = #{title}
+		WHERE POST_NO = #{postNo}
+	</update>
+	
+	<select id="likedPost" parameterType="LikedPost" resultMap="likedPostResultSet">
+		SELECT *
+		FROM LIKED_POST
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+        AND USER_ID = #{userId} 
+	</select>
+	
+	<update id="likeUp" parameterType="LikedPost">
+		UPDATE LIKED_POST
+		<set>
+		<if test='likeYn eq "N".toString()'>
+		LIKE_YN = 'Y'
+		</if>
+		<if test='likeYn eq "Y".toString()'>
+		LIKE_YN = 'N'
+		</if>
+		</set>
+		WHERE USER_ID = #{userId}
+		AND POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</update>
+	
+	<update id="likeUpdate" parameterType="LikedPost">
+		UPDATE MAP_BOARD
+		<set>
+		<if test='likeYn eq "N".toString()'>
+		LIKE_TOTAL = LIKE_TOTAL - 1
+		</if>
+		<if test='likeYn eq "Y".toString()'>
+		LIKE_TOTAL = LIKE_TOTAL + 1
+		</if>
+		</set>
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</update>
+	
+	<insert id="insertLike" parameterType="LikedPost">
+		INSERT INTO LIKED_POST VALUES(
+		#{userId}
+		, '3'
+		,#{postNo}
+		, 'Y'
+		)
+	</insert>
+	
+	<update id="planDelete" parameterType="_int">
+		UPDATE POST
+		SET POST_DEL_YN = 'Y'
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{postNo}
+	</update>
+	</mapper>

@@ -12,8 +12,14 @@
 <style>
 	ul.dayNight { overflow:auto; height:auto; }
 	#map { width:100%; height:720px; }
-	.rightBox { position:relative; }
-	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 160px; padding:20px; background:rgba(255,255,255,.7);}
+	.leftBox {  }
+	div.rightBox { float:left; width:74%; height:100%; position:relative; }
+	.rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7); }
+	.rightBox .btns .delete {color : #bd9dec; font-weight:700; }
+	.ltSec span:hover { cursor:pointer; }
+	
+	.btns a { display:inline-block; }
+	
 </style>
 </head>
 <body>
@@ -22,7 +28,8 @@
         <div class="titleSec" style="background:url('${board.thumbnail }' )no-repeat 0 20%;  background-size:cover;">
             <p class="planTitle">${board.title }</p>
             <p class="ltSec">
-                <span class="likes"><i class="xi-heart-o"></i> ${mapList.likeTotal}</span>
+                <span class="likes">
+                </span>
                 <span class="voting"><i class="xi-star-o"></i> ${mapList.voteTotal}</span>
             </p>
             <div class="cover"></div>
@@ -48,7 +55,7 @@
                     </ul>
                 </div><!-- bottSel -->
             </div><!-- // leftSelBox -->
-            <div class="rightMapBox">
+            <div class="rightBox">
 				<div id="map"></div>
             	<c:if test="${loginUser.id eq board.userId}">
 					<c:url var="planModifyForm" value="planModifyForm.do">
@@ -56,12 +63,90 @@
 					</c:url>
 				<div class="btns">
 					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="#none" class="btn delete">삭제</a>
 				</div>
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
     </div><!-- // container end -->
 <script>
+
+	$(".btns .delete").on("click", function(){
+		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
+		if(result){
+			<c:url var="planDelete" value="planDelete.do">
+				<c:param name="postNo" value="${board.postNo }"/>
+			</c:url>
+			location.href="${planDelete }";
+		    alert("삭제되었습니다.");
+		}else{
+		    
+		}
+	});
+
+	userId = "${loginUser.id}";
+	postNo = ${board.postNo };
+	like = "${liked.likeYn }";
+	likeCount = ${mapList.likeTotal};
+	
+	$(document).on("ready", function(){
+
+		var $span = $("<span>");
+		var $spanC = $("<span class='count'>")
+		
+		if(like == 'Y'){
+			$span.append("<i class='xi-heart'>");
+		}else if(like == 'N' || like == "") {
+			$span.append("<i class='xi-heart-o'>");
+		}
+		$spanC.text(" " + likeCount);
+		$span.append($spanC);
+		$(".likes").html($span);
+	});
+	
+	$(".likes").on("click", function(){
+		
+		$.ajax({
+			url : "likeUp.do",
+			dataType : "json",
+			data : { "userId" : userId, "postNo" : postNo},
+			success : function(data){
+				var msg = data.msg;
+				console.log(msg);
+				if(msg == 'error'){
+					alert("로그인 후 이용해주세요!");
+     	        	location.href="${contextPath}/login.do";
+				}else if(msg == 'success'){
+
+					var userLiked = data.userLiked;
+					var lc = data.lc;
+					
+					if(userLiked == 'Y'){
+						$(".likes").find("i").attr("class", "xi-heart");
+					}else if(userLiked == 'N') {
+						$(".likes").find("i").attr("class", "xi-heart-o");
+					}
+					$(".likes").find(".count").text(" " + lc);
+	
+					
+				}
+				
+
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+			
+		});
+	});
+	
+
+	$(".voting").on("click", function(){
+		alert("vote!");
+	});
+
 	$(document).on("ready", function(){
       	// 마커를 표시할 위치와 title 객체 배열입니다 
      	var positions = [];
@@ -82,11 +167,12 @@
 			var XP = "${tv.txpoint}";
 			var YP = "${tv.typoint}";
 			var tvDataTit = "${tv.tName}";
+			var tcode = "${tv.tCode}";
 			
 			var night = "${tv.night}";
           		
         // 배열 추가 설정
-			var str = {title: tvDataTit, latlng: new kakao.maps.LatLng(YP, XP)};
+			var str = {title: tvDataTit, latlng: new kakao.maps.LatLng(YP, XP), tcode : tcode};
 			switch(night){
 				case '0' : pea.push(str); break;
 				case '1' : peb.push(str); break;

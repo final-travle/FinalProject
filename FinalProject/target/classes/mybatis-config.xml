@@ -23,6 +23,7 @@
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.PostTag" alias="PostTag"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.MapBoard" alias="MapBoard"/>
+		<typeAlias type="com.kh.FinalProject.travel.model.vo.LikedPost" alias="LikedPost"/>
 	</typeAliases>
 	
 	<mappers>
@@ -30,5 +31,6 @@
 		<mapper resource="/mappers/friends-mapper.xml"/>
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/travel-mapper.xml"/>
+		<mapper resource="/mappers/review-mapper.xml"/>
 	</mappers>
 </configuration>

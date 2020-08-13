@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
@@ -79,6 +80,51 @@ public class TravelDao {
 	public Board selectPlan(int postNo) {
 		return sqlSessionTemplate.selectOne("travelMapper.selectPlan", postNo);
 	}
+
+	public ArrayList<PostTag> getPostTagList(int postNo) {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.getPostTagList", postNo);
+	}
+
+	public int planModifyB(int postNo) {
+		return sqlSessionTemplate.delete("travelMapper.planModifyB", postNo);
+	}
+	
+	public int planModifyPT(int postNo) {
+		return sqlSessionTemplate.delete("travelMapper.planModifyPT", postNo);
+	}
+
+	public int ModifyTag(PostTag tg) {
+		return sqlSessionTemplate.insert("travelMapper.modifyTag", tg);
+	}
+		
+	public int planMoidfyPoint(Travel tv) {
+		return sqlSessionTemplate.insert("travelMapper.modifyPoint", tv);
+	}
+	
+	public int planModifyPost(Board b) {
+		return sqlSessionTemplate.update("travelMapper.planModifyPost", b);
+	}
+	
+	public int likeUp(LikedPost lp) {
+		return sqlSessionTemplate.update("travelMapper.likeUp", lp);
+	}
+
+	public LikedPost likedView(LikedPost lp) {
+		return sqlSessionTemplate.selectOne("travelMapper.likedPost", lp);
+	}
+
+	public int likeUpdate(LikedPost lp) {
+		return sqlSessionTemplate.update("travelMapper.likeUpdate", lp);
+	}
+
+	public int insertLike(LikedPost lp) {
+		return sqlSessionTemplate.update("travelMapper.insertLike", lp);
+	}
+
+	public int planDelete(int postNo) {
+		return sqlSessionTemplate.update("travelMapper.planDelete", postNo);
+	}
+
 
 
 }
