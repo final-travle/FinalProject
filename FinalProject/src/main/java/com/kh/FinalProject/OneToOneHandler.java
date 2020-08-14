@@ -130,8 +130,13 @@ public class OneToOneHandler extends TextWebSocketHandler {
                   //int result =1;
                   
                   }
-                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg");
-                  sess.sendMessage(new TextMessage(jsonStr2));
+                  if(sessionList.size() == 1) {
+	                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "1";
+	                  sess.sendMessage(new TextMessage(jsonStr2));
+                  }else {
+                	  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "";
+	                  sess.sendMessage(new TextMessage(jsonStr2));
+                  }
                }
             }
          }

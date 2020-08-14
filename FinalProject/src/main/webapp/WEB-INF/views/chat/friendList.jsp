@@ -82,7 +82,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
   position:fixed;
   display:block;
   width:100%;
-  height:100%;
+  height:100%;	
   top:150px;
   left:75px;
   background:#FFFFFF;
@@ -626,7 +626,7 @@ textarea:focus{
 	  	  style="width:75px;height:50px;margin-left:100px;cursor:pointer;">
 	  </label>
   	  <form name="updateProfileForm" action ="updateprofile.do" method="post" enctype="multipart/form-data">
-  	  	<input type="hidden" name="id" value="${loginUser.id }">
+  	  	<input type="hidden" name="id" value="${loginUser.id }" id="id2">
   	  	<input type="hidden" name="profile" value="${loginUser.profile }">
 	  	  <input id="update_myprofile" name="update_myprofile" type="file" style="display:none;" accept="image/*">
 	  	  
@@ -889,17 +889,25 @@ textarea:focus{
 				<div style="float:left;height:80px;">
 					<img src="${pageContext.request.contextPath}/resources/profile/${onetooneList.profile}" 
   	  				style="margin-left:10px;width:50px;height:50px;border-radius:40%;cursor:pointer;"class="chat_friend_profile_detail">
+  	  				
 				</div>
 				<div style="float:left;height:50px;width:280px;overflow:hidden;">
 					<c:url var="chatroom" value="enterOneToOneChatroom.do">
-						<c:param name="co_no" value="${onetooneList.co_no}"/>
+						<c:param name="co_no" value="${onetooneList.co_no}" />
+						<c:param name="friendId" value="${onetooneList.friendId }"/>
 					</c:url>
 					<p style="font-size:30px;margin-left:20px;margin-top:-6px;">
 						<a href="#" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
-						style="color:black;text-decoration:none;" >${onetooneList.nickname }</a>
+						style="color:black;text-decoration:none;" class="enterOneToOneChatroom" >${onetooneList.nickname }
+						</a>
 					</p>
-					<p style="margin-top:-30px;margin-left:20px;">
+					<p style="margin-top:-30px;margin-left:20px;" id="Message_Content${onetooneList.co_no }">
 						${onetooneList.message_cont }
+					</p>
+				</div>
+				<div>
+					<p id="ReadYNCount${onetooneList.co_no }">
+						${onetooneList.count }
 					</p>
 				</div>
 			
@@ -911,6 +919,52 @@ textarea:focus{
 	<br><br><br><br>
 </div>
 </div>
+
+<script>
+
+	let sock2 = new SockJS("<c:url value='/echolist'/>");
+	
+	sock2.onmessage = onMessage;
+	
+
+	function onMessage(evt){
+		var data = evt.data;
+		var co_no = null;
+		var message = null;
+		var friendid = null;
+		
+		var myid = $("#id2").val();
+		
+		console.log("채팅리스트 데이터" + data)
+		
+		var strArray = data.split("|");
+		
+		for(var i = 0; i < strArray.length; i++){
+			console.log("str[" + i + "]" + strArray[i]);
+		}
+		
+		co_no = strArray[0];
+		friendid = strArray[1];
+		message = strArray[2];
+		
+		console.log("co_no = " + co_no);
+		console.log("friendid = " + friendid);
+		console.log("message = " + message);
+		console.log("myid = " + myid);
+		
+		var ReadYNCount = $("#ReadYNCount"+co_no).val();
+		console.log("count = " + ReadYNCount);
+		
+		if(myid != friendid){
+			
+		}
+		
+		
+			$("#Message_Content"+co_no).text(message);
+		
+		
+	}
+</script>
 
 <input type="checkbox" id="modal3">
 <div class="openchatroom_modal">

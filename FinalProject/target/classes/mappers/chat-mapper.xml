@@ -98,14 +98,18 @@
 	</update>
 	
 	<select id="selectOneToOneRoom" parameterType="HashMap" resultMap="otoResultSet">
-		SELECT *
-		FROM ONETOONE_ROOM
-		WHERE MY_ID=#{myId} AND FRIEND_ID=#{friendId}
+		SELECT ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID, COUNT(READ_YN) AS COUNT
+		FROM ONETOONE_ROOM ORM
+		JOIN ONETOONE_MESSAGE OM ON (ORM.CO_NO = OM.CO_NO)
+		WHERE ORM.MY_ID = #{myId} AND ORM.FRIEND_ID=#{friendId} AND READ_YN = 'N'
+		GROUP BY ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID
 	</select>
 	<select id="selectOneToOneRoom2" parameterType="HashMap" resultMap="otoResultSet">
-		SELECT *
-		FROM ONETOONE_ROOM
-		WHERE MY_ID=#{friendId} AND FRIEND_ID=#{myId}
+		SELECT ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID, COUNT(READ_YN) AS COUNT
+		FROM ONETOONE_ROOM ORM
+		JOIN ONETOONE_MESSAGE OM ON (ORM.CO_NO = OM.CO_NO)
+		WHERE ORM.MY_ID = #{friendId} AND ORM.FRIEND_ID=#{myId} AND READ_YN = 'N'
+		GROUP BY ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID
 	</select>
 	
 	<insert id="insertOneToOneRoom" parameterType="HashMap">
@@ -147,7 +151,7 @@
 	</select>
 	
 	<select id="selectMessageList" resultMap="otomsgResultSet">
-		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE,M.PROFILE,M.NICKNAME
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME
 		FROM ONETOONE_MESSAGE OM
 		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
 		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
@@ -155,7 +159,7 @@
 	</select>
 	
 	<select id="selectMessageList2" resultMap="otomsgResultSet">
-		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE,M.PROFILE,M.NICKNAME
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME
 		FROM ONETOONE_MESSAGE OM
 		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
 		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
@@ -204,6 +208,20 @@
 		SET READ_YN = 'Y'
 		WHERE CHAT_ID != #{id} AND CO_NO = #{co_no}
 	</update>
+	
+	<select id="selectMyChatRoomNo" resultMap="otoResultSet">
+		SELECT CO_NO
+		FROM ONETOONE_ROOM
+		WHERE MY_ID=#{loginUserid} OR FRIEND_ID=#{loginUserid}
+		
+	</select>
+	
+	<select id="ReadYNCount" resultMap="otomsgResultSet">
+		SELECT CO_NO,CHAT_ID, COUNT(READ_YN) AS COUNT
+		FROM ONETOONE_MESSAGE
+		WHERE READ_YN = 'N'
+		GROUP BY CO_NO,CHAT_ID
+	</select>
 	
 </mapper>
 

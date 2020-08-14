@@ -2,6 +2,7 @@ package com.kh.FinalProject.chat.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -134,6 +135,18 @@ public class ChatServiceImpl implements ChatService{
 	public int updateReadYN(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return cDao.updateReadYN(map);
+	}
+
+	@Override
+	public List<OneToOne> selectMyChatRoomNo(String loginUserid) {
+		// TODO Auto-generated method stub
+		return cDao.selectMyChatRoomNo(loginUserid);
+	}
+
+	@Override
+	public ArrayList<OneToOneMsg> ReadYNCountList() {
+		// TODO Auto-generated method stub
+		return cDao.ReadYNCountList();
 	}
 
 	

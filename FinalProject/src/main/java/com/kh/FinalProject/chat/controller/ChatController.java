@@ -69,7 +69,21 @@ public class ChatController {
 		 
 		 ArrayList<OneToOne> onetooneList = new ArrayList();
 		 onetooneList = cService.OneToOneList(id);
-		 System.out.println("1대1 채팅방 목록" + onetooneList);
+		 System.out.println("1대1 채팅방 목록 = " + onetooneList);
+		 
+		 ArrayList<OneToOneMsg> readynCountList = new ArrayList();
+		 readynCountList = cService.ReadYNCountList();
+		 System.out.println("안읽은 메시지 갯수 = " + readynCountList);
+		 
+		 for(int i = 0; i < onetooneList.size(); i++) {
+			 for(int j = 0; j < readynCountList.size(); j++) {
+				 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
+					 if(!m.getId().equals(readynCountList.get(i).getChatId())) {
+						 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
+					 }
+				 }
+			 }
+		 }
 		 
 		 if(mal != null) {
 			 mv.addObject("friendList", mal);
@@ -92,6 +106,14 @@ public class ChatController {
 			 mv.setViewName("chat/friendList");
 		 }else {
 			 mv.addObject("onetooneList", onetooneList);
+			 mv.setViewName("chat/friendList");
+		 }
+		 
+		 if(readynCountList != null) {
+			 mv.addObject("readynCountList", readynCountList);
+			 mv.setViewName("chat/friendList");
+		 }else {
+			 mv.addObject("readynCountList", readynCountList);
 			 mv.setViewName("chat/friendList");
 		 }
 		 
@@ -309,9 +331,11 @@ public class ChatController {
 				  if(result > 0) {
 					  if(oto2 == null) {
 						  session.setAttribute("co_no", oto.getCo_no());
+						  session.setAttribute("friendId", oto.getFriendId());
 						  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
 					  }else if(oto == null) {
 						  session.setAttribute("co_no", oto2.getCo_no());
+						  session.setAttribute("friendId", oto2.getFriendId());
 						  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
 					  }
 				  }
@@ -322,6 +346,7 @@ public class ChatController {
 					  otomsg=cService.selectMessageList(oto.getCo_no());
 					  
 					  session.setAttribute("co_no", oto.getCo_no());
+					  session.setAttribute("friendId", oto.getFriendId());
 					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg).setViewName("chat/oneToOneDetail");
 				  }else if(oto == null) {
@@ -329,6 +354,7 @@ public class ChatController {
 					  otomsg2=cService.selectMessageList2(oto2.getCo_no());
 					  
 					  session.setAttribute("co_no", oto2.getCo_no());
+					  session.setAttribute("friendId", oto2.getFriendId());
 					  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg2).setViewName("chat/oneToOneDetail");
 				  }
@@ -339,7 +365,8 @@ public class ChatController {
 		 
 		  @RequestMapping("enterOneToOneChatroom.do")
 		  public ModelAndView enterOneToOneChatroom(ModelAndView mv,HttpSession session,
-					@RequestParam(value = "co_no", required = false) String co_no) {
+					@RequestParam(value = "co_no", required = false) String co_no,
+					@RequestParam(value = "friendId", required = false) String friendId) {
 			 
 			  Member loginUser = (Member)session.getAttribute("loginUser");
 			  HashMap <String, String> map = new HashMap<>();
@@ -349,10 +376,13 @@ public class ChatController {
 			  int result = cService.updateReadYN(map);
 			  
 			  OneToOne oto = new OneToOne();
+			  
+			  
 			  ArrayList<OneToOneMsg>  otomsg = new ArrayList();
 			  otomsg=cService.selectMessageList(co_no);
 			  
 			  oto.setCo_no(co_no);
+			  oto.setFriendId(friendId);
 				System.out.println("방번호  : " + oto.getCo_no());
 				
 				mv.addObject("oto", oto).setViewName("chat/oneToOneDetail");
@@ -360,6 +390,7 @@ public class ChatController {
 				
 				loginUser.setChatroom_no(co_no);
 				
+				session.setAttribute("friendId", oto.getFriendId());
 				session.setAttribute("co_no", loginUser.getChatroom_no());
 				session.setAttribute("nickname", loginUser.getNickname());
 				session.setAttribute("profile", loginUser.getProfile());
