@@ -46,6 +46,12 @@
 		WHERE USER_ID=#{id} AND EMAIL = #{email}
 	</select>
 	
+	<select id="pCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE USER_ID=#{id}
+	</select>
+	
 	
 	
 	

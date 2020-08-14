@@ -179,7 +179,7 @@ public class PostSharedController {
 			mal2.add(mService.friendsInfo(sharedfd.get(i)));
 		}
 		
-		mv.addObject("freindsshared",mal2);
+		mv.addObject("friendsshared",mal2);
 		mv.addObject("postNo",postNo);
 		mv.addObject("postType",postType);
 		mv.addObject("allshared",sharedfd);
@@ -209,7 +209,7 @@ public class PostSharedController {
 			ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 			ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 			ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
-			
+			System.out.println(sharedfd);
 			
 			for(int i=0;i<fal.size();i++) {
 				if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
@@ -229,8 +229,8 @@ public class PostSharedController {
 			for(int i =0;i<sharedfd.size();i++) {
 				mal2.add(mService.friendsInfo(sharedfd.get(i)));
 			}
-			
-			mv.addObject("freindsshared",mal2);
+			System.out.println(mal2);
+			mv.addObject("friendsshared",mal2);
 			mv.addObject("postNo",postNo);
 			mv.addObject("postType",postType);
 			mv.addObject("allshared",sharedfd);

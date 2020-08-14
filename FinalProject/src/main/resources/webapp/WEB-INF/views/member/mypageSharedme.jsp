@@ -39,11 +39,6 @@
 	                </li>
                 </c:forEach>
                </ul>             
-            <c:if test="${!empty sessionScope.loginUser}">
-            <div class="insertBtns cf">
-                <a href="planInsertView.do" class="insert colorBtn btn">글쓰기</a>
-            </div>
-            </c:if>
 
             <div class="pagination">
 				<!-- [prev] -->
@@ -84,6 +79,7 @@
 					</c:url>
 					<a href="${blistEnd }"> [next]</a>
 				</c:if>	
+ 
             </div>
             <!-- // plan -->
 

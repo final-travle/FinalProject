@@ -253,6 +253,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.fCount(id);
 	}
 
+	@Override
+	public int fCount2(String id) {
+		// TODO Auto-generated method stub
+		return mDao.fCount2(id);
+	}
+
 
 	@Override
 	public ArrayList<Friends> realfriends(String id, String search, PageInfo pi) {
@@ -433,6 +439,16 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return mDao.allMember2(id);
 	}
+
+
+	@Override
+	public int pCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.pCount(id);
+	}
+
+
+	
 
 	}
 

@@ -380,9 +380,11 @@ public class MemberController  {
 			Member mb = (Member) session.getAttribute("loginUser");
 			Member loginUser = mService.loginMember(mb);
 			int fCount = mService.fCount(mb.getId());
+			int postCount = mService.pCount(mb.getId());
 			if(loginUser != null) {
 				model.addAttribute("member",loginUser);
 				model.addAttribute("fCount",fCount);
+				model.addAttribute("pCount",postCount);
 				return "member/mypageChange";
 			}else {
 				model.addAttribute("member",mb);
@@ -395,10 +397,12 @@ public class MemberController  {
 				
 			}
 		}
+		
 		@RequestMapping("mchange.do")	
 		public String mchange(Member m, Model model,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException {
 			Member mb = (Member) session.getAttribute("loginUser");// 여기해야됨
 			// 이제 서비스로 넘기자
+			int postCount = mService.pCount(mb.getId());
 			Ttype tp = new Ttype();
 			m.setBirth(request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"));
 			int result = mService.change(m,mb);
@@ -465,7 +469,7 @@ public class MemberController  {
 		
 
 			Member m = (Member) session.getAttribute("loginUser");
-			
+			int postCount = mService.pCount(m.getId());
 			String Search = noticeSearch;
 			if(Search != null ||Search!="") {
 				model.addObject("search", Search);	
@@ -545,6 +549,7 @@ public class MemberController  {
 				
 			}
 			
+			model.addObject("pCount",postCount);
 				model.addObject("listCount",listCount);
 				model.addObject("fCount",fCount);
 				model.addObject("friends",mal);
@@ -562,6 +567,7 @@ public class MemberController  {
 				required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
 		
 			Member m = (Member) session.getAttribute("loginUser");
+			int postCount = mService.pCount(m.getId());
 			int fCount = mService.fCount(m.getId());
 	    	String Search = noticeSearch;
 			if(Search != null || Search!="") {
@@ -594,6 +600,7 @@ public class MemberController  {
 			}
 		
 			if(mb != null) {
+				model.addObject("pCount",postCount);
 				model.addObject("fCount",fCount);
 				model.addObject("listCount",listCount);
 				model.addObject("allmember",mb);
@@ -603,6 +610,10 @@ public class MemberController  {
 			}
 			return model;				
 	}    
+	
+	    
+	    
+	    
 	    
 	    
 	        @RequestMapping("hansolhansol.do")
@@ -626,13 +637,30 @@ public class MemberController  {
     		public ModelAndView okfriends(ModelAndView model,HttpSession session,String id) throws IOException {
 					
 	        	Member m = (Member) session.getAttribute("loginUser");
+	        	int postCount = mService.pCount(m.getId());
 	        	int fCount = mService.fCount(m.getId());
 				ArrayList<Friends> fal = mService.friendsadd(id,m.getId());
+				ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+				for(int i=0;i<fal.size();i++) {
+					if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+						al.add(fal.get(i).getUserId());
+					}else if(fal.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+						al.add(fal.get(i).getfId());
+					}
+				}
+				
+				ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
+				
+				for(int i =0;i<al.size();i++) {
+					mal.add(mService.friendsInfo(al.get(i)));
+				}
+				
 				String Search =null;//내가 db에 내가 들어있는 친구 목록을 다뽑아
 				int listCount = mService.getListCount(Search,m.getId());
 				if(fal != null) {
+					model.addObject("pCount",postCount);
 					model.addObject("listCount",listCount);
-					model.addObject("falll",fal);
+					model.addObject("falll",mal);
 					model.addObject("fCount",fCount);
 					model.setViewName("/member/accfriends");
 					
@@ -644,15 +672,35 @@ public class MemberController  {
     		public ModelAndView accfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
     		String Search=null;
     			Member m = (Member) session.getAttribute("loginUser");
+    			int postCount = mService.pCount(m.getId());
     			int fCount = mService.fCount(m.getId());
     			int listCount = mService.getListCount(Search,m.getId());
 	        	System.out.println(id);
-				int fal = mService.accfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
-				ArrayList<Friends> fall = mService.friendsadd(id,m.getId());
-				if(fall != null) {
+				 mService.accfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
+				ArrayList<Friends> fal = mService.friendsadd(id,m.getId());
+				ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+				for(int i=0;i<fal.size();i++) {
+					if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+						al.add(fal.get(i).getUserId());
+					}else if(fal.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+						al.add(fal.get(i).getfId());
+					}
+				}
+
+				ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
+				
+				for(int i =0;i<al.size();i++) {
+					mal.add(mService.friendsInfo(al.get(i)));
+				}
+				
+				
+				
+				
+				if(fal != null) {
+					model.addObject("pCount",postCount);
 					model.addObject("fCount",fCount);
 					model.addObject("listCount",listCount);
-					model.addObject("falll",fall);
+					model.addObject("falll",mal);
 					model.setViewName("/member/accfriends");
 				}else {
 					
@@ -674,10 +722,12 @@ public class MemberController  {
     		public ModelAndView dltaccfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
     		
     			Member m = (Member) session.getAttribute("loginUser");
+    			int postCount = mService.pCount(m.getId());
     			int fCount = mService.fCount(m.getId());
 				int fal = mService.dltfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
 				ArrayList<Friends> fall = mService.friendsadd(id,m.getId());
 				if(fal > 0) {
+					model.addObject("pCount",postCount);
 					model.addObject("falll",fall);
 					model.addObject("fCount",fCount);
 					model.setViewName("/member/accfriends");
@@ -724,10 +774,12 @@ public class MemberController  {
 	    		public ModelAndView refusefriends(ModelAndView model,HttpServletResponse response,HttpSession session,String deleteid) throws IOException {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
+	    			int postCount = mService.pCount(m.getId());
 					int fal = mService.refusefriends(m.getId(),deleteid); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
 					ArrayList<Friends> fall = mService.friendsadd(deleteid,m.getId());
 					int fCount = mService.fCount(m.getId());
 					if(fal > 0) {
+						model.addObject("pCount",postCount);
 						model.addObject("falll",fall);
 						model.addObject("fCount",fCount);
 						model.setViewName("/member/accfriends");
@@ -742,6 +794,7 @@ public class MemberController  {
 	    				required=false) Integer page,String noticeSearch,@RequestParam(value="search", required=false) String search) {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
+	    			int postCount = mService.pCount(m.getId());
 	    			int fCount = mService.fCount(m.getId());
 	    	    	String Search = noticeSearch;
 	    			if(Search != null || Search!="") {
@@ -761,6 +814,7 @@ public class MemberController  {
 	    			ArrayList<Member> mb = mService.allMember(m.getId(),Search,pi);//자기 자신을 제외한 나머지 회원을 불러옴
 	    		
 	    			if(mb != null) {
+	    				model.addObject("pCount",postCount);
 	    				model.addObject("fCount",fCount);
 	    				model.addObject("listCount",listCount);
 	    				model.addObject("allmember",mb);

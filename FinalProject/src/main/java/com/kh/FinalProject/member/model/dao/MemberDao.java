@@ -169,6 +169,13 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("friends.fCount",id);
 	}
 
+	public int fCount2(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("friends.fCount2",id);
+	}
+
+	
+	
 	public ArrayList<Friends> realfriends(FriendsPage fp) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp);
@@ -287,6 +294,13 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.allMember2",id);
 	}
+
+	public int pCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.pCount",id);
+	}
+
+	
 	
 	
 }

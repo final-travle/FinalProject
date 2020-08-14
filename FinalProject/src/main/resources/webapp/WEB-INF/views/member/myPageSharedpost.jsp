@@ -8,85 +8,31 @@
 <title>Insert title here</title>
 <!-- 필요한 CSS, JS 로드 -->
 <style>
-.ui-autocomplete { 
-    overflow-y: scroll; 
-    overflow-x: hidden;}
-    
-    
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-.snip1368 {
-  font-family: 'Roboto', Arial, sans-serif;
-  position: relative;
-  overflow: hidden;
-  margin: 10px;
-  min-width: 315px;
-  max-width: 315px;
-  color: #ffffff;
-  line-height: 1.4em;
-} 
-
-.snip1368 img {
-  opacity: 1;
-  width: 100%;
-  vertical-align: top;
+#noticelistArea{
+                margin: 10px;
+                padding:0;
+                width: 590px;
+                border-top: 1px solid #444444;
+                border-collapse: collapse;
 }
-
-.snip1368 .snip13 {
-  padding: 5px 25px 15px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  bottom: 0%;
-  background-color: #141414;
-  -webkit-transform: translateY(200%);
-  transform: translateY(200%);
+#friendsbody{width: 600px;margin: 0 auto;}
+#friendsIdSearch{
+	margin:20px auto;
+	text-align:center;
 }
-
-.snip1368 .snip13:before {
-  position: absolute;
-  content: '';
-  bottom: 100%;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 55px 0 0 315px;
-  border-color: transparent transparent transparent #141414;
+#sharedfriends{
+width: 600px;
+height : 200px;
+border : 1px  solid black;
+margin-bottom : 50px;
 }
-
- .snip1368 .snip13 .icons{
-  position: absolute;
-  content: '';
-  bottom: 100%;
-  top: 0px;
-  right: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  }
-
- .snip1368 i {
-  padding: 0px 8px;
-  display: inline-block;
-  font-size: 24px;
-  color: #ffffff;
-  text-align: center;
-  opacity: 0.7;
+input[type=text]{
+height: 36px;
+ width: 200px;
 }
-
- .snip1368 i:hover {
-  opacity: 1;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-
-.snip1368:hover .snip13,
-.snip1368.hover .snip13 {
-  -webkit-transform: translateY(0%);
-  transform: translateY(0%);
-}
+.btn { width:100px; height:40px; border:2px solid #bd9dec; background:#fff; border-radius:3px; line-height:40px; text-align:center; box-sizing:border-box; }
+.btn a {  color:#bd9dec; font-weight:700; }
+.colorBtn { background:#bd9dec; color:#fff; }
 </STYLE>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -94,18 +40,18 @@
 <script src="https://unpkg.com/hangul-js" type="text/javascript"></script>
 
 </head>
-<body>
+<body id="friendsbody">
+<div id="friendsIdSearch" >
 	<form id="memberplanListShared"  method="post" action="memberplanListShared.do">
-		<input id="searchInput" name="searchInput">
-		<button type="submit">검색</button>
+		<label for="searchInput">이름검색 : </label><input type="text" id="searchInput" name="searchInput">
+		<input type="submit" class="colorBtn btn" value="SEARCH">
 			
 			<input type="hidden" name="postNo" value="${postNo }"/>
 			<input type="hidden" name="page" value="${pi.currentPage }"/>
 			<input type="hidden" name="postType" value="${postType }"/>
-			
 	</form>
- 
- <div>
+ </div>
+ <div id="sharedfriends">
  <c:if test="${empty friendsshared  }">
             <h3>공유된 친구가없습니다 .</h3>
             </c:if>
@@ -115,8 +61,7 @@
 						<c:param name="postType" value="${postType }" />
 					  	<c:param name="id" value="${nb.id} " />
 					</c:url>
-		         <a href="${url12}">${nb.name }</a>
-                 
+		         <a href="${url12}">${nb.name }</a>  
 	</c:forEach>
 	 
  </div>
@@ -125,8 +70,8 @@
  
  <div id="friendsInfo">
              <table id="noticelistArea" align="center" width="600" border="1">
-                    <tr>
-                        <th>id</th> <th>이름</th> <th>닉네임</th> <th>핸드폰</th> <th>공유하기</th>
+                    <tr bgcolor="#bd9dec">
+                        <th>ID</th> <th>이름</th> <th>닉네임</th> <th>성별</th> <th>공유하기</th>
                     </tr>
 
             <c:if test="${empty friends  }">
@@ -141,7 +86,7 @@
             <td align="center">${n.id }</td>
             <td align="center">${n.name }</td>
             <td align="center">${n.nickname }</td>
-            <td align="center">${n.phone }</td>
+            <td align="center">${n.gender }</td>
             <c:set var="loop_flag" value="false" />
 	            <c:forEach var="nb" items="${allshared }">
 	            <c:if test="${not loop_flag }">
@@ -168,6 +113,7 @@
                    
             </table>
  </div>
+ 
 </body>
 <script>
 	$(function() { 

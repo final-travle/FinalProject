@@ -96,4 +96,9 @@ public interface MemberService {
 
 	ArrayList<Member> allMember2(String id);
 
+	int fCount2(String id);
+
+	int pCount(String id);
+
+
 }

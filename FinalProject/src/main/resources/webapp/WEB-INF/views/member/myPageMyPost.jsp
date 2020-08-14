@@ -7,11 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.snip1368 { position:relative; width:440px; height:320px; overflow:hidden; }
-	.snip13 { position:absolute; top:0; bottom:0; width:100%; height:100%; background:rgba(0,0,0,.7); display:none; }
-	.snip1368:hover .snip13 { display:block; transition: 0.3s;}
+	.snip1368 {position:relative; width:440px; height:320px; overflow:hidden; }
+	.snip13 { -webkit-transition: 0.2s; position:absolute; top:0; bottom:0; width:100%; height:100%; background:rgba(0,0,0,.7); display:none; }
+	.snip1368:hover .snip13 { display:block; }
 	.snip13 .icon:after { display:block; content:""; clear:both;  }
-	.snip13 a { display:inline-block; width:50%; box-sizing:border-box;  float:left; height:160px; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	.snip13 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left; height:160px; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	
 </style>
 </head>
 <body>
@@ -36,7 +37,7 @@
 	                    <img src="${pl.thumbnail }"/>
 	                        <div class="snip13">
 			                    <div class="icons">
-				                    <a href="#" onclick="window.open('${memberplanListShared }','_blank','width=600, height=800'); return flase">공유</a>
+				                    <a href="#" onclick="window.open('${memberplanListShared }','_blank','width=600, height=600'); return flase">공유</a>
 			      					<a href="#"> <i class="ion-social-two-outline">삭제</i></a>
 								    <a href="#"> <i class="ion-social-three-outline">수정</i></a>
 								    <a href="${planDetail }"> <i class="ion-social-four-outline">글보기</i></a>
