@@ -220,119 +220,120 @@ public class ReviewController {
 		
 		String userId = mb.getId();
 		
-		System.out.println(posex.size());
-		System.out.println(posex);
-		
-		String contents = (String) posex.remove(11);
-		
-		// json에 붙어 온 firstImg 를 저장한다.
-		String firstImg = (String) posex.remove(10);
-		
-		// json에 붙어온 제목 가져와 잘라내 저장한다.
-		String mtitle = (String)posex.remove(9);
-		
+		String contents = (String) posex.remove(10);
+//		
+//		// json에 붙어 온 firstImg 를 저장한다.
+		String firstImg = (String) posex.remove(9);
+//		
+//		// json에 붙어온 제목 가져와 잘라내 저장한다.
+		String mtitle = (String)posex.remove(8);
+//		
 		// json에 붙어온 tagList를 저장한다.
-		ArrayList tagList = (ArrayList) posex.remove(8);
+		ArrayList tagList = (ArrayList) posex.remove(7);
 		
 		
 		ArrayList tTypeArr = (ArrayList) tagList.get(0);
 		ArrayList tNameArr = (ArrayList) tagList.get(1);
 		
 		int result = 0;
-		
 
+		
 		b.setTitle(mtitle);
 		b.setUserId(userId);
 		b.setThumbnail(firstImg);
+		b.setPostContents(contents);
 		
-//		result = rs.reviewInsert(b);
+		result = rs.reviewInsert(b);
 		
 
 		 String msg = "";
-//		 if(result > 0) {
-//			 int result2 = 0;
-//			 
-//			 result2 = ts.planLikeThumbupInsert();
-//			 
-//			// post tag 테이블에 추가
-//			for(int i = 0; i < tTypeArr.size(); i ++) {
-//				int tResult = 0;
-//				
-//				String tagType = (String) tTypeArr.get(i);
-//				String tagName = (String) tNameArr.get(i);
-//				
-//				tg.setTagType(tagType);
-//				tg.setTagName(tagName);
-//				
-//				tResult = ts.insertTag(tg);
-//				
-//			}
-//			 
-//			 
-//			 
-//			 if(result2 > 0) {
-//				 
-//				 int result3 = 0;
-//		    	
-//				// 넘어온 json object를 배열 단위로 풀어준다.
-//			    for(int i = 0; i < posex.size(); i ++) {
-//			    	int pDay = i;
-//
-//			    	// 배열값이 비었는지 확인하기 위하여 먼저 배열화함
-//			    	ArrayList testli = (ArrayList) posex.get(i);
-//
-//			    	if(testli.isEmpty() == false) {
-//			    		result3 = ts.planDayInsert(i);
-//			    
-//				    	List<Object> mList = (List<Object>) posex.get(i);
-//	
-//				    	
-//				    	// 날짜별 지역을 찍어준다.
-//				    	for(int j = 0; j < mList.size(); j ++) {
-//					    	int result4 = 0;
-//					    	
-//			//	    		System.out.println("location");
-//			//	    		System.out.println(mList.get(j));
-//				    		
-//				    		// title과 latlng, code 나누기 위한 map 선언
-//				    		Map<String, Object> mlInfo = (Map<String, Object>) mList.get(j);
-//			
-//				    		String pTitle = (String) mlInfo.get("title");
-//			//	    		System.out.println(pTitle);
-//			
-//				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
-//				    		//System.out.println(ptcode);
-//				    		
-//				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
-//				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
-//			
-//				    		double xpoint = (Double) latlng.get("Ga");
-//				    		double ypoint = (Double) latlng.get("Ha");
-//			//	    		System.out.println(xpoint + ", " + ypoint);
-//					    		
-//					    	tv.setNight(i);
-//					    	tv.settCode(ptcode);
-//					    	tv.settName(pTitle);
-//					    	tv.setTxpoint(xpoint);
-//					    	tv.setTypoint(ypoint);
-//					    	
-//					    	result4 = ts.planInsertPoint(tv);
-//					    	
-//					    	msg = "글이 정상적으로 등록되었습니다.";
-//					    	
-//			    		}
-//			    		
-//			    	}
-//
-//		    	}
-//			    
-//    		} // result2 if end
-//
-//		 }else {
-//			msg = "데이터 전송 실패";
-//			 
-//		 }
-//		 
+		 if(result > 0) {
+			 int result2 = 0;
+			 
+			 result2 = rs.reviewLikeThumbupInsert();
+			 
+			// post tag 테이블에 추가
+			for(int i = 0; i < tTypeArr.size(); i ++) {
+				int tResult = 0;
+				
+				String tagType = (String) tTypeArr.get(i);
+				String tagName = (String) tNameArr.get(i);
+				
+				tg.setTagType(tagType);
+				tg.setTagName(tagName);
+				
+				System.out.println(tg.getTagName());
+				
+				tResult = rs.insertTag(tg);
+				
+			}
+			 
+			 
+			 
+			 if(result2 > 0) {
+				 System.out.println("tag 잘 들어감");
+				 
+				 int result3 = 0;
+		    	
+				// 넘어온 json object를 배열 단위로 풀어준다.
+			    for(int i = 0; i < posex.size(); i ++) {
+			    	int pDay = i;
+
+			    	// 배열값이 비었는지 확인하기 위하여 먼저 배열화함
+			    	ArrayList testli = (ArrayList) posex.get(i);
+
+			    	if(testli.isEmpty() == false) {
+//			    		result3 = rs.reviewDayInsert(i);
+			    
+				    	List<Object> mList = (List<Object>) posex.get(i);
+	
+				    	
+				    	// 날짜별 지역을 찍어준다.
+				    	for(int j = 0; j < mList.size(); j ++) {
+					    	int result4 = 0;
+					    	
+			//	    		System.out.println("location");
+			//	    		System.out.println(mList.get(j));
+				    		
+				    		// title과 latlng, code 나누기 위한 map 선언
+				    		Map<String, Object> mlInfo = (Map<String, Object>) mList.get(j);
+			
+				    		String pTitle = (String) mlInfo.get("title");
+			//	    		System.out.println(pTitle);
+			
+				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//System.out.println(ptcode);
+				    		
+				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
+				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
+			
+				    		double xpoint = (Double) latlng.get("Ga");
+				    		double ypoint = (Double) latlng.get("Ha");
+			//	    		System.out.println(xpoint + ", " + ypoint);
+					    		
+					    	tv.setNight(i);
+					    	tv.settCode(ptcode);
+					    	tv.settName(pTitle);
+					    	tv.setTxpoint(xpoint);
+					    	tv.setTypoint(ypoint);
+					    	
+//					    	result4 = rs.reviewInsertPoint(tv);
+					    	
+					    	msg = "글이 정상적으로 등록되었습니다.";
+					    	
+			    		}
+			    		
+			    	}
+
+		    	}
+			    
+    		} // result2 if end
+
+		 }else {
+			msg = "데이터 전송 실패";
+			 
+		 }
+		 
 		 return msg;
 	    
 	}

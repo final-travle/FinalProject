@@ -15,12 +15,45 @@
 		<result property="FileName" column="FILE_NAME" />
 	</resultMap>
 	
+	<resultMap type="Travel" id="travelResultSet">
+		<id property="tCode" column="T_CODE"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+		<result property="night" column="NIGHT" />
+		<result property="tName" column="T_NAME" />
+		<result property="txpoint" column="T_XPOINT" />
+		<result property="typoint" column="T_YPOINT" />
+	
+	</resultMap>
+
+	<resultMap type="Tag" id="tagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+	</resultMap>
+	
 	<resultMap type="PostTag" id="postTagResultSet">
 		<id property="tagName" column="TAG_NAME"/>
 		<result property="tagType" column="TAG_TYPE" />
 		<result property="postType" column="POST_TYPE" />
 		<result property="postNo" column="POST_NO" />
 	</resultMap>
+	
+	
+	<resultMap type="MapBoard" id="mapBoardResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="voteTotal" column="VOTE_TOTAL" />
+		<result property="likeTotal" column="LIKE_TOTAL" />
+	</resultMap>
+
+	<resultMap type="LikedPost" id="likedPostResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="likeYn" column="LIKE_YN" />
+	</resultMap>
+
 	
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -42,18 +75,58 @@
 		FROM POST_TAG
 	</select>
 	
-	<insert id="insertPlanB" parameterType="Board">
+	<insert id="insertReivew" parameterType="Board">
 		INSERT INTO POST VALUES (
 		'4'
-		, SEQ_MAP.NEXTVAL
-		, #{title}
-		, #{userId}
+		, SEQ_POST.NEXTVAL
 		, #{thumbnail}
-		, NULL
+		, #{userId}
+		, #{title}
+		, #{postContents}
 		, 0
 		, SYSDATE
 		, 'N'
 		, NULL
 		)
 	</insert>
+	
+	<insert id="insertLT">
+		INSERT INTO MAP_BOARD VALUES(
+		'4'
+		, SEQ_POST.CURRVAL
+		, 0
+		, 0
+		)
+	</insert>
+	
+	<insert id="insertTag" parameterType="Tag">
+		INSERT INTO POST_TAG VALUES (
+		#{tagType}
+		, #{tagName}
+		, '4'
+		, SEQ_POST.CURRVAL
+		)
+	</insert>
+	
+	<insert id="insertDay" parameterType="_int">
+		INSERT INTO MAP_INFO VALUES(
+		#{i}
+		, '4'
+		, SEQ_POST.CURRVAL
+		)
+	</insert>
+	
+	<insert id="insertPoint" parameterType="Travel">
+		INSERT INTO TRAVEL VALUES(
+		#{tCode}
+		, '4'
+		, SEQ_POST.CURRVAL
+		, #{night}
+		, #{tName}
+		, #{txpoint}
+		, #{typoint}
+		)
+	</insert>
+	
+	
 </mapper>
