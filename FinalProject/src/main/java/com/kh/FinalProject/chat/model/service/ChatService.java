@@ -55,4 +55,10 @@ public interface ChatService {
 
 	ArrayList<OneToOneMsg> ReadYNCountList();
 
+	int insertOneToOneSendImage(HashMap<String, Object> dbmap);
+
+	int insertOneToOneSendImage2(HashMap<String, Object> dbmap);
+
+	int insertOpenchatSendImage(HashMap<String, Object> dbmap);
+
 }

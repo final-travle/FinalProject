@@ -53,6 +53,13 @@
 		<result property="userId" column="USER_ID" />
 		<result property="likeYn" column="LIKE_YN" />
 	</resultMap>
+	
+	<resultMap type="PostShared" id="PostSharedResultSet">
+		<id property="share_id" column="SHARE_ID" />
+		<result property="post_type" column="POST_TYPE" />
+		<result property="post_no" column="POST_NO" />
+		<result property="user_id" column="USER_ID" />
+	</resultMap>
 
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -274,4 +281,26 @@
 		WHERE POST_TYPE = '3'
 		AND POST_NO = #{postNo}
 	</update>
+	
+	<select id="memberselectList" parameterType="string" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_DEL_YN = 'N'
+		AND USER_ID = #{id}
+		ORDER BY POST_NO DESC
+	</select>
+	
+	<select id="selectShare" parameterType="string" resultMap="PostSharedResultSet">
+		SELECT *
+		FROM SHARED
+		WHERE SHARE_ID = #{id}
+	</select>
+	
 	</mapper>
+	
+	
+	
+	
+	
+	

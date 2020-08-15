@@ -126,4 +126,19 @@ public class ChatDao {
 		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.ReadYNCount");
 	}
 
+	public int insertOneToOneSendImage(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("chatmapper.insertOneToOneSendImage", dbmap);
+	}
+
+	public int insertOneToOneSendImage2(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("chatmapper.insertOneToOneSendImage2", dbmap);
+	}
+
+	public int insertOpenchatSendImage(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("chatmapper.insertOpenchatSendImage",dbmap);
+	}
+
 }

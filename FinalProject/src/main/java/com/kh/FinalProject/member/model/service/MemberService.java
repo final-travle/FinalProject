@@ -30,8 +30,6 @@ public interface MemberService {
 	
 	Member friendsInfo(String string);
 
-	ArrayList<Member> allMember(String string);
-
 	ArrayList<Friends> friendsadd(String string, String id);
 
 	int accfriends(String id, String string);
@@ -54,7 +52,7 @@ public interface MemberService {
 
 	int fCount(String id);
 
-	ArrayList<Friends> realfriends(String id, String search, PageInfo pi);
+	ArrayList<Friends> realfriends(String id, String search,PageInfo pi);
 
 	int loginTime(String id);
 
@@ -89,5 +87,18 @@ public interface MemberService {
 	Member search(String member);
 
 	int membercount(Member m);
+
+	ArrayList<Friends> rlfriends(String id);
+
+	ArrayList<Friends> realfriendsShared(String id, String search);
+
+	ArrayList<String> sharedfd(Integer postNo, String postType, String id);
+
+	ArrayList<Member> allMember2(String id);
+
+	int fCount2(String id);
+
+	int pCount(String id);
+
 
 }

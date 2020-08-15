@@ -149,29 +149,32 @@ body {
             background: ivory;
         }
         #chat {
-            height: 90%;
+            height: 80%;
             word-break:break-all;
             background-image: url("${pageContext.request.contextPath}/resources/images/b.jpg");
             background-size: cover;
             background-repeat: no-repeat;
         }
         #chatForm {
-            height: 10%;
+            height: 20%;
             border-top: 1px solid black;
-            background-color:#D8D8D8;
+            background-color:white;
             text-align: center;
         }
         #message {
             width: 80%;
-            height: 32px;
-            border-radius: 8px;
+            height: 60px;
+            border:0px;
+            font-size:15px;
+            outline:none;
         }
         #sendBtn {
             width: 16%;
             height: 34px;
-            border-radius: 50px;
-            background: black;
-            color: white;
+            background: #F4FA58;
+            color: blcak;
+            border-radius:5px;
+            border:1px solid #E6E6E6;
         }
 		
 		
@@ -248,6 +251,37 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
   transform: scale(1, 1);
 }
 
+.SendImage_modal {
+   position:absolute;
+  display:block;
+  z-index:92;
+  width:200px;
+  height:250px;
+  top:15%;
+  left:25%;
+ /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
+ background:white;
+  border:4px solid black;
+  border-radius:5%;
+  overflow:hidden;
+  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
 </style>
 
 
@@ -289,8 +323,15 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 					<div class='interval'>
 						<img src="${pageContext.request.contextPath}/resources/profile/${otomsg.profile}"
 						 style='float:right;width:40px;height:40px;border-radius:40%'>
-						<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
-						&nbsp;${otomsg.content }&nbsp;</strong>&nbsp;
+						 <c:if test="${otomsg.send_image ne null}">
+							<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
+							&nbsp;<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}"
+							style='width:150px;height:150px;margin-top:10px;'>&nbsp;</strong>&nbsp;
+						</c:if>
+						<c:if test="${otomsg.send_image eq null}">
+							<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
+							&nbsp;${otomsg.content }&nbsp;</strong>&nbsp;
+						</c:if>
 						<c:if test="${otomsg.read_yn eq 'N'}">
 							<strong style="float:right;margin-right:10px;margin-top:20px;color:yellow;font-size:12px;" class='readyn'>1</strong>
 						</c:if>
@@ -304,8 +345,15 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 						<img src="${pageContext.request.contextPath}/resources/profile/${otomsg.profile}"
 						style='width:40px;height:40px;border-radius:40%;float:left;'>
 						<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;${otomsg.nickname }</p>
-						<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
-						${otomsg.content }&nbsp;</strong>&nbsp;
+						<c:if test="${otomsg.send_image ne null }">
+							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}"
+							style="width:150px;height:150px;margin-top:10px;">&nbsp;</strong>&nbsp;
+						</c:if>
+						<c:if test="${otomsg.send_image eq null }">
+							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							${otomsg.content }&nbsp;</strong>&nbsp;
+						</c:if>
 						<c:if test="${otomsg.read_yn eq 'N'}">
 							<strong style='float:left;margin-left:10px;margin-top:20px;color:yellow;font-size:12px;' class='readyn'>1</strong>
 						</c:if>
@@ -316,7 +364,6 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 	</c:forEach>
 	
 	
-	
 		<div id="chatdata">
 			<input type="hidden" value="${loginUser.id }" id="userid">
 			<input type="hidden" value="${loginUser.nickname }" id="nickname">
@@ -325,19 +372,104 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 			<input type="hidden" value="${loginUser.profile }" id="profile">
 		</div>
 	</div>
-		<form id="chatForm">
+	<div id="chatForm">
+		<form>
 			<input type="text" id="message" autocomplete=off >
-			<button id="sendBtn" >send</button>
+			<button id="sendBtn" >전송</button>
 		</form>
+		<label for="ChatroomSendImage">
+			<img src="${pageContext.request.contextPath}/resources/images/sendImage.jpeg"
+			style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="사진전송">
+		</label>
+		<form id="SendImage" name="SendImage" enctype="multipart/form-data">
+			<input id="ChatroomSendImage" name="ChatroomSendImage" type="file" style="display:none;"accept="image/*">
+		</form>
+	</div>
 </div>
-	
   </div>
-	
-
-	
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
+<script>
+	$(function(){
+		$("#message").focus();
+	});
+	 function readURL(input){
+		 if(input.files&&input.files[0]){
+			 var reader = new FileReader();
+			 reader.onload = function(e){
+				 $(".SendImage_preview").attr("src",e.target.result);
+				 console.log(e.target.result);
+			 }
+			 
+			 reader.readAsDataURL(input.files[0]);
+		 }
+	 }
+	$("#ChatroomSendImage").change(function(){
+		readURL(this);
+		$("input:checkbox[id='SendImage_modal']").prop("checked", true);	
+		$("#SendImage_modal").prop("checked", true);
+	})
+	
+</script>
+
+<script>
+
+function submit_SendImage_modal(){
+	
+	var form = $("#SendImage")[0];
+	var formData = new FormData(form);
+	
+	console.log("확인" + form);
+	
+		$.ajax({
+			type:"post",
+			enctype:"multipart/form-data",
+			url:"SaveSendImage.do",
+			data:formData,
+			contentType : false,
+	        processData : false,
+	        success:function(result){
+	        	var msgData3 = {
+	    				user_profile : $("#profile").val(),
+	    				user_nickname : $("#nickname").val(),
+	    				chatroom_no : $("#chatroom_no").val(),
+	    				msg : "이미지입니다",
+	    				image : result
+	    		};
+	        	var msgData4 = {
+	        			friendid : $("#friendid").val(),
+	        			chatroom_no : $("#chatroom_no").val(),
+	        			msg : "이미지입니다"
+	        	};
+	        	var jsonData3 = JSON.stringify(msgData3);
+	        	var jsonData4 = JSON.stringify(msgData4);
+	        	sock.send(jsonData3);
+	        	sock2.send(jsonData4);
+	        }
+		});
+	
+}
+</script>
+
+ <input type="checkbox" id="SendImage_modal">
+ <div class="SendImage_modal">
+ 	<img src="" class="SendImage_preview"
+			style="width:200px;height:200px;">
+			
+	<img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
+						style='width:60px;height:50px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SendImage_modal();">
+						
+	<img src="${pageContext.request.contextPath}/resources/images/submitImage.png" onclick="submit_SendImage_modal();"
+						style="width:50px;height:40px;float:left;margin-left:40px;margin-top:5px;cursor:pointer;" title="전송">
+ </div> 
+<script>
+	function close_SendImage_modal(){
+		$(".SendImage_preview").attr("src","${pageContext.request.contextPath}/resources/images/white.png");
+		$("input:checkbox[id='SendImage_modal']").prop("checked", false);
+		$("#SendImage_modal").prop("checked", false);
+	}
+</script>
 
 
 
@@ -413,7 +545,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		var chatroom = null;
 		var profile = null;
 		var readyn = null;
-		
+		var image = null;
 		
 		
 		console.log("데이타 : " + data);
@@ -430,7 +562,61 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		var loginId = $("#nickname").val();
 		console.log("current_session_nickname : " + currentuser_session);
 		
-		//1. 채팅방번호  2.세션아이디 3.메세지내용
+		if(strArray.length == 6){
+			chatroom = strArray[0];
+			profile = strArray[1];
+			sessionid = strArray[2];
+			message = strArray[3];
+			image = strArray[4];
+			readyn = strArray[5];
+			console.log("chatroom :" + chatroom);
+			console.log("message : " + message);
+			console.log("profile : " + profile);
+			console.log("readyn : " + readyn);
+			console.log("sessionid : " + sessionid);
+			console.log("image : " + image);
+			
+			/* <img src="${pageContext.request.contextPath}/resources/images/sendImage.jpeg"
+				style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="사진전송"> */
+			
+			if(chatroom == currentchatroom){
+				if(sessionid == currentuser_session){
+					var printHTML = "<div>";
+					printHTML += "<div class='interval'>";
+					printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/" + profile 
+											+ "' style='float:right;width:40px;height:40px;border-radius:40%'>"
+											+" <strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>&nbsp;"
+											+"<img src='${pageContext.request.contextPath}/resources/ChatroomSendImage/" + image 
+											+ "' style='width:150px;height:150px;margin-top:10px;'>"
+											+"&nbsp;</strong>&nbsp;<strong style='float:right;margin-right:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
+											+readyn+"</strong>";
+					printHTML += "</div>";
+					printHTML += "</div>";
+					printHTML += "<br clear='both'>";
+					$("#chat").append(printHTML);
+					$("#chat").scrollTop($("#chat")[0].scrollHeight);
+				}else{
+					var printHTML = "<div>";
+					printHTML += "<div class='interval'>";
+					printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
+											+"' style='width:40px;height:40px;border-radius:40%;float:left;'>"
+											+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+											+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+											+"<img src='${pageContext.request.contextPath}/resources/ChatroomSendImage/" + image 
+											+ "' style='width:150px;height:150px;margin-top:10px;'>"
+											+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
+											+readyn+"</strong>";
+					printHTML += "</div>";
+					printHTML += "</div>";
+					printHTML += "<br clear='both'>";
+					$("#chat").append(printHTML);
+					$("#chat").scrollTop($("#chat")[0].scrollHeight);
+				} 
+			
+			}else{
+				console.log("오류 ");
+			}
+		}else{
 		chatroom = strArray[0];
 		profile = strArray[1];
 		sessionid = strArray[2];
@@ -448,11 +634,11 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 			if(sessionid != loginId){
 				$(".readyn").text('');
 			}
-			userEnter();
+			/* userEnter(); */
 			var printHTML = "<div>";
-			printHTML += "<div class='intervalgreet'>";
+			/* printHTML += "<div class='intervalgreet'>";
 			printHTML += "<strong class='a' id='enterdiv'>&nbsp;[ "+sessionid +" ]님께서 입장하셨습니다   "+"&nbsp;</strong>";
-			printHTML += "</div>";
+			printHTML += "</div>"; */
 			printHTML += "</div>";
 			$("#chat").append(printHTML);
 			return 0;
@@ -503,7 +689,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 		}else{
 			console.log("오류 ");
 		}
-		
+		}
 	}
 	/* --------------------------------------------------------------------------------------------------------------- */
 	function onClose(evt){
@@ -521,7 +707,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 	}  
 	
 	/* --------------------------------------------------------------------------------------------------------------- */
-	function userEnter(){
+	/* function userEnter(){
 		
 		console.log("오나?");
 		var roomnumber = $("#chatroom_no").val();
@@ -550,7 +736,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
            }  
 		});
 	
-	}
+	} */
 	
 	
 	</script>

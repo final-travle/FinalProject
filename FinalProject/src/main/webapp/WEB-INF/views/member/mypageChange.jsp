@@ -5,46 +5,15 @@
 <html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title></title>
 <style>
-     #hansol{
-          width: 4000px;
-      }
-
-      body {
-    font-family: "Lato", sans-serif;
-}
-#h{
-    right: 250px;
-}
-.sidenav {
-    height: 150;
-    width: 100;
-    position: fixed;
-    z-index: 0;
-    top: 150;
-    left: 0;
-   right: 10;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    margin-right:20px ;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-#joinForm{
-                width: 850px;
+body {    font-family: "Lato", sans-serif;}
+#joinForm{  
+				width: 800px;
                 margin: 0 auto;
             }
             #logintable{
-                margin: 10px;
-                padding:0;
-                width: 700px;
+                margin: 0 ;
+                padding:0 ;
+                width: 800px;
                 border-top: 1px solid #444444;
                 border-collapse: collapse;
             }
@@ -58,18 +27,20 @@
                 text-align: center;
                 padding: 10px;   
             }
+            
             #inp{
                padding: 10px;
                padding-left: 110px;
                padding-right: 100px;
             }
-            tr td input{
-                border-radius: 5px;
+            tr td input[type=text] {
+                
                 height: 30px;
                 width: 280px;
             }
+            
             #sye{
-              border-radius: 5px;
+              
                 height: 30px;
                 width: 280px;
             }
@@ -77,8 +48,7 @@
                zoom: 2.0;
             }
            div select{
-              height: 30px;
-              border-radius: 5px;
+              height: 30px;   
               width: 80px;
               float: left;
               margin-left: 3px ;
@@ -96,6 +66,20 @@
                margin-bottom: 0;
                color: lightgray;
            }
+            tr td input[type=password] {
+              
+                height: 30px;
+                width: 280px;
+            }
+            tr td input[type=email] {
+              
+                height: 30px;
+                width: 280px;
+            }
+             tr td input[type=tel] {
+                              height: 30px;
+                width: 280px;
+            }
            #agr{
                
                margin-left: 20px;
@@ -108,7 +92,7 @@
                 height: 140px;
                 overflow: auto;
                 border: 1px solid black;
-                border-radius: 10px;
+                
             }
             .container::-webkit-scrollbar {
                 width: 10px;
@@ -128,94 +112,137 @@
                 color: lightgray; 
             }
             input[type=radio] {
-            width:              150px;
+            width:              100px;
             height:             20px;
         }
-
-#logintable{
-    
-
-                margin: 0 auto;
-                padding:0;
-                width: 750px;
-                border-top: 1px solid #444444;
-                border-collapse: collapse;
-            }
-            tr td input{
-                border-radius: 5px;
-                height: 30px;
+        input[type=submit]{
+                                height: 30px;
                 width: 280px;
+                 margin: auto;
             }
+
+			
             #sye{
-              border-radius: 5px;
+              
                 height: 30px;
                 width: 280px;
             }
 
-.sidenav a:hover {
-    color: #f1f1f1;
+
+#memberinfo{
+width : 100%;
+height : 150px;
+text-align: center;
+}
+#memberinfo h1{
+margin : 10px;
+}
+#memberinfo h2{
+margin : 10px  10px 20px 10px;
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+#menubutton{
+width: 50px;
+height:50px;
+font-size : 14px;
+text-align:center;
+margin:0;
+padding: 0;
+line-height:50px;
+border:0;
+background:#bd9dec;
+border:1px solid #bd9dec;
+position: absolute;
+top:-50px;
+left: 0;
+color:#fff;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+#mySidenav{
+font-size :xx-large;
+width: 200px;
+height:435px;
+position: fixed;
+bottom : 0px;
+right: 75px;
+color :black;
+border: 1px solid #ddd;
+transition : .2s ease-in;
 }
+
+#mySidenav.on {
+bottom:-435px;
+}
+
+p{
+text-align: center;
+}
+
+.menuSide { background:#fff; }
+
+.menuSide p a:before,
+.menuSide  p a:after {
+  content: '';
+  border-bottom: solid 1px black;
+  position: absolute;
+  width: 0;
+}
+
+
+.menuSide p a { position:relative; }
+
+.menuSide p a:before { left: 0; bottom:-4px; }
+.menuSide p a:after { right: 0; bottom:-4px; }
+
+.menuSide  p a:hover:before,
+.menuSide  p a:hover:after {
+  width: 50%;
+}
+.menuSide  p a:before, .menuSide p a:after {
+  -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+
 </style>
 
 <body>
-<div id="hansol">
-<hr>
+<jsp:include page="../common/header.jsp" />
+
+<div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
-글 수 <span style="color: orange;"> 15</span>개</h2>
+글 수 <span style="color: orange;"> ${pCount} </span>개</h2>
+<h1 style="text-align: center; font-style : oblique;">INFOCHANGE</h1>
 <hr>
 </div>
    <br><br><br>
-   <div id="mySidenav" class="sidenav">
-    <c:if test="${sessionScope.loginUser.id eq 'master'}">
-    <hr>
-    <a href="#">내 가 쓴 글</a>
-    <a href="#">내가 좋아한 글</a>
-    <a href="memberChange.do">내 정보 수정</a>
-    <a href="friends.do">친구정보</a>
-    <a href="friendsadd.do">친구추가</a>
-    <a href="accfriends.do">친구수락</a>
-    <a href="mypageDelete.do">회원탈퇴</a>
-    <a href="adminMember.do">회원관리</a>
-    <a href="#">회원 글 관리</a>
-    <hr>
-    </c:if>
+   <div id="mySidenav">
+   <button id="menubutton"><i class="xi-angle-down"></i></button>
+	   <div class="menuSide">
+		   	<p>
+		   		<a href="memberplanList.do">내 가 쓴 글</a>
+		   	</p>
+		</div>
+	   <div class="menuSide"><p> <a href="mypageSharedme.do">내게 공유된 글</a></p></div>
+	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
+	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
+	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
+	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
+	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+   </c:if>
     </div>
-    <div id="mySidenav" class="sidenav">
-    <c:if test="${ sessionScope.loginUser.id ne 'master'}">
-    <hr>
-    <a href="#">내 가 쓴 글</a>
-    <a href="#">내가 좋아한 글</a>
-    <a href="memberChange.do">내 정보 수정</a>
-    <a href="friends.do">친구정보</a>
-    <a href="friendsadd.do">친구추가</a>
-    <a href="accfriends.do">친구수락</a>
-    <a href="mypageDelete.do">회원탈퇴</a>
-    <hr>
-    </c:if>
-  </div>   
-  <form method="post" action="mchange.do">
-  <div id="h">
+  <form id="joinForm" method="post" action="mchange.do">
   <table id="logintable">
-    <tbody><tr>
+    <tbody>
+    <tr>
         <td id="lab" class="ltd">
             <label>ID<span style="color: orange;">*</span></label>
         </td>
         <td id="inp" class="ltd">
-            <input type="text" id="userId" name="id" value="${member.id}" required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
+            <input type="text" id="userId" name="id" value="${member.id}" disabled required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
         </td>
     </tr>
     <tr>
@@ -259,10 +286,10 @@
               	호캉스<input type="checkbox" name="tType" value="호캉스"/>
                 FLEX<input type="checkbox" name="tType" value="FLEX"/>
               	힐링<input type="checkbox" name="tType" value="힐링"/>
-              	효도관광<input type="checkbox" name="tType" value="효도관광"/>
+              	효도관광<input type="checkbox" name="tType" value="효도관광"/><br>
               	이벤트<input type="checkbox" name="tType" value="이벤트"/>
-              	직장인휴가<input type="checkbox" name="tType" value="직장인휴가"/><br>
-              	문화재탐방<input type="checkbox" name="tType" value="문화재탐방"/>
+              	직장인휴가<input type="checkbox" name="tType" value="직장인휴가"/>
+              	문화재탐방<input type="checkbox" name="tType" value="문화재탐방"/><br>
               	짠내투어<input type="checkbox" name="tType" value="짠내투어"/>
               	쇼핑관광<input type="checkbox" name="tType" value="쇼핑관광"/>
               	한달살이<input type="checkbox" name="tType" value="한달살이"/>
@@ -420,26 +447,29 @@
               <label>성별<span style="color: orange;">*</span></label>
           </td>
           <td id="inp" class="ltd">
-            <span class="sortOptions">
+           
             <label for="sex">남</label>
             <input type="radio" name="gender" id="sex" value="M">
             <label for="sex">여</label>
             <input type="radio" name="gender" id="sex" value="Y">
-            </span>
+           
             
         </td>
       </tr>
        <tr>
-       <td id="inp" class="ltd">
-            <input type="submit" id="idCheck"  style="width: 70px; background: darkgrey; color: white;">
+       <td id="inp" class="sb" colspan="2" >
+       <div style="text-align : center;">
+            <input type="submit" id="idCheck"  class="colorBtn btn">
+         </div>
             </td>
+            <td></td>
        </tr>
    
 </tbody>
 </table>
 
-</div>
 </form>
+</div>
 <!-- <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span> -->
 
 <!-- <script>
@@ -453,10 +483,31 @@
     </script> -->
 
 
+<script>
+$(document).ready(function(){
+/*     $("#menubutton").click(function(){
+        $("#mySidenav").slideToggle();
+    }); */
+    
+    $("#menubutton").on("click", function(){
+    	$mySidenav = $("#mySidenav").attr("class");
+    	console.log($mySidenav);
+    	if($mySidenav == "on"){
+    		$("#mySidenav").removeClass("on");
+    		$(this).find("i").attr("class", "xi-angle-down");
+    	}else {
+    		$("#mySidenav").addClass("on");
+    		$(this).find("i").attr("class", "xi-angle-up");
+    	}
+    	
+    });
+    
+    
+});
+</script>
 
 
-
-
-
+   <jsp:include page="../common/footer.jsp" />
+ 
 
 </body></html>

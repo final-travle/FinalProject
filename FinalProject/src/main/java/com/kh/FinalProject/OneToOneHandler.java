@@ -95,47 +95,81 @@ public class OneToOneHandler extends TextWebSocketHandler {
                   
                   System.out.println("msg : " + mapReceive.get("msg"));
                   HashMap<String,Object> dbmap = new HashMap<String,Object>();
-                  dbmap.put("co_no", co_no);
-                  dbmap.put("id", loginid);
-                  dbmap.put("message",String.valueOf(mapReceive.get("msg")));
                   
-                  if(session.getId() == sess.getId()) {
-                	  System.out.println("세션리스트길이? "+sessionList.size());
-                 
-                  if(sessionList.size() == 1) {
-                	  int result = cService.insertOneToOnemsg(dbmap);//db저장 -> 나혼자 들어가있을때
+                  if(mapReceive.containsKey("image")) {
+                	  dbmap.put("co_no", co_no);
+                      dbmap.put("id", loginid);
+                      dbmap.put("message",String.valueOf(mapReceive.get("msg")));
+                	  dbmap.put("image", mapReceive.get("image"));
                 	  
-	                  if( result >0) {
-			                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg"); 
-			
-			                  System.out.println("디비저장 성공 : " + jsonStr2);
+                	  if(session.getId() == sess.getId()) {
+                		  if(sessionList.size() == 1) {
+                			  int result = cService.insertOneToOneSendImage(dbmap);
+                			  
+                			  if(result > 0) {
+                				  String jsonStr = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + mapReceive.get("image"); 
+                					
+				                  System.out.println("디비저장 성공 : " + jsonStr);
+                			  }else {
+			                	  System.out.println("db저장 실패");
+                			  }
+                		  }else {
+                			  int result = cService.insertOneToOneSendImage2(dbmap);
+                			  
+                			  if(result > 0) {
+                				  String jsonStr = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + mapReceive.get("image");
+                					
+    	                          System.out.println("디비저장 성공 : " + jsonStr);
+                			  }else {
+                				  System.out.println("db저장 실패");
+                			  }
+                		  }
+                	  }
+                	  if(sessionList.size() == 1) {
+		                  String jsonStr = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + mapReceive.get("image") + "|" + "1";
+		                  sess.sendMessage(new TextMessage(jsonStr));
 	                  }else {
-		                	  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg");                   
-		
-		                     System.out.println("db저장 실패");
+	                	  String jsonStr = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") +"|" + mapReceive.get("image") + "|" + "";
+		                  sess.sendMessage(new TextMessage(jsonStr));
 	                  }
                   }else {
-                	  int result = cService.insertOneToOnemsg2(dbmap);//db저장 -> 둘다 들어와있을때
-                	  
-                	  if( result >0) {
-                          String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg"); 
-
-                          System.out.println("디비저장 성공 : " + jsonStr2);
-                          }else {
-                        	  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg");                   
-
-                             System.out.println("db저장 실패");
-                          }
-                  }
-                  //int result =1;
-                  
-                  }
-                  if(sessionList.size() == 1) {
-	                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "1";
-	                  sess.sendMessage(new TextMessage(jsonStr2));
-                  }else {
-                	  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "";
-	                  sess.sendMessage(new TextMessage(jsonStr2));
+	                  dbmap.put("co_no", co_no);
+	                  dbmap.put("id", loginid);
+	                  dbmap.put("message",String.valueOf(mapReceive.get("msg")));
+	                  
+	                  if(session.getId() == sess.getId()) {
+	                 
+	                  if(sessionList.size() == 1) {
+	                	  int result = cService.insertOneToOnemsg(dbmap);//db저장 -> 나혼자 들어가있을때
+	                	  
+		                  if( result >0) {
+				                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg"); 
+				
+				                  System.out.println("디비저장 성공 : " + jsonStr2);
+		                  }else {
+			                	  System.out.println("db저장 실패");
+		                  }
+	                  }else {
+	                	  int result = cService.insertOneToOnemsg2(dbmap);//db저장 -> 둘다 들어와있을때
+	                	  
+	                	  if( result >0) {
+	                          String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg"); 
+	
+	                          System.out.println("디비저장 성공 : " + jsonStr2);
+	                          }else {
+	                             System.out.println("db저장 실패");
+	                          }
+	                  }
+	                  //int result =1;
+	                  
+	                  }
+	                  if(sessionList.size() == 1) {
+		                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "1";
+		                  sess.sendMessage(new TextMessage(jsonStr2));
+	                  }else {
+	                	  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg") + "|" + "";
+		                  sess.sendMessage(new TextMessage(jsonStr2));
+	                  }
                   }
                }
             }

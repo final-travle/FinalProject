@@ -118,6 +118,7 @@
         </style>
 </head>
 <body>
+<jsp:include page="../common/header.jsp" />
 
    <form id="joinForm" method="post" action="minsert.do">
             <h2 id="h2">JOIN MEMBER</h2>

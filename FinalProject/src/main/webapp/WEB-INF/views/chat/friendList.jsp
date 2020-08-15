@@ -657,6 +657,8 @@ textarea:focus{
  <script>
  function updateprofile_submit(){
 	 updateProfileForm.submit();
+	 $("input:checkbox[id='saveprofile_modal']").prop("checked", false);	
+	$("#saveprofile_modal").prop("checked", false);
 }
  </script>
 
@@ -831,7 +833,7 @@ textarea:focus{
   	  	function insertOneToOneChatroom(){
   	  		console.log("fr_id = " + friendId);
   	  		
-  	  		window.open("insertOneToOneChatroom.do?friendId="+friendId, "1대1채팅", "top=100, left=300, width=400, height=500, status=no, menubar=no");
+  	  		window.open("insertOneToOneChatroom.do?friendId="+friendId, "1대1채팅", "top=100, left=600, width=400, height=500, status=no, menubar=no");
   	  		
   	  		/* location.href="insertOneToOneChatroom.do?friendId="+friendId; */
   	  	}
