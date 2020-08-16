@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,8 @@ import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.review.model.service.ReviewService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -53,17 +56,15 @@ public class ReviewController {
 			currentPage = page;
 		}
 		
+		System.out.println("page : " + page);
+		
 		int listCount = rs.getListCount();
-		System.out.println(listCount);
 		
 		PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
 		
 		ArrayList<Board> list = rs.selectList(pi2);
 		ArrayList<PostTag> tl = rs.selectListTag();
 		
-		System.out.println(list);
-		System.out.println(tl);
-
 		if(list != null) {
 			mv.addObject("tl", tl);
 			mv.addObject("list", list);
@@ -283,7 +284,7 @@ public class ReviewController {
 			    	ArrayList testli = (ArrayList) posex.get(i);
 
 			    	if(testli.isEmpty() == false) {
-//			    		result3 = rs.reviewDayInsert(i);
+			    		result3 = rs.reviewDayInsert(i);
 			    
 				    	List<Object> mList = (List<Object>) posex.get(i);
 	
@@ -317,7 +318,16 @@ public class ReviewController {
 					    	tv.setTxpoint(xpoint);
 					    	tv.setTypoint(ypoint);
 					    	
-//					    	result4 = rs.reviewInsertPoint(tv);
+
+					    	System.out.println(tv.getNight());
+					    	System.out.println(tv.gettCode());
+					    	System.out.println(tv.gettName());
+					    	System.out.println(tv.getTxpoint());
+					    	System.out.println(tv.getTypoint());
+					    	
+					    	
+					    	
+					    	result4 = rs.reviewInsertPoint(tv);
 					    	
 					    	msg = "글이 정상적으로 등록되었습니다.";
 					    	
@@ -338,5 +348,155 @@ public class ReviewController {
 	    
 	}
 	
-	
+	@RequestMapping("reviewDetail.do")
+	public ModelAndView reviewDetail(HttpSession session, ModelAndView mv, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
+		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println(postNo);
+		
+		// 조회수 올려준다.
+		int result = rs.hitsUp(postNo);
+		
+		// 로그인 된 유저 아이디 가져온다.
+		Member m = (Member) session.getAttribute("loginUser");
+		if(m != null) {
+			lp.setUserId(m.getId());
+			lp.setPostNo(postNo);
+		
+		}
+		LikedPost liked = rs.likedView(lp);
+		
+		System.out.println(liked);
+		
+		MapBoard mb = rs.likeVoteView(postNo);
+
+		
+		if(result > 0) {
+			Board b = rs.selectPostView(postNo);
+			
+			if(b != null){
+				ArrayList<Travel> t = rs.selectTravelList(postNo);
+
+				Travel tLast = t.get(t.size() - 1);
+				
+				System.out.println(t);
+								
+				int dayNum = tLast.getNight();
+				
+				
+				mv.addObject("board", b)
+				.addObject("travel", t)
+				.addObject("currentPage", currentPage)
+				.addObject("dayNum", dayNum)
+				.addObject("liked", liked)
+				.addObject("mapList", mb)
+				.setViewName("review/reviewDetail");
+				
+			}
+			
+			
+		}else {
+			
+		}
+		
+		return mv;
+	}
+
+	@RequestMapping("rlikeUp.do")
+	public void likeUp(HttpServletResponse response,
+						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postType") String postType,
+						@RequestParam(value="postNo") int postNo,
+						LikedPost lp) throws IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+
+		JSONObject jso = new JSONObject();
+		
+		String msg = "";
+		
+		if(userId.isEmpty()) {
+			msg = "error";
+		}else {
+			msg = "success";
+			
+			lp.setUserId(userId);
+			lp.setPostNo(postNo);
+			lp.setPostType(postType);
+
+			int lc = 0;
+			int vc = 0;
+			String userLiked = null;
+
+			LikedPost lpList = rs.likedView(lp);
+			
+			if(lpList == null) {
+				int lur = 0;
+				lur = rs.insertLike(lp);
+
+				lp.setLikeYn("Y");
+				
+			}else {
+				
+				lp.setLikeYn(lpList.getLikeYn());
+				
+				System.out.println("lpList : " + lpList);
+				System.out.println("lpList YN : " + lpList.getLikeYn());
+				
+				int lpr = 0;
+				
+				lpr = rs.likeUp(lp);
+				if(lpList.getLikeYn().equals("Y")) {					
+					lp.setLikeYn("N");
+				}else {
+					lp.setLikeYn("Y");
+				}
+				
+			}
+			
+			System.out.println("* lp : " + lp);
+			int result = 0;
+
+			result = rs.likeUpdate(lp);
+			//////
+			LikedPost lpv = new LikedPost();
+			MapBoard mb = new MapBoard();
+			
+			lpv = rs.likedView(lp);
+			userLiked = lp.getLikeYn();
+			
+			System.out.println("* userLiked : " + userLiked);
+			
+			
+			lp.setLikeYn(userLiked);
+			lp.setPostNo(postNo);
+			
+			mb = new MapBoard();
+			
+			mb = rs.likeVoteView(postNo);
+			
+			lc = mb.getLikeTotal();
+			vc = mb.getVoteTotal();
+
+			jso.put("lc", lc);
+			jso.put("vc", vc);
+			
+			jso.put("userLiked", userLiked);
+			
+			response.setContentType("text/html; charset=utf-8");
+				
+		}
+			
+
+		jso.put("msg", msg);
+		
+		PrintWriter out = response.getWriter();
+		out.print(jso.toString());
+		out.flush();
+		
+		
+	}
 }

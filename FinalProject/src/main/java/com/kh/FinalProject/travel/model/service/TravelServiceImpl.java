@@ -80,8 +80,8 @@ public class TravelServiceImpl implements TravelService {
 	}
 
 	@Override
-	public MapBoard likeVoteView(int postNo) {
-		return td.likeVoteView(postNo);
+	public MapBoard likeVoteView(LikedPost lp) {
+		return td.likeVoteView(lp);
 	}
 
 	@Override

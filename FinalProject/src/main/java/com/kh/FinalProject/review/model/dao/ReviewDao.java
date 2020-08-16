@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -56,7 +58,33 @@ public class ReviewDao {
 	}
 
 	public int reviewInsertPoint(Travel tv) {
-		return sqlSessionTemplate.insert("reviewMapper.InsertPoint", tv);
+		System.out.println("여기까지는? " + tv);
+		return sqlSessionTemplate.insert("reviewMapper.insertPoint", tv);
+	}
+
+	public int hitsUp(int postNo) {
+		return sqlSessionTemplate.update("reviewMapper.hitsUp", postNo);
+	}
+
+	public LikedPost likedView(LikedPost lp) {
+		return sqlSessionTemplate.selectOne("reviewMapper.likedPost", lp);
+	}
+
+	public MapBoard likeVoteView(int postNo) {
+		return sqlSessionTemplate.selectOne("reviewMapper.likeVoteView", postNo);
+	}
+
+	public Board selectPostView(int postNo) {
+		return sqlSessionTemplate.selectOne("reviewMapper.selectPostView", postNo);
+	}
+
+	public ArrayList<Travel> selectTravelList(int postNo) {
+		return (ArrayList) sqlSessionTemplate.selectList("reviewMapper.selectTravelList", postNo);
+	}
+
+	public int insertLike(LikedPost lp) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

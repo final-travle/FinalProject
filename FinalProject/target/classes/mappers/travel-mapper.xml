@@ -162,10 +162,10 @@
 		AND POST_NO = #{postNo}
 	</select>
 	
-	<select id="likeVoteView" parameterType="_int" resultMap="mapBoardResultSet">
+	<select id="likeVoteView" parameterType="MapBoard" resultMap="mapBoardResultSet">
 		SELECT *
 		FROM MAP_BOARD
-		WHERE POST_TYPE = '3'
+		WHERE POST_TYPE = #{postType}
 		AND POST_NO = #{postNo}
 	</select>
 	
@@ -232,7 +232,7 @@
 	<select id="likedPost" parameterType="LikedPost" resultMap="likedPostResultSet">
 		SELECT *
 		FROM LIKED_POST
-		WHERE POST_TYPE = '3'
+		WHERE POST_TYPE = #{postType}
 		AND POST_NO = #{postNo}
         AND USER_ID = #{userId} 
 	</select>
@@ -248,7 +248,7 @@
 		</if>
 		</set>
 		WHERE USER_ID = #{userId}
-		AND POST_TYPE = '3'
+		AND POST_TYPE = #{postType}
 		AND POST_NO = #{postNo}
 	</update>
 	
@@ -262,14 +262,14 @@
 		LIKE_TOTAL = LIKE_TOTAL + 1
 		</if>
 		</set>
-		WHERE POST_TYPE = '3'
+		WHERE POST_TYPE = #{postType}
 		AND POST_NO = #{postNo}
 	</update>
 	
 	<insert id="insertLike" parameterType="LikedPost">
 		INSERT INTO LIKED_POST VALUES(
 		#{userId}
-		, '3'
+		, #{postType}
 		,#{postNo}
 		, 'Y'
 		)

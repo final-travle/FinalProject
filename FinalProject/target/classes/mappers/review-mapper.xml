@@ -128,5 +128,39 @@
 		)
 	</insert>
 	
+	<update id="hitsUp"  parameterType="Board">
+		UPDATE POST
+		SET HITS = HITS + 1
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</update>
 	
+	<select id="likedPost" parameterType="LikedPost" resultMap="likedPostResultSet">
+		SELECT *
+		FROM LIKED_POST
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+        AND USER_ID = #{userId} 
+	</select>
+	
+	<select id="likeVoteView" parameterType="_int" resultMap="mapBoardResultSet">
+		SELECT *
+		FROM MAP_BOARD
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectPostView" parameterType="_int" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectTravelList" resultMap="travelResultSet">
+		SELECT *
+		FROM TRAVEL
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</select>
 </mapper>

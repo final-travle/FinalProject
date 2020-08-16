@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.review.model.dao.ReviewDao;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -61,6 +63,48 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int reviewInsertPoint(Travel tv) {
 		return rd.reviewInsertPoint(tv);
+	}
+
+	@Override
+	public int hitsUp(int postNo) {
+		return rd.hitsUp(postNo);
+	}
+
+	@Override
+	public LikedPost likedView(LikedPost lp) {
+		return rd.likedView(lp);
+	}
+
+	@Override
+	public MapBoard likeVoteView(int postNo) {
+		return rd.likeVoteView(postNo);
+	}
+
+	@Override
+	public Board selectPostView(int postNo) {
+		return rd.selectPostView(postNo);
+	}
+
+	@Override
+	public ArrayList<Travel> selectTravelList(int postNo) {
+		return rd.selectTravelList(postNo);
+	}
+
+	@Override
+	public int insertLike(LikedPost lp) {
+		return 0;
+	}
+
+	@Override
+	public int likeUp(LikedPost lp) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int likeUpdate(LikedPost lp) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

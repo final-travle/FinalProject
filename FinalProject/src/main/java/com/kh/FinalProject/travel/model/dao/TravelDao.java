@@ -73,8 +73,8 @@ public class TravelDao {
 		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.selectTravelList", postNo);
 	}
 
-	public MapBoard likeVoteView(int postNo) {
-		return sqlSessionTemplate.selectOne("travelMapper.likeVoteView", postNo);
+	public MapBoard likeVoteView(LikedPost lp) {
+		return sqlSessionTemplate.selectOne("travelMapper.likeVoteView", lp);
 	}
 
 	public Board selectPlan(int postNo) {

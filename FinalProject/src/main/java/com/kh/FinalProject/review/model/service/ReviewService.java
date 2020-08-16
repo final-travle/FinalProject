@@ -3,6 +3,8 @@ package com.kh.FinalProject.review.model.service;
 import java.util.ArrayList;
 
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -27,5 +29,21 @@ public interface ReviewService {
 	int reviewDayInsert(int i);
 
 	int reviewInsertPoint(Travel tv);
+
+	int hitsUp(int postNo);
+
+	LikedPost likedView(LikedPost lp);
+
+	MapBoard likeVoteView(int postNo);
+
+	Board selectPostView(int postNo);
+
+	ArrayList<Travel> selectTravelList(int postNo);
+
+	int insertLike(LikedPost lp);
+
+	int likeUp(LikedPost lp);
+
+	int likeUpdate(LikedPost lp);
 
 }

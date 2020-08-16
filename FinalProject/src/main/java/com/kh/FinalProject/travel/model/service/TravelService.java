@@ -38,7 +38,7 @@ public interface TravelService {
 
 	ArrayList<Travel> selectTravelList(int postNo);
 
-	MapBoard likeVoteView(int postNo);
+	MapBoard likeVoteView(LikedPost lp);
 
 	Board selectPlan(int postNo);
 

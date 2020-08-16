@@ -54,19 +54,15 @@ public class TravelController {
 		if(page != null) {
 			currentPage = page;
 		}
+
+		System.out.println("page : " + page);
 		
 		int listCount = ts.getListCount();
-		System.out.println(listCount);
 		
 		PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
 		
 		ArrayList<Board> list = ts.selectList(pi2);
-		
 		ArrayList<PostTag> tl = ts.selectListTag();
-		
-		System.out.println(tl);
-		System.out.println(list);
-		
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
@@ -560,7 +556,7 @@ public class TravelController {
 	
 	
 	@RequestMapping("planDetail.do")
-	public ModelAndView planDetail(HttpSession session, ModelAndView mv, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
+	public ModelAndView planDetail(HttpSession session, ModelAndView mv, String postType, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
 		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
 		int currentPage = 1;
 		if(page != null) {
@@ -577,12 +573,13 @@ public class TravelController {
 		if(m != null) {
 			lp.setUserId(m.getId());
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 		
 		}
 		LikedPost liked = ts.likedView(lp);
 		
 		
-		MapBoard mb = ts.likeVoteView(postNo);
+		MapBoard mb = ts.likeVoteView(lp);
 		
 		System.out.println(liked);
 		
@@ -621,12 +618,12 @@ public class TravelController {
 	@RequestMapping("likeUp.do")
 	public void likeUp(HttpServletResponse response,
 						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postType") String postType,
 						@RequestParam(value="postNo") int postNo,
 						LikedPost lp) throws IOException {
 		response.setContentType("aplication/json; charset=utf-8");
 
 		JSONObject jso = new JSONObject();
-		
 		
 		String msg = "";
 		
@@ -637,6 +634,7 @@ public class TravelController {
 			
 			lp.setUserId(userId);
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 
 			int lc = 0;
 			int vc = 0;
@@ -684,10 +682,11 @@ public class TravelController {
 			
 			lp.setLikeYn(userLiked);
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 			
 			mb = new MapBoard();
 			
-			mb = ts.likeVoteView(postNo);
+			mb = ts.likeVoteView(lp);
 			
 			lc = mb.getLikeTotal();
 			vc = mb.getVoteTotal();

@@ -17,19 +17,19 @@
             
 			<p class="piCount">총 개시글 갯수 : ${pi.listCount }</p>
             <ul class="grid grid3 cf">
-				<c:forEach var="pl" items="${list }">
-					<c:url var="planDetail" value="planDetail.do">
-						<c:param name="postNo" value="${pl.postNo }" />
-						<c:param name="page" value="${pi.currentPage }" />
+				<c:forEach var="rl" items="${list }">
+					<c:url var="reviewDetail" value="reviewDetail.do">
+						<c:param name="postNo" value="${rl.postNo }" />
+						<c:param name="page" value="${ri.currentPage }" />
 					</c:url>
 	                <li>
 	                    <p class="img">
-	                        <a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
+	                        <a href="${reviewDetail }"><img src="${rl.thumbnail }" /></a>
 	                    </p>
-	                    <p class="title">${pl.title }</p>
-	                    <p>${pl.userId }</p>
+	                    <p class="title">${rl.title }</p>
+	                    <p>${rl.userId }</p>
 	                    <p class="cont">
-	                    	<c:set var="liPostNo" value="${pl.postNo }" />
+	                    	<c:set var="liPostNo" value="${rl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
 		                    	<c:if test = "${tl.postNo eq liPostNo}">
 			                    		<c:out value="# ${tl.tagName } " />
@@ -54,7 +54,7 @@
 				</c:if>
 				
 				<c:if test="${pi.currentPage gt 1 }">
-					<c:url var="blistBack" value="planList.do">
+					<c:url var="blistBack" value="reviewListView.do">
 						<c:param name="page" value="${pi.currentPage - 1 }" />
 					</c:url>
 					<a href="${blistBack }">[prev] </a>
@@ -67,7 +67,7 @@
 					</c:if>
 					
 					<c:if test="${p ne pi.currentPage }">
-						<c:url var="blistCheck" value="planList.do">
+						<c:url var="blistCheck" value="reviewListView.do">
 							<c:param name="page" value="${p }"/>
 						</c:url>
 						<a href="${blistCheck }">${p }</a>
@@ -81,7 +81,7 @@
 				</c:if>
 				
 				<c:if test="${pi.currentPage lt pi.maxPage }">
-					<c:url var="blistEnd" value="planList.do">
+					<c:url var="blistEnd" value="reviewListView.do">
 						<c:param name="page" value="${pi.currentPage + 1 }" />
 					</c:url>
 					<a href="${blistEnd }"> [next]</a>

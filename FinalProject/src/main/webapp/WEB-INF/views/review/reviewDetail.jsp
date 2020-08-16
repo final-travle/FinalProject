@@ -20,6 +20,9 @@
 	
 	.btns a { display:inline-block; }
 	
+	.reviewContents {  border-top:1px solid #ddd; box-sizing:border-box; line-height:1.8; margin-bottom:30px; }
+	.reviewContents img { margin:10px 0; max-width: 1200px; }
+	.reviewContents .rvTitle { font-size:26px; background:#bd9dec; color:#fff; text-align:center; padding:10px 0; margin-bottom:30px; }
 </style>
 </head>
 <body>
@@ -28,8 +31,7 @@
         <div class="titleSec" style="background:url('${board.thumbnail }' )no-repeat 0 20%;  background-size:cover;">
             <p class="planTitle">${board.title }</p>
             <p class="ltSec">
-                <span class="likes">
-                </span>
+                <span class="likes"></span>
                 <span class="voting"><i class="xi-star-o"></i> ${mapList.voteTotal}</span>
             </p>
             <div class="cover"></div>
@@ -68,6 +70,16 @@
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
+        <!-- review contents area -->
+        <div class="reviewContents">
+	        <div class="rvTitle">
+	     	   ${board.title }
+	        </div>
+	        <div id="content">
+	        	${board.postContents }
+	        </div>
+        </div>        
+        <!-- // review contents area end -->
     </div><!-- // container end -->
 <script>
 
