@@ -88,19 +88,19 @@ public class OneToOneChatlistHandler extends TextWebSocketHandler {
          
                      for(int i=0;i<sessionList.size();i++) {
                         Map<String, Object> mapSessionList = sessionList.get(i);
+                        
                         String loginUser = String.valueOf(mapSessionList.get("loginUser"));
                         String friendid = mapReceive.get("friendid");
                         System.out.println("loginUser : " + loginUser);
                         System.out.println("friendid : " +friendid);
                         
-//                              if(loginUser.equals(friendid)) {
                                  
                            WebSocketSession sess = (WebSocketSession)mapSessionList.get("session");
                            
                            String jsonstr = mapReceive.get("co_no") + "|" + mapReceive.get("friendid") +"|" + mapReceive.get("msg");
                            System.out.println("보내기전 확인 : " +jsonstr);
                            sess.sendMessage(new TextMessage(jsonstr));
-//                              }
+
                      }
                      
                   }

@@ -13,6 +13,7 @@ public class OneToOneMsg implements Serializable{
 	private String co_no;
 	private String chatId;
 	private String content;
+	private String send_image;
 	private String sentDate;
 	private String read_yn;
 	
@@ -22,13 +23,14 @@ public class OneToOneMsg implements Serializable{
 	
 	public OneToOneMsg() {}
 
-	public OneToOneMsg(int message_no, String co_no, String chatId, String content, String sentDate, String read_yn,
-			String profile, String nickname, int count) {
+	public OneToOneMsg(int message_no, String co_no, String chatId, String content, String send_image, String sentDate,
+			String read_yn, String profile, String nickname, int count) {
 		super();
 		this.message_no = message_no;
 		this.co_no = co_no;
 		this.chatId = chatId;
 		this.content = content;
+		this.send_image = send_image;
 		this.sentDate = sentDate;
 		this.read_yn = read_yn;
 		this.profile = profile;
@@ -66,6 +68,14 @@ public class OneToOneMsg implements Serializable{
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSend_image() {
+		return send_image;
+	}
+
+	public void setSend_image(String send_image) {
+		this.send_image = send_image;
 	}
 
 	public String getSentDate() {
@@ -111,8 +121,8 @@ public class OneToOneMsg implements Serializable{
 	@Override
 	public String toString() {
 		return "OneToOneMsg [message_no=" + message_no + ", co_no=" + co_no + ", chatId=" + chatId + ", content="
-				+ content + ", sentDate=" + sentDate + ", read_yn=" + read_yn + ", profile=" + profile + ", nickname="
-				+ nickname + ", count=" + count + "]";
+				+ content + ", send_image=" + send_image + ", sentDate=" + sentDate + ", read_yn=" + read_yn
+				+ ", profile=" + profile + ", nickname=" + nickname + ", count=" + count + "]";
 	}
 	
 }

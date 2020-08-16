@@ -14,6 +14,7 @@ import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.member.model.vo.PageInfo;
 import com.kh.FinalProject.member.model.vo.Time;
 import com.kh.FinalProject.member.model.vo.Ttype;
+import com.kh.FinalProject.postShared.model.vo.PostShared;
 
 @Repository("mDao")
 public class MemberDao {
@@ -24,13 +25,11 @@ public class MemberDao {
 	
 	public int insertMember(Member m) {
 		// TODO Auto-generated method stub
-		System.out.println("member : "+m);
 		return sqlSessionTemplate.insert("memberMapper.insertMember",m);
 	}
 
 	public Member loginMember(Member m) {
 		// TODO Auto-generated method stub
-		System.out.println("member : "+m);
 		return sqlSessionTemplate.selectOne("memberMapper.selectMember",m);
 	}
 
@@ -51,7 +50,6 @@ public class MemberDao {
 
 	public int checkIdDup(String id) {
 		// TODO Auto-generated method stub
-		System.out.println(id);
 		return sqlSessionTemplate.selectOne("memberMapper.checkIdDup",id);
 	}
 
@@ -88,7 +86,6 @@ public class MemberDao {
 
 	public ArrayList<Friends> friendsadd(Friends fr) {
 		// TODO Auto-generated method stub
-		System.out.println("쉬이벌 여기까진 와야지");
 		return (ArrayList)sqlSessionTemplate.selectList("friends.friendsadd",fr);
 	}
 
@@ -99,7 +96,6 @@ public class MemberDao {
 
 	public int getListCount(String userId) {
 		// TODO Auto-generated method stub
-		System.out.println("그럼 쉬벌 여기까지도와야지");
 		return	sqlSessionTemplate.selectOne("friends.getListCount",userId);
 	}
 
@@ -173,6 +169,13 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("friends.fCount",id);
 	}
 
+	public int fCount2(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("friends.fCount2",id);
+	}
+
+	
+	
 	public ArrayList<Friends> realfriends(FriendsPage fp) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp);
@@ -262,6 +265,42 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("memberMapper.membercount",m);
 	}
+
+	public ArrayList<Friends> rlfriends(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.rlfriends",id);
+	}
+
+	public ArrayList<Friends> realfriendsShared(FriendsPage fp) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriendsShared",fp);
+	}
+
+	public ArrayList<Friends> realfriendsShared(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriendsShared2",id);
+	}
+
+	public ArrayList<String> sharedfd(Integer postNo, String postType, String id) {
+		// TODO Auto-generated method stub
+		PostShared ps = new PostShared();
+		ps.setPost_no(postNo);
+		ps.setPost_type(postType);
+		ps.setUser_id(id);
+		return (ArrayList)sqlSessionTemplate.selectList("friends.sharedfd",ps);
+	}
+
+	public ArrayList<Member> allMember2(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.allMember2",id);
+	}
+
+	public int pCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.pCount",id);
+	}
+
+	
 	
 	
 }

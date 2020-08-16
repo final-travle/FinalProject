@@ -6,22 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 
 </head>
 <style>
-#hansol{width: 4000px;}
 body {font-family: "Lato", sans-serif;}
 #h{right: 250px;}
-.sidenav {height: 150;width: 100;position: fixed;z-index: 0;top: 150; left: 0;right: 10;
-			overflow-x: hidden;transition: 0.5s;padding-top: 60px;margin-right:20px ;}
-.sidenav a {padding: 8px 8px 8px 32px;text-decoration: none; font-size: 25px;
-    color: #818181;display: block;transition: 0.3s;}
-#joinForm{width: 850px;margin: 0 auto;}
-#logintable{margin: 10px;padding:0;width: 700px;border-top: 1px solid #444444;border-collapse: collapse;}
-.ltd {border-bottom: 1px solid #444444;padding: 10px;}
-#lab{background-color:white;color: black;text-align: center;padding: 10px;   }
+#friendsbody{width: 850px;margin: 0 auto;}
 #inp{padding: 10px;padding-left: 110px; padding-right: 100px;}
 tr td input{border-radius: 5px;height: 30px;width: 280px;}
 #sye{border-radius: 5px;height: 30px; width: 280px;}
@@ -38,108 +29,199 @@ div select{height: 30px;border-radius: 5px;width: 80px;float: left;margin-left: 
 .container::-webkit-scrollbar-track {background-color: grey;border-radius: 10px;box-shadow: inset 0px 0px 5px white;}
 input::-webkit-input-placeholder { color: lightgray; }
 input[type=radio] {width:              150px;height:             20px;}
-#logintable{    margin: 0 auto;padding:0;width: 750px;border-top: 1px solid #444444;border-collapse: collapse;}
-tr td input{border-radius: 5px;height: 30px;width: 280px;}
 #sye{border-radius: 5px;height: 30px;width: 280px;}
-.sidenav a:hover {color: #f1f1f1;}
-.sidenav .closebtn {position: absolute;top: 0;right: 25px;font-size: 36px;margin-left: 50px;}
 @media screen and (max-height: 450px) {.sidenav {padding-top: 15px;}.sidenav a {font-size: 18px;}}
-</style>
+#friendsbody{  width: 850px;  margin: 0 auto;    }
+#firendsIdSearch{
+	margin:20px auto;
+	text-align:center;
+}
 
+#friendsbodyInfo {
+width:100%;
+}
+
+#search {
+	width:540px;
+}
+
+#friendsbodyInfo tr {
+	line-height:2.6;
+	border-bottom:1px solid #ddd;
+}
+#friendsbodyInfo td { 
+ }
+
+input[type=text]{
+height: 36px;
+ width: 200px;
+}
+
+#memberinfo{
+width : 100%;
+height : 150px;
+text-align: center;
+}
+#memberinfo h1{
+margin : 10px;
+}
+#memberinfo h2{
+margin : 10px  10px 20px 10px;
+}
+
+#menubutton{
+width: 50px;
+height:50px;
+font-size : 14px;
+text-align:center;
+margin:0;
+padding: 0;
+line-height:50px;
+border:0;
+background:#bd9dec;
+border:1px solid #bd9dec;
+position: absolute;
+top:-50px;
+left: 0;
+color:#fff;
+}
+
+#mySidenav{
+font-size :xx-large;
+width: 200px;
+height:435px;
+position: fixed;
+bottom : 0px;
+right: 75px;
+color :black;
+border: 1px solid #ddd;
+transition : .2s ease-in;
+}
+
+#mySidenav.on {
+bottom:-435px;
+}
+
+p{
+text-align: center;
+}
+
+.menuSide { background:#fff; }
+
+.menuSide p a:before,
+.menuSide  p a:after {
+  content: '';
+  border-bottom: solid 1px black;
+  position: absolute;
+  width: 0;
+}
+
+
+.menuSide p a { position:relative; }
+
+.menuSide p a:before { left: 0; bottom:-4px; }
+.menuSide p a:after { right: 0; bottom:-4px; }
+
+.menuSide  p a:hover:before,
+.menuSide  p a:hover:after {
+  width: 50%;
+}
+.menuSide  p a:before, .menuSide p a:after {
+  -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+
+
+#friendstable{
+                margin: 10px;
+                padding:0;
+                width: 800px;
+                border-top: 1px solid #444444;
+                border-collapse: collapse;
+            }</style>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://unpkg.com/hangul-js" type="text/javascript"></script>
 <body>
-<div id="hansol">
-<hr>
+<jsp:include page="../common/header.jsp" />
+
+<div id="memberinfo">
+
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
-<button type="button" onclick="location.href='home.do'">메인으로</button>
 <h2>친구 : <span style="color: orange;"> ${fCount}</span>명<br>
-글 수 <span style="color: orange;"> 15</span>개</h2>
+글 수 <span style="color: orange;"> ${pCount} </span>개</h2>
+<h1 style="text-align: center; font-style : oblique;">FRIENDS</h1>
 <hr>
 </div>
+
    <br><br><br>
   
   
-  
-  
-  
-  
-   <div id="mySidenav" class="sidenav">
-    <c:if test="${sessionScope.loginUser.id eq 'master'}">
-    <hr>
-    <a href="#">내 가 쓴 글</a>
-    <a href="#">내가 좋아한 글</a>
-    <a href="memberChange.do">내 정보 수정</a>
-    <a href="friends.do">친구정보</a>
-    <a href="friendsadd.do">친구추가</a>
-    <a href="accfriends.do">친구수락</a>
-    <a href="mypageDelete.do">회원탈퇴</a>
-    <a href="adminMember.do">회원관리</a>
-    <a href="#">회원 글 관리</a>
-    <hr>
-    </c:if>
+   <div id="mySidenav">
+   <button id="menubutton"><i class="xi-angle-down"></i></button>
+	   <div class="menuSide">
+		   	<p>
+		   		<a href="memberplanList.do">내 가 쓴 글</a>
+		   	</p>
+		</div>
+	   <div class="menuSide"><p> <a href="mypageSharedme.do">내게 공유된 글</a></p></div>
+	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
+	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
+	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
+	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
+	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+   </c:if>
     </div>
-    <div id="mySidenav" class="sidenav">
-    <c:if test="${ sessionScope.loginUser.id ne 'master'}">
-    <hr>
-    <a href="#">내 가 쓴 글</a>
-    <a href="#">내가 좋아한 글</a>
-    <a href="memberChange.do">내 정보 수정</a>
-    <a href="friends.do">친구정보</a>
-    <a href="friendsadd.do">친구추가</a>
-    <a href="accfriends.do">친구수락</a>
-    <a href="mypageDelete.do">회원탈퇴</a>
-    <hr>
-    </c:if>
-  </div>
-
-
-
-
-<form method="post" action="friends.do">
-<select name="search">
-    <option value="">아이디로검색</option>
-    <option value="name">이름</option>
-    <option value="nicname">별명</option>
-    <option value="sex">성별</option>
-    <option value="birth">생년월일</option>
-</select>
-<input type="text" id="search" name="noticeSearch"  placeholder="검색어를 입력해주세요"> <input type="submit" id="searchBtn" value="SEARCH">
-<table align="center" width="600" border="1" cellspacing="0"
-         style="claer:right;" id="td">
-      <tr bgcolor="#99ccff">
-         <th>이름</th>
-         <th>닉네임</th>
-         <th>성별</th>
-         <th>이메일</th>
-         <th>최근접속일</th>
-         <th>삭제여부</th>
-      </tr>
-      <c:if test="${empty friends }">
-            <tr>
-            
-            <td>리스트가없습니다</td>
-            </tr>
-            </c:if>
-      <c:forEach var="n" items="${friends }">
-       
-         <tr>
-            <td align="center">${n.name }</td>
-            <td align="center">${n.nickname }</td>
-            <td align="center">${n.gender }</td>
-            <td align="center">${n.email }</td>
-            <td align="center">${n.time }</td>
-            <td>
-		            <c:url value="refusefriends.do" var="url">
-					<c:param name="deleteid" value="${n.id }" />
-					</c:url>
-		            <a href="${url}">삭제하기</a>
-		            </td>
-        </tr>   
-      </c:forEach>
-   </table>
-   
-   </form>
-   
-   
+<div id="friendsbody">
+	<form method="post" action="friends.do">
+		<div id="firendsIdSearch">
+		<label for="search"> 아이디로검색 :</label> 
+		<input align="center" type="text" id="search" name="noticeSearch"  placeholder="아이디를 입력해주세요">
+		<input type="submit" id="searchBtn" class="colorBtn btn" value="SEARCH">
+		</div>
+		
+			<div id="friendsbodyInfo">
+				<table align="center" width="800" border="1" cellspacing="0" 
+			         style="claer:right;" id="friendstable">
+			      <tr bgcolor="#bd9dec">
+			         <th>이름</th>
+			         <th>닉네임</th>
+			         <th>성별</th>
+			         <th>ID</th>
+			         <th>최근접속일</th>
+			         <th>삭제여부</th>
+			      </tr>
+			      <c:if test="${empty friends }">
+			            <tr>
+			            <td colspan="5">리스트가없습니다</td>
+			            </tr>
+			            </c:if>
+			      <c:forEach var="n" items="${friends }">
+			       
+			         <tr>
+			            <td align="center">${n.name }</td>
+			            <td align="center">${n.nickname }</td>
+			            <td align="center">${n.gender }</td>
+			            <td align="center">${n.id }</td>
+			            <td align="center">${n.time }</td>
+			            <td>
+					            <c:url value="refusefriends.do" var="url">
+								<c:param name="deleteid" value="${n.id }" />
+								</c:url>
+					            <a href="${url}">삭제하기</a>
+					            </td>
+			        </tr>   
+			      </c:forEach>
+			   </table>
+		   </div>
+	  </form>
+		   
+  </div> 
    <div id="paging" align="center" width="600" border="1">
    <!-- [이전] -->
 			<c:if test="${pi.currentPage eq 1 }">
@@ -195,11 +277,88 @@ tr td input{border-radius: 5px;height: 30px;width: 280px;}
    			}
    			</script>
    
+   <script>
+	$(function() { 
+
+		//화면 다 뜨면 시작
+		//DB쿼리 조작 없이 초성 검색을 하기 위해서는 우선 DB에 있는 항목들을 다 가지고 와야한다.
+		//즉 너무 많은 수가 있으면 클라이언트 측이 느려질 수 있다는 점.
+		//하지만 DB쿼리를 조작해서 서버에서 초성검색을 하는 방식에 비해 서버에는 무리가 없다.
+		// ajax로 미리 검색어 목록을 다 가지고 온다.
+		$.ajax({
+			type : 'get',
+			url : "friendshansolyy.do",
+			dataType : "json",
+			//request.term = $("#autocomplete").val()
+			//data: {"param":"param"},
+			success : function(data) {
+				let source = $.map(data, function(item) { //json[i] 번째 에 있는게 item 임.
+					chosung = "";
+					Hangul.d(item, true).forEach(function(strItem, index) {
+						if(strItem[0] != " "){	//띄어 쓰기가 아니면
+							chosung += strItem[0];//초성 추가
+						}
+					});
+					return {
+						label : chosung + "|" +item, //실제 검색어랑 비교 대상 ㄱㅊㅂㅇㅂ|김치 볶음밥 이 저장된다.
+						value : item, //김치 볶음밥
+						chosung : chosung	//ㄱㅊㅂㅇㅂ
+					}
+				});
+				
+				
+				$("#search").autocomplete({
+					source : source,	// source 는 자동 완성 대상
+					select : function(event, ui) {	//아이템 선택시
+						console.log(ui.item.label + " 선택 완료");	
+						
+					},
+					focus : function(event, ui) {	//포커스 가면
+						return false;//한글 에러 잡기용도로 사용됨
+					}
+				}).autocomplete( "instance" )._renderItem = function( ul, item ) {	
+				//.autocomplete( "instance" )._renderItem 설절 부분이 핵심
+			      return $( "<li>" )	//기본 tag가 li로 되어 있음 
+			        .append( "<div>" + item.value + "</div>" )	//여기에다가 원하는 모양의 HTML을 만들면 UI가 원하는 모양으로 변함.
+			        .appendTo( ul );	//웹 상으로 보이는 건 정상적인 "김치 볶음밥" 인데 내부에서는 ㄱㅊㅂㅇㅂ,김치 볶음밥 에서 검색을 함.
+			    };
+			}
+		});
+
+	});
+	
+	
+	
+</script>
    
+
 </div>
 
+   
+   <script>
+$(document).ready(function(){
+/*     $("#menubutton").click(function(){
+        $("#mySidenav").slideToggle();
+    }); */
+    
+    $("#menubutton").on("click", function(){
+    	$mySidenav = $("#mySidenav").attr("class");
+    	console.log($mySidenav);
+    	if($mySidenav == "on"){
+    		$("#mySidenav").removeClass("on");
+    		$(this).find("i").attr("class", "xi-angle-down");
+    	}else {
+    		$("#mySidenav").addClass("on");
+    		$(this).find("i").attr("class", "xi-angle-up");
+    	}
+    	
+    });
+    
+    
+});
+</script>
 
-
-
+   <jsp:include page="../common/footer.jsp" />
+ 
 </body>
 </html>

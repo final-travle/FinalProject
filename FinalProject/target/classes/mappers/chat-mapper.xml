@@ -38,6 +38,7 @@
 		<result property="cr_no" column="CR_NO"/>
 		<result property="chat_id" column="CM_ID"/>
 		<result property="chat_content" column="CM_CONT"/>
+		<result property="sent_image" column="CM_SENT_IMAGE"/>
 	</resultMap>
 	
 	<resultMap type="OneToOne" id="otoResultSet">
@@ -51,6 +52,7 @@
 		<result property="co_no" column="CO_NO"/>
 		<result property="chatId" column="CHAT_ID"/>
 		<result property="content" column="MESSAGE_CONT"/>
+		<result property="send_image" column="SENT_IMAGE"/>
 		<result property="sentDate" column="SENT_DATE"/>
 		<result property="read_yn" column="READ_YN"/>
 	</resultMap>
@@ -98,18 +100,14 @@
 	</update>
 	
 	<select id="selectOneToOneRoom" parameterType="HashMap" resultMap="otoResultSet">
-		SELECT ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID, COUNT(READ_YN) AS COUNT
-		FROM ONETOONE_ROOM ORM
-		JOIN ONETOONE_MESSAGE OM ON (ORM.CO_NO = OM.CO_NO)
-		WHERE ORM.MY_ID = #{myId} AND ORM.FRIEND_ID=#{friendId} AND READ_YN = 'N'
-		GROUP BY ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE MY_ID = #{myId} AND FRIEND_ID = #{friendId}
 	</select>
 	<select id="selectOneToOneRoom2" parameterType="HashMap" resultMap="otoResultSet">
-		SELECT ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID, COUNT(READ_YN) AS COUNT
-		FROM ONETOONE_ROOM ORM
-		JOIN ONETOONE_MESSAGE OM ON (ORM.CO_NO = OM.CO_NO)
-		WHERE ORM.MY_ID = #{friendId} AND ORM.FRIEND_ID=#{myId} AND READ_YN = 'N'
-		GROUP BY ORM.CO_NO, ORM.MY_ID, ORM.FRIEND_ID
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE MY_ID = #{friendId} AND FRIEND_ID = #{myId}
 	</select>
 	
 	<insert id="insertOneToOneRoom" parameterType="HashMap">
@@ -123,6 +121,7 @@
 																					  , #{co_no}
 																					  , #{id}
 																					  , #{message}
+																					  , null
 																					  , SYSDATE
 																					  , 'N')
 	</insert>
@@ -151,7 +150,7 @@
 	</select>
 	
 	<select id="selectMessageList" resultMap="otomsgResultSet">
-		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME,OM.SENT_IMAGE
 		FROM ONETOONE_MESSAGE OM
 		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
 		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
@@ -159,7 +158,7 @@
 	</select>
 	
 	<select id="selectMessageList2" resultMap="otomsgResultSet">
-		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME
+		SELECT OM.MESSAGE_NO, OM.CO_NO, OM.CHAT_ID, OM.MESSAGE_CONT, OM.SENT_DATE, OM.READ_YN, M.PROFILE,M.NICKNAME,OM.SENT_IMAGE
 		FROM ONETOONE_MESSAGE OM
 		JOIN MEMBER M ON (M.USER_ID = OM.CHAT_ID)
 		WHERE CO_NO = #{co_no} AND MESSAGE_CONT !='null'
@@ -183,11 +182,21 @@
 																					  , #{chatroom_no}
 																					  , #{id}
 																					  , #{message}
+																					  , null
+																					  )
+	</insert>
+	
+	<insert id="insertOpenchatSendImage" parameterType="HashMap">
+		INSERT INTO CHATROOM_MESSAGE VALUES(SEQ_CRMSG.NEXTVAL
+																					  , #{chatroom_no}
+																					  , #{id}
+																					  , #{message}
+																					  , #{image}
 																					  )
 	</insert>
 	
 	<select id="selectOpenMessageList" resultMap="chatroommessageResultSet">
-		SELECT CM.CM_NO, CM.CR_NO, CM.CM_ID, CM.CM_CONT, M.PROFILE, M.NICKNAME
+		SELECT CM.CM_NO, CM.CR_NO, CM.CM_ID, CM.CM_CONT, M.PROFILE, M.NICKNAME, CM.CM_SENT_IMAGE
 		FROM CHATROOM_MESSAGE CM
 		JOIN MEMBER M ON (M.USER_ID = CM.CM_ID)
 		WHERE CM.CR_NO = #{cr_no} AND CM_CONT != 'null'
@@ -199,6 +208,7 @@
 																					  , #{co_no}
 																					  , #{id}
 																					  , #{message}
+																					  , null
 																					  , SYSDATE
 																					  , 'Y')
 	</insert>
@@ -219,9 +229,29 @@
 	<select id="ReadYNCount" resultMap="otomsgResultSet">
 		SELECT CO_NO,CHAT_ID, COUNT(READ_YN) AS COUNT
 		FROM ONETOONE_MESSAGE
-		WHERE READ_YN = 'N'
+		WHERE READ_YN = 'N' AND MESSAGE_CONT != 'null'
 		GROUP BY CO_NO,CHAT_ID
 	</select>
+	
+	<insert id="insertOneToOneSendImage"  parameterType="HashMap">
+		INSERT INTO ONETOONE_MESSAGE VALUES(SEQ_OTOMSG.NEXTVAL
+																					  , #{co_no}
+																					  , #{id}
+																					  , #{message}
+																					  , #{image}
+																					  , SYSDATE
+																					  , 'N')
+	</insert>
+	
+	<insert id="insertOneToOneSendImage2"  parameterType="HashMap">
+		INSERT INTO ONETOONE_MESSAGE VALUES(SEQ_OTOMSG.NEXTVAL
+																					  , #{co_no}
+																					  , #{id}
+																					  , #{message}
+																					  , #{image}
+																					  , SYSDATE
+																					  , 'Y')
+	</insert>
 	
 </mapper>
 

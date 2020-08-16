@@ -149,6 +149,24 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.ReadYNCountList();
 	}
 
+	@Override
+	public int insertOneToOneSendImage(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOneToOneSendImage(dbmap);
+	}
+
+	@Override
+	public int insertOneToOneSendImage2(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOneToOneSendImage2(dbmap);
+	}
+
+	@Override
+	public int insertOpenchatSendImage(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return cDao.insertOpenchatSendImage(dbmap);
+	}
+
 	
 
 

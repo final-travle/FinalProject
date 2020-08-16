@@ -13,19 +13,21 @@ public class ChatroomMsg implements Serializable{
 	private int cr_no;
 	private String chat_id;
 	private String chat_content;
+	private String sent_image;
 	
 	private String nickname;
 	private String profile;
 	
 	public ChatroomMsg() {}
 
-	public ChatroomMsg(int message_no, int cr_no, String chat_id, String chat_content, String nickname,
-			String profile) {
+	public ChatroomMsg(int message_no, int cr_no, String chat_id, String chat_content, String sent_image,
+			String nickname, String profile) {
 		super();
 		this.message_no = message_no;
 		this.cr_no = cr_no;
 		this.chat_id = chat_id;
 		this.chat_content = chat_content;
+		this.sent_image = sent_image;
 		this.nickname = nickname;
 		this.profile = profile;
 	}
@@ -62,6 +64,14 @@ public class ChatroomMsg implements Serializable{
 		this.chat_content = chat_content;
 	}
 
+	public String getSent_image() {
+		return sent_image;
+	}
+
+	public void setSent_image(String sent_image) {
+		this.sent_image = sent_image;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -81,9 +91,7 @@ public class ChatroomMsg implements Serializable{
 	@Override
 	public String toString() {
 		return "ChatroomMsg [message_no=" + message_no + ", cr_no=" + cr_no + ", chat_id=" + chat_id + ", chat_content="
-				+ chat_content + ", nickname=" + nickname + ", profile=" + profile + "]";
+				+ chat_content + ", sent_image=" + sent_image + ", nickname=" + nickname + ", profile=" + profile + "]";
 	}
-	
-	
 	
 }

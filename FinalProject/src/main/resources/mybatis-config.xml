@@ -17,7 +17,7 @@
 		<typeAlias type="com.kh.FinalProject.chat.model.vo.OneToOne" alias="OneToOne"/>
 		<typeAlias type="com.kh.FinalProject.chat.model.vo.OneToOneMsg" alias="OneToOneMsg"/>
 		
-		
+		<typeAlias type="com.kh.FinalProject.postShared.model.vo.PostShared" alias="PostShared"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Travel" alias="Travel"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Tag" alias="Tag"/>

@@ -78,7 +78,7 @@ public class ChatController {
 		 for(int i = 0; i < onetooneList.size(); i++) {
 			 for(int j = 0; j < readynCountList.size(); j++) {
 				 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
-					 if(!m.getId().equals(readynCountList.get(i).getChatId())) {
+					 if(!m.getId().equals(readynCountList.get(j).getChatId())) {
 						 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
 					 }
 				 }
@@ -344,6 +344,7 @@ public class ChatController {
 				  if(oto2 == null) {
 					  ArrayList<OneToOneMsg> otomsg = new ArrayList();
 					  otomsg=cService.selectMessageList(oto.getCo_no());
+					  System.out.println("메시지목록 = " + otomsg);
 					  
 					  session.setAttribute("co_no", oto.getCo_no());
 					  session.setAttribute("friendId", oto.getFriendId());
@@ -352,6 +353,7 @@ public class ChatController {
 				  }else if(oto == null) {
 					  ArrayList<OneToOneMsg> otomsg2 = new ArrayList();
 					  otomsg2=cService.selectMessageList2(oto2.getCo_no());
+					  System.out.println("메시지목록 = " + otomsg2);
 					  
 					  session.setAttribute("co_no", oto2.getCo_no());
 					  session.setAttribute("friendId", oto2.getFriendId());
@@ -380,6 +382,8 @@ public class ChatController {
 			  
 			  ArrayList<OneToOneMsg>  otomsg = new ArrayList();
 			  otomsg=cService.selectMessageList(co_no);
+			  System.out.println("메시지목록 = " + otomsg);
+			  
 			  
 			  oto.setCo_no(co_no);
 			  oto.setFriendId(friendId);
@@ -455,21 +459,134 @@ public class ChatController {
 			  return mv;
 		  }
 		  
+	  @RequestMapping("SaveSendImage.do")
+		  public void SaveSendImage(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+				@RequestParam(value="ChatroomSendImage", required=false) MultipartFile file) throws IOException {
+		  
+		String sendImageName = saveFile2(file, request);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(!sendImageName.equals("")) {
+			out.print(sendImageName);
+			out.flush();
+			out.close();
+		}else {
+			out.append("실패");
+			out.flush();
+			out.close();
+		}
+	  }
+		  
+	  public String saveFile2(MultipartFile file, HttpServletRequest request) {
+			//파일이 저장될 경로를 설정하는 메소드
+			
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			
+			String savePath = root + "//ChatroomSendImage";
+			
+			double dValue = Math.random();
+			char cValue = (char)((dValue * 26) + 97);
+			
+			double dValue2 = Math.random();
+			char cValue2 = (char)((dValue2 * 26) + 97);
+			
+			double dValue3 = Math.random();
+			int iValue = (int)(dValue3 * 1000);
+			
+			File folder = new File(savePath);
+			//java.io.File로 import 하자
+			
+			if(!folder.exists()) {
+				folder.mkdirs();
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originFileName = file.getOriginalFilename();
+			String sendImageName = "OneToOne" + cValue + iValue + cValue2 + sdf.format(new java.sql.Date(System.currentTimeMillis()))+
+					"." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			
+			String filePath = folder + "\\" + sendImageName;
+			
+			try {
+				file.transferTo(new File(filePath));		//이 때 파일이 저장된다.
+				//이 상태로는 파일 업로드가 되지 않는다.
+				//왜냐하면 파일 제한크기에 대한 설정이 없기 때문이다.
+				//그래서 파일 크기 지정을 root-context.xml에서 해준다.
+			} catch (Exception e) {
+				System.out.println("파일 전송 에러" + e.getMessage());
+			}	
+			
+			
+			return sendImageName;
+		}
+		  
+		  
+	  @RequestMapping("SaveSendImage_OpenChat.do")
+	  public void SaveSendImage_OpenChat(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+			@RequestParam(value="ChatroomSendImage", required=false) MultipartFile file) throws IOException {
+	  
+	String sendImageName = saveFile3(file, request);
+	
+	PrintWriter out = response.getWriter();
+	
+	if(!sendImageName.equals("")) {
+		out.print(sendImageName);
+		out.flush();
+		out.close();
+	}else {
+		out.append("실패");
+		out.flush();
+		out.close();
+	}
+  }
+	  public String saveFile3(MultipartFile file, HttpServletRequest request) {
+			//파일이 저장될 경로를 설정하는 메소드
+			
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			
+			String savePath = root + "//OpenChatroomSendImage";
+			
+			double dValue = Math.random();
+			char cValue = (char)((dValue * 26) + 97);
+			
+			double dValue2 = Math.random();
+			char cValue2 = (char)((dValue2 * 26) + 97);
+			
+			double dValue3 = Math.random();
+			int iValue = (int)(dValue3 * 1000);
+			
+			File folder = new File(savePath);
+			//java.io.File로 import 하자
+			
+			if(!folder.exists()) {
+				folder.mkdirs();
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originFileName = file.getOriginalFilename();
+			String sendImageName = "Open" + cValue + iValue + cValue2 +  sdf.format(new java.sql.Date(System.currentTimeMillis()))+
+					"." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+			
+			String filePath = folder + "\\" + sendImageName;
+			
+			try {
+				file.transferTo(new File(filePath));		//이 때 파일이 저장된다.
+				//이 상태로는 파일 업로드가 되지 않는다.
+				//왜냐하면 파일 제한크기에 대한 설정이 없기 때문이다.
+				//그래서 파일 크기 지정을 root-context.xml에서 해준다.
+			} catch (Exception e) {
+				System.out.println("파일 전송 에러" + e.getMessage());
+			}	
+			
+			
+			return sendImageName;
+		}
+	  
+	  
+	  
+	  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -110,25 +110,39 @@ public class EchoRoomHandler extends TextWebSocketHandler{
 		                  String profile = m.getProfile();
 		                  
 		                  HashMap<String,Object> dbmap = new HashMap<String,Object>();
-		                  dbmap.put("chatroom_no", chatroom_no);
-		                  dbmap.put("id", id);
-		                  dbmap.put("message", mapReceive.get("msg"));
 		                  
-		                  int result = cService.insertOpenchatMsg(dbmap);
-		                  
-		                  if(result > 0) {
-		                	  	String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
-						
-								System.out.println("디비저장 성공 : " + jsonStr2);
-								sess.sendMessage(new TextMessage(jsonStr2));
-		                  }else {
-		                	  String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
+		                  if(mapReceive.containsKey("image")) {
+		                	  dbmap.put("chatroom_no", chatroom_no);
+			                  dbmap.put("id", id);
+		                      dbmap.put("message",String.valueOf(mapReceive.get("msg")));
+		                	  dbmap.put("image", mapReceive.get("image"));
 		                	  
-		                	  System.out.println("디비저장실패");
-		                	  sess.sendMessage(new TextMessage(jsonStr2));
+		                	  int result = cService.insertOpenchatSendImage(dbmap);
+		                	  
+		                	  if(result > 0) {
+		                		  String jsonStr = chatroom_no + "|" + profile +"|" +nickname+ "|" + mapReceive.get("msg") + "|" + mapReceive.get("image");
+		                		  System.out.println("디비저장 성공 : " + jsonStr);
+		                	  }else {
+		                		  System.out.println("디비 저장 실패");
+		                	  }
+		                	  String jsonStr = chatroom_no + "|" + profile +"|" +nickname+ "|" + mapReceive.get("msg") + "|" + mapReceive.get("image");
+			                  sess.sendMessage(new TextMessage(jsonStr));
+		                  }else {
+			                  dbmap.put("chatroom_no", chatroom_no);
+			                  dbmap.put("id", id);
+			                  dbmap.put("message", mapReceive.get("msg"));
+			                  
+			                  int result = cService.insertOpenchatMsg(dbmap);
+			                  
+			                  if(result > 0) {
+			                	  	String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
+									System.out.println("디비저장 성공 : " + jsonStr2);
+			                  }else {
+			                	  System.out.println("디비저장실패");
+			                  }
+			                  String jsonStr2 = chatroom_no + "|" + profile + "|" +nickname + "|" + mapReceive.get("msg");
+			                  sess.sendMessage(new TextMessage(jsonStr2));
 		                  }
-		                
-
 						
 						
 					}

@@ -32,7 +32,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member loginMember(Member m) {
 		// TODO Auto-generated method stub
-		System.out.println(m);
 		return mDao.loginMember(m);
 	}
 
@@ -85,19 +84,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int getListCount(String search,String userId) {
 		// TODO Auto-generated method stub
-		System.out.println("쉬벌 여기까진 들어가냐 ");
-		System.out.println(search);
-		System.out.println(userId);
 		int count =0;
 		if(search =="" || search ==null ) {
-			
-			System.out.println("하 쉬이벌 존나 하기싫네");
 			count=mDao.getListCount(userId);
 		}else {
 			FriendsPage fp = new FriendsPage();
 			fp.setSearch(search);
 			fp.setUserId(userId);
-			System.out.println("하 쉬이벌 존온나 하기싫네");
 			count=mDao.getListCount2(fp);
 		}
 		
@@ -109,7 +102,6 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> allMember(String string, String search, PageInfo pi) {
 		ArrayList<Member> al = new ArrayList<Member>();
 		if(search ==null || search =="") {
-			
 			al=mDao.allMember2(string,pi);
 		}else {
 			FriendsPage fp = new FriendsPage();
@@ -168,8 +160,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<Friends> friends(String id, String search) {
 		// TODO Auto-generated method stub
-		System.out.println("여기까지는 오냐");
-		System.out.println(search);
 		ArrayList<Friends> al = new ArrayList<Friends>();
 		if(search !=null  || search=="") {
 			FriendsPage fp = new FriendsPage();
@@ -203,9 +193,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int getaddListCount(String search, String userId) {
-		System.out.println("쉬벌 여기까진 들어가냐 ");
-		System.out.println(search);
-		System.out.println(userId);
 		int count =0;
 		if(search ==null || search=="") {
 			count=mDao.getaddListCount(userId);
@@ -222,22 +209,9 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-
-	@Override
-	public ArrayList<Member> allMember(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 	@Override
 	public int okfriendsCount(String search, String string, String id) {
 		// TODO Auto-generated method stub
-		
-		 
-			
-		
-		
 		return mDao.okfriendsCount(string);
 	}
 
@@ -277,6 +251,12 @@ public class MemberServiceImpl implements MemberService {
 	public int fCount(String id) {
 		// TODO Auto-generated method stub
 		return mDao.fCount(id);
+	}
+
+	@Override
+	public int fCount2(String id) {
+		// TODO Auto-generated method stub
+		return mDao.fCount2(id);
 	}
 
 
@@ -421,6 +401,54 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return mDao.membercount(m);
 	}
+
+
+	@Override
+	public ArrayList<Friends> rlfriends(String id) {
+		// TODO Auto-generated method stub
+		return mDao.rlfriends(id);
+	}
+
+
+	@Override
+	public ArrayList<Friends> realfriendsShared(String id, String search) {
+		
+		ArrayList<Friends> al = new ArrayList<Friends>();
+		if(search !=null  || search=="") {
+			FriendsPage fp = new FriendsPage();
+			fp.setSearch(search);
+			fp.setUserId(id);
+			al =mDao.realfriendsShared(fp);			
+		}else {
+			al=mDao.realfriendsShared(id);
+		}
+		
+		return al;
+	}
+
+
+	@Override
+	public ArrayList<String> sharedfd(Integer postNo, String postType, String id) {
+		// TODO Auto-generated method stub
+		return mDao.sharedfd(postNo,postType,id);
+	}
+
+
+	@Override
+	public ArrayList<Member> allMember2(String id) {
+		// TODO Auto-generated method stub
+		return mDao.allMember2(id);
+	}
+
+
+	@Override
+	public int pCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.pCount(id);
+	}
+
+
+	
 
 	}
 
