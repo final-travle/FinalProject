@@ -21,7 +21,7 @@
    <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
     <div id="headWrap">
         <header id="header" class="cb">
-            <h1 class="logo"><img src="<c:url value="/resources/images/logo.png" />"></h1>
+            <h1 class="logo"><a href="home.do"><img src="<c:url value="/resources/images/logo.png" />"></a></h1>
             <div class="logSection">
                 <!-- 로그인하지 않았을 때 -->
                 <div class="log-out cf">
@@ -34,13 +34,12 @@
                 <!-- 로그인했을 때 -->
                 <div class="log-in cf">
                 <c:if test="${!empty sessionScope.loginUser}">
-                	<p><c:out value="${loginUser.name }님"/></p>
                     <p class="btn"><a href="logout.do">로그아웃</a></p>
                     <p class="btn colorBtn"><a href="friends.do">마이페이지</a></p>
-                    </c:if>
                     <div class="userRound">
                         <p><c:out value="${loginUser.nickname }"/> </p><!-- user nickname 들어갈 부분 -->
                     </div>
+                 </c:if>
                 </div>
             </div>
         </header>
