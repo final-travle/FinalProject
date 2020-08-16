@@ -13,7 +13,7 @@
         <div id="content">
             
             <!-- review -->
-            <h2 class="title cont-title"><span class="color">인증된 여행지!</span> 여긴 어때요?</h2>
+            <h2 class="title cont-title">어디 갈 지 고민이라면? <span class="color"> 인증된 여행지!</span></h2>
             
 			<p class="piCount">총 개시글 갯수 : ${pi.listCount }</p>
             <ul class="grid grid3 cf">

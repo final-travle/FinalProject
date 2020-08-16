@@ -11,6 +11,7 @@ import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
+import com.kh.FinalProject.travel.model.vo.Travel;
 
 @Repository("rd")
 public class ReviewDao {
@@ -40,6 +41,22 @@ public class ReviewDao {
 
 	public int reviewInsert(Board b) {
 		return sqlSessionTemplate.insert("reviewMapper.insertReivew", b);
+	}
+
+	public int reviewLikeThumbupInsert() {
+		return sqlSessionTemplate.insert("reviewMapper.insertLT");
+	}
+
+	public int insertTag(Tag tg) {
+		return sqlSessionTemplate.insert("reviewMapper.insertTag", tg);
+	}
+
+	public int reviewDayInsert(int i) {
+		return sqlSessionTemplate.insert("reviewMapper.insertDay", i);
+	}
+
+	public int reviewInsertPoint(Travel tv) {
+		return sqlSessionTemplate.insert("reviewMapper.InsertPoint", tv);
 	}
 	
 }

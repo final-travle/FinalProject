@@ -93,11 +93,12 @@
 		<input type="checkbox" name="tag" id="${tag.tagName }" class="${tag.tagType }" value="${tag.tagName }"><label for="${tag.tagName }"># ${tag.tagName }</label>
 	</c:forEach>
 	</div>
-	
-<div class="btns">
-	<c:url var="rInsert" value="rInsert.do"/>
-	<button type="submit" class="btn colorBtn apply">등록</button>
-	<button class="btn">취소</button>
+<div class="bInsertWrap">
+	<div class="btns">
+		<c:url var="rInsert" value="rInsert.do"/>
+		<button type="submit" class="btn colorBtn apply">등록</button>
+		<button class="btn">취소</button>
+	</div>
 </div>
 </div><!-- // container end -->
 
@@ -417,11 +418,11 @@
 					    });
 					
 
-					    linePath = [];
-						   for(var k = 0; k < posex[i].length; k++){
-							   linePath.push(posex[i][k].latlng);
-						   }
-						
+					   linePath = [];
+						for (var k = 0; k < posex[i].length; k ++) {
+					 	  linePath.push(posex[i][k].latlng);
+						}
+							   
 						 // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
 					    //var linePoint = str.latlng;
 
@@ -491,7 +492,7 @@
         	   
         });
         
-     	$(".btns .apply").on("click", function(){
+     	$(".bInsertWrap .btns .apply").on("click", function(){
      		var chkType = [];
      		var chkName = [];
      		var chkArr = [chkType, chkName];
@@ -503,7 +504,7 @@
      		
      		posex.push(chkArr);
      		
-     		
+     		 
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		
@@ -511,11 +512,9 @@
 
      		posex.push(firstImg);
 
+     		var contents = $("#summernote").val();
      		
-     		var test = $("#summernote").text();
-     		posex.push(mtitle);
-     		
-     		console.log(test);
+     		posex.push(contents);
 
      		 $.ajax({
      	        type: "POST",
@@ -527,7 +526,7 @@
      	        success: function(msg) {
      	        	alert(msg);
      	        	// detail page 강제 이동
-     	        	location.href="${contextPath}/planList.do";
+     	        	location.href="${contextPath}/reviewListView.do";
      	        },
 				error : function(request, status, errorData){
 					alert("error code: " + request.status + "\n"

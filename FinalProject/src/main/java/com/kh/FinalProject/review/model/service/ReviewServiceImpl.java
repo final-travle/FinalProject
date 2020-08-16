@@ -10,6 +10,7 @@ import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
+import com.kh.FinalProject.travel.model.vo.Travel;
 
 @Service("rs")
 public class ReviewServiceImpl implements ReviewService {
@@ -40,6 +41,26 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int reviewInsert(Board b) {
 		return rd.reviewInsert(b);
+	}
+
+	@Override
+	public int reviewLikeThumbupInsert() {
+		return rd.reviewLikeThumbupInsert();
+	}
+
+	@Override
+	public int insertTag(Tag tg) {
+		return rd.insertTag(tg);
+	}
+
+	@Override
+	public int reviewDayInsert(int i) {
+		return rd.reviewDayInsert(i);
+	}
+
+	@Override
+	public int reviewInsertPoint(Travel tv) {
+		return rd.reviewInsertPoint(tv);
 	}
 
 }
