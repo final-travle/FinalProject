@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -40,6 +39,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Controller
 public class TravelController {
@@ -54,19 +54,15 @@ public class TravelController {
 		if(page != null) {
 			currentPage = page;
 		}
+
+		System.out.println("page : " + page);
 		
 		int listCount = ts.getListCount();
-		System.out.println(listCount);
 		
 		PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
 		
 		ArrayList<Board> list = ts.selectList(pi2);
-		
 		ArrayList<PostTag> tl = ts.selectListTag();
-		
-		System.out.println(tl);
-		System.out.println(list);
-		
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
@@ -560,7 +556,7 @@ public class TravelController {
 	
 	
 	@RequestMapping("planDetail.do")
-	public ModelAndView planDetail(HttpSession session, ModelAndView mv, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
+	public ModelAndView planDetail(HttpSession session, ModelAndView mv, String postType, int postNo, @RequestParam("page") Integer page, LikedPost lp) {
 		// 사용자가 보던 페이지(현재 페이지)를 목록 보기 했을 때 다시 보여주게 하게끔 해주는 코드
 		int currentPage = 1;
 		if(page != null) {
@@ -577,14 +573,17 @@ public class TravelController {
 		if(m != null) {
 			lp.setUserId(m.getId());
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 		
 		}
 		LikedPost liked = ts.likedView(lp);
+		Vote voted = ts.voteView(lp);
+		
+		System.out.println("liked : " + liked);
+		System.out.println("voted : " + voted);
 		
 		
-		MapBoard mb = ts.likeVoteView(postNo);
-		
-		System.out.println(liked);
+		MapBoard mb = ts.likeVoteView(lp);
 		
 		if(result > 0) {
 			Board b = ts.selectPostView(postNo);
@@ -604,6 +603,7 @@ public class TravelController {
 				.addObject("currentPage", currentPage)
 				.addObject("dayNum", dayNum)
 				.addObject("liked", liked)
+				.addObject("voted", voted)
 				.addObject("mapList", mb)
 				.setViewName("travel/planDetail");
 				
@@ -621,12 +621,12 @@ public class TravelController {
 	@RequestMapping("likeUp.do")
 	public void likeUp(HttpServletResponse response,
 						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postType") String postType,
 						@RequestParam(value="postNo") int postNo,
 						LikedPost lp) throws IOException {
 		response.setContentType("aplication/json; charset=utf-8");
 
 		JSONObject jso = new JSONObject();
-		
 		
 		String msg = "";
 		
@@ -637,6 +637,7 @@ public class TravelController {
 			
 			lp.setUserId(userId);
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 
 			int lc = 0;
 			int vc = 0;
@@ -684,16 +685,16 @@ public class TravelController {
 			
 			lp.setLikeYn(userLiked);
 			lp.setPostNo(postNo);
+			lp.setPostType(postType);
 			
 			mb = new MapBoard();
 			
-			mb = ts.likeVoteView(postNo);
+			mb = ts.likeVoteView(lp);
 			
 			lc = mb.getLikeTotal();
 			vc = mb.getVoteTotal();
 
 			jso.put("lc", lc);
-			jso.put("vc", vc);
 			
 			jso.put("userLiked", userLiked);
 			
@@ -710,7 +711,99 @@ public class TravelController {
 		
 		
 	}
-	
+
+	@RequestMapping("voteUp.do")
+	public void voteUp(HttpServletResponse response,
+						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postType") String postType,
+						@RequestParam(value="postNo") int postNo,
+						Vote v) throws IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+
+		JSONObject jso = new JSONObject();
+		
+		String msg = "";
+		
+		if(userId.isEmpty()) {
+			msg = "error";
+		}else {
+			msg = "success";
+			
+			v.setUserId(userId);
+			v.setPostNo(postNo);
+			v.setPostType(postType);
+
+			int lc = 0;
+			int vc = 0;
+			String userVoted = null;
+
+			Vote vpList = ts.voteView(v);
+			
+			if(vpList == null) {
+				int lur = 0;
+				lur = ts.insertVote(v);
+
+				v.setPostYn("Y");
+				
+			}else {
+				
+				v.setPostYn(vpList.getPostYn());
+				
+				System.out.println("vpList : " + vpList);
+				System.out.println("vpList YN : " + vpList.getPostYn());
+				
+				int lpr = 0;
+				
+				lpr = ts.voteUp(v);
+				if(vpList.getPostYn().equals("Y")) {					
+					v.setPostYn("N");
+				}else {
+					v.setPostYn("Y");
+				}
+				
+			}
+			
+			int result = 0;
+
+			result = ts.VoteUpdate(v);
+			//////
+			Vote vpv = new Vote();
+			MapBoard mb = new MapBoard();
+			
+			vpv = ts.voteView(v);
+			userVoted = vpv.getPostYn();
+			
+			System.out.println("* userVoted : " + userVoted);
+			
+			
+			v.setPostYn(userVoted);
+			v.setPostNo(postNo);
+			v.setPostType(postType);
+			
+			mb = new MapBoard();
+			
+			mb = ts.likeVoteView(v);
+			
+			lc = mb.getLikeTotal();
+			vc = mb.getVoteTotal();
+
+			jso.put("vc", vc);
+			
+			jso.put("userVoted", userVoted);
+			
+			response.setContentType("text/html; charset=utf-8");
+				
+		}
+			
+
+		jso.put("msg", msg);
+		
+		PrintWriter out = response.getWriter();
+		out.print(jso.toString());
+		out.flush();
+		
+		
+	}
 	
 
 	@RequestMapping("planModifyForm.do")

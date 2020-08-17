@@ -13,6 +13,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Service("ts")
 public class TravelServiceImpl implements TravelService {
@@ -80,8 +81,8 @@ public class TravelServiceImpl implements TravelService {
 	}
 
 	@Override
-	public MapBoard likeVoteView(int postNo) {
-		return td.likeVoteView(postNo);
+	public MapBoard likeVoteView(LikedPost lp) {
+		return td.likeVoteView(lp);
 	}
 
 	@Override
@@ -142,6 +143,36 @@ public class TravelServiceImpl implements TravelService {
 	@Override
 	public int planDelete(int postNo) {
 		return td.planDelete(postNo);
+	}
+
+	@Override
+	public Vote voteView(Vote v) {
+		return td.voteView(v);
+	}
+
+	@Override
+	public int insertVote(Vote v) {
+		return td.insertVote(v);
+	}
+
+	@Override
+	public int voteUp(Vote v) {
+		return td.voteUp(v);
+	}
+
+	@Override
+	public int VoteUpdate(Vote v) {
+		return td.voteUpdate(v);
+	}
+
+	@Override
+	public MapBoard likeVoteView(Vote v) {
+		return td.likeVoteView(v);
+	}
+
+	@Override
+	public Vote voteView(LikedPost lp) {
+		return td.voteView(lp);
 	}
 
 

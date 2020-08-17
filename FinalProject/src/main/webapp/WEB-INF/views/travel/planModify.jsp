@@ -82,7 +82,7 @@
 		<div class="rightBox">
 			<div id="map"></div>
 			<div class="btns">
-				<button type="submit" class="btn colorBtn apply">등록</button>
+				<button type="submit" class="btn colorBtn apply">수정</button>
 				<button class="btn">취소</button>
 			</div>
 		</div>

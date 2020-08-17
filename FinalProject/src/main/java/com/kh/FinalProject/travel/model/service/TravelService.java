@@ -8,6 +8,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
@@ -38,7 +39,7 @@ public interface TravelService {
 
 	ArrayList<Travel> selectTravelList(int postNo);
 
-	MapBoard likeVoteView(int postNo);
+	MapBoard likeVoteView(LikedPost lp);
 
 	Board selectPlan(int postNo);
 
@@ -65,6 +66,17 @@ public interface TravelService {
 
 	int planDelete(int postNo);
 
+	Vote voteView(Vote v);
+
+	int insertVote(Vote v);
+
+	int voteUp(Vote v);
+
+	int VoteUpdate(Vote v);
+
+	MapBoard likeVoteView(Vote v);
+
+	Vote voteView(LikedPost lp);
 
 
 }

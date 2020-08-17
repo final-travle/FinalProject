@@ -24,6 +24,7 @@
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.PostTag" alias="PostTag"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.MapBoard" alias="MapBoard"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.LikedPost" alias="LikedPost"/>
+		<typeAlias type="com.kh.FinalProject.travel.model.vo.Vote" alias="Vote"/>
 	</typeAliases>
 	
 	<mappers>

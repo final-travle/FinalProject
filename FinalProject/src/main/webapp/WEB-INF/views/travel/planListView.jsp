@@ -21,6 +21,7 @@
 				<c:forEach var="pl" items="${list }">
 					<c:url var="planDetail" value="planDetail.do">
 						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="postType" value="${pl.postType }" />
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
 	                <li>

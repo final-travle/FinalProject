@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.review.model.dao.ReviewDao;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.LikedPost;
+import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
@@ -62,5 +64,71 @@ public class ReviewServiceImpl implements ReviewService {
 	public int reviewInsertPoint(Travel tv) {
 		return rd.reviewInsertPoint(tv);
 	}
+
+	@Override
+	public int hitsUp(int postNo) {
+		return rd.hitsUp(postNo);
+	}
+
+	@Override
+	public LikedPost likedView(LikedPost lp) {
+		return rd.likedView(lp);
+	}
+
+	@Override
+	public MapBoard likeVoteView(int postNo) {
+		return rd.likeVoteView(postNo);
+	}
+
+	@Override
+	public Board selectPostView(int postNo) {
+		return rd.selectPostView(postNo);
+	}
+
+	@Override
+	public ArrayList<Travel> selectTravelList(int postNo) {
+		return rd.selectTravelList(postNo);
+	}
+
+	@Override
+	public ArrayList<PostTag> getPostTagList(int postNo) {
+		return rd.getPostTagList(postNo);
+	}
+
+	@Override
+	public Board selectReview(int postNo) {
+		return rd.selectReview(postNo);
+	}
+
+	@Override
+	public int reviewModifyPost(Board b) {
+		return rd.reviewModifyPost(b);
+	}
+
+	@Override
+	public int reviewModifyB(int postNo) {
+		return rd.reviewModifyB(postNo);
+	}
+
+	@Override
+	public int reviewMoidfyPoint(Travel tv) {
+		return rd.reviewMoidfyPoint(tv);
+	}
+
+	@Override
+	public int reviewModifyPT(int postNo) {
+		return rd.reviewModifyPT(postNo);
+	}
+
+	@Override
+	public int ModifyTag(PostTag tg) {
+		return rd.ModifyTag(tg);
+	}
+
+	@Override
+	public int reviewDelete(int postNo) {
+		return rd.reviewDelete(postNo);
+	}
+
 
 }

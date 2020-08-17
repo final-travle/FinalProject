@@ -20,6 +20,9 @@
 	
 	.btns a { display:inline-block; }
 	
+	.reviewContents {  border-top:1px solid #ddd; box-sizing:border-box; line-height:1.8; margin-bottom:30px; }
+	.reviewContents img { margin:10px 0; max-width: 1200px; }
+	.reviewContents .rvTitle { font-size:26px; background:#bd9dec; color:#fff; text-align:center; padding:10px 0; margin-bottom:30px; }
 </style>
 </head>
 <body>
@@ -28,10 +31,8 @@
         <div class="titleSec" style="background:url('${board.thumbnail }' )no-repeat 0 20%;  background-size:cover;">
             <p class="planTitle">${board.title }</p>
             <p class="ltSec">
-                <span class="likes">
-                </span>
-                <span class="voting">
-                </span>
+                <span class="likes"></span>
+                <span class="voting"><i class="xi-star-o"></i> ${mapList.voteTotal}</span>
             </p>
             <div class="cover"></div>
         </div>
@@ -59,26 +60,36 @@
             <div class="rightBox">
 				<div id="map"></div>
             	<c:if test="${loginUser.id eq board.userId}">
-					<c:url var="planModifyForm" value="planModifyForm.do">
+					<c:url var="reviewModifyForm" value="reviewModifyForm.do">
 						<c:param name="postNo" value="${board.postNo }"/>
 					</c:url>
 				<div class="btns">
-					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="${reviewModifyForm }" class="btn colorBtn apply">수정</a>
 					<a href="#none" class="btn delete">삭제</a>
 				</div>
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
+        <!-- review contents area -->
+        <div class="reviewContents">
+	        <div class="rvTitle">
+	     	   ${board.title }
+	        </div>
+	        <div id="content">
+	        	${board.postContents }
+	        </div>
+        </div>        
+        <!-- // review contents area end -->
     </div><!-- // container end -->
 <script>
 
 	$(".btns .delete").on("click", function(){
 		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
 		if(result){
-			<c:url var="planDelete" value="planDelete.do">
+			<c:url var="reviewDelete" value="reviewDelete.do">
 				<c:param name="postNo" value="${board.postNo }"/>
 			</c:url>
-			location.href="${planDelete }";
+			location.href="${reviewDelete }";
 		    alert("삭제되었습니다.");
 		}else{
 		    
@@ -93,7 +104,7 @@
 	voteCount = ${mapList.voteTotal};
 	
 	postType = ${board.postType };
-	
+
 	$(document).on("ready", function(){
 
 		var $lspan = $("<span>");
