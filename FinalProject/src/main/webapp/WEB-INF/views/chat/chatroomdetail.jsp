@@ -436,7 +436,8 @@ function submit_SendImage_modal(){
 	        	sock.send(jsonData3);
 	        }
 		});
-	
+		$("input:checkbox[id='SendImage_modal']").prop("checked", false);
+		$("#SendImage_modal").prop("checked", false);
 }
 </script>
 

@@ -255,10 +255,9 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
    position:absolute;
   display:block;
   z-index:92;
-  width:200px;
-  height:250px;
-  top:15%;
-  left:25%;
+  width:300px;
+  top:5%;
+  left:15%;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
  background:white;
   border:4px solid black;
@@ -276,6 +275,35 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 }
 
 input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.sentImage_detail_modal {
+   position:absolute;
+  display:block;
+  z-index:92;
+  width:300px;
+  top:5%;
+  left:20%;
+ background:white;
+  border:4px solid black;
+  border-radius:5%;
+  overflow:hidden;
+
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
   -ms-transform: scale(1, 1);
@@ -313,10 +341,12 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 <input type="checkbox" id="modal1" checked>
 <div class="friend_modal">
 	<div class="text">
- 
-<div id="container">
+	<div id="backArea" style="position:absolute;top:10px;left:10px;width:40px;height:40px;background:white;border-radius:50%;">
+		<img src="${pageContext.request.contextPath}/resources/images/back.png" title="나가기"
+						 style='width:40px;height:40px;cursor:pointer;' onclick="history.go(-1);">
+	</div>
+	<div id="container">
 	<div id="chat" class="chat">
-	
 	<c:forEach var="otomsg" items="${otomsg }">
 			<c:if test="${loginUser.id  eq otomsg.chatId }">
 				<div>
@@ -325,8 +355,9 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 						 style='float:right;width:40px;height:40px;border-radius:40%'>
 						 <c:if test="${otomsg.send_image ne null}">
 							<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
-							&nbsp;<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}"
-							style='width:150px;height:150px;margin-top:10px;'>&nbsp;</strong>&nbsp;
+							&nbsp;<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}" 
+							class="sent_Image"
+							style='width:150px;margin-top:10px;cursor:pointer;' onclick="sentImage_detail();">&nbsp;</strong>&nbsp;
 						</c:if>
 						<c:if test="${otomsg.send_image eq null}">
 							<strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>
@@ -346,12 +377,12 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 						style='width:40px;height:40px;border-radius:40%;float:left;'>
 						<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;${otomsg.nickname }</p>
 						<c:if test="${otomsg.send_image ne null }">
-							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
-							<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}"
-							style="width:150px;height:150px;margin-top:10px;">&nbsp;</strong>&nbsp;
+							<strong class='a' style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}" class="sent_Image"
+							style="width:150px;margin-top:10px;cursor:pointer;" onclick="sentImage_detail();">&nbsp;</strong>&nbsp; 
 						</c:if>
 						<c:if test="${otomsg.send_image eq null }">
-							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<strong class='a' style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
 							${otomsg.content }&nbsp;</strong>&nbsp;
 						</c:if>
 						<c:if test="${otomsg.read_yn eq 'N'}">
@@ -363,7 +394,7 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 			</c:if>
 	</c:forEach>
 	
-	
+
 		<div id="chatdata">
 			<input type="hidden" value="${loginUser.id }" id="userid">
 			<input type="hidden" value="${loginUser.nickname }" id="nickname">
@@ -377,19 +408,47 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 			<input type="text" id="message" autocomplete=off >
 			<button id="sendBtn" >전송</button>
 		</form>
-		<label for="ChatroomSendImage">
-			<img src="${pageContext.request.contextPath}/resources/images/sendImage.jpeg"
-			style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="사진전송">
-		</label>
-		<form id="SendImage" name="SendImage" enctype="multipart/form-data">
-			<input id="ChatroomSendImage" name="ChatroomSendImage" type="file" style="display:none;"accept="image/*">
-		</form>
+			<label for="ChatroomSendImage">
+				<img src="${pageContext.request.contextPath}/resources/images/sendImage.jpeg"
+				style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="사진전송">
+			</label>
+			<form id="SendImage" name="SendImage" enctype="multipart/form-data">
+				<input id="ChatroomSendImage" name="ChatroomSendImage" type="file" style="display:none;"accept="image/*">
+			</form>
 	</div>
 </div>
   </div>
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
+
+<script>
+		$(function (){
+					$(".sent_Image").click(function(){
+						var img = $(this).attr("src");
+						var sent_Image = img.substring(img.lastIndexOf("/")+1);
+						
+						console.log("경로 : " + img);
+						console.log("이미지명 : " + sent_Image);
+						
+						$(".sentImage_detailview").attr("src",img);
+					})
+				})
+		function sentImage_detail(){
+			$("input:checkbox[id='sentImage_detail_modal']").prop("checked", true);	
+			$("#sentImage_detail_modal").prop("checked", true);
+		}
+		
+	</script>
+	<input type="checkbox" id="sentImage_detail_modal">
+	<div class="sentImage_detail_modal">
+		<img src="" class="sentImage_detailview"
+		style="width:300px;">
+		
+		<img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
+		style='width:50px;height:40px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SentImage_detail_modal();">
+	</div>
+
 <script>
 	$(function(){
 		$("#message").focus();
@@ -410,6 +469,11 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 		$("input:checkbox[id='SendImage_modal']").prop("checked", true);	
 		$("#SendImage_modal").prop("checked", true);
 	})
+	function close_SentImage_detail_modal(){
+		$(".sentImage_detailview").attr("src","${pageContext.request.contextPath}/resources/images/white.png");
+		$("input:checkbox[id='sentImage_detail_modal']").prop("checked", false);
+		$("#sentImage_detail_modal").prop("checked", false);
+	}
 	
 </script>
 
@@ -448,20 +512,21 @@ function submit_SendImage_modal(){
 	        	sock2.send(jsonData4);
 	        }
 		});
-	
+		$("input:checkbox[id='SendImage_modal']").prop("checked", false);
+		$("#SendImage_modal").prop("checked", false);
 }
 </script>
 
  <input type="checkbox" id="SendImage_modal">
  <div class="SendImage_modal">
  	<img src="" class="SendImage_preview"
-			style="width:200px;height:200px;">
+			style="width:300px;">
 			
 	<img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
-						style='width:60px;height:50px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SendImage_modal();">
+						style='width:50px;height:40px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SendImage_modal();">
 						
 	<img src="${pageContext.request.contextPath}/resources/images/submitImage.png" onclick="submit_SendImage_modal();"
-						style="width:50px;height:40px;float:left;margin-left:40px;margin-top:5px;cursor:pointer;" title="전송">
+						style="width:40px;height:30px;float:left;margin-left:130px;margin-top:5px;cursor:pointer;" title="전송">
  </div> 
 <script>
 	function close_SendImage_modal(){
@@ -578,7 +643,7 @@ function submit_SendImage_modal(){
 			
 			/* <img src="${pageContext.request.contextPath}/resources/images/sendImage.jpeg"
 				style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="사진전송"> */
-			
+				
 			if(chatroom == currentchatroom){
 				if(sessionid == currentuser_session){
 					var printHTML = "<div>";
@@ -587,7 +652,7 @@ function submit_SendImage_modal(){
 											+ "' style='float:right;width:40px;height:40px;border-radius:40%'>"
 											+" <strong class='a' style='float:right;margin-right:10px;margin-top:7px;max-width:200px;' id='mymsg'>&nbsp;"
 											+"<img src='${pageContext.request.contextPath}/resources/ChatroomSendImage/" + image 
-											+ "' style='width:150px;height:150px;margin-top:10px;'>"
+											+ "'class='sent_Image' style='width:150px;margin-top:10px;cursor:pointer;' onclick='sentImage_detail();'>"
 											+"&nbsp;</strong>&nbsp;<strong style='float:right;margin-right:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
 											+readyn+"</strong>";
 					printHTML += "</div>";
@@ -601,9 +666,9 @@ function submit_SendImage_modal(){
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 											+"' style='width:40px;height:40px;border-radius:40%;float:left;'>"
 											+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-											+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+											+"<strong class='a'style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 											+"<img src='${pageContext.request.contextPath}/resources/ChatroomSendImage/" + image 
-											+ "' style='width:150px;height:150px;margin-top:10px;'>"
+											+ "' class='sent_Image' style='width:150px;margin-top:10px;cursor:pointer;' onclick='sentImage_detail();'>"
 											+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
 											+readyn+"</strong>";
 					printHTML += "</div>";
@@ -676,7 +741,7 @@ function submit_SendImage_modal(){
 				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 										+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
 										+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-										+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+										+"<strong class='a'style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 										+message+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
 										+readyn+"</strong>";
 				printHTML += "</div>";

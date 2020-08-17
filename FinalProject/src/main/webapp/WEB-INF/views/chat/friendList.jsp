@@ -22,7 +22,7 @@
       	font-family: 'Jua', sans-serif;
       	letter-spacing :0.5px;
       }
-/* 기초 CSS 디자인 */
+
 * {
   box-sizing:border-box;
 }
@@ -30,7 +30,7 @@ body {
   margin:0;
 }
 
-/* 본문 디자인 */
+
 .wrap {
   display:block;
   position:fixed;
@@ -46,7 +46,7 @@ body {
 }
 
 
-/* 모달 윈도우 디자인 */
+
 .friend_modal {
   position:fixed;
   display:block;
@@ -59,7 +59,7 @@ body {
   border-left:0px;
   border-top:0px;
   overflow-y:scroll;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 0.8;
   filter: alpha(opacity=60);
@@ -69,8 +69,6 @@ body {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#modal1[type=checkbox]:checked ~ .friend_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -91,7 +89,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
   border-top:0px;
   overflow-y:scroll;
   word-break:break-all;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 0.8;
   filter: alpha(opacity=60);
@@ -101,8 +99,6 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#modal2[type=checkbox]:checked ~ .chatroom_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -123,7 +119,7 @@ input#modal2[type=checkbox]:checked ~ .chatroom_modal {
   border-top:0px;
   overflow-y:scroll;
   word-break:break-all;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 0.8;
   filter: alpha(opacity=60);
@@ -133,8 +129,6 @@ input#modal2[type=checkbox]:checked ~ .chatroom_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#modal3[type=checkbox]:checked ~ .openchatroom_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -178,7 +172,7 @@ input#modal3[type=checkbox]:checked ~ .openchatroom_modal {
   border:1px solid #386980;
   border-right:0px;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  
   visibility: collapse;
   opacity: 0.9;
   filter: alpha(opacity=60);
@@ -188,8 +182,6 @@ input#modal3[type=checkbox]:checked ~ .openchatroom_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#chatmenumodal[type=checkbox]:checked ~ .menu_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -209,7 +201,7 @@ input#chatmenumodal[type=checkbox]:checked ~ .menu_modal {
   border-left:0px;
   border-bottom:1px solid #BDBDBD;
   overflow-y:scroll;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  
   visibility: collapse;
   opacity: 0.8;
   filter: alpha(opacity=60);
@@ -219,8 +211,6 @@ input#chatmenumodal[type=checkbox]:checked ~ .menu_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#head_modal1[type=checkbox]:checked ~ .friendmodalheader {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -240,7 +230,7 @@ input#head_modal1[type=checkbox]:checked ~ .friendmodalheader {
   border-left:0px;
   border-bottom:0px;
   overflow-y:scroll;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 0.8;
   filter: alpha(opacity=60);
@@ -250,8 +240,6 @@ input#head_modal1[type=checkbox]:checked ~ .friendmodalheader {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#head_modal2[type=checkbox]:checked ~ .chatmodalheader {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -271,7 +259,7 @@ input#head_modal2[type=checkbox]:checked ~ .chatmodalheader {
   border:1px #BCA9F5;
   border-radius:10px;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+  
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -281,8 +269,6 @@ input#head_modal2[type=checkbox]:checked ~ .chatmodalheader {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -301,7 +287,7 @@ input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
   border:1px #BCA9F5;
   border-radius:10px;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -311,8 +297,6 @@ input#makeopenchat_modal[type=checkbox]:checked ~ .makeOpenchatForm_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#updateNickname[type=checkbox]:checked ~ .updateNickname {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -333,7 +317,7 @@ input#updateNickname[type=checkbox]:checked ~ .updateNickname {
   border:4px solid black;
   border-radius:5%;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -343,8 +327,6 @@ input#updateNickname[type=checkbox]:checked ~ .updateNickname {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -363,7 +345,7 @@ input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
 background-color:transparent;
  border:0px;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -373,8 +355,6 @@ background-color:transparent;
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -402,7 +382,7 @@ input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
   border:4px solid black;
   border-radius:5%;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -412,8 +392,6 @@ input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -434,7 +412,7 @@ input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   border:4px solid black;
   border-radius:5%;
   overflow:hidden;
-  /* 아래 부분은 애니메이션 효과를 위한 부분 */
+
   visibility: collapse;
   opacity: 1;
   filter: alpha(opacity=60);
@@ -444,8 +422,6 @@ input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   -ms-transform: scale(0, 0);
   transform: scale(0, 0);
 }
-
-/* 모달 윈도우가 팝업되는 코어 소스 */
 input#friend_profile_detail2[type=checkbox]:checked ~ .friend_profile_detail2 {
   visibility: visible;
   -webkit-transform: scale(1, 1);
@@ -833,9 +809,11 @@ textarea:focus{
   	  	function insertOneToOneChatroom(){
   	  		console.log("fr_id = " + friendId);
   	  		
-  	  		window.open("insertOneToOneChatroom.do?friendId="+friendId, "1대1채팅", "top=100, left=600, width=400, height=500, status=no, menubar=no");
+  	  		/* window.open("insertOneToOneChatroom.do?friendId="+friendId, "1대1채팅", "top=100, left=600, width=400, height=500, status=no, menubar=no"); */
   	  		
-  	  		/* location.href="insertOneToOneChatroom.do?friendId="+friendId; */
+  	  		location.href="insertOneToOneChatroom.do?friendId="+friendId;
+	  	  	$("input:checkbox[id='friend_profile_detail']").prop("checked", false);
+	  		$("#friend_profile_detail").prop("checked", false);
   	  	}
   	  </script>
   	  
@@ -899,7 +877,7 @@ textarea:focus{
 						<c:param name="friendId" value="${onetooneList.friendId }"/>
 					</c:url>
 					<p style="font-size:30px;margin-left:20px;margin-top:-6px;">
-						<a href="#" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
+						<a href="${chatroom }" <%-- onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" --%> 
 						style="color:black;text-decoration:none;" class="enterOneToOneChatroom" >${onetooneList.nickname }
 						</a>
 					</p>
