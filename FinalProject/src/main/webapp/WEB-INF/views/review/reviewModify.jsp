@@ -576,58 +576,6 @@
      		
      		posex.push(chkArr);
      		
-     		 
-     		// 제목 json에 붙여 전송
-     		var mtitle = $("#mtitle").val();
-     		
-     		posex.push(mtitle);
-
-     		posex.push(firstImg);
-     		posex.push(postNo);
-
-     		var contents = $("#summernote").val();
-     		
-     		posex.push(contents);
-
-     		 $.ajax({
-     	        type: "POST",
-     	        url: "rModify.do",
-     	        data: JSON.stringify(posex),
-     	        contentType:'application/json; charset=UTF-8',
-     	        dataType:"text",
-     	        async: false,
-     	        success: function(msg) {
-     	        	alert(msg);
-     	        	// detail page 강제 이동
-     	        	location.href="${contextPath}/reviewListView.do";
-     	        },
-				error : function(request, status, errorData){
-					alert("error code: " + request.status + "\n"
-	                          +"message: " + request.responseText
-	                          +"error: " + errorData);
-				}
-     	    });
-     		
-   		});
-     	
-     	$(".bInsertWrap .btns .apply").on("click", function(){
-     		var chkType = [];
-     		var chkName = [];
-     		var chkArr = [chkType, chkName];
-     		
-     		var firstImg = "${plan.thumbnail}";
-     		var postNo = ${plan.postNo};
-     		
-     		console.log(firstImg);
-     		
-     		$('input:checkbox[name=tag]:checked').each(function () {
-     			chkArr.push($(this).val());
-     			chkName.push($(this).val());
-     			chkType.push($(this).attr("class"));
-     		});
-     		
-     		posex.push(chkArr);
-     		
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		

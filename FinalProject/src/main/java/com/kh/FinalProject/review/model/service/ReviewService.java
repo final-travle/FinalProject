@@ -54,4 +54,6 @@ public interface ReviewService {
 
 	int ModifyTag(PostTag tg);
 
+	int reviewDelete(int postNo);
+
 }

@@ -125,5 +125,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return rd.ModifyTag(tg);
 	}
 
+	@Override
+	public int reviewDelete(int postNo) {
+		return rd.reviewDelete(postNo);
+	}
+
 
 }

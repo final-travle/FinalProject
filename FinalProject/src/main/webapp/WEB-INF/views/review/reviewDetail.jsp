@@ -86,10 +86,10 @@
 	$(".btns .delete").on("click", function(){
 		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
 		if(result){
-			<c:url var="planDelete" value="planDelete.do">
+			<c:url var="reviewDelete" value="reviewDelete.do">
 				<c:param name="postNo" value="${board.postNo }"/>
 			</c:url>
-			location.href="${planDelete }";
+			location.href="${reviewDelete }";
 		    alert("삭제되었습니다.");
 		}else{
 		    

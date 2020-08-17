@@ -547,6 +547,7 @@ public class ReviewController {
 		// json에 붙어온 tagList를 저장한다.
 		ArrayList tagList = (ArrayList) posex.remove(7);
 		
+		System.out.println("tag List : " + tagList);
 		
 		ArrayList tTypeArr = (ArrayList) tagList.get(0);
 		ArrayList tNameArr = (ArrayList) tagList.get(1);
@@ -578,6 +579,7 @@ public class ReviewController {
 			    
 				    	List<Object> mList = (List<Object>) posex.get(i);
 	
+				    	System.out.println("mList : " + mList);
 				    	
 				    	// 날짜별 지역을 찍어준다.
 				    	for(int j = 0; j < mList.size(); j ++) {
@@ -586,6 +588,8 @@ public class ReviewController {
 				    		// title과 latlng, code 나누기 위한 map 선언
 				    		Map<String, Object> mlInfo = (Map<String, Object>) mList.get(j);
 			
+				    		
+				    		
 				    		String pTitle = (String) mlInfo.get("title");
 			//	    		System.out.println(pTitle);
 			
@@ -641,5 +645,13 @@ public class ReviewController {
 		 return msg;
 	    
 	}
-	
+
+	@RequestMapping("reviewDelete.do")
+	public String planDelete(@RequestParam("postNo") int postNo) {
+		int result = 0;
+		result = rs.reviewDelete(postNo);
+		
+		return "redirect:reviewListView.do";
+		
+	}
 }

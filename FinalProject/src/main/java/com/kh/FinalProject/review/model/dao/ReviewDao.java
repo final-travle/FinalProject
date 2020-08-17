@@ -109,5 +109,9 @@ public class ReviewDao {
 	public int ModifyTag(PostTag tg) {
 		return sqlSessionTemplate.insert("reviewMapper.modifyTag", tg);
 	}
+
+	public int reviewDelete(int postNo) {
+		return sqlSessionTemplate.update("reviewMapper.reviewDelete", postNo);
+	}
 	
 }
