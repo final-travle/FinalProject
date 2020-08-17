@@ -69,8 +69,68 @@
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
+         <div class="commentSec">
+             <p class="commCount">COMMENT(${count})</p>
+             <table>
+             <c:forEach var="comm" items="${cmnts }">
+                 <tr class="comm">
+                    <td>
+                         <div class="userRound">
+                             <p>${comm.cmntWirter }</p><!-- user nickname 들어갈 부분 -->
+                         </div>
+                     </td> 
+                     <td>
+                         	${comm.cmntContents }
+                     </td>
+                     <td>
+                         ${comm.cmntDate }
+                     </td>
+                 </tr>
+                 <c:forEach var="reComm" items="${reCmnts }">
+                 <c:if test="${comm.cmntNo eq reComm.cmntNo }">
+                 <tr class="reComm">
+                     <td>
+                          <div class="userRound">
+                              <p>${reComm.rcmntWirter }</p><!-- user nickname 들어갈 부분 -->
+                          </div>
+                      </td> 
+                      <td>
+                          	${reComm.rcmntContents }
+                      </td>
+                      <td>
+                          ${reComm.rcmntDate }
+                      </td>
+                 </tr>
+                 </c:if>
+                 </c:forEach>
+             </c:forEach>
+             </table>
+             <div class="commInsert cf">
+                 <p>댓글 입력</p>
+                 <textarea rows="5" placeholder="리뷰에 예쁜 댓글을 달아주세요 :)"></textarea>
+                 <p class="btn colorBtn">댓글 등록</p>
+             </div>
+         </div><!-- // commentSec end -->
     </div><!-- // container end -->
 <script>
+	$(".commInsert p.btn").on("click", function(){
+		var commCont = $(".commInsert textarea").val();
+		
+		console.log(commCont);
+		
+		$.ajax({
+			url : "commInsert.do",
+			data : { "postType" : postType, "postNo" : postNo, "commCont" : commCont},
+			success : function(data){
+				console.log(success);
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
 
 	$(".btns .delete").on("click", function(){
 		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");

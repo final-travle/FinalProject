@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.Comments;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.ReComments;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Vote;
@@ -148,6 +150,14 @@ public class TravelDao {
 
 	public Vote voteView(LikedPost lp) {
 		return sqlSessionTemplate.selectOne("travelMapper.voteView", lp);
+	}
+
+	public ArrayList<Comments> getComments(Comments cmnt) {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.getComments", cmnt);
+	}
+
+	public ArrayList<ReComments> getReComments(Comments cmnt) {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.getReComments", cmnt);
 	}
 
 

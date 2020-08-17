@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.ReComments;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Vote;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.Comments;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 
@@ -77,6 +79,10 @@ public interface TravelService {
 	MapBoard likeVoteView(Vote v);
 
 	Vote voteView(LikedPost lp);
+
+	ArrayList<Comments> getComments(Comments cmnt);
+
+	ArrayList<ReComments> getReComments(Comments cmnt);
 
 
 }

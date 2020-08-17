@@ -33,10 +33,12 @@ import com.kh.FinalProject.travel.model.service.TravelService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
+import com.kh.FinalProject.travel.model.vo.Comments;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.ReComments;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Vote;
@@ -576,6 +578,21 @@ public class TravelController {
 			lp.setPostType(postType);
 		
 		}
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.getReComments(cmnt);
+		
+		System.out.println("cmnts" + cmnts);
+		System.out.println("reCmnts" + reCmnts);
+		
 		LikedPost liked = ts.likedView(lp);
 		Vote voted = ts.voteView(lp);
 		
@@ -605,6 +622,8 @@ public class TravelController {
 				.addObject("liked", liked)
 				.addObject("voted", voted)
 				.addObject("mapList", mb)
+				.addObject("cmnts", cmnts)
+				.addObject("reCmnts", reCmnts)
 				.setViewName("travel/planDetail");
 				
 			}
@@ -1045,5 +1064,12 @@ public class TravelController {
 		
 		return "redirect:planList.do";
 		
+	}
+	
+	
+	@RequestMapping("commInsert.do")
+	public String commInsert(String postType, int postNo, String commCont) {
+		System.out.println(commCont);
+		return null;
 	}
 }
