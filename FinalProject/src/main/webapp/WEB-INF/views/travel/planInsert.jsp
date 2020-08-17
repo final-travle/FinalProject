@@ -459,12 +459,12 @@
      		});
      		
      		posex.push(chkArr);
-     		posex.push(firstImg);
      		
      		// 제목 json에 붙여 전송
      		var mtitle = $("#mtitle").val();
      		
      		posex.push(mtitle);
+     		posex.push(firstImg);
 
      		 $.ajax({
      	        type: "POST",

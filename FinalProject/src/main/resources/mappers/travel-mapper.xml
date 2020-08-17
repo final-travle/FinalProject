@@ -54,6 +54,14 @@
 		<result property="likeYn" column="LIKE_YN" />
 	</resultMap>
 	
+	<resultMap type="Vote" id="votePostResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="postYn" column="POST_YN" />
+	</resultMap>
+	
+	
 	<resultMap type="PostShared" id="PostSharedResultSet">
 		<id property="share_id" column="SHARE_ID" />
 		<result property="post_type" column="POST_TYPE" />
@@ -298,7 +306,54 @@
 		WHERE SHARE_ID = #{id}
 	</select>
 	
-	</mapper>
+	<select id="voteView" parameterType="Vote" resultMap="votePostResultSet">
+		SELECT *
+		FROM VOTE
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+        AND USER_ID = #{userId}
+	</select>
+
+	<insert id="insertVote" parameterType="Vote">
+		INSERT INTO VOTE VALUES(
+		#{userId}
+		, #{postType}
+		,#{postNo}
+		, 'Y'
+		)
+	</insert>
+
+	<update id="voteUp" parameterType="Vote">
+		UPDATE VOTE
+		<set>
+		<if test='postYn eq "N".toString()'>
+		POST_YN = 'Y'
+		</if>
+		<if test='postYn eq "Y".toString()'>
+		POST_YN = 'N'
+		</if>
+		</set>
+		WHERE USER_ID = #{userId}
+		AND POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+	</update>
+	
+	<update id="voteUpdate" parameterType="Vote">
+		UPDATE MAP_BOARD
+		<set>
+		<if test='postYn eq "N".toString()'>
+		VOTE_TOTAL = VOTE_TOTAL - 1
+		</if>
+		<if test='postYn eq "Y".toString()'>
+		VOTE_TOTAL = VOTE_TOTAL + 1
+		</if>
+		</set>
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+	</update>
+	
+	
+</mapper>
 	
 	
 	

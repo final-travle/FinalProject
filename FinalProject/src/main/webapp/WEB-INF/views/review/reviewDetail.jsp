@@ -99,27 +99,44 @@
 	userId = "${loginUser.id}";
 	postNo = ${board.postNo };
 	like = "${liked.likeYn }";
+	vote = "${voted.postYn }";
 	likeCount = ${mapList.likeTotal};
-
-	postType = ${board.postType };
+	voteCount = ${mapList.voteTotal};
 	
+	postType = ${board.postType };
+
 	$(document).on("ready", function(){
 
-		var $span = $("<span>");
-		var $spanC = $("<span class='count'>")
+		var $lspan = $("<span>");
+		var $vspan = $("<span>");
+		var $spanCl = $("<span class='count'>")
+		var $spanCv = $("<span class='count'>")
 		
 		if(like == 'Y'){
-			$span.append("<i class='xi-heart'>");
+			$lspan.append("<i class='xi-heart'>");
 		}else if(like == 'N' || like == "") {
-			$span.append("<i class='xi-heart-o'>");
+			$lspan.append("<i class='xi-heart-o'>");
 		}
-		$spanC.text(" " + likeCount);
-		$span.append($spanC);
-		$(".likes").html($span);
+		$spanCl.text(" " + likeCount);
+		$lspan.append($spanCl);
+		$(".likes").html($lspan);
+		
+
+		if(vote == 'Y'){
+			$vspan.append("<i class='xi-star'>");
+		}else if(vote == 'N' || vote == "") {
+			$vspan.append("<i class='xi-star-o'>");
+		}
+		$spanCv.text(" " + voteCount);
+		$vspan.append($spanCv);
+		$(".voting").html($vspan);
+		
+		
+		
+		
 	});
 	
 	$(".likes").on("click", function(){
-		
 		$.ajax({
 			url : "likeUp.do",
 			dataType : "json",
@@ -141,11 +158,7 @@
 						$(".likes").find("i").attr("class", "xi-heart-o");
 					}
 					$(".likes").find(".count").text(" " + lc);
-	
-					
 				}
-				
-
 			},
 			error : function(request, status, errorData){
 				alert("error code: " + request.status + "\n"
@@ -158,7 +171,36 @@
 	
 
 	$(".voting").on("click", function(){
-		alert("vote!");
+		$.ajax({
+			url : "voteUp.do",
+			dataType : "json",
+			data : { "userId" : userId, "postType" : postType, "postNo" : postNo},
+			success : function(data){
+				var msg = data.msg;
+				console.log(msg);
+				if(msg == 'error'){
+					alert("로그인 후 이용해주세요!");
+     	        	location.href="${contextPath}/login.do";
+				}else if(msg == 'success'){
+					//
+					var userVoted = data.userVoted;
+					var vc = data.vc;
+					
+					if(userVoted == 'Y'){
+						$(".voting").find("i").attr("class", "xi-star");
+					}else if(userVoted == 'N') {
+						$(".voting").find("i").attr("class", "xi-star-o");
+					}
+					$(".voting").find(".count").text(" " + vc);
+				}
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+			
+		});
 	});
 
 	$(document).on("ready", function(){

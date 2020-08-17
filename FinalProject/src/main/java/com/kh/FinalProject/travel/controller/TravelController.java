@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -40,6 +39,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Controller
 public class TravelController {
@@ -577,11 +577,13 @@ public class TravelController {
 		
 		}
 		LikedPost liked = ts.likedView(lp);
+		Vote voted = ts.voteView(lp);
+		
+		System.out.println("liked : " + liked);
+		System.out.println("voted : " + voted);
 		
 		
 		MapBoard mb = ts.likeVoteView(lp);
-		
-		System.out.println(liked);
 		
 		if(result > 0) {
 			Board b = ts.selectPostView(postNo);
@@ -601,6 +603,7 @@ public class TravelController {
 				.addObject("currentPage", currentPage)
 				.addObject("dayNum", dayNum)
 				.addObject("liked", liked)
+				.addObject("voted", voted)
 				.addObject("mapList", mb)
 				.setViewName("travel/planDetail");
 				
@@ -692,7 +695,6 @@ public class TravelController {
 			vc = mb.getVoteTotal();
 
 			jso.put("lc", lc);
-			jso.put("vc", vc);
 			
 			jso.put("userLiked", userLiked);
 			
@@ -709,7 +711,99 @@ public class TravelController {
 		
 		
 	}
-	
+
+	@RequestMapping("voteUp.do")
+	public void voteUp(HttpServletResponse response,
+						@RequestParam(value="userId") String userId,
+						@RequestParam(value="postType") String postType,
+						@RequestParam(value="postNo") int postNo,
+						Vote v) throws IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+
+		JSONObject jso = new JSONObject();
+		
+		String msg = "";
+		
+		if(userId.isEmpty()) {
+			msg = "error";
+		}else {
+			msg = "success";
+			
+			v.setUserId(userId);
+			v.setPostNo(postNo);
+			v.setPostType(postType);
+
+			int lc = 0;
+			int vc = 0;
+			String userVoted = null;
+
+			Vote vpList = ts.voteView(v);
+			
+			if(vpList == null) {
+				int lur = 0;
+				lur = ts.insertVote(v);
+
+				v.setPostYn("Y");
+				
+			}else {
+				
+				v.setPostYn(vpList.getPostYn());
+				
+				System.out.println("vpList : " + vpList);
+				System.out.println("vpList YN : " + vpList.getPostYn());
+				
+				int lpr = 0;
+				
+				lpr = ts.voteUp(v);
+				if(vpList.getPostYn().equals("Y")) {					
+					v.setPostYn("N");
+				}else {
+					v.setPostYn("Y");
+				}
+				
+			}
+			
+			int result = 0;
+
+			result = ts.VoteUpdate(v);
+			//////
+			Vote vpv = new Vote();
+			MapBoard mb = new MapBoard();
+			
+			vpv = ts.voteView(v);
+			userVoted = vpv.getPostYn();
+			
+			System.out.println("* userVoted : " + userVoted);
+			
+			
+			v.setPostYn(userVoted);
+			v.setPostNo(postNo);
+			v.setPostType(postType);
+			
+			mb = new MapBoard();
+			
+			mb = ts.likeVoteView(v);
+			
+			lc = mb.getLikeTotal();
+			vc = mb.getVoteTotal();
+
+			jso.put("vc", vc);
+			
+			jso.put("userVoted", userVoted);
+			
+			response.setContentType("text/html; charset=utf-8");
+				
+		}
+			
+
+		jso.put("msg", msg);
+		
+		PrintWriter out = response.getWriter();
+		out.print(jso.toString());
+		out.flush();
+		
+		
+	}
 	
 
 	@RequestMapping("planModifyForm.do")

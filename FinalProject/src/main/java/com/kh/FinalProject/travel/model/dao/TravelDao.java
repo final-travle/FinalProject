@@ -14,6 +14,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Repository("td")
 public class TravelDao {
@@ -118,11 +119,35 @@ public class TravelDao {
 	}
 
 	public int insertLike(LikedPost lp) {
-		return sqlSessionTemplate.update("travelMapper.insertLike", lp);
+		return sqlSessionTemplate.insert("travelMapper.insertLike", lp);
 	}
 
 	public int planDelete(int postNo) {
 		return sqlSessionTemplate.update("travelMapper.planDelete", postNo);
+	}
+
+	public Vote voteView(Vote v) {
+		return sqlSessionTemplate.selectOne("travelMapper.voteView", v);
+	}
+
+	public int insertVote(Vote v) {
+		return sqlSessionTemplate.update("travelMapper.insertVote", v);
+	}
+
+	public int voteUp(Vote v) {
+		return sqlSessionTemplate.update("travelMapper.voteUp", v);
+	}
+
+	public int voteUpdate(Vote v) {
+		return sqlSessionTemplate.update("travelMapper.voteUpdate", v);
+	}
+
+	public MapBoard likeVoteView(Vote v) {
+		return sqlSessionTemplate.selectOne("travelMapper.likeVoteView", v);
+	}
+
+	public Vote voteView(LikedPost lp) {
+		return sqlSessionTemplate.selectOne("travelMapper.voteView", lp);
 	}
 
 
