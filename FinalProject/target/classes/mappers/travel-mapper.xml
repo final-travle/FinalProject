@@ -226,7 +226,8 @@
 	<update id="planModifyPost" parameterType="Board">
 		UPDATE POST
 		SET TITLE = #{title}
-		WHERE POST_NO = #{postNo}
+		WHERE POST_TYPE = '3'
+        AND POST_NO = #{postNo}
 	</update>
 	
 	<select id="likedPost" parameterType="LikedPost" resultMap="likedPostResultSet">

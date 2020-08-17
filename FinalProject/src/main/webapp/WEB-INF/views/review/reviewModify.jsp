@@ -43,6 +43,7 @@
 	.dn1 .dayTit { background:#ddd; };
 	.on { background:#bd9dec; color:#fff; font-weight:700; }
 	
+	.bInsertWrap { text-align:center; padding:20px 0; }
 </style>
 </head>
 <body>
@@ -81,12 +82,12 @@
 	
 		<div class="rightBox">
 			<div id="map"></div>
-			<div class="btns">
-				<button type="submit" class="btn colorBtn apply">수정</button>
-				<button class="btn">취소</button>
-			</div>
 		</div>
 	</div>
+ <form method="post">
+ 	<textarea id="summernote" name="editordata">
+	        	${plan.postContents }</textarea>
+ </form>
 	
 	<div class="tagWrap">
 		<c:forEach var="tag" items="${tag }">
@@ -99,6 +100,12 @@
 			><label for="${tag.tagName }" ># ${tag.tagName }</label>
 	</c:forEach>
 	</div>
+<div class="bInsertWrap">
+	<div class="btns">
+		<button type="submit" class="btn colorBtn apply">수정</button>
+		<button class="btn">취소</button>
+	</div>
+</div>
 </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
@@ -118,6 +125,46 @@
 		</div>
 	<script>
 
+	$(function(){
+        $('#summernote').summernote({
+            height: 500,                 // 에디터 높이
+            minHeight: null,             // 최소 높이
+            maxHeight: null,             // 최대 높이
+            focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",					// 한글 설정
+            placeholder: '여행 후기를 입력해주세요 ;)',			
+			callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+		            for (var i = files.length - 1; i >= 0; i--) {
+		            	sendFile(files[i], this);
+		            }
+		        }
+			}
+		});
+	});
+	
+
+	function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: "POST",
+        	url: 'reviewImgSave.do',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+        		
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});
+  	};
+	
+	
+	
+	
 	$(".daySelectWrap .apply").on("click", function(){
 		$(this).parents(".daySelectWrap").hide();
 	});
@@ -510,8 +557,60 @@
         	   
         	   
         });
-        
-     	$(".rightBox .btns .apply").on("click", function(){
+
+     	$(".bInsertWrap .btns .apply").on("click", function(){
+     		var chkType = [];
+     		var chkName = [];
+     		var chkArr = [chkType, chkName];
+     		
+     		var firstImg = "${plan.thumbnail}";
+     		var postNo = ${plan.postNo};
+     		
+     		console.log(firstImg);
+     		
+     		$('input:checkbox[name=tag]:checked').each(function () {
+     			//chkArr.push($(this).val());
+     			chkName.push($(this).val());
+     			chkType.push($(this).attr("class"));
+     		});
+     		
+     		posex.push(chkArr);
+     		
+     		 
+     		// 제목 json에 붙여 전송
+     		var mtitle = $("#mtitle").val();
+     		
+     		posex.push(mtitle);
+
+     		posex.push(firstImg);
+     		posex.push(postNo);
+
+     		var contents = $("#summernote").val();
+     		
+     		posex.push(contents);
+
+     		 $.ajax({
+     	        type: "POST",
+     	        url: "rModify.do",
+     	        data: JSON.stringify(posex),
+     	        contentType:'application/json; charset=UTF-8',
+     	        dataType:"text",
+     	        async: false,
+     	        success: function(msg) {
+     	        	alert(msg);
+     	        	// detail page 강제 이동
+     	        	location.href="${contextPath}/reviewListView.do";
+     	        },
+				error : function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+	                          +"message: " + request.responseText
+	                          +"error: " + errorData);
+				}
+     	    });
+     		
+   		});
+     	
+     	$(".bInsertWrap .btns .apply").on("click", function(){
      		var chkType = [];
      		var chkName = [];
      		var chkArr = [chkType, chkName];
@@ -537,9 +636,13 @@
      		posex.push(firstImg);
      		posex.push(postNo);
 
+     		var contents = $("#summernote").val();
+     		
+     		posex.push(contents);
+     		
      		 $.ajax({
      	        type: "POST",
-     	        url: "pModify.do",
+     	        url: "rModify.do",
      	        data: JSON.stringify(posex),
      	        contentType:'application/json; charset=UTF-8',
      	        dataType:"text",
@@ -547,7 +650,7 @@
      	        success: function(msg) {
      	        	alert(msg);
      	        	// detail page 강제 이동
-     	        	location.href="${contextPath}/planList.do";
+     	        	location.href="${contextPath}/reviewListView.do";
      	        },
 				error : function(request, status, errorData){
 					alert("error code: " + request.status + "\n"

@@ -60,11 +60,11 @@
             <div class="rightBox">
 				<div id="map"></div>
             	<c:if test="${loginUser.id eq board.userId}">
-					<c:url var="planModifyForm" value="planModifyForm.do">
+					<c:url var="reviewModifyForm" value="reviewModifyForm.do">
 						<c:param name="postNo" value="${board.postNo }"/>
 					</c:url>
 				<div class="btns">
-					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="${reviewModifyForm }" class="btn colorBtn apply">수정</a>
 					<a href="#none" class="btn delete">삭제</a>
 				</div>
 				</c:if>

@@ -40,10 +40,18 @@ public interface ReviewService {
 
 	ArrayList<Travel> selectTravelList(int postNo);
 
-	int insertLike(LikedPost lp);
+	ArrayList<PostTag> getPostTagList(int postNo);
 
-	int likeUp(LikedPost lp);
+	Board selectReview(int postNo);
 
-	int likeUpdate(LikedPost lp);
+	int reviewModifyPost(Board b);
+
+	int reviewModifyB(int postNo);
+
+	int reviewMoidfyPoint(Travel tv);
+
+	int reviewModifyPT(int postNo);
+
+	int ModifyTag(PostTag tg);
 
 }

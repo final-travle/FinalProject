@@ -82,9 +82,32 @@ public class ReviewDao {
 		return (ArrayList) sqlSessionTemplate.selectList("reviewMapper.selectTravelList", postNo);
 	}
 
-	public int insertLike(LikedPost lp) {
-		// TODO Auto-generated method stub
-		return 0;
+	public ArrayList<PostTag> getPostTagList(int postNo) {
+		return (ArrayList) sqlSessionTemplate.selectList("reviewMapper.getPostTagList", postNo);
+	}
+
+	public Board selectReview(int postNo) {
+		return sqlSessionTemplate.selectOne("reviewMapper.selectReview", postNo);
+	}
+
+	public int reviewModifyPost(Board b) {
+		return sqlSessionTemplate.update("reviewMapper.reviewModifyPost", b);
+	}
+
+	public int reviewModifyB(int postNo) {
+		return sqlSessionTemplate.delete("reviewMapper.reviewModifyB", postNo);
+	}
+
+	public int reviewMoidfyPoint(Travel tv) {
+		return sqlSessionTemplate.insert("reviewMapper.modifyPoint", tv);
+	}
+
+	public int reviewModifyPT(int postNo) {
+		return sqlSessionTemplate.delete("reviewMapper.reviewModifyPT", postNo);
+	}
+
+	public int ModifyTag(PostTag tg) {
+		return sqlSessionTemplate.insert("reviewMapper.modifyTag", tg);
 	}
 	
 }

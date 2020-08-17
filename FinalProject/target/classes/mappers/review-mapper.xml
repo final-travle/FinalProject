@@ -163,4 +163,66 @@
 		WHERE POST_TYPE = '4'
 		AND POST_NO = #{postNo}
 	</select>
+	
+	<select id="getPostTagList" parameterType="_int" resultMap="postTagResultSet">
+		SELECT *
+		FROM POST_TAG
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<select id="selectReview" parameterType="_int" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</select>
+	
+	<update id="reviewModifyPost" parameterType="Board">
+		UPDATE POST P
+		SET (TITLE, POST_CONTENTS) = (SELECT #{title}, #{postContents}
+		                                FROM POST P2
+		                                WHERE P2.TITLE = P.TITLE
+		                                AND P2.POST_TYPE = '4'
+		                                AND P2.POST_NO = #{postNo})
+		WHERE P.POST_TYPE = '4'
+		AND P.POST_NO = #{postNo}
+	
+	</update>
+	
+	<!-- 여기 -->
+	
+	<delete id="reviewModifyB" parameterType="_int">
+		DELETE FROM TRAVEL
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</delete>
+	
+	<delete id="reviewModifyPT" parameterType="_int">
+		DELETE FROM POST_TAG
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+	</delete>
+	
+	<insert id="modifyTag" parameterType="Tag">
+		INSERT INTO POST_TAG VALUES (
+		#{tagType}
+		, #{tagName}
+		, '4'
+		, #{postNo}
+		)
+	</insert>
+	
+	<insert id="modifyPoint" parameterType="Travel">
+		INSERT INTO TRAVEL VALUES(
+		#{tCode}
+		, '4'
+		, #{postNo}
+		, #{night}
+		, #{tName}
+		, #{txpoint}
+		, #{typoint}
+		)
+	</insert>
+	
 </mapper>

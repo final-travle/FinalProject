@@ -91,20 +91,39 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int insertLike(LikedPost lp) {
-		return 0;
+	public ArrayList<PostTag> getPostTagList(int postNo) {
+		return rd.getPostTagList(postNo);
 	}
 
 	@Override
-	public int likeUp(LikedPost lp) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Board selectReview(int postNo) {
+		return rd.selectReview(postNo);
 	}
 
 	@Override
-	public int likeUpdate(LikedPost lp) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int reviewModifyPost(Board b) {
+		return rd.reviewModifyPost(b);
 	}
+
+	@Override
+	public int reviewModifyB(int postNo) {
+		return rd.reviewModifyB(postNo);
+	}
+
+	@Override
+	public int reviewMoidfyPoint(Travel tv) {
+		return rd.reviewMoidfyPoint(tv);
+	}
+
+	@Override
+	public int reviewModifyPT(int postNo) {
+		return rd.reviewModifyPT(postNo);
+	}
+
+	@Override
+	public int ModifyTag(PostTag tg) {
+		return rd.ModifyTag(tg);
+	}
+
 
 }

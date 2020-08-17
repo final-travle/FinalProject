@@ -88,7 +88,7 @@
 	postNo = ${board.postNo };
 	like = "${liked.likeYn }";
 	likeCount = ${mapList.likeTotal};
-
+	
 	postType = ${board.postType };
 	
 	$(document).on("ready", function(){

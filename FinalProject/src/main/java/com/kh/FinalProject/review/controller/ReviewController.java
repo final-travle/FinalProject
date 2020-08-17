@@ -383,7 +383,7 @@ public class ReviewController {
 
 				Travel tLast = t.get(t.size() - 1);
 				
-				System.out.println(t);
+				System.out.println(" t : " + t);
 								
 				int dayNum = tLast.getNight();
 				
@@ -406,97 +406,240 @@ public class ReviewController {
 		return mv;
 	}
 
-	@RequestMapping("rlikeUp.do")
-	public void likeUp(HttpServletResponse response,
-						@RequestParam(value="userId") String userId,
-						@RequestParam(value="postType") String postType,
-						@RequestParam(value="postNo") int postNo,
-						LikedPost lp) throws IOException {
+
+	@RequestMapping("reviewModifyForm.do")
+	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) throws Exception {
+
+        StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D (URL - Encode)", "UTF-8")); /*공공데이터포털에서 발급받은 인증키*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("20", "UTF-8")); /*한 페이지 결과수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+//        urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*지역코드, 시군구코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        
+        // 총 갯수 찾기
+        Pattern pattern = Pattern.compile("<totalCount>(.+?)</totalCount>");
+        Matcher matcher = pattern.matcher(sb);
+        matcher.find();
+        
+        // String > int 변환
+        String total = matcher.group(1);        
+        int tt =Integer.parseInt(total);
+        
+        System.out.println(sb);
+        
+        String[] nameArr = new String[tt];
+        String[] codeArr = new String[tt];
+        
+        
+//        System.out.println(tt);
+        
+    	// 이름값
+        Pattern nameTag = Pattern.compile("<name>(.+?)</name>");
+        Matcher ctname = nameTag.matcher(sb);
+        
+        // 지역코드
+        Pattern codeTag = Pattern.compile("<code>(.+?)</code>");
+        Matcher codeNo = codeTag.matcher(sb);
+
+        
+        int matchCount = 0;
+        
+        // 지역명 배열에 담기
+        while (ctname.find()) {
+        	String name = ctname.group(1);
+        	
+        	nameArr[matchCount] = name;
+        	
+//            System.out.println(matchCount + " : " + name);
+            matchCount++;
+        }
+
+        // 지역명 배열에 담기
+        matchCount = 0;	// 카운트 리셋
+        while (codeNo.find()) {
+        	String code = codeNo.group(1);
+        	
+        	codeArr[matchCount] = code;
+        	
+            matchCount++;
+        }
+        
+        ArrayList<City> city = new ArrayList<City>();
+        
+        for(int i = 0; i < nameArr.length; i++) {
+        	City ct = new City(nameArr[i],codeArr[i]);
+        	city.add(ct);
+        } 
+        
+       // 태그
+        ArrayList<Tag> tag = rs.getTagList();
+        
+        // 선택했던 여행지 얻어오기
+        ArrayList<Travel> tv = rs.selectTravelList(postNo);
+
+		Travel tLast = tv.get(tv.size() - 1);
+		
+		System.out.println(tLast.getNight());
+		
+		int dayNum = tLast.getNight();
+        // 선택한 태그 값 얻어오기
+        ArrayList<PostTag> pt = rs.getPostTagList(postNo);
+        
+		Board planOne = rs.selectReview(postNo);
+		
+		mv.addObject("plan", planOne);
+        mv.addObject("tag", tag);
+        mv.addObject("pt", pt);
+        mv.addObject("tlist", tv);
+        mv.addObject("dayNum", dayNum);
+		mv.addObject("city", city);
+		mv.setViewName("review/reviewModify");
+		
+		
+		return mv;
+	}
+
+	@RequestMapping(value = "rModify.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String planModify(HttpServletResponse response, HttpSession session, @RequestBody List<Object> posex, Board b, Travel tv, PostTag tg) {
 		response.setContentType("aplication/json; charset=utf-8");
 
-		JSONObject jso = new JSONObject();
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
 		
-		String msg = "";
+		String userId = mb.getId();
 		
-		if(userId.isEmpty()) {
-			msg = "error";
-		}else {
-			msg = "success";
+		// json에 붙어온 contents를 저장한다
+		String contents = (String) posex.remove(11);
+		
+		// json에 붙어 온 postNo 를 저장한다.
+		int postNo = (int) posex.remove(10);
+		
+		System.out.println("postNo : " + postNo);
+		
+		// json에 붙어 온 firstImg 를 저장한다.
+		String firstImg = (String) posex.remove(9);
+		
+		// json에 붙어온 제목 가져와 잘라내 저장한다.
+		String mtitle = (String)posex.remove(8);
+		
+		// json에 붙어온 tagList를 저장한다.
+		ArrayList tagList = (ArrayList) posex.remove(7);
+		
+		
+		ArrayList tTypeArr = (ArrayList) tagList.get(0);
+		ArrayList tNameArr = (ArrayList) tagList.get(1);
+
+		b.setPostNo(postNo);
+		b.setTitle(mtitle);
+		b.setUserId(userId);
+		b.setThumbnail(firstImg);
+		b.setPostContents(contents);
+
+		int result = 0;
+
+//		// 제목 수정
+		result = rs.reviewModifyPost(b);
+		
+		// 해당 postNo에 있는 travel 좌표들을 삭제한다.
+		int mr = 0;
+		mr = rs.reviewModifyB(postNo);
+		
+		String msg = "글이 정상적으로 수정되었습니다.";
+		if(mr > 0) {
+				// 넘어온 json object를 배열 단위로 풀어준다.
+			    for(int i = 0; i < posex.size(); i ++) {
+
+			    	// 배열값이 비었는지 확인하기 위하여 먼저 배열화함
+			    	ArrayList testli = (ArrayList) posex.get(i);
+
+			    	if(testli.isEmpty() == false) {
+			    
+				    	List<Object> mList = (List<Object>) posex.get(i);
+	
+				    	
+				    	// 날짜별 지역을 찍어준다.
+				    	for(int j = 0; j < mList.size(); j ++) {
+					    	int piResult = 0;
+				    		
+				    		// title과 latlng, code 나누기 위한 map 선언
+				    		Map<String, Object> mlInfo = (Map<String, Object>) mList.get(j);
 			
-			lp.setUserId(userId);
-			lp.setPostNo(postNo);
-			lp.setPostType(postType);
-
-			int lc = 0;
-			int vc = 0;
-			String userLiked = null;
-
-			LikedPost lpList = rs.likedView(lp);
+				    		String pTitle = (String) mlInfo.get("title");
+			//	    		System.out.println(pTitle);
 			
-			if(lpList == null) {
-				int lur = 0;
-				lur = rs.insertLike(lp);
+				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//System.out.println(ptcode);
+				    		
+				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
+				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
+			
+				    		double xpoint = (Double) latlng.get("Ga");
+				    		double ypoint = (Double) latlng.get("Ha");
+			//	    		System.out.println(xpoint + ", " + ypoint);
+					    		
+					    	tv.setNight(i);
+					    	tv.setPostNo(postNo);
+					    	tv.settCode(ptcode);
+					    	tv.settName(pTitle);
+					    	tv.setTxpoint(xpoint);
+					    	tv.setTypoint(ypoint);
+					    	
+					    	piResult = rs.reviewMoidfyPoint(tv);
+					    	
+					    	
+			    		}
+			    		
+			    	}
 
-				lp.setLikeYn("Y");
+		    	}
+			
+		}
+		
+		// POST TAG 삭제
+		int ptr = 0;
+		ptr = rs.reviewModifyPT(postNo);
+
+		if(ptr > 0) {
+			// post tag 테이블에 추가
+			for(int i = 0; i < tTypeArr.size(); i ++) {
+				int tResult = 0;
 				
-			}else {
+				String tagType = (String) tTypeArr.get(i);
+				String tagName = (String) tNameArr.get(i);
 				
-				lp.setLikeYn(lpList.getLikeYn());
+				tg.setTagType(tagType);
+				tg.setTagName(tagName);
+				tg.setPostNo(postNo);
 				
-				System.out.println("lpList : " + lpList);
-				System.out.println("lpList YN : " + lpList.getLikeYn());
-				
-				int lpr = 0;
-				
-				lpr = rs.likeUp(lp);
-				if(lpList.getLikeYn().equals("Y")) {					
-					lp.setLikeYn("N");
-				}else {
-					lp.setLikeYn("Y");
-				}
+				tResult = rs.ModifyTag(tg);
 				
 			}
-			
-			System.out.println("* lp : " + lp);
-			int result = 0;
-
-			result = rs.likeUpdate(lp);
-			//////
-			LikedPost lpv = new LikedPost();
-			MapBoard mb = new MapBoard();
-			
-			lpv = rs.likedView(lp);
-			userLiked = lp.getLikeYn();
-			
-			System.out.println("* userLiked : " + userLiked);
-			
-			
-			lp.setLikeYn(userLiked);
-			lp.setPostNo(postNo);
-			
-			mb = new MapBoard();
-			
-			mb = rs.likeVoteView(postNo);
-			
-			lc = mb.getLikeTotal();
-			vc = mb.getVoteTotal();
-
-			jso.put("lc", lc);
-			jso.put("vc", vc);
-			
-			jso.put("userLiked", userLiked);
-			
-			response.setContentType("text/html; charset=utf-8");
-				
 		}
-			
-
-		jso.put("msg", msg);
 		
-		PrintWriter out = response.getWriter();
-		out.print(jso.toString());
-		out.flush();
-		
-		
+		 return msg;
+	    
 	}
+	
 }
