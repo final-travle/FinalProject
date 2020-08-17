@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.FinalProject.common.Pagination2;
 import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.travel.model.service.TravelService;
@@ -1068,8 +1071,84 @@ public class TravelController {
 	
 	
 	@RequestMapping("commInsert.do")
-	public String commInsert(String postType, int postNo, String commCont) {
-		System.out.println(commCont);
-		return null;
+	@ResponseBody
+	public String commInsert(HttpSession session, String postType, int postNo, String commCont) {
+
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
+		
+		String userNickname = mb.getNickname();
+		
+		int result = 0;
+
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		cmnt.setCmntWirter(userNickname);
+		cmnt.setCmntContents(commCont);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		Comments commLastLine = cmnts.get(cmnts.size() - 1);
+		int commlLastNo = commLastLine.getCmntNo();
+		
+		cmnt.setCmntNo(commlLastNo + 1);
+		
+		result = ts.insertComment(cmnt);
+		
+		if(result > 0) {
+			System.out.println("insert success");
+			return "success";
+		}else {
+			System.out.println("insert error");
+			return "error";
+		}
+
+	}
+	
+	@RequestMapping("commView.do")
+	public void getReplyList(ModelAndView mv, HttpServletResponse response, int postNo, String postType) throws JsonIOException, IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+		JSONObject jso = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.getReComments(cmnt);
+
+//		jso.put("cmnts", cmnts);
+//		jso.put("reCmnts", reCmnts);
+		
+		jarr.add(cmnts);
+		jarr.add(reCmnts);
+//		
+//		System.out.println(jarr);
+//		
+//		PrintWriter out = response.getWriter();
+//		out.print(jarr.toArray());
+//		out.flush();
+		
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//
+		gson.toJson(jarr, response.getWriter());
+//		gson.toJson(reCmnts, response.getWriter());
+
+//		mv.addObject("cmnts", cmnts);
+//		mv.addObject("reCmnts", reCmnts);
+//
+//		mv.setViewName("travel/planDetail");
+//		
+//		return mv;
+		
 	}
 }

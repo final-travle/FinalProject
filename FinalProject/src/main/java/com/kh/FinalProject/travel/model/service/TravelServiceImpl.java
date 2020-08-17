@@ -187,5 +187,10 @@ public class TravelServiceImpl implements TravelService {
 		return td.getReComments(cmnt);
 	}
 
+	@Override
+	public int insertComment(Comments cmnt) {
+		return td.insertComment(cmnt);
+	}
+
 
 }

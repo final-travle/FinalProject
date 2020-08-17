@@ -109,19 +109,15 @@
 		$.ajax({
 			url : "commView.do",
 			data: { "postType" : postType, "postNo" : postNo },
-			dataType : "json",
 			success : function(data){
-				console.log(data[0]);
-				console.log(data[1]);
-				
-				$(".commCount").append("COMMENTS (" + (data[0].length + data[1].length) + ")");
+				$(".commCount").text("COMMENTS ( 0 )");
 
 				$(".commentSec table").html("");
 				var $commTable = $(".commentSec table");
 				
-				if(data[0].length > 0){
-					for(var i in data[0]){
-						
+				<c:forEach var="comm" items="${cmnts }">
+
+				console.log("실행됨");
 						var $commtr = $("<tr class='comm'>");
 						var $usertd = $("<td>");
 						var $userRound = $("<div class='userRound'>");
@@ -129,49 +125,21 @@
 						var $commConttd = $("<td>");
 						var $commdatetd = $("<td>");
 						
-						$commp.append(data[0][i].cmntWirter);
+						$commp.append("${comm.cmntWirter }");
 						$userRound.append($commp);
 						$usertd.append($userRound);
 						
-						$commConttd.append(data[0][i].cmntContents);
+						$commConttd.append("${comm.cmntContents }");
 
-						$commdatetd.append(data[0][i].cmntDate);
+						$commdatetd.append(" ${comm.cmntDate }");
 						
 						$commtr.append($usertd);
 						$commtr.append($commConttd);
 						$commtr.append($commdatetd);
 						
 						$commTable.append($commtr);
-						
-						for(var j in data[1]){
-							if(data[1][j].cmntNo == data[0][i].cmntNo){
-								var $recommtr = $("<tr class='reComm'>");
-								var $reusertd = $("<td>");
-								var $reuserRound = $("<div class='userRound'>");
-								var $recommp = $("<p>");
-								var $recommConttd = $("<td>");
-								var $recommdatetd = $("<td>");
-								
-								$recommp.append(data[1][j].rcmntWirter);
-								$reuserRound.append($recommp);
-								$reusertd.append($reuserRound);
 
-								$recommConttd.append(data[1][j].rcmntContents);
-								
-								$recommdatetd.append(data[1][j].rcmntDate);
-								
-								$recommtr.append($reusertd);
-								$recommtr.append($recommConttd);
-								$recommtr.append($recommdatetd);
-								
-								
-								
-								$commTable.append($recommtr);
-								
-							}
-						}
-					}
-				}
+	             </c:forEach>
 			},
 			error : function(request, status, errorData){
 				alert("error code: " + request.status + "\n"

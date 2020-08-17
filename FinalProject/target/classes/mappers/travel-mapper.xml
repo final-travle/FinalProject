@@ -385,6 +385,19 @@
 		WHERE POST_TYPE= #{postType}
 		AND POST_NO = #{postNo}
 	</select>
+	
+	<insert id="insertComment" parameterType="Comments">
+		INSERT INTO COMMENTS VALUES(
+			#{cmntNo}
+			, #{postType}
+			, #{postNo}
+			, #{cmntWirter}
+			, #{cmntContents}
+			, SYSDATE
+		)
+	</insert>
+	
+	
 </mapper>
 	
 	

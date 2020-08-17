@@ -84,5 +84,7 @@ public interface TravelService {
 
 	ArrayList<ReComments> getReComments(Comments cmnt);
 
+	int insertComment(Comments cmnt);
+
 
 }

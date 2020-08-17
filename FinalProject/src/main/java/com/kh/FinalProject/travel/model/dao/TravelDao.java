@@ -160,6 +160,10 @@ public class TravelDao {
 		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.getReComments", cmnt);
 	}
 
+	public int insertComment(Comments cmnt) {
+		return sqlSessionTemplate.insert("travelMapper.insertComment", cmnt);
+	}
+
 
 
 }
