@@ -213,7 +213,7 @@
     <script>
     	function openChat(name){
     		var url = "friendList.do";
-    		var options = 'top=100, left=300, width=500, height=600, status=no, menubar=no';
+    		var options = 'top=20, left=400, width=550, height=650, status=no, menubar=no';
     		window.open(url, name, options);
     	}
     </script>
