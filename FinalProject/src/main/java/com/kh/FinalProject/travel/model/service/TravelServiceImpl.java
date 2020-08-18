@@ -207,5 +207,10 @@ public class TravelServiceImpl implements TravelService {
 		return td.insertReComment(recmnt);
 	}
 
+	@Override
+	public int recommentModify(ReComments recmnt) {
+		return td.recommentModify(recmnt);
+	}
+
 
 }

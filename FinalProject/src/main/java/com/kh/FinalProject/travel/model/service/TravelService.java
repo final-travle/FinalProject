@@ -92,5 +92,7 @@ public interface TravelService {
 
 	int insertReComment(ReComments recmnt);
 
+	int recommentModify(ReComments recmnt);
+
 
 }

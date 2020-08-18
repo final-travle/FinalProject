@@ -20,8 +20,9 @@
 	
 	.btns a { display:inline-block; }
 	
-	.commModify, .reCommt { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
-	.cmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
+	.commModify, .reCommt, .recommModify { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
+	.recommModify { color:#eee; }
+	.cmntBtn, .recmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
 </style>
 </head>
 <body>
@@ -134,7 +135,7 @@
 						var $commConttd = $("<td>");
 						var $commdatetd = $("<td>");
 						
-						
+						var $reCommTable = $("<table>");
 						
 						$commp.append(data[0][i].cmntWirter);
 						$userRound.append($commp);
@@ -164,10 +165,13 @@
 						$commtr.append($commConttd);
 						$commtr.append($commdatetd);
 						
-						$commTable.append($commtr);
+						
+						var $retr = $("<tr>");
+						var $retd = $("<td colspan='3'>");
 						
 						for(var j in data[1]){
 							if(data[1][j].cmntNo == data[0][i].cmntNo){
+								
 								var $recommtr = $("<tr class='reComm'>");
 								var $reusertd = $("<td>");
 								var $reuserRound = $("<div class='userRound'>");
@@ -178,10 +182,22 @@
 								$recommp.append(data[1][j].rcmntWirter);
 								$reuserRound.append($recommp);
 								$reusertd.append($reuserRound);
+								
 
 								$recommConttd.append(data[1][j].rcmntContents);
+
+
+								var nickname = data[1][j].rcmntWirter;
+								
+								if("${loginUser.nickname }" == nickname){
+								var $recommModify = $("<span class='recommModify'>").text("수정");
+								$recommConttd.append($recommModify);
+								}
 								
 								$recommdatetd.append(data[1][j].rcmntDate);
+								
+
+								$recommtr.attr("id", data[1][j].rcmntNo);
 								
 								$recommtr.append($reusertd);
 								$recommtr.append($recommConttd);
@@ -189,9 +205,15 @@
 								
 								
 								
-								$commTable.append($recommtr);
+								//$commTable.append($recommtr);
+								$reCommTable.append($recommtr);
+								$retd.append($reCommTable);
+								$retr.append($retd);
 								
 							}
+
+							$commTable.append($commtr);
+							$commTable.append($retr);
 						}
 					}
 				}else{
@@ -241,6 +263,7 @@
 		$thistr.children("td").eq(1).html($insertTdArea).append(cmntBtn);
 	});
 
+	// 코멘트 수정
 	$(document).on("click", ".comm .cmntBtn", function(){
 		var commCont = $(this).prev(".insertarea").val();
 
@@ -261,7 +284,7 @@
 	});
 
 
-	// 코멘트 답글 버튼 생성
+	// 리코멘트 답글 버튼 생성
 	$(document).on("click", ".comm .reCommt", function(){
 		var $recommArea = $("<textarea class='recommArea'>").css({"width": "90%", "height" : "50px", "resize" : "none"});
 		var $recommtr = $("<tr class='recommtr'>");
@@ -281,7 +304,7 @@
 		
 	});
 	
-	
+	// 리코멘트 인서트
 	$(document).on("click", ".recommtr .recmntBtn", function(){
 		var recommCont = $(this).parent("td").prev("td").children(".recommArea").val();
 		var cmntNo = $(this).closest(".recommtr").prev(".comm").attr("id");
@@ -302,7 +325,44 @@
 		});
 	});
 
-	
+	// 리코멘트 수정 버튼 생성
+	$(document).on("click", ".reComm .recommModify", function(){
+		var recommCont = $(this).parent().text().replace("수정", "");
+		var recmntBtn = $("<span class='recmntBtn'>").text("답글 수정");
+		
+		var $reinsertTdArea = $("<textarea class='reinsertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(recommCont);
+		
+
+		var $thistr = $(this).closest("tr");
+
+		$thistr.children("td").eq(1).html($reinsertTdArea).append(recmntBtn);
+	});
+
+	// 리코멘트 수정
+	$(document).on("click", ".reComm .recmntBtn", function(){
+		var recommCont = $(this).prev(".reinsertarea").val();
+
+		var recmntNo = $(this).closest("tr").attr("id");
+		
+		var cmntNo = $(this).closest("tr").parents("tr").prev().attr("id");
+
+		console.log(recmntNo);
+		console.log(cmntNo);
+		
+		
+		$.ajax({
+			url : "recommModify.do",
+			data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo, "recmntNo" : recmntNo},
+			success : function(data){
+				commView();
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
 	
 	userId = "${loginUser.id}";
 	postNo = ${board.postNo };

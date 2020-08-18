@@ -1211,6 +1211,26 @@ public class TravelController {
 		}
 	}
 	
+
+	@RequestMapping("recommModify.do")
+	@ResponseBody
+	public void recommModify(int postNo, String postType, int cmntNo, String recommCont, int recmntNo) {
+		//System.out.println(postNo + postType + cmntNo + commCont);
+		
+		ReComments recmnt = new ReComments();
+		
+		recmnt.setPostType(postType);
+		recmnt.setPostNo(postNo);
+		recmnt.setCmntNo(cmntNo);
+		recmnt.setRcmntNo(recmntNo);
+		recmnt.setRcmntContents(recommCont);
+		
+		int result = ts.recommentModify(recmnt);
+		
+		if(result > 0) {
+			System.out.println("답글 수정 완료!");
+		}
+	}
 	
 	
 }

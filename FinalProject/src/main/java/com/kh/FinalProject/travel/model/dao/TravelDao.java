@@ -176,6 +176,10 @@ public class TravelDao {
 		return sqlSessionTemplate.insert("travelMapper.insertReComment", recmnt);
 	}
 
+	public int recommentModify(ReComments recmnt) {
+		return sqlSessionTemplate.update("travelMapper.recommentModify", recmnt);
+	}
+
 
 
 }

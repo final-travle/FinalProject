@@ -427,6 +427,16 @@
 			, SYSDATE
 		)
 	</insert>
+	
+	<update id="recommentModify" parameterType="ReComments">
+		UPDATE RE_COMMENTS
+		SET R_CMNT_CONTENTS = #{rcmntContents}
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+		AND CMNT_NO = #{cmntNo}
+		AND R_CMNT_NO = #{rcmntNo}
+	</update>
+	
 </mapper>
 	
 	
