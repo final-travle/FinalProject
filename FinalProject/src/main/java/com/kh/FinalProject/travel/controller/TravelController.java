@@ -1167,8 +1167,50 @@ public class TravelController {
 		int result = ts.commentModify(cmnt);
 		
 		if(result > 0) {
-			System.out.println("글 수정 완료!");
+			System.out.println("댓글 수정 완료!");
 		}
 	}
+	
+
+	@RequestMapping("recommentInsert.do")
+	@ResponseBody
+	public String recommentInsert(HttpSession session, int postNo, String postType, int cmntNo, String recommCont) {
+		System.out.println(postNo + postType + cmntNo + recommCont);
+
+		ReComments recmnt = new ReComments();
+
+		recmnt.setPostType(postType);
+		recmnt.setPostNo(postNo);
+		recmnt.setCmntNo(cmntNo);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.checkReComments(recmnt);
+		
+		ReComments commLastLine = reCmnts.get(reCmnts.size() - 1);
+		int recommlLastNo = commLastLine.getRcmntNo();
+		
+		recmnt.setRcmntNo(recommlLastNo + 1);
+		recmnt.setRcmntContents(recommCont);
+		
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
+		
+		String userNickname = mb.getNickname();
+		
+		recmnt.setRcmntWirter(userNickname);
+		
+		int result = 0;
+		result = ts.insertReComment(recmnt);
+
+		if(result > 0) {
+			System.out.println("insert success");
+			return "success";
+		}else {
+			System.out.println("insert error");
+			return "error";
+		}
+	}
+	
+	
 	
 }

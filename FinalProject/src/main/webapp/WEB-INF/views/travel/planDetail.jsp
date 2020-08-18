@@ -21,7 +21,7 @@
 	.btns a { display:inline-block; }
 	
 	.commModify, .reCommt { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
-	.cmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
+	.cmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
 </style>
 </head>
 <body>
@@ -227,6 +227,7 @@
 		}
 	});
 	
+	// 코멘트 수정 버튼 생성
 	$(document).on("click", ".comm .commModify", function(){
 		var commCont = $(this).parent().text().replace("수정", "").replace("답글", "");
 				
@@ -239,7 +240,7 @@
 
 		$thistr.children("td").eq(1).html($insertTdArea).append(cmntBtn);
 	});
-	
+
 	$(document).on("click", ".comm .cmntBtn", function(){
 		var commCont = $(this).prev(".insertarea").val();
 
@@ -259,6 +260,50 @@
 		});
 	});
 
+
+	// 코멘트 답글 버튼 생성
+	$(document).on("click", ".comm .reCommt", function(){
+		var $recommArea = $("<textarea class='recommArea'>").css({"width": "90%", "height" : "50px", "resize" : "none"});
+		var $recommtr = $("<tr class='recommtr'>");
+		var $recommtd = $("<td colspan='2'>").css("text-align", "center");
+
+		var $recmntBtn = $("<span class='recmntBtn'>").text("답글 달기");
+		var $trcmnttd = $("<td>").css("vertical-align", "middle");
+		
+		var $thistr = $(this).closest("tr");
+		
+		
+		$recommtd.append($recommArea);
+		$trcmnttd.append($recmntBtn);
+		$recommtr.append($recommtd);
+		$recommtr.append($trcmnttd);
+		$thistr.after($recommtr);
+		
+	});
+	
+	
+	$(document).on("click", ".recommtr .recmntBtn", function(){
+		var recommCont = $(this).parent("td").prev("td").children(".recommArea").val();
+		var cmntNo = $(this).closest(".recommtr").prev(".comm").attr("id");
+		
+		$.ajax({
+			url : "recommentInsert.do",
+			data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo },
+			success : function(data){
+				if(data == "success"){
+					commView();
+				}
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
+
+	
+	
 	userId = "${loginUser.id}";
 	postNo = ${board.postNo };
 	like = "${liked.likeYn }";

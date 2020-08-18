@@ -168,6 +168,14 @@ public class TravelDao {
 		return sqlSessionTemplate.update("travelMapper.commentModify", cmnt);
 	}
 
+	public ArrayList<ReComments> checkReComments(ReComments recmnt) {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.checkReComments", recmnt);
+	}
+
+	public int insertReComment(ReComments recmnt) {
+		return sqlSessionTemplate.insert("travelMapper.insertReComment", recmnt);
+	}
+
 
 
 }

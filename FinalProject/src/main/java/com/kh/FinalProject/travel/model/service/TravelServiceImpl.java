@@ -197,5 +197,15 @@ public class TravelServiceImpl implements TravelService {
 		return td.commentModify(cmnt);
 	}
 
+	@Override
+	public ArrayList<ReComments> checkReComments(ReComments recmnt) {
+		return td.checkReComments(recmnt);
+	}
+
+	@Override
+	public int insertReComment(ReComments recmnt) {
+		return td.insertReComment(recmnt);
+	}
+
 
 }

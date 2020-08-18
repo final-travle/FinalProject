@@ -377,6 +377,7 @@
 		FROM COMMENTS
 		WHERE POST_TYPE= #{postType}
 		AND POST_NO = #{postNo}
+        ORDER BY CMNT_NO
 	</select>
 	
 	<select id="getReComments" parameterType="ReComments" resultMap="reCommentsResultSet">
@@ -384,6 +385,7 @@
 		FROM RE_COMMENTS
 		WHERE POST_TYPE= #{postType}
 		AND POST_NO = #{postNo}
+        ORDER BY R_CMNT_NO
 	</select>
 	
 	<insert id="insertComment" parameterType="Comments">
@@ -405,6 +407,26 @@
 		AND CMNT_NO = #{cmntNo}
 	</update>
 	
+	<select id="checkReComments" parameterType="ReComments" resultMap="reCommentsResultSet">
+		SELECT *
+		FROM RE_COMMENTS
+		WHERE POST_TYPE= #{postType}
+		AND POST_NO = #{postNo}
+        AND CMNT_NO = #{cmntNo}
+        ORDER BY R_CMNT_NO
+	</select>
+	
+	<insert id="insertReComment" parameterType="ReComments">
+		INSERT INTO RE_COMMENTS VALUES(
+			#{rcmntNo}
+			, #{cmntNo}
+			, #{postType}
+			, #{postNo}
+			, #{rcmntWirter}
+			, #{rcmntContents}
+			, SYSDATE
+		)
+	</insert>
 </mapper>
 	
 	
