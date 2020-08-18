@@ -141,7 +141,7 @@ text-align: center;
 					</c:url>
 					planModifyForm.do
 					
-					<c:url var="planModifyForm" value="planModifyForm.do">
+					<c:url var="planModifyForm" value="planModifyForm2.do">
 						<c:param name="postNo" value="${pl.postNo }" />
 						<c:param name="postType" value="${pl.postType }" />
 						<c:param name="page" value="${pi.currentPage }" />
