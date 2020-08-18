@@ -113,8 +113,6 @@
                 </tr>
             </table>
             <div>
-                <input type="checkbox" id="check1">
-                <label id="idsave">아이디 저장</label>
                 
                 <label style="float: right;"><a href="searchPwd.do">비밀번호찾기</a></label>
                 <label style="float: right; text-decoration: none"><a href="searchId.do">아이디찾기 /&nbsp;</a></laebel>

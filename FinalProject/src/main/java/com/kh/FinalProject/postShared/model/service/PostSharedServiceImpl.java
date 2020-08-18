@@ -20,7 +20,7 @@ public class PostSharedServiceImpl implements PostSharedService{
 
 	
 	@Autowired
-	PostSharedDao pDao;
+	private PostSharedDao pDao;
 	
 	@Override
 	public ArrayList<Board> selectList(PageInfo pi2,String id) {
@@ -63,6 +63,42 @@ public class PostSharedServiceImpl implements PostSharedService{
 	public int deleteShared(PostShared ps) {
 		// TODO Auto-generated method stub
 		return pDao.deleteShared(ps);
+	}
+
+	@Override
+	public int getListCount(String id) {
+		// TODO Auto-generated method stub
+		return pDao.getListCount(id);
+	}
+
+	@Override
+	public void planDelete(String id, Integer postNo) {
+		PostShared ps = new PostShared();
+		ps.setPost_no(postNo);
+		ps.setUser_id(id);
+		pDao.planDelete(ps);
+		
+	}
+
+	@Override
+	public void memberSharedDelete(String id, Integer postNo) {
+		PostShared ps = new PostShared();
+		ps.setPost_no(postNo);
+		ps.setUser_id(id);
+		pDao.memberSharedDelete(ps);
+		
+	}
+	
+	@Override
+	public int getListAllCount() {
+		// TODO Auto-generated method stub
+		return pDao.getListAllCount();
+	}
+
+	@Override
+	public ArrayList<Board> selectAllList(PageInfo pi2) {
+		// TODO Auto-generated method stub
+		return pDao.selectAllList(pi2);
 	}
 
 }

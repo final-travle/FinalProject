@@ -100,7 +100,7 @@ public class MemberController  {
 		System.out.println(loginUser);
 		if(loginUser != null) {
 			model.addAttribute("loginUser",loginUser);
-			return "home";
+			return "redirect:home.do";
 		}else {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -405,6 +405,11 @@ public class MemberController  {
 			int postCount = mService.pCount(mb.getId());
 			Ttype tp = new Ttype();
 			m.setBirth(request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"));
+			m.setId(mb.getId());
+			m.setJob(mb.getJob());
+			m.setWithd_yn(mb.getWithd_yn());
+			m.setJoin_date(mb.getJoin_date());
+			System.out.println(m);
 			int result = mService.change(m,mb);
 			mService.deleteTtype(mb.getId());
 			int fCount = mService.fCount(mb.getId());
@@ -673,7 +678,7 @@ public class MemberController  {
     		String Search=null;
     			Member m = (Member) session.getAttribute("loginUser");
     			int postCount = mService.pCount(m.getId());
-    			int fCount = mService.fCount(m.getId());
+    			
     			int listCount = mService.getListCount(Search,m.getId());
 	        	System.out.println(id);
 				 mService.accfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
@@ -693,7 +698,7 @@ public class MemberController  {
 					mal.add(mService.friendsInfo(al.get(i)));
 				}
 				
-				
+				int fCount = mService.fCount(m.getId());
 				
 				
 				if(fal != null) {
@@ -702,15 +707,6 @@ public class MemberController  {
 					model.addObject("listCount",listCount);
 					model.addObject("falll",mal);
 					model.setViewName("/member/accfriends");
-				}else {
-					
-					response.setContentType("text/html; charset=UTF-8");
-					PrintWriter out = response.getWriter();
-					out.println("<script>alert('받은 요청이 없습니다.'); </script>");
-					out.flush();
-					model.setViewName("/member/accfriends");
-			
-					
 				}
 			
 				return model;   	        				
@@ -732,9 +728,13 @@ public class MemberController  {
 					model.addObject("fCount",fCount);
 					model.setViewName("/member/accfriends");
 					
+				}{
+					System.out.println("삭제 실패");
 				}
 				return model;   	        				
     	}
+	            
+	            
 	            @RequestMapping("dltmember.do") //회원 탈퇴
 	    		public String dltmember(ModelAndView model,HttpServletResponse response,HttpSession session,String pwd) throws IOException {
 	    		

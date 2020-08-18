@@ -150,12 +150,12 @@ text-align: center;
     <form method="post" action="friendsadd2.do">
 		<div id="friendsbodyInfo">
             <table id="noticelistArea" align="center" width="800" border="1">
-                    <tr>
+                    <tr bgcolor="#bd9dec">
                         <th>ID</th> <th>이름</th> <th>닉네임</th> <th>수락</th> <th>거절</th>
                     </tr>
 			  <c:if test="${empty falll }">
             <tr>
-            <td colspan="5"> <p style="text-align: center;">리스트가없습니다</p></td>
+            <td style="text-align : center;" colspan="5"> <p style="text-align: center;">리스트가없습니다</p></td>
             </tr>
             </c:if>
             <c:if test="${not empty falll}">          

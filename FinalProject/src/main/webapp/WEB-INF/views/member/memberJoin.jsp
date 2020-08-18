@@ -366,7 +366,7 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check1" name = "agree_chk" class="infoBox">
                         <label>(필수)이용약관</label>
-                        <lable><a href="javascript:windowopenPopup();">전체보기</a></lable>
+                        <lable><a href="javascript:windowopenPopup();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                
@@ -374,7 +374,7 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check2" name="agree_chk" class="infoBox">
                         <label>(필수)개인정보 수집 및 이용</label>
-                        <lable><a href="javascript:windowopenPopup2();">전체보기</a></lable>
+                        <lable><a href="javascript:windowopenPopup2();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                    
@@ -382,19 +382,19 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check3" name="agree_chk" class="infoBox" >
                         <label>(필수)14세 이상입니다. *회원가입은 만 14세 이상부터 가능합니다.</label>
-                         <lable><a href="javascript:windowopenPopup3();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup3();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check4" value="N" name="alarm_YN" class="infoBox">
                         <label>(선택)정보/이벤트 메일 수신에 동의합니다.</label>
-                         <lable><a href="javascript:windowopenPopup4();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup4();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check5" value="N" name="agree_chk" class="infoBox">
                         <label>(선택)정보/이벤트 SMS 수신에 동의합니다.</label>
-                         <lable><a href="javascript:windowopenPopup5();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup5();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <dev style="font-size: 10px; color: lightgray;">*선택 약관 미동의시 포인트, 할인 혜택 등 추가 정보 수신 불가</dev>
@@ -402,9 +402,9 @@
             </ul>
             <br><br><br><br><br>
             <div style="text-align: center;">
-                <input type="button" value="회원가입" id="submit_btn" style="width: 90px; height: 40px; color: white; background: darkgrey; border-radius: 7px;" onclick="check();">
+                <input class="colorBtn btn" type="button" value="회원가입" id="submit_btn"  onclick="check();">
                 
-                <input type="button" value="취소" id="cancel" onclick=cancle(); style="width: 90px; height: 40px; color: black; background-color: lightgray; border-radius: 7px;">
+                <input class="colorBtn btn" type="button" value="취소" id="cancel" onclick="location.href='home.do'" >
             </div>        
         </form>
         <script>
@@ -482,7 +482,6 @@
                    $("#joinForm").submit();
                 }
             }
-            // 회원가입 실패
              <%--  <%if(msg != null){%>
                alert("<%=msg%>");
              <%}%>

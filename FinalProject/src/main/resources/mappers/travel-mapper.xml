@@ -95,6 +95,58 @@
 		AND POST_DEL_YN = 'N'
 	</select>
 	
+	<select id="getListCount2" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND POST_DEL_YN = 'N'
+		AND USER_ID = #{id}
+	</select>
+	
+	
+	<select id="getListAllCount"  resultType="_int">
+		SELECT COUNT(*)
+		FROM POST
+		WHERE (POST_TYPE = '3'
+		OR POST_TYPE = '4')
+		AND POST_DEL_YN = 'N'
+	</select>
+	
+	
+	<select id="memberselectAllList"  resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE (POST_TYPE = '3'
+		OR POST_TYPE = '4')
+		AND POST_DEL_YN = 'N'
+	</select>
+	
+	
+	<select id="selectsharedList" parameterType="PostShared" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE USER_ID = #{user_id}
+		AND POST_NO = #{post_no}
+		AND POST_TYPE = #{post_type}
+	</select>
+	
+	
+	<delete id="deleteShared" parameterType="PostShared">
+	DELETE FROM SHARED
+	WHERE POST_TYPE = #{post_type}
+	AND POST_NO= #{post_no}
+	AND (SHARE_ID = #{share_id} OR USER_ID = #{share_id}) 
+	</delete>
+	
+	<delete id="memberSharedDelete" parameterType="PostShared">
+	DELETE FROM SHARED
+	WHERE POST_TYPE = '3'
+	AND POST_NO= #{post_no}
+	AND SHARE_ID = #{user_id} 
+	</delete>
+	
+	
+	
 	<select id="selectList" resultMap="boardResultSet">
 		SELECT *
 		FROM POST
@@ -102,6 +154,11 @@
 		AND POST_DEL_YN = 'N'
 		ORDER BY POST_NO DESC
 	</select>
+	
+	<insert id="sharedInsert" parameterType="PostShared">
+	INSERT INTO SHARED VALUES(#{share_id}, #{post_type}, #{post_no}, #{user_id})
+	
+	</insert>	
 	
 	
 	<select id="selectListTag" resultMap="postTagResultSet">
@@ -294,6 +351,9 @@
 		AND POST_NO = #{postNo}
 	</update>
 	
+	
+	
+
 	<insert id="insertLike" parameterType="LikedPost">
 		INSERT INTO LIKED_POST VALUES(
 		#{userId}
@@ -310,11 +370,21 @@
 		AND POST_NO = #{postNo}
 	</update>
 	
+	<update id="planDelete2" parameterType="PostShared">
+		UPDATE POST
+		SET POST_DEL_YN = 'Y'
+		WHERE POST_TYPE = '3'
+		AND POST_NO = #{post_no}
+		AND USER_ID = #{user_id}
+	</update>
+	
+	
+	
 	<select id="memberselectList" parameterType="string" resultMap="boardResultSet">
 		SELECT *
 		FROM POST
-		WHERE POST_TYPE = '3'
-		AND POST_DEL_YN = 'N'
+		WHERE 
+		 POST_DEL_YN = 'N'
 		AND USER_ID = #{id}
 		ORDER BY POST_NO DESC
 	</select>

@@ -214,7 +214,7 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return mDao.okfriendsCount(string);
 	}
-
+	
 
 	@Override
 	public ArrayList<Friends> friendsacc(String id, String string) {
@@ -445,6 +445,15 @@ public class MemberServiceImpl implements MemberService {
 	public int pCount(String id) {
 		// TODO Auto-generated method stub
 		return mDao.pCount(id);
+	}
+
+
+
+
+	@Override
+	public void deleteShar(Integer postNo) {
+		// TODO Auto-generated method stub
+		mDao.deleteShar(postNo);
 	}
 
 

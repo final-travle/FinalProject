@@ -423,7 +423,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 </div>
 <script type="text/javascript">
 	$(function(){
-			$('input[id="message"]').keydown(function() {
+			/* $('input[id="message"]').keydown(function() {
 			    if (event.keyCode === 13) {
 			        return false;
 			    }
@@ -446,7 +446,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 			 }else{
 				 $("#sendBtn").prop("disabled",false);
 			 }
-		 })
+		 }) */
 	})
 </script>
 

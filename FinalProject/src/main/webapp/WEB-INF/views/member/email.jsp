@@ -7,6 +7,10 @@
 	<title></title>
 	<script src="../../js/jquery-3.4.1.min.js"></script>
 	<style>
+	   
+.btn { width:100px; height:40px; border:2px solid #bd9dec; background:#fff; border-radius:3px; line-height:40px; text-align:center; box-sizing:border-box; }
+.btn a {  color:#bd9dec; font-weight:700; }
+.colorBtn { background:#bd9dec; color:#fff; }
 		a {
 			text-decoration: none;
 			color: darkgrey;
@@ -51,7 +55,7 @@
             <div>코드 입력</div>
             <div style="font-size: 12px; color: darkgray;">인증코드를 적어주세요.</div> 제한시간 : <B><span id="timer"></span></B> <br>
             <br>
-            <input type="text" id="userId" name="email_injeung" style="width: 600px; height: 30px; border-radius: 8px; " placeholder="아이디를 입력해주세요">
+            <input type="text" id="userId" name="email_injeung" style="width: 600px; height: 30px; border-radius: 8px; " placeholder="인증코드를 적어주세요">
             <br>    
             <input type="hidden" name="dice" value=${dice } />
   			<input type="hidden" name="member" value=${member.id } />
@@ -63,7 +67,7 @@
             <br>
             <hr>
             <br>
-          	 <input type="submit" value="다음" id="nextbtn" style="font-size: 16px;">
+          	 <input class="colorBtn btn" type="submit" value="다음" id="nextbtn" style="font-size: 16px;">
         </form>
 	</div>
 

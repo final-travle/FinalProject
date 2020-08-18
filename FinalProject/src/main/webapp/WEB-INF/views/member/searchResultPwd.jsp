@@ -6,6 +6,10 @@
 <head>
    <title></title>
    <style>
+   
+.btn { width:100px; height:40px; border:2px solid #bd9dec; background:#fff; border-radius:3px; line-height:40px; text-align:center; box-sizing:border-box; }
+.btn a {  color:#bd9dec; font-weight:700; }
+.colorBtn { background:#bd9dec; color:#fff; }
         #h1{
                margin-left: 300px;
            }

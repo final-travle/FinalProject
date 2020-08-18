@@ -300,6 +300,12 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.pCount",id);
 	}
 
+
+	public void deleteShar(Integer postNo) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("memberMapper.deleteShar",postNo);
+	}
+
 	
 	
 	
