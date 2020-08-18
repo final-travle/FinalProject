@@ -40,6 +40,8 @@
         #searchId{float : right;}
     </style>
 <body>
+<jsp:include page="../common/header.jsp" />
+
     <div id="hansol1">
     <h1 id="h1">SEARCH RESULT</h2>
     <div id="hansol2">
@@ -47,6 +49,8 @@
     </div>
     <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button> <button class="colorBtn btn" id="searchId" onclick="location.href='searchId.do'">아이디찾기 </button>
     </div>
+   <jsp:include page="../common/footer.jsp" />
+   
 </body>
 
 </html>

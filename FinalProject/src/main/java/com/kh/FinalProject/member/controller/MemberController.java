@@ -56,7 +56,7 @@ public class MemberController  {
 	private MemberService mService;
 	
 	@RequestMapping("minsert.do")
-	public String memberInsert(HttpServletRequest request, Model model) {
+	public String memberInsert(HttpServletResponse response,HttpServletRequest request, Model model) throws IOException {
 		Member m = new Member(request.getParameter("id"),
 							  request.getParameter("pwd"),
 							  request.getParameter("name"),
@@ -67,6 +67,7 @@ public class MemberController  {
 							  request.getParameter("email"),
 							  request.getParameter("phone"),
 							  "N");
+		System.out.println(m);
 		int result = mService.insertMember(m);
 		Ttype tp = new Ttype();
 		// 이제 서비스로 넘기자
@@ -81,7 +82,11 @@ public class MemberController  {
 			
 			return "member/login";				
 		}else {
-			throw new MemberException("회원 가입 실패!");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보를 확인해주세요.'); </script>");
+			out.flush();
+			return "member/memberJoin";
 		}
 		
 	}

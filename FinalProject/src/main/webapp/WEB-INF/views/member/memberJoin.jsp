@@ -407,6 +407,9 @@
                 <input class="colorBtn btn" type="button" value="취소" id="cancel" onclick="location.href='home.do'" >
             </div>        
         </form>
+        
+     <jsp:include page="../common/footer.jsp" />
+        
         <script>
         $(function(){
          $("#userId").on("keyup",function(){
@@ -541,7 +544,7 @@
                     var value = $("#userPwd").val();
                     var reg = /^[a-z0-9]{6,18}$/;
                     if(!reg.test(value)){
-                        alert("영문자와 숫자로 6글자 이상 12글자 이하여야 합니다.");
+                        alert("영문자와 숫자로 6글자 이상 18글자 이하여야 합니다.");
                         $("#userPwd").focus().val('');
                     }
                 });
@@ -592,7 +595,7 @@
         
                  });   
               
-
+        
                 
                
                    

@@ -139,7 +139,13 @@ text-align: center;
 						<c:param name="postType" value="${pl.postType }" />
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
+					planModifyForm.do
 					
+					<c:url var="planModifyForm" value="planModifyForm.do">
+						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="postType" value="${pl.postType }" />
+						<c:param name="page" value="${pi.currentPage }" />
+					</c:url>
 					
 					<c:url var="planDelete" value="myplanDelete2.do">
 						<c:param name="postNo" value="${pl.postNo }" />
@@ -158,7 +164,7 @@ text-align: center;
 			                    <div class="icons">
 				                    <a href="#" onclick="window.open('${memberplanListShared }','_blank','width=600, height=600'); return flase">공유</a>
 			      					<a href="${planDelete }"> <i class="ion-social-two-outline">삭제</i></a>
-								    <a href="#"> <i class="ion-social-three-outline">수정</i></a>
+								    <a href="${planModifyForm}"> <i class="ion-social-three-outline">수정</i></a>
 								    <a href="${planDetail }"> <i class="ion-social-four-outline">글보기</i></a>
 			                    </div>
 			                 </div>

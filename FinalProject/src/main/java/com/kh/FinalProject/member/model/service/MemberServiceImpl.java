@@ -267,9 +267,9 @@ public class MemberServiceImpl implements MemberService {
 			FriendsPage fp = new FriendsPage();
 			fp.setSearch(search);
 			fp.setUserId(id);
-			al =mDao.realfriends(fp);			
+			al =mDao.realfriends(fp,pi);			
 		}else {
-			al=mDao.realfriends(id);
+			al=mDao.realfriends(id,pi);
 		}
 		
 		return al;

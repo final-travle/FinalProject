@@ -176,14 +176,19 @@ public class MemberDao {
 
 	
 	
-	public ArrayList<Friends> realfriends(FriendsPage fp) {
+	public ArrayList<Friends> realfriends(FriendsPage fp,PageInfo pi) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp);
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp,rowBounds);
 	}
 
-	public ArrayList<Friends> realfriends(String id) {
+	public ArrayList<Friends> realfriends(String id,PageInfo pi) {
+		
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends2",id);
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends2",id,rowBounds);
 	}
 
 	public int loginTime(String id) {
