@@ -9,13 +9,10 @@
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/reset.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/swiper-bundle.min.css" />" rel="stylesheet">
-<link rel="stylesheet" href="${contextPath}/resources/css/summernote-lite.css" />
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="http://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="<c:url value="/resources/js/action.js" />"></script>
 <script src="<c:url value="/resources/js/swiper-bundle.min.js" />"></script>
-<script src="${contextPath}/resources/js/summernote-lite.js"></script>
-<script src="${contextPath}/resources/js/summernote-ko-KR.js"></script>
 </head>
 <body>
    <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
@@ -43,13 +40,18 @@
                 </div>
             </div>
         </header>
+        
+        <c:url var="nlist" value="nlist.do"/>
+        <c:url var="elist" value="elist.do"/>
+        
         <nav id="nav">
             <ul class="topMenu cf">
                 <li><a href="home.do">홈</a></li>
                 <li><a href="planList.do">플랜</a></li>
-                <li><a href="#none">탐색</a></li>
+                <li><a href="slist.do">탐색</a></li>
                 <li><a href="reviewListView.do">리뷰</a></li>
-                <li><a href="#none">이벤트</a></li>
+                <li><a href="elist.do">이벤트</a></li>
+                <li><a href="nlist.do">공지사항</a><li>
             </ul>
         </nav>
     </div>
