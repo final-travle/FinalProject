@@ -404,7 +404,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 		</div>
 	</div>
 	<div id="chatForm">
-		<form>
+		<form id="sendMessageForm">
 			<input type="text" id="message" autocomplete=off >
 			<button id="sendBtn" >전송</button>
 		</form>
@@ -421,6 +421,34 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
+<script type="text/javascript">
+	$(function(){
+			$('input[id="message"]').keydown(function() {
+			    if (event.keyCode === 13) {
+			        return false;
+			    }
+			}); 
+			$("#sendBtn").prop("disabled",true);
+		
+		
+		$("#sendMessageForm").submit(function(){
+				$("#sendBtn").prop("disabled",true);
+				$('input[id="message"]').keydown(function() {
+				    if (event.keyCode === 13) {
+				        event.preventDefault();
+				    }
+				});
+		})
+		
+		 $("#message").keypress(function(e){
+			 if(e.keyCode == 32){
+				 $("#sendBtn").prop("disabled",true);
+			 }else{
+				 $("#sendBtn").prop("disabled",false);
+			 }
+		 })
+	})
+</script>
 
 <script>
 		$(function (){
