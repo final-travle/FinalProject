@@ -121,7 +121,7 @@ public class PostSharedController {
 				@RequestParam(value="page", required=false) Integer page) {
 			
 			
-			
+			mService.deleteShar(postNo);
 			Member mb = (Member) session.getAttribute("loginUser");
 			 pService.planDelete(mb.getId(),postNo);
 			int currentPage = 1;

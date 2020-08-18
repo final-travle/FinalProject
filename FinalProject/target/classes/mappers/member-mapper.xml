@@ -46,6 +46,9 @@
 		WHERE USER_ID=#{id} AND EMAIL = #{email}
 	</select>
 	
+	
+	
+	
 	<select id="pCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM POST
@@ -175,6 +178,12 @@
 	<delete id="deleteTtype" parameterType="string">
 	DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
 	</delete>
+	
+	<delete id="deleteShar" parameterType="_int">
+	DELETE FROM SHARED WHERE POST_NO=#{postNo} AND POST_TYPE='3'
+	</delete>
+	
+	
 	
 	<update id="adminMemberDelete" parameterType="string" >
 	UPDATE MEMBER SET WITHD_YN ='Y'  
