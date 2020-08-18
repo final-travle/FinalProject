@@ -50,6 +50,7 @@
 		SELECT COUNT(*)
 		FROM POST
 		WHERE USER_ID=#{id}
+		AND POST_DEL_YN = 'N'
 	</select>
 	
 	

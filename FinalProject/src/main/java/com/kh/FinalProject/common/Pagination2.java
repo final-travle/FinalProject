@@ -14,7 +14,7 @@ public class Pagination2 {
 		
 		int boardLimit=12;
 		
-		maxPage = (int)((double)listCount/boardLimit+0.9);
+		maxPage = (int)((double)listCount/boardLimit+0.9);  //전체 몇개에서 맥스 페이지가 몇개냐 
 		
 		startPage = (int)(((double)(currentPage/pageLimit) + 0.9) - 1)*pageLimit + 1;
 		

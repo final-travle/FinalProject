@@ -30,4 +30,14 @@ public interface PostSharedService {
 
 	int deleteShared(PostShared ps);
 
+	int getListCount(String id);
+
+	void planDelete(String id, Integer postNo);
+
+	void memberSharedDelete(String id, Integer postNo);
+
+	int getListAllCount();
+
+	ArrayList<Board> selectAllList(PageInfo pi2);
+
 }

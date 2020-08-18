@@ -54,6 +54,7 @@ height: 36px;
  <div id="sharedfriends">
  <c:if test="${empty friendsshared  }">
             <h3>공유된 친구가없습니다 .</h3>
+            
             </c:if>
 	 <c:forEach var="nb" items="${friendsshared }">
                 <c:url value="memberdeleteShared.do" var="url12">
@@ -76,7 +77,8 @@ height: 36px;
 
             <c:if test="${empty friends  }">
             <tr>
-            <td>검색된 친구가없습니다</td>
+            
+            <td colspan="5" style="text-align : center;">검색된 친구가없습니다</td>
             </tr>
             </c:if>      
             <c:forEach var="n" items="${friends }">
