@@ -253,6 +253,12 @@
 																					  , 'Y')
 	</insert>
 	
+	<select id="ReadYnCount" resultType="_int">
+		SELECT COUNT(READ_YN) AS COUNT
+		FROM ONETOONE_MESSAGE
+		WHERE CO_NO = #{co_no} AND CHAT_ID = #{loginUserid} AND READ_YN='N' AND MESSAGE_CONT != 'null'
+	</select>
+	
 </mapper>
 
 

@@ -375,14 +375,14 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 					<div class='interval'>
 						<img src="${pageContext.request.contextPath}/resources/profile/${otomsg.profile}"
 						style='width:40px;height:40px;border-radius:40%;float:left;'>
-						<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;${otomsg.nickname }</p>
+						<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;${otomsg.nickname }</p>
 						<c:if test="${otomsg.send_image ne null }">
-							<strong class='a' style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<strong class='a' style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
 							<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${otomsg.send_image}" class="sent_Image"
 							style="width:150px;margin-top:10px;cursor:pointer;" onclick="sentImage_detail();">&nbsp;</strong>&nbsp; 
 						</c:if>
 						<c:if test="${otomsg.send_image eq null }">
-							<strong class='a' style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<strong class='a' style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
 							${otomsg.content }&nbsp;</strong>&nbsp;
 						</c:if>
 						<c:if test="${otomsg.read_yn eq 'N'}">
@@ -424,12 +424,10 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 
 <script>
 		$(function (){
-					$(".sent_Image").click(function(){
+					$(".sent_Image").on("click", function(){
 						var img = $(this).attr("src");
-						var sent_Image = img.substring(img.lastIndexOf("/")+1);
 						
 						console.log("경로 : " + img);
-						console.log("이미지명 : " + sent_Image);
 						
 						$(".sentImage_detailview").attr("src",img);
 					})
@@ -503,7 +501,7 @@ function submit_SendImage_modal(){
 	    		};
 	        	var msgData4 = {
 	        			friendid : $("#friendid").val(),
-	        			chatroom_no : $("#chatroom_no").val(),
+	        			co_no : $("#chatroom_no").val(),
 	        			msg : "이미지입니다"
 	        	};
 	        	var jsonData3 = JSON.stringify(msgData3);
@@ -665,8 +663,8 @@ function submit_SendImage_modal(){
 					printHTML += "<div class='interval'>";
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 											+"' style='width:40px;height:40px;border-radius:40%;float:left;'>"
-											+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-											+"<strong class='a'style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+											+"<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+											+"<strong class='a'style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 											+"<img src='${pageContext.request.contextPath}/resources/ChatroomSendImage/" + image 
 											+ "' class='sent_Image' style='width:150px;margin-top:10px;cursor:pointer;' onclick='sentImage_detail();'>"
 											+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
@@ -677,10 +675,8 @@ function submit_SendImage_modal(){
 					$("#chat").append(printHTML);
 					$("#chat").scrollTop($("#chat")[0].scrollHeight);
 				} 
-			
-			}else{
-				console.log("오류 ");
 			}
+				//여기서 ajax? 디비에서 불러온건 모달자세히보기가 켜지는데 이렇게 붙인건 안켜짐
 		}else{
 		chatroom = strArray[0];
 		profile = strArray[1];
@@ -740,8 +736,8 @@ function submit_SendImage_modal(){
 				printHTML += "<div class='interval'>";
 				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 										+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
-										+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-										+"<strong class='a'style='margin-left:-75px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+										+"<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+										+"<strong class='a'style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 										+message+"&nbsp;</strong>&nbsp;<strong style='float:left;margin-left:7px;margin-top:20px;color:yellow;font-size:12px;'class='readyn'>"
 										+readyn+"</strong>";
 				printHTML += "</div>";

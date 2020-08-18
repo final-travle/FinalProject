@@ -463,6 +463,7 @@ public class ChatController {
 		  public void SaveSendImage(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
 				@RequestParam(value="ChatroomSendImage", required=false) MultipartFile file) throws IOException {
 		  
+		  
 		String sendImageName = saveFile2(file, request);
 		
 		PrintWriter out = response.getWriter();

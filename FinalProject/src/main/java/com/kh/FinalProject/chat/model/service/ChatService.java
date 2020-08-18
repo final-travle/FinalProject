@@ -61,4 +61,6 @@ public interface ChatService {
 
 	int insertOpenchatSendImage(HashMap<String, Object> dbmap);
 
+	int ReadYnCount(HashMap<String, Object> dbmap);
+
 }
