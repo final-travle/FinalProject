@@ -20,7 +20,7 @@
 	
 	.btns a { display:inline-block; }
 	
-	.commModify { display:inline-block; margin-left:20px; color:#888; cursor:pointer; }
+	.commModify, .reCommt { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
 	.cmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
 </style>
 </head>
@@ -119,7 +119,7 @@
 				console.log(data[0]);
 				console.log(data[1]);
 				
-				$(".commCount").append("COMMENTS (" + (data[0].length + data[1].length) + ")");
+				$(".commCount").text("COMMENTS (" + (data[0].length + data[1].length) + ")");
 
 				$(".commentSec table").html("");
 				var $commTable = $(".commentSec table");
@@ -135,14 +135,27 @@
 						var $commdatetd = $("<td>");
 						
 						
-						var $commModify = $("<span class='commModify'>").text("수정");
 						
 						$commp.append(data[0][i].cmntWirter);
 						$userRound.append($commp);
 						$usertd.append($userRound);
 						
-						$commConttd.append(data[0][i].cmntContents).append($commModify);
+						$commConttd.append(data[0][i].cmntContents);
+						
+						var nickname = data[0][i].cmntWirter;
+						
+						if("${loginUser.nickname }" == nickname){
+						var $commModify = $("<span class='commModify'>").text("수정");
+						$commConttd.append($commModify);
+							
+						}
 
+						
+   		                <c:if test="${!empty sessionScope.loginUser}">
+						var $reCommt = $("<span class='reCommt'>").text("답글");
+						$commConttd.append($reCommt);
+						</c:if>
+						
 						$commdatetd.append(data[0][i].cmntDate);
 
 						$commtr.attr("id", data[0][i].cmntNo);
@@ -215,7 +228,7 @@
 	});
 	
 	$(document).on("click", ".comm .commModify", function(){
-		var commCont = $(this).parent().text().replace("수정", "");
+		var commCont = $(this).parent().text().replace("수정", "").replace("답글", "");
 				
 		var cmntBtn = $("<span class='cmntBtn'>").text("댓글 수정");
 		
