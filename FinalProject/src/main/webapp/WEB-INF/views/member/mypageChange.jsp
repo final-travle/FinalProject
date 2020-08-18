@@ -242,7 +242,7 @@ text-align: center;
             <label>ID<span style="color: orange;">*</span></label>
         </td>
         <td id="inp" class="ltd">
-            <input type="text" id="userId" name="id" value="${member.id}" disabled required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
+            <input type="text" id="id" name="id" value="${member.id}" disabled required="" placeholder="4글자 이상 12글자 이하 영문자(소문자)와 숫자">
         </td>
     </tr>
     <tr>
@@ -274,8 +274,7 @@ text-align: center;
           <label>닉네임</label>
       </td>
       <td id="inp" class="ltd">
-          <input type="text" id="reference" name="reference" value="${member.nickname}">
-
+          <input type="text" id="reference" name="nickname" value="${member.nickname}">
       </td>
   </tr>
     <tr>

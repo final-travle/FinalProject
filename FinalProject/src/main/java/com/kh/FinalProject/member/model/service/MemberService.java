@@ -100,5 +100,7 @@ public interface MemberService {
 
 	int pCount(String id);
 
+	void deleteShar(Integer postNo);
+
 
 }

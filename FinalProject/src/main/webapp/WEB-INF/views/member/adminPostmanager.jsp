@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 #memberinfo{
 width : 100%;
 height : 150px;
@@ -45,7 +46,6 @@ right: 75px;
 color :black;
 border: 1px solid #ddd;
 transition : .2s ease-in;
-z-index : 100;
 }
 
 #mySidenav.on {
@@ -81,18 +81,26 @@ text-align: center;
           transition: all 0.2s ease;
 }
 
+	.snip1368 {position:relative; overflow:hidden; }
+	.snip13 { -webkit-transition: 0.2s; position:absolute; top:0; bottom:0; width:100%; height:100%; background:rgba(0,0,0,.7); display:none; }
+	.snip1368:hover .snip13 { display:block; }
+	.snip13 .icon:after { display:block; content:""; clear:both;  }
+	.snip13 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left; height:100%; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	
+	.snip131 .icon1:after { display:block; content:""; clear:both;  }
+	.snip131 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left;  height:100%; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	
+	
 </style>
-
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-
 
 <div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
 글 수 <span style="color: orange;"> ${pCount}</span>개</h2>
-<h1 style="text-align: center; font-style : oblique;">SHARED POSTS</h1>
+<h1 style="text-align: center; font-style : oblique;">POST MANAGE</h1>
 <hr>
 </div>
    <br><br><br>
@@ -115,33 +123,69 @@ text-align: center;
    </c:if>
     </div>
 
-
-
     <div id="container" class="cf">
         <div id="content">
             
             <!-- plan -->
        <ul class="grid grid3 cf">
 				<c:forEach var="pl" items="${list }">
+					
 					<c:url var="planDetail" value="planDetail.do">
 						<c:param name="postNo" value="${pl.postNo }" />
 						<c:param name="postType" value="${pl.postType }" />
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
 					
-					<c:url var="memberSharedDelete" value="memberSharedDelete.do">
+					
+					<c:url var="planDelete" value="adminplanDelete.do">
+						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="postType" value="${pl.postType }" />
+						<c:param name="page" value="${pi.currentPage }" />
+					</c:url>
+					
+					
+					
+	                <li>
+	                <c:if test="${pl.postType eq 3 }">
+	                <div class="snip1368">
+	                    <img src="${pl.thumbnail }"/>
+	                        <div class="snip13">
+			                    <div class="icons">
+			      					<a href="${planDelete }"> <i class="ion-social-two-outline">삭제</i></a>
+								    <a href="${planDetail }"> <i class="ion-social-four-outline">글보기</i></a>
+			                    </div>
+			                 </div>
+	                    </div>
+	                 </c:if>   
+	                 
+	                 <c:url var="reviewDetail" value="reviewDetail.do">
 						<c:param name="postNo" value="${pl.postNo }" />
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
-	                <li>
-	                    <p class="img">
-	                        <a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
-	                    </p>
+					
+					<c:url var="reviewDelete" value="adminreviewListDelete.do">
+						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="page" value="${pi.currentPage }" />
+					</c:url>
+	                 <c:if test="${pl.postType ne 3 }">
+	                    <div class="snip1368">
+	                    <img src="${pl.thumbnail }"/>
+	                        <div class="snip13">
+			                    <div class="icons">
+			      					<a href="${reviewDelete}"> <i class="ion-social-two-outline">삭제</i></a>		   
+								    <a href="${reviewDetail }"> <i class="ion-social-four-outline">글보기</i></a>
+			                    </div>
+			                 </div>
+	                    </div>
+					</c:if>
 	                    <p class="title">${pl.title }</p>
 	                    <p>${pl.userId }</p>
 	                    <p class="cont">
-	                    <a href="${memberSharedDelete }">공유끊기</a><br>
-	                    <a href="${planDetail }"> 글보기</a>
+	                 
+						<c:choose>
+							<c:when test="${pl.postType ne 3}"><c:out value="리뷰" /><br></c:when>							
+							<c:when test="${pl.postType eq 3}"><c:out value="플랜 " /><br></c:when>						
+						</c:choose>
 	                    	<c:set var="liPostNo" value="${pl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
 		                    	<c:if test = "${tl.postNo eq liPostNo}">
@@ -154,6 +198,7 @@ text-align: center;
 	                </li>
                 </c:forEach>
                </ul>             
+          
 
             <div class="pagination">
 				<!-- [prev] -->
@@ -162,7 +207,7 @@ text-align: center;
 				</c:if>
 				
 				<c:if test="${pi.currentPage gt 1 }">
-					<c:url var="blistBack" value="planList.do">
+					<c:url var="blistBack" value="memberplanList.do">
 						<c:param name="page" value="${pi.currentPage - 1 }" />
 					</c:url>
 					<a href="${blistBack }">[prev] </a>
@@ -175,7 +220,7 @@ text-align: center;
 					</c:if>
 					
 					<c:if test="${p ne pi.currentPage }">
-						<c:url var="blistCheck" value="planList.do">
+						<c:url var="blistCheck" value="memberplanList.do">
 							<c:param name="page" value="${p }"/>
 						</c:url>
 						<a href="${blistCheck }">${p }</a>
@@ -189,12 +234,11 @@ text-align: center;
 				</c:if>
 				
 				<c:if test="${pi.currentPage lt pi.maxPage }">
-					<c:url var="blistEnd" value="planList.do">
+					<c:url var="blistEnd" value="memberplanList.do">
 						<c:param name="page" value="${pi.currentPage + 1 }" />
 					</c:url>
 					<a href="${blistEnd }"> [next]</a>
 				</c:if>	
- 
             </div>
             <!-- // plan -->
 

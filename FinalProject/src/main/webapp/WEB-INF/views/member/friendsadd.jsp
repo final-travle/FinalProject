@@ -179,7 +179,7 @@ text-align: center;
             <c:if test="${empty allmember  }">
             <tr>
             
-            <td colspan="5">리스트가없습니다</td>
+            <td style="text-align : center;" colspan="6">리스트가없습니다</td>
             </tr>
             </c:if>      
             <c:forEach var="n" items="${allmember }">

@@ -187,7 +187,7 @@ text-align: center;
    </div>          
            <div id="friendsbodyInfo"> 
             <table id="friendstable" align="center" width="600" border="1">
-                    <tr>
+                    <tr  bgcolor="#bd9dec">
                         <th>ID</th> <th>이름</th> <th>닉네임</th> <th>연락처</th> <th>삭제</th>
                     </tr>
 
@@ -205,7 +205,7 @@ text-align: center;
             <c:url value="adminMemberinfo.do" var="url2">
 				<c:param name="id" value="${n.id }" />
 			</c:url>
-           <a href="${url2}"> ${n.id }</a></td>
+           <a href="#" onclick="window.open('${url2}','_blank','width=800, height=600'); return flase"> ${n.id }</a></td>
             <td align="center">${n.name }</td>
             <td align="center">${n.nickname }</td>
             <td align="center">${n.phone }</td>
