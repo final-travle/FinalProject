@@ -20,9 +20,6 @@
 	
 	.btns a { display:inline-block; }
 	
-	.commModify, .reCommt, .recommModify { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
-	.recommModify { color:#eee; }
-	.cmntBtn, .recmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
 </style>
 </head>
 <body>
@@ -212,9 +209,9 @@
 								
 							}
 
-							$commTable.append($commtr);
-							$commTable.append($retr);
 						}
+						$commTable.append($commtr);
+						$commTable.append($retr);
 					}
 				}else{
 					var $commtr = $("<tr>");

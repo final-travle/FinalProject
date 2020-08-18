@@ -217,3 +217,8 @@ h3.tit { font-size:26px; text-align:center; margin:30px 0; }
 .rightBox { float:left; width:90%; height:100%; position:relative; }
 .rightBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7);}
 .piCount { text-align:right; margin-bottom:16px; }
+
+
+.commModify, .reCommt, .recommModify { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
+.recommModify { color:#eee; }
+.cmntBtn, .recmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }

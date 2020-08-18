@@ -1091,8 +1091,14 @@ public class TravelController {
 		// 댓글 불러오기
 		ArrayList<Comments> cmnts = ts.getComments(cmnt);
 		
-		Comments commLastLine = cmnts.get(cmnts.size() - 1);
-		int commlLastNo = commLastLine.getCmntNo();
+		int commlLastNo = 0;
+		
+		System.out.println(cmnts.size());
+		
+		if(cmnts.size() > 0) {
+			Comments commLastLine = cmnts.get(cmnts.size() - 1);
+			commlLastNo = commLastLine.getCmntNo();			
+		}
 		
 		cmnt.setCmntNo(commlLastNo + 1);
 		
@@ -1186,9 +1192,12 @@ public class TravelController {
 		// 대댓글 불러오기
 		ArrayList<ReComments> reCmnts = ts.checkReComments(recmnt);
 		
-		ReComments commLastLine = reCmnts.get(reCmnts.size() - 1);
-		int recommlLastNo = commLastLine.getRcmntNo();
-		
+		int recommlLastNo = 0;
+
+		if(reCmnts.size() > 0) {
+			ReComments commLastLine = reCmnts.get(reCmnts.size() - 1);
+			recommlLastNo = commLastLine.getRcmntNo();
+		}
 		recmnt.setRcmntNo(recommlLastNo + 1);
 		recmnt.setRcmntContents(recommCont);
 		
