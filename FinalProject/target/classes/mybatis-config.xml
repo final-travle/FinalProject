@@ -25,6 +25,8 @@
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.MapBoard" alias="MapBoard"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.LikedPost" alias="LikedPost"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Vote" alias="Vote"/>
+		<typeAlias type="com.kh.FinalProject.travel.model.vo.Comments" alias="Comments"/>
+		<typeAlias type="com.kh.FinalProject.travel.model.vo.ReComments" alias="ReComments"/>
 		
 		<typeAlias type="com.kh.FinalProject.search.model.vo.PostTag" alias="Search"/>
 		<typeAlias type="com.kh.FinalProject.search.model.vo.Tag" alias="Tagg"/>

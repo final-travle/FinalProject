@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.travel.model.dao.TravelDao;
 import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.Comments;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.ReComments;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Vote;
@@ -173,6 +175,41 @@ public class TravelServiceImpl implements TravelService {
 	@Override
 	public Vote voteView(LikedPost lp) {
 		return td.voteView(lp);
+	}
+
+	@Override
+	public ArrayList<Comments> getComments(Comments cmnt) {
+		return td.getComments(cmnt);
+	}
+
+	@Override
+	public ArrayList<ReComments> getReComments(Comments cmnt) {
+		return td.getReComments(cmnt);
+	}
+
+	@Override
+	public int insertComment(Comments cmnt) {
+		return td.insertComment(cmnt);
+	}
+
+	@Override
+	public int commentModify(Comments cmnt) {
+		return td.commentModify(cmnt);
+	}
+
+	@Override
+	public ArrayList<ReComments> checkReComments(ReComments recmnt) {
+		return td.checkReComments(recmnt);
+	}
+
+	@Override
+	public int insertReComment(ReComments recmnt) {
+		return td.insertReComment(recmnt);
+	}
+
+	@Override
+	public int recommentModify(ReComments recmnt) {
+		return td.recommentModify(recmnt);
 	}
 
 

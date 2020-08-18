@@ -68,6 +68,25 @@
 		<result property="post_no" column="POST_NO" />
 		<result property="user_id" column="USER_ID" />
 	</resultMap>
+	
+	<resultMap type="Comments" id="commentsResultSet">
+		<id property="cmntNo" column="CMNT_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+		<result property="cmntWirter" column="CMNT_WRITER" />
+		<result property="cmntContents" column="CMNT_CONTENTS" />
+		<result property="cmntDate" column="CMNT_DATE" />
+	</resultMap>
+	
+	<resultMap type="ReComments" id="reCommentsResultSet">
+		<id property="rcmntNo" column="R_CMNT_NO" />
+		<result property="cmntNo" column="CMNT_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+		<result property="rcmntWirter" column="R_CMNT_WRITER" />
+		<result property="rcmntContents" column="R_CMNT_CONTENTS" />
+		<result property="rcmntDate" column="R_CMNT_DATE" />
+	</resultMap>
 
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -352,6 +371,71 @@
 		AND POST_NO = #{postNo}
 	</update>
 	
+	<!-- comments -->
+	<select id="getComments" parameterType="Comments" resultMap="commentsResultSet">
+		SELECT *
+		FROM COMMENTS
+		WHERE POST_TYPE= #{postType}
+		AND POST_NO = #{postNo}
+        ORDER BY CMNT_NO
+	</select>
+	
+	<select id="getReComments" parameterType="ReComments" resultMap="reCommentsResultSet">
+		SELECT *
+		FROM RE_COMMENTS
+		WHERE POST_TYPE= #{postType}
+		AND POST_NO = #{postNo}
+        ORDER BY R_CMNT_NO
+	</select>
+	
+	<insert id="insertComment" parameterType="Comments">
+		INSERT INTO COMMENTS VALUES(
+			#{cmntNo}
+			, #{postType}
+			, #{postNo}
+			, #{cmntWirter}
+			, #{cmntContents}
+			, SYSDATE
+		)
+	</insert>
+	
+	<update id="commentModify" parameterType="Comments">
+		UPDATE COMMENTS
+		SET CMNT_CONTENTS = #{cmntContents}
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+		AND CMNT_NO = #{cmntNo}
+	</update>
+	
+	<select id="checkReComments" parameterType="ReComments" resultMap="reCommentsResultSet">
+		SELECT *
+		FROM RE_COMMENTS
+		WHERE POST_TYPE= #{postType}
+		AND POST_NO = #{postNo}
+        AND CMNT_NO = #{cmntNo}
+        ORDER BY R_CMNT_NO
+	</select>
+	
+	<insert id="insertReComment" parameterType="ReComments">
+		INSERT INTO RE_COMMENTS VALUES(
+			#{rcmntNo}
+			, #{cmntNo}
+			, #{postType}
+			, #{postNo}
+			, #{rcmntWirter}
+			, #{rcmntContents}
+			, SYSDATE
+		)
+	</insert>
+	
+	<update id="recommentModify" parameterType="ReComments">
+		UPDATE RE_COMMENTS
+		SET R_CMNT_CONTENTS = #{rcmntContents}
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+		AND CMNT_NO = #{cmntNo}
+		AND R_CMNT_NO = #{rcmntNo}
+	</update>
 	
 </mapper>
 	

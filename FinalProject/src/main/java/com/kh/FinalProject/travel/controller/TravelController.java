@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,16 +28,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.FinalProject.common.Pagination2;
 import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.travel.model.service.TravelService;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.City;
 import com.kh.FinalProject.travel.model.vo.CityInfo;
+import com.kh.FinalProject.travel.model.vo.Comments;
 import com.kh.FinalProject.travel.model.vo.LikedPost;
 import com.kh.FinalProject.travel.model.vo.MapBoard;
 import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
+import com.kh.FinalProject.travel.model.vo.ReComments;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
 import com.kh.FinalProject.travel.model.vo.Vote;
@@ -576,6 +581,21 @@ public class TravelController {
 			lp.setPostType(postType);
 		
 		}
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.getReComments(cmnt);
+		
+		System.out.println("cmnts" + cmnts);
+		System.out.println("reCmnts" + reCmnts);
+		
 		LikedPost liked = ts.likedView(lp);
 		Vote voted = ts.voteView(lp);
 		
@@ -605,6 +625,8 @@ public class TravelController {
 				.addObject("liked", liked)
 				.addObject("voted", voted)
 				.addObject("mapList", mb)
+				.addObject("cmnts", cmnts)
+				.addObject("reCmnts", reCmnts)
 				.setViewName("travel/planDetail");
 				
 			}
@@ -1046,4 +1068,178 @@ public class TravelController {
 		return "redirect:planList.do";
 		
 	}
+	
+	
+	@RequestMapping("commInsert.do")
+	@ResponseBody
+	public String commInsert(HttpSession session, String postType, int postNo, String commCont) {
+
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
+		
+		String userNickname = mb.getNickname();
+		
+		int result = 0;
+
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		cmnt.setCmntWirter(userNickname);
+		cmnt.setCmntContents(commCont);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		int commlLastNo = 0;
+		
+		System.out.println(cmnts.size());
+		
+		if(cmnts.size() > 0) {
+			Comments commLastLine = cmnts.get(cmnts.size() - 1);
+			commlLastNo = commLastLine.getCmntNo();			
+		}
+		
+		cmnt.setCmntNo(commlLastNo + 1);
+		
+		result = ts.insertComment(cmnt);
+		
+		if(result > 0) {
+			System.out.println("insert success");
+			return "success";
+		}else {
+			System.out.println("insert error");
+			return "error";
+		}
+
+	}
+	
+	@RequestMapping("commView.do")
+	public void getReplyList(ModelAndView mv, HttpServletResponse response, int postNo, String postType) throws JsonIOException, IOException {
+		response.setContentType("aplication/json; charset=utf-8");
+		JSONObject jso = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostNo(postNo);
+		cmnt.setPostType(postType);
+		
+		// 댓글 불러오기
+		ArrayList<Comments> cmnts = ts.getComments(cmnt);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.getReComments(cmnt);
+
+//		jso.put("cmnts", cmnts);
+//		jso.put("reCmnts", reCmnts);
+		
+		jarr.add(cmnts);
+		jarr.add(reCmnts);
+//		
+//		System.out.println(jarr);
+//		
+//		PrintWriter out = response.getWriter();
+//		out.print(jarr.toArray());
+//		out.flush();
+		
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//
+		gson.toJson(jarr, response.getWriter());
+//		gson.toJson(reCmnts, response.getWriter());
+
+//		mv.addObject("cmnts", cmnts);
+//		mv.addObject("reCmnts", reCmnts);
+//
+//		mv.setViewName("travel/planDetail");
+//		
+//		return mv;
+		
+	}
+	
+	@RequestMapping("commModify.do")
+	@ResponseBody
+	public void commModify(int postNo, String postType, int cmntNo, String commCont) {
+		//System.out.println(postNo + postType + cmntNo + commCont);
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostType(postType);
+		cmnt.setPostNo(postNo);
+		cmnt.setCmntNo(cmntNo);
+		cmnt.setCmntContents(commCont);
+		
+		int result = ts.commentModify(cmnt);
+		
+		if(result > 0) {
+			System.out.println("댓글 수정 완료!");
+		}
+	}
+	
+
+	@RequestMapping("recommentInsert.do")
+	@ResponseBody
+	public String recommentInsert(HttpSession session, int postNo, String postType, int cmntNo, String recommCont) {
+		System.out.println(postNo + postType + cmntNo + recommCont);
+
+		ReComments recmnt = new ReComments();
+
+		recmnt.setPostType(postType);
+		recmnt.setPostNo(postNo);
+		recmnt.setCmntNo(cmntNo);
+		
+		// 대댓글 불러오기
+		ArrayList<ReComments> reCmnts = ts.checkReComments(recmnt);
+		
+		int recommlLastNo = 0;
+
+		if(reCmnts.size() > 0) {
+			ReComments commLastLine = reCmnts.get(reCmnts.size() - 1);
+			recommlLastNo = commLastLine.getRcmntNo();
+		}
+		recmnt.setRcmntNo(recommlLastNo + 1);
+		recmnt.setRcmntContents(recommCont);
+		
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
+		
+		String userNickname = mb.getNickname();
+		
+		recmnt.setRcmntWirter(userNickname);
+		
+		int result = 0;
+		result = ts.insertReComment(recmnt);
+
+		if(result > 0) {
+			System.out.println("insert success");
+			return "success";
+		}else {
+			System.out.println("insert error");
+			return "error";
+		}
+	}
+	
+
+	@RequestMapping("recommModify.do")
+	@ResponseBody
+	public void recommModify(int postNo, String postType, int cmntNo, String recommCont, int recmntNo) {
+		//System.out.println(postNo + postType + cmntNo + commCont);
+		
+		ReComments recmnt = new ReComments();
+		
+		recmnt.setPostType(postType);
+		recmnt.setPostNo(postNo);
+		recmnt.setCmntNo(cmntNo);
+		recmnt.setRcmntNo(recmntNo);
+		recmnt.setRcmntContents(recommCont);
+		
+		int result = ts.recommentModify(recmnt);
+		
+		if(result > 0) {
+			System.out.println("답글 수정 완료!");
+		}
+	}
+	
+	
 }

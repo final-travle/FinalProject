@@ -20,9 +20,6 @@
 	
 	.btns a { display:inline-block; }
 	
-	.reviewContents {  border-top:1px solid #ddd; box-sizing:border-box; line-height:1.8; margin-bottom:30px; }
-	.reviewContents img { margin:10px 0; max-width: 1200px; }
-	.reviewContents .rvTitle { font-size:26px; background:#bd9dec; color:#fff; text-align:center; padding:10px 0; margin-bottom:30px; }
 </style>
 </head>
 <body>
@@ -31,8 +28,10 @@
         <div class="titleSec" style="background:url('${board.thumbnail }' )no-repeat 0 20%;  background-size:cover;">
             <p class="planTitle">${board.title }</p>
             <p class="ltSec">
-                <span class="likes"></span>
-                <span class="voting"><i class="xi-star-o"></i> ${mapList.voteTotal}</span>
+                <span class="likes">
+                </span>
+                <span class="voting">
+                </span>
             </p>
             <div class="cover"></div>
         </div>
@@ -60,26 +59,16 @@
             <div class="rightBox">
 				<div id="map"></div>
             	<c:if test="${loginUser.id eq board.userId}">
-					<c:url var="reviewModifyForm" value="reviewModifyForm.do">
+					<c:url var="planModifyForm" value="planModifyForm.do">
 						<c:param name="postNo" value="${board.postNo }"/>
 					</c:url>
 				<div class="btns">
-					<a href="${reviewModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
 					<a href="#none" class="btn delete">삭제</a>
 				</div>
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
-        <!-- review contents area -->
-        <div class="reviewContents">
-	        <div class="rvTitle">
-	     	   ${board.title }
-	        </div>
-	        <div id="content">
-	        	${board.postContents }
-	        </div>
-        </div>        
-        <!-- // review contents area end -->
          <div class="commentSec">
              <p class="commCount"></p>
              <table>
@@ -93,284 +82,82 @@
          </div><!-- // commentSec end -->
     </div><!-- // container end -->
 <script>
-
-postType = ${board.postType };
-postNo = ${board.postNo };
-
-console.log(postType);
-
-$(document).on("ready", function(){
-	commView();
-});
-
-$(".commInsert p.btn").on("click", function(){
-	var commCont = $(".commInsert textarea").val();
-	
-	$.ajax({
-		url : "commInsert.do",
-		data : { "postType" : postType, "postNo" : postNo, "commCont" : commCont},
-		success : function(data){
-			if(data == "success"){
-				$(".commInsert textarea").val("");
-				commView();
-			}
-		},
-		error : function(request, status, errorData){
-			alert("error code: " + request.status + "\n"
-                      +"message: " + request.responseText
-                      +"error: " + errorData);
-		}
+	$(document).on("ready", function(){
+		commView();
 	});
-});
-
-// 리뷰 리스트
-function commView(){
-	$.ajax({
-		url : "commView.do",
-		data: { "postType" : postType, "postNo" : postNo },
-		dataType : "json",
-		success : function(data){
-			console.log(data[0]);
-			console.log(data[1]);
-			
-			$(".commCount").text("COMMENTS (" + (data[0].length + data[1].length) + ")");
-
-			$(".commentSec table").html("");
-			var $commTable = $(".commentSec table");
-			
-			if(data[0].length > 0){
-				for(var i in data[0]){
-					
-					var $commtr = $("<tr class='comm'>");
-					var $usertd = $("<td>");
-					var $userRound = $("<div class='userRound'>");
-					var $commp = $("<p>");
-					var $commConttd = $("<td>");
-					var $commdatetd = $("<td>");
-					
-					var $reCommTable = $("<table>");
-					
-					$commp.append(data[0][i].cmntWirter);
-					$userRound.append($commp);
-					$usertd.append($userRound);
-					
-					$commConttd.append(data[0][i].cmntContents);
-					
-					var nickname = data[0][i].cmntWirter;
-					
-					if("${loginUser.nickname }" == nickname){
-					var $commModify = $("<span class='commModify'>").text("수정");
-					$commConttd.append($commModify);
-						
-					}
-
-					
-	                <c:if test="${!empty sessionScope.loginUser}">
-					var $reCommt = $("<span class='reCommt'>").text("답글");
-					$commConttd.append($reCommt);
-					</c:if>
-					
-					$commdatetd.append(data[0][i].cmntDate);
-
-					$commtr.attr("id", data[0][i].cmntNo);
-					
-					$commtr.append($usertd);
-					$commtr.append($commConttd);
-					$commtr.append($commdatetd);
-					
-					
-					var $retr = $("<tr>");
-					var $retd = $("<td colspan='3'>");
-					
-					for(var j in data[1]){
-						if(data[1][j].cmntNo == data[0][i].cmntNo){
-							
-							var $recommtr = $("<tr class='reComm'>");
-							var $reusertd = $("<td>");
-							var $reuserRound = $("<div class='userRound'>");
-							var $recommp = $("<p>");
-							var $recommConttd = $("<td>");
-							var $recommdatetd = $("<td>");
-							
-							$recommp.append(data[1][j].rcmntWirter);
-							$reuserRound.append($recommp);
-							$reusertd.append($reuserRound);
-							
-
-							$recommConttd.append(data[1][j].rcmntContents);
-
-
-							var nickname = data[1][j].rcmntWirter;
-							
-							if("${loginUser.nickname }" == nickname){
-							var $recommModify = $("<span class='recommModify'>").text("수정");
-							$recommConttd.append($recommModify);
-							}
-							
-							$recommdatetd.append(data[1][j].rcmntDate);
-							
-
-							$recommtr.attr("id", data[1][j].rcmntNo);
-							
-							$recommtr.append($reusertd);
-							$recommtr.append($recommConttd);
-							$recommtr.append($recommdatetd);
-							
-							
-							
-							//$commTable.append($recommtr);
-							$reCommTable.append($recommtr);
-							$retd.append($reCommTable);
-							$retr.append($retd);
-							
-						}
-
-					}
-					$commTable.append($commtr);
-					$commTable.append($retr);
+	$(".commInsert p.btn").on("click", function(){
+		var commCont = $(".commInsert textarea").val();
+		
+		$.ajax({
+			url : "commInsert.do",
+			data : { "postType" : postType, "postNo" : postNo, "commCont" : commCont},
+			success : function(data){
+				if(data == "success"){
+					$(".commInsert textarea").val("");
+					commView();
 				}
-			}else{
-				var $commtr = $("<tr>");
-				var $commtd = $("<td style='text-align:center; padding:20px 0'>").html("아직 댓글이 없어요 &nbsp; :<");
-				
-				$commtr.append($commtd);
-				$commTable.append($commtr);
-				
-				
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
 			}
-		},
-		error : function(request, status, errorData){
-			alert("error code: " + request.status + "\n"
-                      +"message: " + request.responseText
-                      +"error: " + errorData);
-		}
+		});
 	});
-}
 
-// 코멘트 수정 버튼 생성
-$(document).on("click", ".comm .commModify", function(){
-	var commCont = $(this).parent().text().replace("수정", "").replace("답글", "");
-			
-	var cmntBtn = $("<span class='cmntBtn'>").text("댓글 수정");
-	
-	var $insertTdArea = $("<textarea class='insertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(commCont);
-	
-	
-	var $thistr = $(this).closest("tr");
+	function commView(){
+		$.ajax({
+			url : "commView.do",
+			data: { "postType" : postType, "postNo" : postNo },
+			success : function(data){
+				$(".commCount").text("COMMENTS ( 0 )");
 
-	$thistr.children("td").eq(1).html($insertTdArea).append(cmntBtn);
-});
+				$(".commentSec table").html("");
+				var $commTable = $(".commentSec table");
+				
+				<c:forEach var="comm" items="${cmnts }">
 
-// 코멘트 수정
-$(document).on("click", ".comm .cmntBtn", function(){
-	var commCont = $(this).prev(".insertarea").val();
+				console.log("실행됨");
+						var $commtr = $("<tr class='comm'>");
+						var $usertd = $("<td>");
+						var $userRound = $("<div class='userRound'>");
+						var $commp = $("<p>");
+						var $commConttd = $("<td>");
+						var $commdatetd = $("<td>");
+						
+						$commp.append("${comm.cmntWirter }");
+						$userRound.append($commp);
+						$usertd.append($userRound);
+						
+						$commConttd.append("${comm.cmntContents }");
 
-	var cmntNo = $(this).closest("tr").attr("id");
-	
-	$.ajax({
-		url : "commModify.do",
-		data: { "postType" : postType, "postNo" : postNo, "commCont" : commCont, "cmntNo" : cmntNo },
-		success : function(data){
-			commView();
-		},
-		error : function(request, status, errorData){
-			alert("error code: " + request.status + "\n"
-                      +"message: " + request.responseText
-                      +"error: " + errorData);
-		}
-	});
-});
+						$commdatetd.append(" ${comm.cmntDate }");
+						
+						$commtr.append($usertd);
+						$commtr.append($commConttd);
+						$commtr.append($commdatetd);
+						
+						$commTable.append($commtr);
 
-
-// 리코멘트 답글 버튼 생성
-$(document).on("click", ".comm .reCommt", function(){
-	var $recommArea = $("<textarea class='recommArea'>").css({"width": "90%", "height" : "50px", "resize" : "none"});
-	var $recommtr = $("<tr class='recommtr'>");
-	var $recommtd = $("<td colspan='2'>").css("text-align", "center");
-
-	var $recmntBtn = $("<span class='recmntBtn'>").text("답글 달기");
-	var $trcmnttd = $("<td>").css("vertical-align", "middle");
-	
-	var $thistr = $(this).closest("tr");
-	
-	
-	$recommtd.append($recommArea);
-	$trcmnttd.append($recmntBtn);
-	$recommtr.append($recommtd);
-	$recommtr.append($trcmnttd);
-	$thistr.after($recommtr);
-	
-});
-
-// 리코멘트 인서트
-$(document).on("click", ".recommtr .recmntBtn", function(){
-	var recommCont = $(this).parent("td").prev("td").children(".recommArea").val();
-	var cmntNo = $(this).closest(".recommtr").prev(".comm").attr("id");
-	
-	$.ajax({
-		url : "recommentInsert.do",
-		data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo },
-		success : function(data){
-			if(data == "success"){
-				commView();
+	             </c:forEach>
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
 			}
-		},
-		error : function(request, status, errorData){
-			alert("error code: " + request.status + "\n"
-                      +"message: " + request.responseText
-                      +"error: " + errorData);
-		}
-	});
-});
-
-// 리코멘트 수정 버튼 생성
-$(document).on("click", ".reComm .recommModify", function(){
-	var recommCont = $(this).parent().text().replace("수정", "");
-	var recmntBtn = $("<span class='recmntBtn'>").text("답글 수정");
-	
-	var $reinsertTdArea = $("<textarea class='reinsertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(recommCont);
-	
-
-	var $thistr = $(this).closest("tr");
-
-	$thistr.children("td").eq(1).html($reinsertTdArea).append(recmntBtn);
-});
-
-// 리코멘트 수정
-$(document).on("click", ".reComm .recmntBtn", function(){
-	var recommCont = $(this).prev(".reinsertarea").val();
-
-	var recmntNo = $(this).closest("tr").attr("id");
-	
-	var cmntNo = $(this).closest("tr").parents("tr").prev().attr("id");
-
-	console.log(recmntNo);
-	console.log(cmntNo);
+		});
+	}
 	
 	
-	$.ajax({
-		url : "recommModify.do",
-		data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo, "recmntNo" : recmntNo},
-		success : function(data){
-			commView();
-		},
-		error : function(request, status, errorData){
-			alert("error code: " + request.status + "\n"
-                      +"message: " + request.responseText
-                      +"error: " + errorData);
-		}
-	});
-});
-
-
 
 	$(".btns .delete").on("click", function(){
 		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
 		if(result){
-			<c:url var="reviewDelete" value="reviewDelete.do">
+			<c:url var="planDelete" value="planDelete.do">
 				<c:param name="postNo" value="${board.postNo }"/>
 			</c:url>
-			location.href="${reviewDelete }";
+			location.href="${planDelete }";
 		    alert("삭제되었습니다.");
 		}else{
 		    
@@ -385,7 +172,7 @@ $(document).on("click", ".reComm .recmntBtn", function(){
 	voteCount = ${mapList.voteTotal};
 	
 	postType = ${board.postType };
-
+	
 	$(document).on("ready", function(){
 
 		var $lspan = $("<span>");
