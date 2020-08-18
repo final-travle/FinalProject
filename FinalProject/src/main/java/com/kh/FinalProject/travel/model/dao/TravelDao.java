@@ -164,6 +164,10 @@ public class TravelDao {
 		return sqlSessionTemplate.insert("travelMapper.insertComment", cmnt);
 	}
 
+	public int commentModify(Comments cmnt) {
+		return sqlSessionTemplate.update("travelMapper.commentModify", cmnt);
+	}
+
 
 
 }

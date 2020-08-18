@@ -86,5 +86,7 @@ public interface TravelService {
 
 	int insertComment(Comments cmnt);
 
+	int commentModify(Comments cmnt);
+
 
 }

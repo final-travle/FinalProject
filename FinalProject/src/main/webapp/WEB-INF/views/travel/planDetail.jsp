@@ -20,6 +20,8 @@
 	
 	.btns a { display:inline-block; }
 	
+	.commModify { display:inline-block; margin-left:20px; color:#888; cursor:pointer; }
+	.cmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
 </style>
 </head>
 <body>
@@ -85,6 +87,7 @@
 	$(document).on("ready", function(){
 		commView();
 	});
+	
 	$(".commInsert p.btn").on("click", function(){
 		var commCont = $(".commInsert textarea").val();
 		
@@ -104,7 +107,9 @@
 			}
 		});
 	});
-
+	
+	
+	// 리뷰 리스트
 	function commView(){
 		$.ajax({
 			url : "commView.do",
@@ -129,13 +134,18 @@
 						var $commConttd = $("<td>");
 						var $commdatetd = $("<td>");
 						
+						
+						var $commModify = $("<span class='commModify'>").text("수정");
+						
 						$commp.append(data[0][i].cmntWirter);
 						$userRound.append($commp);
 						$usertd.append($userRound);
 						
-						$commConttd.append(data[0][i].cmntContents);
+						$commConttd.append(data[0][i].cmntContents).append($commModify);
 
 						$commdatetd.append(data[0][i].cmntDate);
+
+						$commtr.attr("id", data[0][i].cmntNo);
 						
 						$commtr.append($usertd);
 						$commtr.append($commConttd);
@@ -171,6 +181,14 @@
 							}
 						}
 					}
+				}else{
+					var $commtr = $("<tr>");
+					var $commtd = $("<td style='text-align:center; padding:20px 0'>").html("아직 댓글이 없어요 &nbsp; :<");
+					
+					$commtr.append($commtd);
+					$commTable.append($commtr);
+					
+					
 				}
 			},
 			error : function(request, status, errorData){
@@ -194,6 +212,38 @@
 		}else{
 		    
 		}
+	});
+	
+	$(document).on("click", ".comm .commModify", function(){
+		var commCont = $(this).parent().text().replace("수정", "");
+				
+		var cmntBtn = $("<span class='cmntBtn'>").text("댓글 수정");
+		
+		var $insertTdArea = $("<textarea class='insertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(commCont);
+		
+		
+		var $thistr = $(this).closest("tr");
+
+		$thistr.children("td").eq(1).html($insertTdArea).append(cmntBtn);
+	});
+	
+	$(document).on("click", ".comm .cmntBtn", function(){
+		var commCont = $(this).prev(".insertarea").val();
+
+		var cmntNo = $(this).closest("tr").attr("id");
+		
+		$.ajax({
+			url : "commModify.do",
+			data: { "postType" : postType, "postNo" : postNo, "commCont" : commCont, "cmntNo" : cmntNo },
+			success : function(data){
+				commView();
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
 	});
 
 	userId = "${loginUser.id}";

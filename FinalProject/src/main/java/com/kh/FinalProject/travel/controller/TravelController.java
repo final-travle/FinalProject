@@ -1151,4 +1151,24 @@ public class TravelController {
 //		return mv;
 		
 	}
+	
+	@RequestMapping("commModify.do")
+	@ResponseBody
+	public void commModify(int postNo, String postType, int cmntNo, String commCont) {
+		//System.out.println(postNo + postType + cmntNo + commCont);
+		
+		Comments cmnt = new Comments();
+		
+		cmnt.setPostType(postType);
+		cmnt.setPostNo(postNo);
+		cmnt.setCmntNo(cmntNo);
+		cmnt.setCmntContents(commCont);
+		
+		int result = ts.commentModify(cmnt);
+		
+		if(result > 0) {
+			System.out.println("글 수정 완료!");
+		}
+	}
+	
 }

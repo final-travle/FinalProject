@@ -397,6 +397,13 @@
 		)
 	</insert>
 	
+	<update id="commentModify" parameterType="Comments">
+		UPDATE COMMENTS
+		SET CMNT_CONTENTS = #{cmntContents}
+		WHERE POST_TYPE = #{postType}
+		AND POST_NO = #{postNo}
+		AND CMNT_NO = #{cmntNo}
+	</update>
 	
 </mapper>
 	
