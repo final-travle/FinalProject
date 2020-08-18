@@ -27,6 +27,13 @@
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Vote" alias="Vote"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.Comments" alias="Comments"/>
 		<typeAlias type="com.kh.FinalProject.travel.model.vo.ReComments" alias="ReComments"/>
+		
+		<typeAlias type="com.kh.FinalProject.search.model.vo.PostTag" alias="Search"/>
+		<typeAlias type="com.kh.FinalProject.search.model.vo.Tag" alias="Tagg"/>
+		<typeAlias type="com.kh.FinalProject.search.model.vo.Choice" alias="Choice"/>
+		<typeAlias type="com.kh.FinalProject.search.model.vo.Board" alias="Boardd"/>
+		
+		<typeAlias type="com.kh.FinalProject.notice.model.vo.Notice" alias="Notice"/>
 	</typeAliases>
 	
 	<mappers>
@@ -35,5 +42,7 @@
 		<mapper resource="/mappers/chat-mapper.xml"/>
 		<mapper resource="/mappers/travel-mapper.xml"/>
 		<mapper resource="/mappers/review-mapper.xml"/>
+		<mapper resource="/mappers/search-mapper.xml"/>
+		<mapper resource="/mappers/notice-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -886,8 +886,13 @@ textarea:focus{
 					</p>
 				</div>
 				<div>
-					<p id="ReadYNCount${onetooneList.co_no }">
-						${onetooneList.count }
+					<p id="ReadYNCount${onetooneList.co_no }" style="color:red;font-weight:800;">
+						<c:if test="${onetooneList.count eq 0 }">
+							
+						</c:if>
+						<c:if test="${onetooneList.count ne 0 }">
+							${onetooneList.count }
+						</c:if>
 					</p>
 				</div>
 			
@@ -912,6 +917,7 @@ textarea:focus{
 		var co_no = null;
 		var message = null;
 		var friendid = null;
+		var count = null;
 		
 		var myid = $("#id2").val();
 		
@@ -926,20 +932,17 @@ textarea:focus{
 		co_no = strArray[0];
 		friendid = strArray[1];
 		message = strArray[2];
+		count = strArray[3];
 		
 		console.log("co_no = " + co_no);
 		console.log("friendid = " + friendid);
 		console.log("message = " + message);
+		console.log("count = " + count);
 		console.log("myid = " + myid);
 		
-		var ReadYNCount = $("#ReadYNCount"+co_no).val();
-		console.log("count = " + ReadYNCount);
-		
-		if(myid != friendid){
-			
-		}
 		
 		
+			$("#ReadYNCount"+co_no).text(count);
 			$("#Message_Content"+co_no).text(message);
 		
 		

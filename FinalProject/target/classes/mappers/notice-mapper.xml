@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+			
+	<resultMap id="noticeResultSet" type="Notice">
+		<id property="postType" column="POST_TYPE"/>
+		<result property="postNo" column="POST_NO"/>
+		<result property="thumbnail" column="THUMBNAIL"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="title" column="TITLE"/>
+		<result property="postContents" column="POST_CONTENTS"/>
+		<result property="hits" column="HITS"/>
+		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="postDelYn" column="POST_DEL_YN"/>
+		<result property="fileName" column="FILE_NAME"/>
+		
+	</resultMap>	
+	
+	<select id="listCount" resultType="int">
+			SELECT COUNT(*)
+			FROM POST 
+			WHERE POST_TYPE='1'
+	</select>
+	
+	<select id="selectList" resultMap="noticeResultSet">
+			SELECT *
+			FROM POST
+			WHERE POST_TYPE='1'
+			ORDER BY POST_NO DESC
+	</select>
+	
+	
+	
+	<insert id="insertNotice" parameterType="Notice">
+			INSERT INTO POST(POST_TYPE, POST_NO, USER_ID, TITLE, POST_CONTENTS, HITS, WRITE_DATE, POST_DEL_YN, FILE_NAME)
+			VALUES('1'
+				   , SEQ_NO.NEXTVAL
+				   , #{userId}
+				   , #{title}
+				   , #{postContents}
+				   , #{hits}
+				   , SYSDATE
+				   , 'N'
+				   , #{fileName}
+				   )			
+	</insert>
+	
+	<update id="updateCount" parameterType="_int">
+		UPDATE POST
+		SET HITS = HITS + 1
+		WHERE POST_TYPE='1'
+			AND POST_NO=#{postNo}
+	</update>
+	
+	<select id="selectOne" parameterType="_int" resultMap="noticeResultSet">
+		SELECT * 
+		FROM POST
+		WHERE POST_TYPE='1'
+			AND POST_NO=#{postNo}
+				AND POST_DEL_YN='N'
+	</select>
+	
+	<update id="updateNotice">
+		UPDATE POST
+		SET TITLE = #{title}
+		  ,POST_CONTENTS = #{postContents}
+		  ,FILE_NAME = #{fileName}
+		WHERE POST_TYPE='1'
+			AND POST_NO=#{postNo}  
+	</update>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		DELETE
+		FROM POST 
+		WHERE POST_TYPE='1'
+			AND POST_NO=#{postNo}
+	</delete>
+	
+
+	<select id ="searchList" parameterType="string" resultType="arraylist" resultMap="noticeResultSet">
+			SELECT *
+			FROM POST 
+			WHERE TITLE LIKE '%' ||#{keyword}|| '%'
+					AND POST_TYPE='1'
+				ORDER BY POST_NO DESC	
+			
+	</select>
+
+</mapper>

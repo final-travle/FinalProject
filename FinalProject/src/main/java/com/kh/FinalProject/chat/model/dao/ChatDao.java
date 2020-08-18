@@ -141,4 +141,9 @@ public class ChatDao {
 		return sqlSessionTemplate.insert("chatmapper.insertOpenchatSendImage",dbmap);
 	}
 
+	public int ReadYnCount(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("chatmapper.ReadYnCount",dbmap);
+	}
+
 }

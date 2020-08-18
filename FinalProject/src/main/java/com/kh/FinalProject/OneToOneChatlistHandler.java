@@ -77,14 +77,18 @@ public class OneToOneChatlistHandler extends TextWebSocketHandler {
             
             
             //이거 왜넣었을까?
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("co_no", mapReceive.get("co_no"));
-            map.put("session", session);
+            HashMap<String, Object> dbmap = new HashMap<String, Object>();
+            dbmap.put("co_no", mapReceive.get("co_no"));
+            dbmap.put("loginUserid", loginUserid);
             
            
-            System.out.println("방번호 : " + mapReceive.get("co_no"));
+            System.out.println("방번호오ㅗㅇ : " + mapReceive.get("co_no"));
+            System.out.println("친구 아이디이ㅣㅣㅇ : " + mapReceive.get("friendid"));
             //메세지 뿌려주기
             System.out.println("sessionList 확인..123.:" + sessionList);
+            
+            int count = cService.ReadYnCount(dbmap);
+                        System.out.println("안읽은 메시지 갯수 ==== " + count);
          
                      for(int i=0;i<sessionList.size();i++) {
                         Map<String, Object> mapSessionList = sessionList.get(i);
@@ -94,10 +98,9 @@ public class OneToOneChatlistHandler extends TextWebSocketHandler {
                         System.out.println("loginUser : " + loginUser);
                         System.out.println("friendid : " +friendid);
                         
-                                 
                            WebSocketSession sess = (WebSocketSession)mapSessionList.get("session");
                            
-                           String jsonstr = mapReceive.get("co_no") + "|" + mapReceive.get("friendid") +"|" + mapReceive.get("msg");
+                           String jsonstr = mapReceive.get("co_no") + "|" + mapReceive.get("friendid") +"|" + mapReceive.get("msg") + "|" + count;
                            System.out.println("보내기전 확인 : " +jsonstr);
                            sess.sendMessage(new TextMessage(jsonstr));
 
