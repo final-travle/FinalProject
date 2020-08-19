@@ -100,7 +100,7 @@ public class MemberController  {
 		System.out.println(loginUser);
 		if(loginUser != null) {
 			model.addAttribute("loginUser",loginUser);
-			return "home";
+			return "redirect:index.jsp";
 		}else {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -415,7 +415,7 @@ public class MemberController  {
 				if(result > 0) {
 					model.addAttribute("result",result);
 					model.addAttribute("fCount",fCount);
-					return "home";
+					return "redirect:index.jsp";
 				}else {
 					model.addAttribute("member",mb);
 					model.addAttribute("fCount",fCount);
@@ -457,7 +457,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}
 	   
 	    
