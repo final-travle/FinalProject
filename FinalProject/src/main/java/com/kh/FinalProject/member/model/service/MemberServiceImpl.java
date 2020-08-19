@@ -457,6 +457,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public int sCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.sCount(id);
+	}
+
+
 	
 
 	}

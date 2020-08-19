@@ -54,7 +54,10 @@ public class PostSharedController {
 			}
 			
 			Member mb = (Member) session.getAttribute("loginUser");
-			 int postCount = mService.pCount(mb.getId());
+			int sharedCount = mService.sCount(mb.getId());
+			mv.addObject("sCount",sharedCount);
+			
+			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
 			mv.addObject("fCount",fCount);
 			mv.addObject("pCount",postCount);
@@ -87,7 +90,11 @@ public class PostSharedController {
 		public ModelAndView reviewListView2(HttpSession session,ModelAndView mv,Integer postNo ,@RequestParam(value="page", required=false) Integer page) {
 			rs.reviewDelete(postNo);
 			Member mb = (Member) session.getAttribute("loginUser");
-			 pService.planDelete(mb.getId(),postNo);
+			 
+			pService.planDelete(mb.getId(),postNo);
+			int sharedCount = mService.sCount(mb.getId());
+			mv.addObject("sCount",sharedCount);
+			
 			int currentPage = 1;
 			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
@@ -124,7 +131,10 @@ public class PostSharedController {
 			mService.deleteShar(postNo);
 			Member mb = (Member) session.getAttribute("loginUser");
 			 pService.planDelete(mb.getId(),postNo);
-			int currentPage = 1;
+			 int sharedCount = mService.sCount(mb.getId());
+				mv.addObject("sCount",sharedCount);
+				
+			 int currentPage = 1;
 			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
 			mv.addObject("fCount",fCount);
@@ -161,7 +171,10 @@ public class PostSharedController {
 			
 			Member mb = (Member) session.getAttribute("loginUser");
 			 pService.planDelete(mb.getId(),postNo);
-			int currentPage = 1;
+			 int sharedCount = mService.sCount(mb.getId());
+				mv.addObject("sCount",sharedCount);
+				
+			 int currentPage = 1;
 			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
 			mv.addObject("fCount",fCount);
@@ -199,6 +212,9 @@ public class PostSharedController {
 			if(page != null) {
 				currentPage = page;
 			}
+			int sharedCount = mService.sCount(mb.getId());
+			mv.addObject("sCount",sharedCount);
+			
 			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
 			mv.addObject("fCount",fCount);
@@ -238,6 +254,8 @@ public class PostSharedController {
 			
 			pService.memberSharedDelete(mb.getId(),postNo);
 			ArrayList<PostShared> psd = pService.selectShare(mb.getId());
+			int sharedCount = mService.sCount(mb.getId());
+			mv.addObject("sCount",sharedCount);
 					
 			int postCount = mService.pCount(mb.getId());
 			int fCount = mService.fCount(mb.getId());
@@ -275,7 +293,11 @@ public class PostSharedController {
 				
 				
 				Member mb = (Member) session.getAttribute("loginUser");
-				 pService.planDelete(mb.getId(),postNo);
+				 
+				pService.planDelete(mb.getId(),postNo);
+				int sharedCount = mService.sCount(mb.getId());
+				mv.addObject("sCount",sharedCount);
+				
 				 int postCount = mService.pCount(mb.getId());
 					int fCount = mService.fCount(mb.getId());
 					mv.addObject("fCount",fCount);
@@ -316,6 +338,9 @@ public class PostSharedController {
 		if(page != null) {
 			currentPage = page;
 		}
+		int sharedCount = mService.sCount(mb.getId());
+		mv.addObject("sCount",sharedCount);
+		
 		int postCount = mService.pCount(mb.getId());
 		int fCount = mService.fCount(mb.getId());
 		mv.addObject("fCount",fCount);
@@ -351,6 +376,9 @@ public class PostSharedController {
 		Member mb = (Member) session.getAttribute("loginUser");
 		int postCount = mService.pCount(mb.getId());
 		int fCount = mService.fCount(mb.getId());
+		int sharedCount = mService.sCount(mb.getId());
+		mv.addObject("sCount",sharedCount);
+		
 		mv.addObject("fCount",fCount);
 		mv.addObject("pCount",postCount);
 		ArrayList<PostShared> psd = pService.selectShare(mb.getId());
@@ -389,6 +417,9 @@ public class PostSharedController {
 		System.out.println(ps);
 		pService.deleteShared(ps);		
 		Member m = (Member) session.getAttribute("loginUser");
+		int sharedCount = mService.sCount(m.getId());
+		mv.addObject("sCount",sharedCount);
+		
 		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 		ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 		ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
@@ -439,6 +470,8 @@ public class PostSharedController {
 		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 		ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 		ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
+		int sharedCount = mService.sCount(m.getId());
+		mv.addObject("sCount",sharedCount);
 		
 		
 		for(int i=0;i<fal.size();i++) {
@@ -486,6 +519,8 @@ public class PostSharedController {
 		mv.addObject("fCount",fCount);
 		mv.addObject("pCount",postCount);
 		int num = pService.SharedInsert(m.getId(),id,postNo,postType);
+		int sharedCount = mService.sCount(m.getId());
+		mv.addObject("sCount",sharedCount);
 		
 		if(num>0) {
 

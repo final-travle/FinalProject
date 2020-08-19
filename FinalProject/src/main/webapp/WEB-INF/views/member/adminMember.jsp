@@ -173,6 +173,10 @@ text-align: center;
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
 	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
 	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>

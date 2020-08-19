@@ -123,11 +123,12 @@ text-align: center;
 <div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
-글 수 <span style="color: orange;"> ${pCount}</span>개</h2>
+글 수 <span style="color: orange;"> ${pCount}</span>개<br>
+공유 글 수 <span style="color: orange;"> ${sCount} </span>개 </h2>
 <h1 style="text-align: center; font-style : oblique;">ACCEPT FRIENDS</h1>
 <hr>
 </div>
-   <br><br><br>
+   <br><br><br><br><br>
    <div id="mySidenav">
    <button id="menubutton"><i class="xi-angle-down"></i></button>
 <div class="menuSide">
@@ -141,6 +142,10 @@ text-align: center;
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
 	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
 	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>

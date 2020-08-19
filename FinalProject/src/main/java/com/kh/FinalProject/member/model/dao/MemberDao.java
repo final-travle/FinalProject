@@ -311,6 +311,11 @@ public class MemberDao {
 		sqlSessionTemplate.delete("memberMapper.deleteShar",postNo);
 	}
 
+	public int sCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.sCount",id);
+	}
+
 	
 	
 	

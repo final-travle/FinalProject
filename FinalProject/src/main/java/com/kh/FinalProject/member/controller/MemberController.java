@@ -386,6 +386,9 @@ public class MemberController  {
 			Member loginUser = mService.loginMember(mb);
 			int fCount = mService.fCount(mb.getId());
 			int postCount = mService.pCount(mb.getId());
+			int sharedCount = mService.sCount(mb.getId());
+			model.addAttribute("sCount",sharedCount);
+			
 			if(loginUser != null) {
 				model.addAttribute("member",loginUser);
 				model.addAttribute("fCount",fCount);
@@ -393,6 +396,9 @@ public class MemberController  {
 				return "member/mypageChange";
 			}else {
 				model.addAttribute("member",mb);
+				model.addAttribute("member",loginUser);
+				model.addAttribute("fCount",fCount);
+				model.addAttribute("pCount",postCount);
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('정보를 확인해주세요.'); </script>");
@@ -407,7 +413,13 @@ public class MemberController  {
 		public String mchange(Member m, Model model,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException {
 			Member mb = (Member) session.getAttribute("loginUser");// 여기해야됨
 			// 이제 서비스로 넘기자
+			
+			
 			int postCount = mService.pCount(mb.getId());
+			model.addAttribute("member",mb);
+			int sharedCount = mService.sCount(m.getId());
+			
+			model.addAttribute("pCount",postCount);
 			Ttype tp = new Ttype();
 			m.setBirth(request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"));
 			m.setId(mb.getId());
@@ -428,6 +440,7 @@ public class MemberController  {
 					return "home";
 				}else {
 					model.addAttribute("member",mb);
+					model.addAttribute("sCount",sharedCount);
 					model.addAttribute("fCount",fCount);
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
@@ -479,7 +492,11 @@ public class MemberController  {
 		
 
 			Member m = (Member) session.getAttribute("loginUser");
+			int sharedCount = mService.sCount(m.getId());
+			model.addObject("sCount",sharedCount);
+			
 			int postCount = mService.pCount(m.getId());
+			model.addObject("pCount",postCount);
 			String Search = noticeSearch;
 			if(Search != null ||Search!="") {
 				model.addObject("search", Search);	
@@ -559,6 +576,7 @@ public class MemberController  {
 				
 			}
 			
+			model.addObject("sCount",sharedCount);
 			model.addObject("pCount",postCount);
 				model.addObject("listCount",listCount);
 				model.addObject("fCount",fCount);
@@ -579,6 +597,9 @@ public class MemberController  {
 			Member m = (Member) session.getAttribute("loginUser");
 			int postCount = mService.pCount(m.getId());
 			int fCount = mService.fCount(m.getId());
+			int sharedCount = mService.sCount(m.getId());
+			model.addObject("sCount",sharedCount);
+			
 	    	String Search = noticeSearch;
 			if(Search != null || Search!="") {
 				model.addObject("search", Search);	
@@ -647,6 +668,9 @@ public class MemberController  {
     		public ModelAndView okfriends(ModelAndView model,HttpSession session,String id) throws IOException {
 					
 	        	Member m = (Member) session.getAttribute("loginUser");
+	        	int sharedCount = mService.sCount(m.getId());
+				model.addObject("sCount",sharedCount);
+				
 	        	int postCount = mService.pCount(m.getId());
 	        	int fCount = mService.fCount(m.getId());
 				ArrayList<Friends> fal = mService.friendsadd(id,m.getId());
@@ -683,6 +707,8 @@ public class MemberController  {
     		String Search=null;
     			Member m = (Member) session.getAttribute("loginUser");
     			int postCount = mService.pCount(m.getId());
+    			int sharedCount = mService.sCount(m.getId());
+    			model.addObject("sCount",sharedCount);
     			
     			int listCount = mService.getListCount(Search,m.getId());
 	        	System.out.println(id);
@@ -723,6 +749,9 @@ public class MemberController  {
     		public ModelAndView dltaccfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
     		
     			Member m = (Member) session.getAttribute("loginUser");
+    			int sharedCount = mService.sCount(m.getId());
+    			model.addObject("sCount",sharedCount);
+    			
     			int postCount = mService.pCount(m.getId());
     			int fCount = mService.fCount(m.getId());
 				int fal = mService.dltfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
@@ -756,6 +785,11 @@ public class MemberController  {
 						model.addObject("fCount",fCount);
 						return "logout.do";
 					}else {
+		    			response.setContentType("text/html; charset=UTF-8");
+						PrintWriter out = response.getWriter();
+						out.println("<script>alert('정보를 확인해주세요.'); </script>");
+						out.flush();
+
 						model.addObject("fCount",fCount);
 						return "mypageDelete.do";
 					}
@@ -766,7 +800,11 @@ public class MemberController  {
 	    		
 	            	Member m = (Member) session.getAttribute("loginUser");
 	    			int fCount = mService.fCount(m.getId());
-	    			
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+
+					int postCount = mService.pCount(m.getId());
+					model.addObject("pCount",postCount);
 	    				
 	    				model.addObject("fCount",fCount);
 	    				model.setViewName("/member/mypageDelete");
@@ -780,6 +818,9 @@ public class MemberController  {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int postCount = mService.pCount(m.getId());
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+	    			
 					int fal = mService.refusefriends(m.getId(),deleteid); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
 					ArrayList<Friends> fall = mService.friendsadd(deleteid,m.getId());
 					int fCount = mService.fCount(m.getId());
@@ -801,7 +842,10 @@ public class MemberController  {
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int postCount = mService.pCount(m.getId());
 	    			int fCount = mService.fCount(m.getId());
-	    	    	String Search = noticeSearch;
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+	    			
+	    			String Search = noticeSearch;
 	    			if(Search != null || Search!="") {
 	    				model.addObject("search", Search);	
 	    		    }
