@@ -48,7 +48,10 @@
        <h3 id="h3"> <c:out value="${result.name }님의 비밀번호는 ${result.pwd}입니다"/></h3>
     </div>
     <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button> <button class="colorBtn btn" id="searchId" onclick="location.href='searchId.do'">아이디찾기 </button>
+    
     </div>
+    <br>
+    <br>
    <jsp:include page="../common/footer.jsp" />
    
 </body>

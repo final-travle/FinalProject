@@ -50,6 +50,10 @@
     </div>
     <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button> <button id="searchPwd" class="colorBtn btn" onclick="location.href='searchPwd.do'">비밀번호찾기 </button>
     </div>
+    <br>
+    <br>
+    <br>
+    
     <jsp:include page="../common/footer.jsp" />
     
 </body>
