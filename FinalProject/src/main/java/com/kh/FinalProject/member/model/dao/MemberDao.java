@@ -38,9 +38,9 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.searchPwd",m);
 	}
 
-	public Member searchId(Member m) {
+	public ArrayList<Member> searchId(Member m) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("memberMapper.searchId",m);
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.searchId",m);
 	}
 
 	public int change(Member m) {

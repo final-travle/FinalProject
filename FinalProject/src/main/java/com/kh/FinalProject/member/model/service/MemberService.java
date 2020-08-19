@@ -16,7 +16,7 @@ public interface MemberService {
 
 	Member searchPwd(Member m);
 
-	Member searchId(Member m);
+	ArrayList<Member> searchId(Member m);
 
 	int change(Member m, Member mb);
 

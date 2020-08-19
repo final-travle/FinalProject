@@ -361,7 +361,7 @@ public class MemberController  {
 		
 		
 		// 이제 서비스로 넘기자
-		Member result = mService.searchId(m);
+			ArrayList<Member> result = mService.searchId(m);
 		
 			if(result != null) {
 				model.addAttribute("result",result);

@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public Member searchId(Member m) {
+	public ArrayList<Member> searchId(Member m) {
 		// TODO Auto-generated method stub
 		return mDao.searchId(m);
 	}
