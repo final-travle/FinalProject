@@ -22,7 +22,7 @@
    <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
     <div id="headWrap">
         <header id="header" class="cb">
-            <h1 class="logo"><a href="home.do"><img src="<c:url value="/resources/images/logo.png" />"></a></h1>
+            <h1 class="logo"><a href="${contextPath}/index.jsp"><img src="<c:url value="/resources/images/logo.png" />"></a></h1>
             <div class="logSection">
                 <!-- 로그인하지 않았을 때 -->
                 <div class="log-out cf">
@@ -50,7 +50,7 @@
         
         <nav id="nav">
             <ul class="topMenu cf">
-                <li><a href="home.do">홈</a></li>
+                <li><a href="${contextPath}/index.jsp">홈</a></li>
                 <li><a href="planList.do">플랜</a></li>
                 <li><a href="slist.do">탐색</a></li>
                 <li><a href="reviewListView.do">리뷰</a></li>
