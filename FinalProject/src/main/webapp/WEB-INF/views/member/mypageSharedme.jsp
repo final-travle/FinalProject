@@ -111,7 +111,7 @@ text-align: center;
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
 
@@ -122,6 +122,9 @@ text-align: center;
             
             <!-- plan -->
        <ul class="grid grid3 cf">
+       <c:if test="${empty list }">
+            <h1 style="text-align: center; font-style : oblique;" > 글이 없습니다.</h1>
+            </c:if>
 				<c:forEach var="pl" items="${list }">
 					<c:url var="planDetail" value="planDetail.do">
 						<c:param name="postNo" value="${pl.postNo }" />
@@ -154,52 +157,6 @@ text-align: center;
 	                </li>
                 </c:forEach>
                </ul>             
-
-            <div class="pagination">
-				<!-- [prev] -->
-				<c:if test="${pi.currentPage eq 1 }">
-					[prev] 
-				</c:if>
-				
-				<c:if test="${pi.currentPage gt 1 }">
-					<c:url var="blistBack" value="planList.do">
-						<c:param name="page" value="${pi.currentPage - 1 }" />
-					</c:url>
-					<a href="${blistBack }">[prev] </a>
-				</c:if>
-				
-				<!-- [pagination] -->
-				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-					<c:if test="${p eq pi.currentPage }">
-						<b>[${p }]</b>
-					</c:if>
-					
-					<c:if test="${p ne pi.currentPage }">
-						<c:url var="blistCheck" value="planList.do">
-							<c:param name="page" value="${p }"/>
-						</c:url>
-						<a href="${blistCheck }">${p }</a>
-					</c:if>
-				</c:forEach>
-				
-				
-				<!-- [next] -->
-				<c:if test="${pi.currentPage eq pi.maxPage }">
-					 [next]
-				</c:if>
-				
-				<c:if test="${pi.currentPage lt pi.maxPage }">
-					<c:url var="blistEnd" value="planList.do">
-						<c:param name="page" value="${pi.currentPage + 1 }" />
-					</c:url>
-					<a href="${blistEnd }"> [next]</a>
-				</c:if>	
- 
-            </div>
-            <!-- // plan -->
-
-        </div><!-- // content end -->
-    </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
 

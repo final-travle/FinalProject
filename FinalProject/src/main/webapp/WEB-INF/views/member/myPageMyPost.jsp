@@ -118,13 +118,15 @@ text-align: center;
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
 
     <div id="container" class="cf">
         <div id="content">
-            
+            <c:if test="${empty list }">
+            <h1 style="text-align: center; font-style : oblique;" > 글이 없습니다.</h1>
+            </c:if>
             <!-- plan -->
        <ul class="grid grid3 cf">
 				<c:forEach var="pl" items="${list }">
@@ -139,7 +141,6 @@ text-align: center;
 						<c:param name="postType" value="${pl.postType }" />
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
-					planModifyForm.do
 					
 					<c:url var="planModifyForm" value="planModifyForm2.do">
 						<c:param name="postNo" value="${pl.postNo }" />
