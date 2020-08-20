@@ -105,7 +105,7 @@ public class MemberController  {
 		System.out.println(loginUser);
 		if(loginUser != null) {
 			model.addAttribute("loginUser",loginUser);
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}else {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -487,7 +487,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}
 	    
 	    @RequestMapping(value="logout2.do", method=RequestMethod.GET)
