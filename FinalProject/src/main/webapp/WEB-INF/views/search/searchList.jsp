@@ -74,13 +74,16 @@
             <input type="radio" name="theNumber" value="자매끼리"/>자매끼리                        
             <input type="radio" name="theNumber" value="형제끼리"/>형제끼리 
         </div>
-         <br>
+
 	         
 	</div>
 
   </section>
-  
+  		<br>
   	<div id="search">
+  	
+  		<div id="content">
+						
             <ul class="grid grid3 cf">
 				<c:forEach var="pl" items="${list }">
 					<c:url var="planDetail" value="planDetail.do">
@@ -116,6 +119,7 @@
                 </c:forEach>
                </ul>   
            </div>
+        </div>   
       
       
            
@@ -162,15 +166,24 @@
 	</div>
 </div>	
 
+
+
+
+  
+
+
 <jsp:include page="../common/footer.jsp" />
 
 
 <script>
-   $("#searchTag input[type='radio']").on("change",function(){
-		
-		var city = $("input[name='city']:checked").val();
-		var month = $("input[name='month']:checked").val();
-		var theNumber = $("input[name='theNumber']:checked").val();
+  	 $("#searchTag input[type='radio']").on("change", function() {
+  		 
+  		 
+	    	var city = $("input[name='city']:checked").val();
+			var month = $("input[name='month']:checked").val();
+			var theNumber = $("input[name='theNumber']:checked").val();
+
+
 			console.log(city, month, theNumber);
 			
 		 $.ajax({
@@ -180,46 +193,70 @@
 			   dataType:"json",
 			   success:function(data){
 				   console.log(data);
-
+				   console.log(data[0]);
+				   console.log(data[1]);
 				   
 					$ul = $("#search ul");
 	    	 	    $ul.html(""); 
 
 					var $li;
-   					var $img;   
+  					var $img;   
 					var $title;
 					var $id;
-					    	 		  
-    	 	if(data.length > 0){	       	 		   	   
-				for(var i in data){
-						    	 		   
-	     	 		   $li = $("<li>");	    	 		   
-    	     	 	   $pimg = $("<p class='img'>");    	     	 	   
-    	     	 	   $img = $("<img>").attr("src", data[i].thumbnail);
-    	     	 	   $postNo = data[i].postNo;
-      				   $postType = data[i].postType; 
-    	     	 	   
+					var $cont;
+					var $contWrap = $("<p class='tagWrap'>");
+					    	 		  					
+   	 		if(data[0].length > 0){	       	 		   	   
+				for(var i in data[0]){
+						    	 		    
+	     	 	   $li = $("<li>");	    	 		   
+   	     	 	   $pimg = $("<p class='img'>");    	     	 	   
+   	     	 	   $img = $("<img>").attr("src", data[0][i].thumbnail);
+   	     	 	  
+   	     	 	    $postNo = data[0][i].postNo;
+     			    $postType = data[0][i].postType;
+     			   
+	    	 	   	$title = $("<p class='title'>").text(data[0][i].title); 	    	 	   
+	    	 	   	$id = $("<p class='id'>").text(data[0][i].userId);
+	    	 	   	
+		    	   
+	    	 	   			     			   
+    	 		   for(var j in data[1]){
+    	 			   
+    	 			   $tagName = data[1][j].tagName;
+    	 			   
+    	 			   
+    	 			   console.log($tagName);
+    	 			   
+    	 			   if(data[1][j].postNo == data[0][i].postNo){
+    	 				   
+    	 				$aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
+    	 				
+    	 				$cont = $("<span class='cont'>").text("#" + data[1][j].tagName + " ");
 
- 	$aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
-			
-					   
-    	     	 	   $aurl.append($img);
-    	     	 	   $pimg.append($aurl);
- 	    	 		   $title = $("<p class='title'>").text(data[i].title);
-	    	 		   $id = $("<p class='id'>").text(data[i].userId); 
- 
+    	 				
+    	   	     	 	   	$aurl.append($img);
+    	   	     	 	   	$pimg.append($aurl);
+	 		       	 		   
+    	   	     	 	   	$li.append($pimg);     
+    		    	 		$li.append($title);
+    		    	 		$li.append($id);
+    		    	 		
+    		    	 		$contWrap.append($cont);
+    		    	 		
+    		    	 		$li.append($contWrap); 
+    		    	 		
+    		    	 		 
 
-	    	 		       	 		   
-    	     	 	   $li.append($pimg);     
-	    	 		   $li.append($title);
-	    	 		   $li.append($id);
-	
-
-	    	 		   
-	    	 		   $ul.append($li);
-					
-				  	  }				
-    	 	   }else{
+    		    	 		   
+    		    	 		$ul.append($li);
+    	 				   
+    	 			   	}
+    	 			   
+    	 		  	   }
+				  }
+   	 		
+   	 	  	 	}else{
     	 		  for(var i in data){
   					   
 	     	 		   $li = $("<li>");
@@ -236,9 +273,10 @@
 	    	 		   $ul.append($li);
     	 		  	
     	 			   $ul.html("");
-    	 		 }
+    	 		   }
     	 	   }
  	 		
+			  
     	 	
     	 	
 			

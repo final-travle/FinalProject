@@ -48,6 +48,16 @@ public class SearchServiceImpl implements SearchService {
 		return sDao.selectThumbnail(choice);
 	}
 
+	@Override
+	public ArrayList<PostTag> selectListTag1() {
+
+		return sDao.selectListTag1();
+	}
+
+
+
+
+
 
 
 

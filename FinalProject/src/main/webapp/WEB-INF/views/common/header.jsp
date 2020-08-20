@@ -46,7 +46,7 @@
         </header>
         
         <c:url var="nlist" value="nlist.do"/>
-        <c:url var="elist" value="elist.do"/>
+       
         
         <nav id="nav">
             <ul class="topMenu cf">

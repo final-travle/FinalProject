@@ -214,5 +214,7 @@ a {
 			<a href="${nlist }">목록 전체 보기</a>
 		</p>
 		<br><br>
+		
+			<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -16,6 +16,17 @@ public class PostTag implements Serializable {
 	
 	public PostTag() {
 	}
+	
+	
+
+
+
+	public PostTag(int postNo) {
+		super();
+		this.postNo = postNo;
+	}
+
+
 
 
 
