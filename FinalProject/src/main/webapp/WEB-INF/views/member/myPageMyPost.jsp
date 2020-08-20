@@ -98,7 +98,8 @@ text-align: center;
 <div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
-글 수 <span style="color: orange;"> ${pCount}</span>개</h2>
+글 수 <span style="color: orange;"> ${pCount}</span>개<br>
+공유 글 수 <span style="color: orange;"> ${sCount} </span>개 </h2>
 <h1 style="text-align: center; font-style : oblique;">MY POST</h1>
 <hr>
 </div>
@@ -114,17 +115,23 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
 
     <div id="container" class="cf">
         <div id="content">
-            
+            <c:if test="${empty list }">
+            <h1 style="text-align: center; font-style : oblique;" > 글이 없습니다.</h1>
+            </c:if>
             <!-- plan -->
        <ul class="grid grid3 cf">
 				<c:forEach var="pl" items="${list }">
@@ -140,6 +147,11 @@ text-align: center;
 						<c:param name="page" value="${pi.currentPage }" />
 					</c:url>
 					
+					<c:url var="planModifyForm" value="planModifyForm2.do">
+						<c:param name="postNo" value="${pl.postNo }" />
+						<c:param name="postType" value="${pl.postType }" />
+						<c:param name="page" value="${pi.currentPage }" />
+					</c:url>
 					
 					<c:url var="planDelete" value="myplanDelete2.do">
 						<c:param name="postNo" value="${pl.postNo }" />
@@ -158,7 +170,7 @@ text-align: center;
 			                    <div class="icons">
 				                    <a href="#" onclick="window.open('${memberplanListShared }','_blank','width=600, height=600'); return flase">공유</a>
 			      					<a href="${planDelete }"> <i class="ion-social-two-outline">삭제</i></a>
-								    <a href="#"> <i class="ion-social-three-outline">수정</i></a>
+								    <a href="${planModifyForm}"> <i class="ion-social-three-outline">수정</i></a>
 								    <a href="${planDetail }"> <i class="ion-social-four-outline">글보기</i></a>
 			                    </div>
 			                 </div>
@@ -199,7 +211,7 @@ text-align: center;
 	                    	<c:set var="liPostNo" value="${pl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
 		                    	<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value=" ${tl.tagName } " />
+			                    		#<c:out value=" ${tl.tagName } " />
 		                    	</c:if>
                     		</c:forEach>
 	                    
@@ -256,6 +268,29 @@ text-align: center;
     </div><!-- // container end -->
 
 <jsp:include page="../common/footer.jsp" />
-
+ 
+<script>
+$(document).ready(function(){
+/*     $("#menubutton").click(function(){
+        $("#mySidenav").slideToggle();
+    }); */
+    
+    $("#menubutton").on("click", function(){
+    	$mySidenav = $("#mySidenav").attr("class");
+    	console.log($mySidenav);
+    	if($mySidenav == "on"){
+    		$("#mySidenav").removeClass("on");
+    		$(this).find("i").attr("class", "xi-angle-down");
+    	}else {
+    		$("#mySidenav").addClass("on");
+    		$(this).find("i").attr("class", "xi-angle-up");
+    	}
+    	
+    });
+    
+    
+});
+</script>
+ 
 </body>
 </html>

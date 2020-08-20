@@ -37,6 +37,7 @@
 	</style>
 </head>
 <body>
+	<jsp:include page="../common/header.jsp" />
 	
 	 <br>
      <br>
@@ -72,6 +73,11 @@
           	 <input type="submit" value="다음" id="nextbtn" style="font-size: 16px;">
         </form>
 	</div>
+	<br>
+    <br>
+    
+
+<jsp:include page="../common/footer.jsp" />
 
 
 	<script>
@@ -111,7 +117,6 @@
 
 
 	
-
 
 	
 </body>

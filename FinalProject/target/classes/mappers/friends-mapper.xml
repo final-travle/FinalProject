@@ -142,6 +142,11 @@
 		WHERE (FR_ID=#{userId} OR USER_ID=#{userId}) AND ACCEPT_YN='Y'
 	</select>
 	
+	<select id="accfriendsCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM FRIEND_YN
+		WHERE FR_ID=#{id} AND ACCEPT_YN='N'
+	</select>
 	
 	
 	<select id="getListCount2" parameterType="FriendsPage" resultType="int">
@@ -175,7 +180,7 @@
 	
 	<delete id="dltfriends" parameterType="FriendsPage">
 	DELETE FROM FRIEND_YN
-	WHERE ACCEPT_YN ='N' AND FR_ID= #{userId} AND USER_ID=#{fId}
+	WHERE ACCEPT_YN ='N' AND FR_ID= #{fId} AND USER_ID=#{userId}
 	</delete>
 	
 	<delete id="dltmemberfriends" parameterType="string">

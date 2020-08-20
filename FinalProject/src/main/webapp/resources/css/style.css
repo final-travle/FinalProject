@@ -113,9 +113,9 @@ h2.title { text-align:center; font-size:26px; margin-bottom:60px; }
 
 /* chat btn */
 .chatSec { position:absolute; right:75px; top:0; z-index:10;}
-.chatSec .chatBtn { background:#754daf; width:80px; height:80px; text-align:center; border:1px solid #754daf; border-radius: 3px; transition: ease .5s; box-sizing:border-box; }
+.chatSec .chatBtn { background:#754daf; width:80px; height:80px; text-align:center; border:1px solid #754daf; border-radius: 3px; transition: ease .5s; box-sizing:border-box; padding-top:16px; }
 .chatSec .chatBtn:hover { background:#bd9dec; border:1px solid #ddd; }
-.chatSec .chatBtn a { color:#fff; padding-top:18px; box-sizing:border-box; width:80px; height:80px; border-radius: 3px;  }
+.chatSec .chatBtn a { color:#fff; box-sizing:border-box; width:80px; height:80px; border-radius: 3px;  }
 
 /* footer */
 #footer { width:100%; }

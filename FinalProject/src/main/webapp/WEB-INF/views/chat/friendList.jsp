@@ -309,7 +309,6 @@ input#updateNickname[type=checkbox]:checked ~ .updateNickname {
   display:block;
   z-index:92;
   width:320px;
-  height:350px;
   top:20%;
   left:20%;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
@@ -338,7 +337,6 @@ input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
   display:block;
   z-index:93;
   width:80px;
-  height:50px;
   top:67%;
   left:43%;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
@@ -374,7 +372,6 @@ input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
   display:block;
   z-index:92;
   width:320px;
-  height:350px;
   top:20%;
   left:20%;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
@@ -404,7 +401,6 @@ input#friend_profile_detail[type=checkbox]:checked ~ .friend_profile_detail {
   display:block;
   z-index:92;
   width:320px;
-  height:350px;
   top:20%;
   left:20%;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
@@ -591,7 +587,7 @@ textarea:focus{
  <div class="myprofile_detail_modal">
  
   	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}"  class="current_myProfile"
-  	  	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
+  	  	style="width:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
   	  	
   	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
@@ -797,7 +793,7 @@ textarea:focus{
  <div class="friend_profile_detail"> 
  	
 	<img class="friendsprofile_detail" src="" 
-	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
+	style="width:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
  	
   	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:40px;cursor:pointer;" onclick="close_friend_profile_detail();">
@@ -828,7 +824,7 @@ textarea:focus{
  <div class="friend_profile_detail2"> 
  	
 	<img class="friendsprofile_detail" src="" 
-	style="width:280px;height:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
+	style="width:280px;margin-left:17px;margin-top:10px;border-radius:5%;">
 	
 	 <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:127px;cursor:pointer;" onclick="close_friend_profile_detail2();">
@@ -963,7 +959,7 @@ textarea:focus{
 						<c:param name="chatroomname" value="${chatroomList.chatroomname }"/>
 					</c:url>
 				<p style="font-size:30px;margin-left:10px;">
-				<a href="#" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
+				<a href="${chatroom }" <%-- onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" --%> 
 				style="color:black;text-decoration:none;" >${chatroomList.chatroomname} </a>
 				</p>
 				<p style="font-size:15px;margin-top:-30px;margin-right:60px;word-break:break-all;">

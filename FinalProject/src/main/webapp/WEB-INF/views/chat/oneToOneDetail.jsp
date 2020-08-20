@@ -145,7 +145,7 @@ body {
 	    #container {
             width: 100%;
             height: 100%;
-            border: 2px solid black;
+            border: 0px;
             background: ivory;
         }
         #chat {
@@ -284,9 +284,9 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 .sentImage_detail_modal {
    position:absolute;
   display:block;
-  z-index:92;
+  z-index:96;
   width:300px;
-  top:5%;
+  top:7%;
   left:20%;
  background:white;
   border:4px solid black;
@@ -304,6 +304,168 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 }
 
 input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.updateNotice_modal {
+   position:absolute;
+  display:block;
+  z-index:93;
+  width:300px;
+  height:200px;
+  top:20%;
+  left:20%;
+ background:white;
+  border:4px solid black;
+  border-radius:5%;
+  overflow:hidden;
+
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#updateNotice_modal[type=checkbox]:checked ~ .updateNotice_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.chatroomNotice_modal {
+   position:absolute;
+  display:block;
+  z-index:94;
+  width:60%;
+  height:120px;
+  top:0%;
+  left:20%;
+ background:white;
+  border:1px solid gray;
+  overflow:hidden;
+
+  visibility: collapse;
+  opacity: 0.8;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#chatroomNotice_modal[type=checkbox]:checked ~ .chatroomNotice_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.smallNotice_modal {
+   position:absolute;
+  display:block;
+  z-index:95;
+  width:40px;
+  height:40px;
+  top:11px;
+  left:65px;
+ background:transparent;
+  border:0px;
+  overflow:hidden;
+
+  visibility: collapse;
+  opacity: 0.9;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#smallNotice_modal[type=checkbox]:checked ~ .smallNotice_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.detail_chatroomNotice_modal {
+   position:absolute;
+  display:block;
+  z-index:95;
+  width:60%;
+  height:400px;
+  top:0%;
+  left:20%;
+ background:white;
+  border:1px solid gray;
+  overflow:hidden;
+
+  visibility: collapse;
+  opacity: 0.9;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#detail_chatroomNotice_modal[type=checkbox]:checked ~ .detail_chatroomNotice_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.selectBackground_modal::-webkit-scrollbar {
+		    width: 0px;
+		  }
+		  .selectBackground_modal::-webkit-scrollbar-thumb {
+		    background-color: #2f3542;
+		    border-radius: 10px;
+		    background-clip: padding-box;
+		    border: 2px solid transparent;
+		  }
+		  .selectBackground_modal::-webkit-scrollbar-track {
+		    background-color: grey;
+		    border-radius: 10px;
+		    box-shadow: inset 0px 0px 5px white;
+		  }
+.selectBackground_modal{
+   position:absolute;
+  display:block;
+  z-index:95;
+  width:388px;
+  height:300px;
+  top:44%;
+  left:0%;
+ background:white;
+  border:1px solid gray;
+  border-radius:7px;
+  overflow:hidden;
+  overflow-y:auto;
+
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
   visibility: visible;
   -webkit-transform: scale(1, 1);
   -ms-transform: scale(1, 1);
@@ -341,7 +503,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 <input type="checkbox" id="modal1" checked>
 <div class="friend_modal">
 	<div class="text">
-	<div id="backArea" style="position:absolute;top:10px;left:10px;width:40px;height:40px;background:white;border-radius:50%;">
+	<div id="backArea" style="position:absolute;top:10px;left:10px;width:40px;height:40px;background:white;border-radius:50%;opacity:0.8;">
 		<img src="${pageContext.request.contextPath}/resources/images/back.png" title="나가기"
 						 style='width:40px;height:40px;cursor:pointer;' onclick="history.go(-1);">
 	</div>
@@ -386,7 +548,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 							${otomsg.content }&nbsp;</strong>&nbsp;
 						</c:if>
 						<c:if test="${otomsg.read_yn eq 'N'}">
-							<strong style='float:left;margin-left:10px;margin-top:20px;color:yellow;font-size:12px;' class='readyn'>1</strong>
+							<strong style='float:left;margin-left:10px;margin-top:20px;color:yellow;font-size:12px;' class='readyn'id="readyn_id">1</strong>
 						</c:if>
 					</div>
 				</div>
@@ -401,6 +563,7 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 			<input type="hidden" value="${oto.co_no }" id="chatroom_no">
 			<input type="hidden" value="${oto.friendId}" id="friendid" >
 			<input type="hidden" value="${loginUser.profile }" id="profile">
+			<input type="hidden" value="${notice }" id="OnetoOneChatroomNotice">
 		</div>
 	</div>
 	<div id="chatForm">
@@ -415,12 +578,216 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 			<form id="SendImage" name="SendImage" enctype="multipart/form-data">
 				<input id="ChatroomSendImage" name="ChatroomSendImage" type="file" style="display:none;"accept="image/*">
 			</form>
+				<img src="${pageContext.request.contextPath}/resources/images/notice.jpeg" onclick="updateChatNotice();"
+				style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="공지글 작성">
+				
+			<img src="${pageContext.request.contextPath}/resources/images/emoticon.jpg" onclick="sendEmoticon();"
+				style="width:35px;height:30px;cursor:pointer;float:left;margin-left:10px;margin-top:6px;" title="이모티콘">
+				
+			<img src="${pageContext.request.contextPath}/resources/images/background.png" onclick="changeChatroomBackground();"
+				style="width:35px;height:35px;cursor:pointer;float:left;margin-left:13px;margin-top:6px;" title="배경화면">
 	</div>
 </div>
   </div>
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
+<input type="checkbox" id="selectBackground_modal">
+<div class="selectBackground_modal" style="display:flex;flex-wrap:wrap;">
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/airplane.png" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/beach.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/blue.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/city.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/moon.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/paint.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sea.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sky.jpg" 
+				style="width:90px;height:150px;"class="backgroundImages">
+	</div>
+	<hr>
+	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
+		<img src="${pageContext.request.contextPath}/resources/images/addbackground.png" 
+				style="width:90px;height:150px;" onclick="enrollBackgroundImage();">
+	</div>
+</div>
+<script>
+	function enrollBackgroundImage(){
+		
+	}
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$(".backgroundImages").on("click",function(){
+			var background = $(this).attr("src");
+			console.log("맞아? "+background);
+			
+			$("#chat").css({"background":"url("+ background +")"});
+			$("#chat").css({"background-size":"cover"});
+			$("#chat").css({"background-repeat":"no-repeat"});
+		})
+	})
+</script>
+
+<script type="text/javascript">
+	function changeChatroomBackground(){
+		if($("input:checkbox[id='selectBackground_modal']").is(":checked") == true){
+			$("input:checkbox[id='selectBackground_modal']").prop("checked", false);	
+			$("#selectBackground_modal").prop("checked", false);
+		}else{
+			$("input:checkbox[id='selectBackground_modal']").prop("checked", true);	
+			$("#selectBackground_modal").prop("checked", true);
+		}
+	}
+	function updateChatNotice(){
+		$("input:checkbox[id='updateNotice_modal']").prop("checked", true);	
+		$("#updateNotice_modal").prop("checked", true);
+		$("#updateChatNotice").focus();
+	}
+</script>
+<input type="checkbox" id="updateNotice_modal">
+<div class="updateNotice_modal">
+	<p style="text-align:center;font-size:20px;">공지사항</p>
+	<textarea id="updateChatNotice" name="updateChatNotice" cols="35" rows="6" wrap="hard" style="resize:none;margin-left:14px;"></textarea>
+	<button type="button" onclick="close_updateChatNotice_modal();">취소</button>
+	<button type="button" onclick="submit_updateChatNotice_modal();">등록</button>
+</div>
+<script>
+	function close_updateChatNotice_modal(){
+		$("#updateChatNotice").val("");
+		$("input:checkbox[id='updateNotice_modal']").prop("checked", false);	
+		$("#updateNotice_modal").prop("checked", false);
+	}
+	function submit_updateChatNotice_modal(){
+		var notice = $("#updateChatNotice").val();
+		var data = 'notice='+notice;
+		var co_no = $("#chatroom_no").val();
+		console.log("내용 = " + data);
+		console.log("방번호 = " + co_no);
+		
+		$.ajax({
+			type:"POST",
+			url:"updateChatNotice.do?co_no="+co_no,
+			data:data,
+			success:function(result){
+				var dcoderesult = decodeURIComponent(result);
+				console.log("결과 = " + dcoderesult);
+				$("input:checkbox[id='chatroomNotice_modal']").prop("checked", true);	
+				$("#chatroomNotice_modal").prop("checked", true);
+				
+				$("input:checkbox[id='smallNotice_modal']").prop("checked", false);	
+				$("#smallNotice_modal").prop("checked", false);
+				$("input:checkbox[id='detail_chatroomNotice_modal']").prop("checked", false);	
+				$("#detail_chatroomNotice_modal").prop("checked", false);
+				
+				$(".notice_content").text(result);
+				$("#updateChatNotice").val("");
+			},
+			error:function(error){
+				alert(error);
+			}
+		});
+		
+		$("input:checkbox[id='updateNotice_modal']").prop("checked", false);	
+		$("#updateNotice_modal").prop("checked", false);
+		$("#updateChatNotice").text("");
+	}
+</script>
+<input type="checkbox" id="chatroomNotice_modal">
+<div class="chatroomNotice_modal">
+<div style="width:100%;height:80px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;display:block">
+	<img src="${pageContext.request.contextPath}/resources/images/notice2.jpg" onclick="closeForm_chatroomNotice_modal();" title="접어두기"
+	style='width:40px;height:40px;border-radius:50%;margin-left:5px;margin-right:5px;margin-top:10px;float:left;cursor:pointer;'>
+	<strong class="notice_content" style="margin-top:10px;white-space: normal; line-height: 1.5; height: 2.4em; text-align: left;
+	word-wrap: break-word; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;text-overflow:ellipsis;"></strong>
+</div>
+	<hr style="margin-bottom:2px;">
+	<p style="text-align:center;margin-top:5px;height:10px; font-size:20px;cursor:pointer;"onclick="detail_chatroomNotice_modal();">전체보기</p>
+</div>
+
+<input type="checkbox" id="smallNotice_modal">
+<div class="smallNotice_modal">
+	<img src="${pageContext.request.contextPath}/resources/images/notice2.jpg" onclick="reOpen_chatroomNotice_modal();"
+	style='width:40px;height:40px;border-radius:50%;cursor:pointer;'>
+</div>
+
+<input type="checkbox" id="detail_chatroomNotice_modal">
+<div class="detail_chatroomNotice_modal">
+	<strong class="notice_content"></strong>
+	<div style="height:50px;width:100%;bottom:0px;position:absolute;">
+	<hr style="margin-bottom:0px;">
+		<p style="height:10px; font-size:20px;text-align:center;cursor:pointer;margin-top:4px;"
+		onclick="close_detail_chatroomNotice_modal();" >접어두기</p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function closeForm_chatroomNotice_modal(){
+		$("input:checkbox[id='chatroomNotice_modal']").prop("checked", false);
+		$("#chatroomNotice_modal").prop("checked", false);
+		
+		$("input:checkbox[id='smallNotice_modal']").prop("checked", true);
+		$("#smallNotice_modal").prop("checked", true);
+	}
+	function reOpen_chatroomNotice_modal(){
+		$("input:checkbox[id='chatroomNotice_modal']").prop("checked", true);
+		$("#chatroomNotice_modal").prop("checked", true);
+		
+		$("input:checkbox[id='smallNotice_modal']").prop("checked", false);
+		$("#smallNotice_modal").prop("checked", false);
+	}
+	function detail_chatroomNotice_modal(){
+		$("input:checkbox[id='detail_chatroomNotice_modal']").prop("checked", true);
+		$("#detail_chatroomNotice_modal").prop("checked", true);
+		
+		$("input:checkbox[id='chatroomNotice_modal']").prop("checked", false);
+		$("#chatroomNotice_modal").prop("checked", false);
+	}
+	function close_detail_chatroomNotice_modal(){
+		$("input:checkbox[id='chatroomNotice_modal']").prop("checked", true);
+		$("#chatroomNotice_modal").prop("checked", true);
+		
+		$("input:checkbox[id='detail_chatroomNotice_modal']").prop("checked", false);
+		$("#detail_chatroomNotice_modal").prop("checked", false);
+	}
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+	  var OnetoOneChatroomNotice = $("#OnetoOneChatroomNotice").val();
+	  console.log("notice = " + OnetoOneChatroomNotice);
+	  
+	  if(OnetoOneChatroomNotice != ""){
+		  $(".notice_content").text(OnetoOneChatroomNotice);
+		  $("input:checkbox[id='chatroomNotice_modal']").prop("checked", true);	
+		  $("#chatroomNotice_modal").prop("checked", true);
+	  }
+  }); 
+</script>
+
+
 <script type="text/javascript">
 	$(function(){
 			/* $('input[id="message"]').keydown(function() {
@@ -451,15 +818,15 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 </script>
 
 <script>
-		$(function (){
-					$(".sent_Image").on("click", function(){
-						var img = $(this).attr("src");
-						
-						console.log("경로 : " + img);
-						
-						$(".sentImage_detailview").attr("src",img);
-					})
-				})
+		$(document).on("click",".sent_Image",function(){
+			var img = $(this).attr("src");
+			
+			console.log("경로 : " + img);
+			
+			$(".sentImage_detailview").attr("src",img);
+			$("#downloadImage").attr("href",img);
+		})
+				
 		function sentImage_detail(){
 			$("input:checkbox[id='sentImage_detail_modal']").prop("checked", true);	
 			$("#sentImage_detail_modal").prop("checked", true);
@@ -472,7 +839,11 @@ input#sentImage_detail_modal[type=checkbox]:checked ~ .sentImage_detail_modal {
 		style="width:300px;">
 		
 		<img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
-		style='width:50px;height:40px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SentImage_detail_modal();">
+		style='width:50px;height:40px;float:left;margin-left:40px;cursor:pointer;' onclick="close_SentImage_detail_modal();">
+		
+		<a href="" id="downloadImage" download>
+		<img src="${pageContext.request.contextPath}/resources/images/imagedownload.jpg" title="다운로드"
+		style='width:50px;height:40px;float:left;margin-left:120px;cursor:pointer;'onclick="downloadImage();"></a>
 	</div>
 
 <script>

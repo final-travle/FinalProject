@@ -101,6 +101,14 @@
 		WHERE USER_ID=#{id} AND WITHD_YN='N'
 	</select>
 	
+	<select id="sCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM SHARED
+		WHERE SHARE_ID = #{id}
+	</select>
+	
+	
+	
 	<insert id="insertTtype" parameterType="Ttype">
 		INSERT INTO PREF_STYLE
 		VALUES(#{sye},#{id}) 
@@ -141,7 +149,7 @@
 	
 	<update id="dltmember" parameterType="Member" >
 	UPDATE MEMBER SET WITHD_YN ='Y' 
-					 WHERE USER_ID=#{id} AND USER_PWD=#{pwd} AND WITHD_YN='N'
+					 WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
 	</update>
 	
 	<update id="loginTime" parameterType="string" >

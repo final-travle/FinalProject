@@ -231,11 +231,10 @@
                 return false;
             }
         }
- 
-
 
         </script>
         
+       <jsp:include page="../common/footer.jsp" />
        
 </body>
 </html>

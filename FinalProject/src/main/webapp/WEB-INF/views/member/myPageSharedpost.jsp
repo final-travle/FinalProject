@@ -9,11 +9,20 @@
 <!-- 필요한 CSS, JS 로드 -->
 <style>
 #noticelistArea{
-                margin: 10px;
-                padding:0;
-                width: 590px;
-                border-top: 1px solid #444444;
-                border-collapse: collapse;
+margin: 10px;
+    padding: 0;
+    width: 590px;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;}
+
+
+a{
+	display: inline-block;
+    padding: 4px 8px;
+    background: cadetblue;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
 }
 #friendsbody{width: 600px;margin: 0 auto;}
 #friendsIdSearch{
@@ -70,8 +79,8 @@ height: 36px;
  
  
  <div id="friendsInfo">
-             <table id="noticelistArea" align="center" width="600" border="1">
-                    <tr bgcolor="#bd9dec">
+             <table id="noticelistArea" align="center" width="600" >
+                    <tr bgcolor="#bd9dec" style ="color : #fff; text-align: center; border-bottom : 1px solid #ddd;">
                         <th>ID</th> <th>이름</th> <th>닉네임</th> <th>성별</th> <th>공유하기</th>
                     </tr>
 
@@ -94,14 +103,14 @@ height: 36px;
 	            <c:if test="${not loop_flag }">
 					<c:if test="${nb eq n.id}">
 					 <c:set var="loop" value="true" />
-					 <td>
+					 <td style="text-align: center;">
 					  <c:out value="공유된친구" />
 					  </td>
 					</c:if>
 				</c:if>
 				</c:forEach>
 				<c:if test="${not loop }">
-		            <td>
+		            <td style="text-align: center;">
 		            <c:url value="memberSharedInsert.do" var="url">
 						<c:param name="postNo" value="${postNo }" />
 						<c:param name="postType" value="${postType }" />
