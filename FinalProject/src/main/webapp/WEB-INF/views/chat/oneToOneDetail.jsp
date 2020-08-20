@@ -657,7 +657,7 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 			$("input:checkbox[id='selectBackground_modal']").prop("checked", false);	
 			$("#selectBackground_modal").prop("checked", false);
 		}else{
-			$("input:checkbox[id='selectBackground_modal']").prop("checked", true);	
+			$("input:checkbox[id='selectBackground_modal']").prop("checked", true);
 			$("#selectBackground_modal").prop("checked", true);
 		}
 	}
