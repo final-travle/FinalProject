@@ -316,6 +316,8 @@
 			
 			console.log(firstImg);
 		});
+
+		tcode = 0;
 		
          $(document).on("click", ".travelAWrap .rTravel li", function() {
         	 // dayNight 의 마지막 li의 값을 뽑아온다
@@ -324,7 +326,7 @@
 			var tvDataTit = $(this).find(".title").text();
 			XP = parseFloat($(this).find(".xpoint").val());
 			YP = parseFloat($(this).find(".ypoint").val());
-			tcode = $(this).find(".tcode").val();
+			//tcode = $(this).find(".tcode").val();
 
 			
 			var $li = $("<li>");
@@ -340,7 +342,6 @@
 			if(lastli == tvDataTit){
 				alert("중복 선택하셨습니다.");
 			}else{
-				
 				switch(dnClick){
 					case '1' : pea.push(str); break;
 					case '2' : peb.push(str); break;
@@ -351,7 +352,7 @@
 					case '7' : peg.push(str); break;
 				}
 				
-				console.log(posex);
+				console.log(str);
 				
 				$li.append(tvDataTit).attr("class", "dnCont");
 				$(".dayNight .dn").eq(dnClick).append($li);
@@ -372,8 +373,7 @@
 					        title : posex[i][j].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 					        image : markerImage // 마커 이미지 
 					    });
-					
-
+						
 					    linePath = [];
 						   for(var k = 0; k < posex[i].length; k++){
 							   linePath.push(posex[i][k].latlng);

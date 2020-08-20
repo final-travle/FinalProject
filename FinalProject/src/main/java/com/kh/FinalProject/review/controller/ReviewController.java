@@ -288,7 +288,8 @@ public class ReviewController {
 			    
 				    	List<Object> mList = (List<Object>) posex.get(i);
 	
-				    	
+
+			    		int ptcode = 0;
 				    	// 날짜별 지역을 찍어준다.
 				    	for(int j = 0; j < mList.size(); j ++) {
 					    	int result4 = 0;
@@ -302,8 +303,9 @@ public class ReviewController {
 				    		String pTitle = (String) mlInfo.get("title");
 			//	    		System.out.println(pTitle);
 			
-				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
 				    		//System.out.println(ptcode);
+				    		ptcode += 1;
 				    		
 				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
 				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
@@ -522,7 +524,7 @@ public class ReviewController {
 
 	@RequestMapping(value = "rModify.do", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String planModify(HttpServletResponse response, HttpSession session, @RequestBody List<Object> posex, Board b, Travel tv, PostTag tg) {
+	public String reviewModify(HttpServletResponse response, HttpSession session, @RequestBody List<Object> posex, Board b, Travel tv, PostTag tg) {
 		response.setContentType("aplication/json; charset=utf-8");
 
 		// 로그인 된 유저 아이디 가져온다.
@@ -569,6 +571,9 @@ public class ReviewController {
 		
 		String msg = "글이 정상적으로 수정되었습니다.";
 		if(mr > 0) {
+
+    			int ptcode = 0;
+    			
 				// 넘어온 json object를 배열 단위로 풀어준다.
 			    for(int i = 0; i < posex.size(); i ++) {
 
@@ -593,8 +598,9 @@ public class ReviewController {
 				    		String pTitle = (String) mlInfo.get("title");
 			//	    		System.out.println(pTitle);
 			
-				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
 				    		//System.out.println(ptcode);
+				    		ptcode += 1;
 				    		
 				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
 				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");

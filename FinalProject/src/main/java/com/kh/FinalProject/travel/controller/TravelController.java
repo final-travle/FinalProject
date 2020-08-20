@@ -508,7 +508,8 @@ public class TravelController {
 			    
 				    	List<Object> mList = (List<Object>) posex.get(i);
 	
-				    	
+
+			    		int ptcode = 0;
 				    	// 날짜별 지역을 찍어준다.
 				    	for(int j = 0; j < mList.size(); j ++) {
 					    	int result4 = 0;
@@ -522,8 +523,11 @@ public class TravelController {
 				    		String pTitle = (String) mlInfo.get("title");
 			//	    		System.out.println(pTitle);
 			
-				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
 				    		//System.out.println(ptcode);
+				    		ptcode += 1;
+				    		
+				    		System.out.println(ptcode);
 				    		
 				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
 				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
@@ -986,6 +990,9 @@ public class TravelController {
 		mr = ts.planModifyB(postNo);
 		String msg = "글이 정상적으로 수정되었습니다.";
 		if(mr > 0) {
+
+    			int ptcode = 0;
+			
 				// 넘어온 json object를 배열 단위로 풀어준다.
 			    for(int i = 0; i < posex.size(); i ++) {
 
@@ -1007,8 +1014,9 @@ public class TravelController {
 				    		String pTitle = (String) mlInfo.get("title");
 			//	    		System.out.println(pTitle);
 			
-				    		int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
+				    		//int ptcode = Integer.valueOf((String) mlInfo.get("tcode"));
 				    		//System.out.println(ptcode);
+				    		ptcode += 1;
 				    		
 				    		// latlng 의 x좌표와 y좌표를 나누기 위한 map 선언
 				    		Map<String, Object> latlng = (Map<String, Object>) mlInfo.get("latlng");
