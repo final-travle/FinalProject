@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- %@ page session="false" %-->
 <html>
 <head>
 	<title>Home</title>
@@ -10,15 +9,6 @@
 <body>
 <jsp:include page="common/header.jsp" />
    <!-- 메인 컨텐츠 영역 start -->
-   
-   <!-- 임시로 만든 버튼 -->
-   <div class="chatSec">
-            <p class="chatBtn" >
-                <a href="javascript:openChat('chat');">지역채팅 바로가기</a>
-            </p>
-        </div>		
-   <!-- 임시로 만든 버튼 -->
-   
     <!-- 이미지 슬라이드 영역 -->
     <div class="mainSlide">
         <div class="swiper-container">
@@ -63,8 +53,13 @@
         <div id="content">
 
             <!-- AD -->
-            <h2 class="title"><span class="color">소리찡</span> 님만을 위한 추천 포인트!</h2>
+            <c:if test="${!empty sessionScope.loginUser}">
+            <h2 class="title"><span class="color">${loginUser.nickname }</span> 님만을 위한 추천 포인트!</h2>
+            </c:if>
             
+            <c:if test="${empty sessionScope.loginUser}">
+            <h2 class="title"><span class="color">여긴 어때요?</span> 여행지 추천 드려요!</h2>
+            </c:if>
             <ul class="grid grid4 cf">
                 <li>
                     <p class="img">

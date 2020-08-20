@@ -38,7 +38,7 @@
                     <p class="btn"><a href="logout.do">로그아웃</a></p>
                     <p class="btn colorBtn"><a href="friends.do">마이페이지</a></p>
                     <div class="userRound">
-                        <p><c:out value="${loginUser.nickname }"/> </p><!-- user nickname 들어갈 부분 -->
+                        <p><c:out value="${loginUser.nickname }"/></p><!-- user nickname 들어갈 부분 -->
                     </div>
                  </c:if>
                 </div>
@@ -54,7 +54,7 @@
                 <li><a href="planList.do">플랜</a></li>
                 <li><a href="slist.do">탐색</a></li>
                 <li><a href="reviewListView.do">리뷰</a></li>
-                <li><a href="elist.do">이벤트</a></li>
+                <!--li><a href="elist.do">이벤트</a></li-->
                 <li><a href="nlist.do">공지사항</a><li>
             </ul>
         </nav>
