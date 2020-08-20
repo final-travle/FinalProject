@@ -106,7 +106,7 @@
 		});
 	});
 	
-	
+
 	// 리뷰 리스트
 	function commView(){
 		$.ajax({
@@ -149,7 +149,7 @@
 						}
 
 						
-   		                <c:if test="${!empty sessionScope.loginUser}">
+		                <c:if test="${!empty sessionScope.loginUser}">
 						var $reCommt = $("<span class='reCommt'>").text("답글");
 						$commConttd.append($reCommt);
 						</c:if>
@@ -225,11 +225,12 @@
 			},
 			error : function(request, status, errorData){
 				alert("error code: " + request.status + "\n"
-                          +"message: " + request.responseText
-                          +"error: " + errorData);
+	                      +"message: " + request.responseText
+	                      +"error: " + errorData);
 			}
 		});
 	}
+
 	
 	
 
@@ -283,6 +284,7 @@
 
 	// 리코멘트 답글 버튼 생성
 	$(document).on("click", ".comm .reCommt", function(){
+		$(".recommtr").remove();
 		var $recommArea = $("<textarea class='recommArea'>").css({"width": "90%", "height" : "50px", "resize" : "none"});
 		var $recommtr = $("<tr class='recommtr'>");
 		var $recommtd = $("<td colspan='2'>").css("text-align", "center");
