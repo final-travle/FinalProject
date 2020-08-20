@@ -3,6 +3,8 @@ package com.kh.FinalProject.notice.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Notice implements Serializable {
 
 	/**
@@ -124,7 +126,8 @@ public class Notice implements Serializable {
 				+ ", title=" + title + ", postContents=" + postContents + ", hits=" + hits + ", writeDate=" + writeDate
 				+ ", postDelYn=" + postDelYn + ", fileName=" + fileName + "]";
 	}
-	
+
+
 	
 	
 	

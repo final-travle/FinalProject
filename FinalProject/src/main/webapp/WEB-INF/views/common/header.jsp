@@ -42,7 +42,7 @@
         </header>
         
         <c:url var="nlist" value="nlist.do"/>
-        <c:url var="elist" value="elist.do"/>
+       
         
         <nav id="nav">
             <ul class="topMenu cf">
@@ -50,7 +50,6 @@
                 <li><a href="planList.do">플랜</a></li>
                 <li><a href="slist.do">탐색</a></li>
                 <li><a href="reviewListView.do">리뷰</a></li>
-                <li><a href="elist.do">이벤트</a></li>
                 <li><a href="nlist.do">공지사항</a><li>
             </ul>
         </nav>

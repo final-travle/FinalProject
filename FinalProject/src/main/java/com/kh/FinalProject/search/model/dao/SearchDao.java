@@ -114,8 +114,20 @@ public class SearchDao {
 		return thumbnailList;
 		
 		
-		//		return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectThumbnail", choice);
 	}
+
+
+
+
+
+	public ArrayList<PostTag> selectListTag1() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectListTag1");
+	}
+
+
+
+
 
 
 
