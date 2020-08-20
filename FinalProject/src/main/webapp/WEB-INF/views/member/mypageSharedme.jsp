@@ -91,7 +91,8 @@ text-align: center;
 <div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
-글 수 <span style="color: orange;"> ${pCount}</span>개</h2>
+글 수 <span style="color: orange;"> ${pCount}</span>개<br>
+공유 글 수 <span style="color: orange;"> ${sCount} </span>개 </h2>
 <h1 style="text-align: center; font-style : oblique;">SHARED POSTS</h1>
 <hr>
 </div>
@@ -107,11 +108,15 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
 
@@ -122,6 +127,9 @@ text-align: center;
             
             <!-- plan -->
        <ul class="grid grid3 cf">
+       <c:if test="${empty list }">
+            <h1 style="text-align: center; font-style : oblique;" > 글이 없습니다.</h1>
+            </c:if>
 				<c:forEach var="pl" items="${list }">
 					<c:url var="planDetail" value="planDetail.do">
 						<c:param name="postNo" value="${pl.postNo }" />
@@ -141,11 +149,10 @@ text-align: center;
 	                    <p>${pl.userId }</p>
 	                    <p class="cont">
 	                    <a href="${memberSharedDelete }">공유끊기</a><br>
-	                    <a href="${planDetail }"> 글보기</a>
 	                    	<c:set var="liPostNo" value="${pl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
 		                    	<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value=" ${tl.tagName } " />
+			                    		#<c:out value=" ${tl.tagName } " />
 		                    	</c:if>
                     		</c:forEach>
 	                    
@@ -155,53 +162,30 @@ text-align: center;
                 </c:forEach>
                </ul>             
 
-            <div class="pagination">
-				<!-- [prev] -->
-				<c:if test="${pi.currentPage eq 1 }">
-					[prev] 
-				</c:if>
-				
-				<c:if test="${pi.currentPage gt 1 }">
-					<c:url var="blistBack" value="planList.do">
-						<c:param name="page" value="${pi.currentPage - 1 }" />
-					</c:url>
-					<a href="${blistBack }">[prev] </a>
-				</c:if>
-				
-				<!-- [pagination] -->
-				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-					<c:if test="${p eq pi.currentPage }">
-						<b>[${p }]</b>
-					</c:if>
-					
-					<c:if test="${p ne pi.currentPage }">
-						<c:url var="blistCheck" value="planList.do">
-							<c:param name="page" value="${p }"/>
-						</c:url>
-						<a href="${blistCheck }">${p }</a>
-					</c:if>
-				</c:forEach>
-				
-				
-				<!-- [next] -->
-				<c:if test="${pi.currentPage eq pi.maxPage }">
-					 [next]
-				</c:if>
-				
-				<c:if test="${pi.currentPage lt pi.maxPage }">
-					<c:url var="blistEnd" value="planList.do">
-						<c:param name="page" value="${pi.currentPage + 1 }" />
-					</c:url>
-					<a href="${blistEnd }"> [next]</a>
-				</c:if>	
- 
-            </div>
-            <!-- // plan -->
-
-        </div><!-- // content end -->
-    </div><!-- // container end -->
-
 <jsp:include page="../common/footer.jsp" />
+
+<script>
+$(document).ready(function(){
+/*     $("#menubutton").click(function(){
+        $("#mySidenav").slideToggle();
+    }); */
+    
+    $("#menubutton").on("click", function(){
+    	$mySidenav = $("#mySidenav").attr("class");
+    	console.log($mySidenav);
+    	if($mySidenav == "on"){
+    		$("#mySidenav").removeClass("on");
+    		$(this).find("i").attr("class", "xi-angle-down");
+    	}else {
+    		$("#mySidenav").addClass("on");
+    		$(this).find("i").attr("class", "xi-angle-up");
+    	}
+    	
+    });
+    
+    
+});
+</script>
 
 </body>
 </html>

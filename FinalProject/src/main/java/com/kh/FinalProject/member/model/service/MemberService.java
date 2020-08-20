@@ -16,7 +16,7 @@ public interface MemberService {
 
 	Member searchPwd(Member m);
 
-	Member searchId(Member m);
+	ArrayList<Member> searchId(Member m);
 
 	int change(Member m, Member mb);
 
@@ -101,6 +101,10 @@ public interface MemberService {
 	int pCount(String id);
 
 	void deleteShar(Integer postNo);
+
+	int sCount(String id);
+
+	int accfriendsCount(String id);
 
 
 }

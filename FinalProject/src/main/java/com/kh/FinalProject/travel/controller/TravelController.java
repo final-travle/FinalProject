@@ -828,6 +828,130 @@ public class TravelController {
 	}
 	
 
+	
+	
+	@RequestMapping("planModifyForm2.do")
+	public ModelAndView planModify2(ModelAndView mv, @RequestParam("postNo") Integer postNo) throws Exception {
+
+        StringBuilder urlBuilder = new StringBuilder("http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("e4W6es0aH0BXtgcISZ6LWxPWhmWicUPytTmUJ72zTxJIubFnvgsVrPPGg%2B%2FgJ18tvp7J9W6Mfsih5TwbYosrEw%3D%3D (URL - Encode)", "UTF-8")); /*공공데이터포털에서 발급받은 인증키*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("20", "UTF-8")); /*한 페이지 결과수*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*현재 페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS (아이폰), AND (안드로이드), WIN (원도우폰), ETC*/
+        urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
+//        urlBuilder.append("&" + URLEncoder.encode("areaCode","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*지역코드, 시군구코드*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        
+        // 총 갯수 찾기
+        Pattern pattern = Pattern.compile("<totalCount>(.+?)</totalCount>");
+        Matcher matcher = pattern.matcher(sb);
+        matcher.find();
+        
+        // String > int 변환
+        String total = matcher.group(1);        
+        int tt =Integer.parseInt(total);
+        
+        System.out.println(sb);
+        
+        String[] nameArr = new String[tt];
+        String[] codeArr = new String[tt];
+        
+        
+//        System.out.println(tt);
+        
+    	// 이름값
+        Pattern nameTag = Pattern.compile("<name>(.+?)</name>");
+        Matcher ctname = nameTag.matcher(sb);
+        
+        // 지역코드
+        Pattern codeTag = Pattern.compile("<code>(.+?)</code>");
+        Matcher codeNo = codeTag.matcher(sb);
+
+        
+        int matchCount = 0;
+        
+        // 지역명 배열에 담기
+        while (ctname.find()) {
+        	String name = ctname.group(1);
+        	
+        	nameArr[matchCount] = name;
+        	
+//            System.out.println(matchCount + " : " + name);
+            matchCount++;
+        }
+
+        // 지역명 배열에 담기
+        matchCount = 0;	// 카운트 리셋
+        while (codeNo.find()) {
+        	String code = codeNo.group(1);
+        	
+        	codeArr[matchCount] = code;
+        	
+            matchCount++;
+        }
+        
+        ArrayList<City> city = new ArrayList<City>();
+        
+        for(int i = 0; i < nameArr.length; i++) {
+        	City ct = new City(nameArr[i],codeArr[i]);
+        	city.add(ct);
+        } 
+        
+       // 태그
+        ArrayList<Tag> tag = ts.getTagList();
+        
+        // 선택했던 여행지 얻어오기
+        ArrayList<Travel> tv = ts.selectTravelList(postNo);
+
+		Travel tLast = tv.get(tv.size() - 1);
+		
+		System.out.println(tLast.getNight());
+		
+		int dayNum = tLast.getNight();
+        // 선택한 태그 값 얻어오기
+        ArrayList<PostTag> pt = ts.getPostTagList(postNo);
+        
+		Board planOne = ts.selectPlan(postNo);
+		
+		mv.addObject("plan", planOne);
+        mv.addObject("tag", tag);
+        mv.addObject("pt", pt);
+        mv.addObject("tlist", tv);
+        mv.addObject("dayNum", dayNum);
+		mv.addObject("city", city);
+		mv.setViewName("travel/planModify2");
+		
+		
+		return mv;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("planModifyForm.do")
 	public ModelAndView planModify(ModelAndView mv, @RequestParam("postNo") Integer postNo) throws Exception {
 

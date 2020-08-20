@@ -211,7 +211,8 @@ text-align: center;
 <div id="memberinfo">
 <h1><span style="color: orange;"> ${loginUser.name }</span>님 어서오세요<br></h1>
 <h2>친구 : <span style="color: orange;">${fCount}</span>명<br>
-글 수 <span style="color: orange;"> ${pCount} </span>개</h2>
+글 수 <span style="color: orange;"> ${pCount} </span>개<br>
+공유 글 수 <span style="color: orange;"> ${sCount} </span>개 </h2>
 <h1 style="text-align: center; font-style : oblique;">INFOCHANGE</h1>
 <hr>
 </div>
@@ -227,14 +228,19 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
-  <form id="joinForm" method="post" action="mchange.do">
+    <br>
+  <form id="joinForm" name="join" method="post" action="mchange.do">
   <table id="logintable">
     <tbody>
     <tr>
@@ -458,8 +464,8 @@ text-align: center;
        <tr>
        <td id="inp" class="sb" colspan="2" >
        <div style="text-align : center;">
-            <input type="submit" id="idCheck"  class="colorBtn btn">
-         </div>
+         <input class="colorBtn btn" type="button" value="제출" id="submit_btn"  onclick="check();">
+                </div>
             </td>
             <td></td>
        </tr>
@@ -501,10 +507,106 @@ $(document).ready(function(){
     	
     });
     
+        
     
+    
+       
 });
-</script>
 
+
+function check(){
+	var f = document.join;
+	   
+	if (f.pwd.value == "") {
+        alert("비밀번호를 입력해주십시오");
+        f.pwd.focus();
+        
+        return false;
+    }
+
+if (f.pwd.value != f.pwd_check.value) {
+		 alert("비빌번호를 다르게 입력했습니다.");
+		f.pwd_check.select();
+    return false;
+}
+   
+   
+	if (f.name.value == "") {
+        alert("이름를 입력해주십시오");
+        f.name.focus();
+        
+        return false;
+    }
+if (f.nickname.value == "") {
+        alert("별명을 입력해주십시오");
+        f.nickname.focus();
+        
+        return false;
+    }
+if (f.email.value == "") {
+    alert("이메일을 입력해주십시오");
+    f.job.focus();
+    
+    return false;
+}
+if (f.phone.value == "") {
+    alert("핸드폰을 입력해주십시오");
+    f.phone.focus();
+    
+    return false;
+}
+
+if ($("select[name=year]").val() == "년") {
+    alert("생년월일을 입력해주십시오");
+    f.year.focus();
+    
+    return false;
+}
+if ($("select[name=mon]").val() == "월") {
+    alert("생년월일을 입력해주십시오");
+    f.mon.focus();
+    
+    return false;
+}
+if ($("select[name=day]").val() == "일") {
+    alert("생년월일을 입력해주십시오");
+    f.day.focus();
+    
+    return false;
+}
+
+
+  
+var objWrite3 = document.getElementsByName("tType");
+var count = 0;
+for(var i=0;i<objWrite3.length;i++){
+    if(objWrite3[i].checked == true){
+        count++;
+    }
+}
+if(count<=0){
+    alert("여행스타일을 설정해주십시오.");
+    return false;
+}
+
+
+var objWrite4 = document.getElementsByName("gender");
+var count = 0;
+for(var i=0;i<objWrite4.length;i++){
+    if(objWrite4[i].checked == true){
+        count++;
+    }
+}
+if(count<=0){
+    alert("성별을 설정해주십시오.");
+    return false;
+}else{
+	$("#joinForm").submit();	
+}
+
+}
+
+</script>
 
    <jsp:include page="../common/footer.jsp" />
  

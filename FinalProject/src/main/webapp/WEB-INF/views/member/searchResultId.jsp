@@ -41,13 +41,24 @@
     
     </style>
 <body>
+<jsp:include page="../common/header.jsp" />
+
     <div id="hansol1">
     <h1 id="h1">SEARCH RESULT</h2>
     <div id="hansol2">
-       <h3 id="h3"><c:out value="${result.name }님의 아이디는 ${result.id}입니다"/></h3>
+       <h3 id="h3"><c:out value="검색된 아이디는"  /> 
+       <c:forEach var="n" items="${result }">
+		${n.id }  
+	</c:forEach><c:out value="입니다"/></h3>
     </div>
     <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button> <button id="searchPwd" class="colorBtn btn" onclick="location.href='searchPwd.do'">비밀번호찾기 </button>
     </div>
+    <br>
+    <br>
+    <br>
+    
+    <jsp:include page="../common/footer.jsp" />
+    
 </body>
 
 </html>

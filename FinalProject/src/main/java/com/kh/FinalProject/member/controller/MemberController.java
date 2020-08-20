@@ -56,7 +56,7 @@ public class MemberController  {
 	private MemberService mService;
 	
 	@RequestMapping("minsert.do")
-	public String memberInsert(HttpServletRequest request, Model model) {
+	public String memberInsert(HttpServletResponse response,HttpServletRequest request, Model model) throws IOException {
 		Member m = new Member(request.getParameter("id"),
 							  request.getParameter("pwd"),
 							  request.getParameter("name"),
@@ -67,6 +67,7 @@ public class MemberController  {
 							  request.getParameter("email"),
 							  request.getParameter("phone"),
 							  "N");
+		System.out.println(m);
 		int result = mService.insertMember(m);
 		Ttype tp = new Ttype();
 		// 이제 서비스로 넘기자
@@ -81,7 +82,11 @@ public class MemberController  {
 			
 			return "member/login";				
 		}else {
-			throw new MemberException("회원 가입 실패!");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보를 확인해주세요.'); </script>");
+			out.flush();
+			return "member/memberJoin";
 		}
 		
 	}
@@ -356,7 +361,7 @@ public class MemberController  {
 		
 		
 		// 이제 서비스로 넘기자
-		Member result = mService.searchId(m);
+			ArrayList<Member> result = mService.searchId(m);
 		
 			if(result != null) {
 				model.addAttribute("result",result);
@@ -381,6 +386,11 @@ public class MemberController  {
 			Member loginUser = mService.loginMember(mb);
 			int fCount = mService.fCount(mb.getId());
 			int postCount = mService.pCount(mb.getId());
+			int sharedCount = mService.sCount(mb.getId());
+			model.addAttribute("sCount",sharedCount);
+
+			int accCount = mService.accfriendsCount(mb.getId());
+			model.addAttribute("accCount",accCount);
 			if(loginUser != null) {
 				model.addAttribute("member",loginUser);
 				model.addAttribute("fCount",fCount);
@@ -388,6 +398,9 @@ public class MemberController  {
 				return "member/mypageChange";
 			}else {
 				model.addAttribute("member",mb);
+				model.addAttribute("member",loginUser);
+				model.addAttribute("fCount",fCount);
+				model.addAttribute("pCount",postCount);
 				response.setContentType("text/html; charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('정보를 확인해주세요.'); </script>");
@@ -402,7 +415,13 @@ public class MemberController  {
 		public String mchange(Member m, Model model,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException {
 			Member mb = (Member) session.getAttribute("loginUser");// 여기해야됨
 			// 이제 서비스로 넘기자
+			
+			
 			int postCount = mService.pCount(mb.getId());
+			model.addAttribute("member",mb);
+			int sharedCount = mService.sCount(m.getId());
+			
+			model.addAttribute("pCount",postCount);
 			Ttype tp = new Ttype();
 			m.setBirth(request.getParameter("year")+request.getParameter("mon")+request.getParameter("day"));
 			m.setId(mb.getId());
@@ -413,6 +432,11 @@ public class MemberController  {
 			int result = mService.change(m,mb);
 			mService.deleteTtype(mb.getId());
 			int fCount = mService.fCount(mb.getId());
+			
+
+			int accCount = mService.accfriendsCount(m.getId());
+			model.addAttribute("accCount",accCount);
+			
 			for(int i=0; i<request.getParameterValues("tType").length;i++) {
 				mService.insertTtype(mb.getId(),request.getParameterValues("tType")[i],tp);
 				}
@@ -423,6 +447,7 @@ public class MemberController  {
 					return "home";
 				}else {
 					model.addAttribute("member",mb);
+					model.addAttribute("sCount",sharedCount);
 					model.addAttribute("fCount",fCount);
 					response.setContentType("text/html; charset=UTF-8");
 					PrintWriter out = response.getWriter();
@@ -464,7 +489,15 @@ public class MemberController  {
 			
 			return "redirect:home.do";
 		}
-	   
+	    
+	    @RequestMapping(value="logout2.do", method=RequestMethod.GET)
+		public String logout2(HttpSession session,SessionStatus status){
+			
+			status.setComplete();
+			
+			return "redirect:home.do";
+		}
+	   	   
 	    
 	    
 	    @RequestMapping("friends.do")
@@ -474,7 +507,12 @@ public class MemberController  {
 		
 
 			Member m = (Member) session.getAttribute("loginUser");
+			int sharedCount = mService.sCount(m.getId());
+			model.addObject("sCount",sharedCount);
+			int accCount = mService.accfriendsCount(m.getId());
+			model.addObject("accCount",accCount);
 			int postCount = mService.pCount(m.getId());
+			model.addObject("pCount",postCount);
 			String Search = noticeSearch;
 			if(Search != null ||Search!="") {
 				model.addObject("search", Search);	
@@ -554,6 +592,7 @@ public class MemberController  {
 				
 			}
 			
+			model.addObject("sCount",sharedCount);
 			model.addObject("pCount",postCount);
 				model.addObject("listCount",listCount);
 				model.addObject("fCount",fCount);
@@ -574,6 +613,11 @@ public class MemberController  {
 			Member m = (Member) session.getAttribute("loginUser");
 			int postCount = mService.pCount(m.getId());
 			int fCount = mService.fCount(m.getId());
+			int sharedCount = mService.sCount(m.getId());
+			model.addObject("sCount",sharedCount);
+
+			int accCount = mService.accfriendsCount(m.getId());
+			model.addObject("accCount",accCount);
 	    	String Search = noticeSearch;
 			if(Search != null || Search!="") {
 				model.addObject("search", Search);	
@@ -642,6 +686,9 @@ public class MemberController  {
     		public ModelAndView okfriends(ModelAndView model,HttpSession session,String id) throws IOException {
 					
 	        	Member m = (Member) session.getAttribute("loginUser");
+	        	int sharedCount = mService.sCount(m.getId());
+				model.addObject("sCount",sharedCount);
+				
 	        	int postCount = mService.pCount(m.getId());
 	        	int fCount = mService.fCount(m.getId());
 				ArrayList<Friends> fal = mService.friendsadd(id,m.getId());
@@ -655,7 +702,9 @@ public class MemberController  {
 				}
 				
 				ArrayList<Member> mal =new ArrayList<Member>(); //친구의 member 정보값 이거 이용
-				
+
+				int accCount = mService.accfriendsCount(m.getId());
+				model.addObject("accCount",accCount);
 				for(int i =0;i<al.size();i++) {
 					mal.add(mService.friendsInfo(al.get(i)));
 				}
@@ -678,11 +727,16 @@ public class MemberController  {
     		String Search=null;
     			Member m = (Member) session.getAttribute("loginUser");
     			int postCount = mService.pCount(m.getId());
+    			int sharedCount = mService.sCount(m.getId());
+    			model.addObject("sCount",sharedCount);
     			
     			int listCount = mService.getListCount(Search,m.getId());
 	        	System.out.println(id);
 				 mService.accfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
 				ArrayList<Friends> fal = mService.friendsadd(id,m.getId());
+
+				int accCount = mService.accfriendsCount(m.getId());
+				model.addObject("accCount",accCount);
 				ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 				for(int i=0;i<fal.size();i++) {
 					if(fal.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
@@ -718,17 +772,23 @@ public class MemberController  {
     		public ModelAndView dltaccfriends(ModelAndView model,HttpServletResponse response,HttpSession session,String id) throws IOException {
     		
     			Member m = (Member) session.getAttribute("loginUser");
+    			int fal = mService.dltfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
+    			int sharedCount = mService.sCount(m.getId());
+    			model.addObject("sCount",sharedCount);
+    			
     			int postCount = mService.pCount(m.getId());
     			int fCount = mService.fCount(m.getId());
-				int fal = mService.dltfriends(m.getId(),id); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
+				
 				ArrayList<Friends> fall = mService.friendsadd(id,m.getId());
+				int accCount = mService.accfriendsCount(m.getId());
+				model.addObject("accCount",accCount);
 				if(fal > 0) {
 					model.addObject("pCount",postCount);
 					model.addObject("falll",fall);
 					model.addObject("fCount",fCount);
 					model.setViewName("/member/accfriends");
 					
-				}{
+				}else{
 					System.out.println("삭제 실패");
 				}
 				return model;   	        				
@@ -741,7 +801,9 @@ public class MemberController  {
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int fCount = mService.fCount(m.getId());
 	    			int fal = 0;
-	    			
+
+	    			int accCount = mService.accfriendsCount(m.getId());
+	    			model.addObject("accCount",accCount);
 	    			if(m.getPwd().equals(pwd)) {
 	    			fal = mService.dltmember(m.getId(),pwd);	
 	    			} 
@@ -749,8 +811,13 @@ public class MemberController  {
 						mService.dltmemberfriends(m.getId());
 						mService.dltTime(m.getId());
 						model.addObject("fCount",fCount);
-						return "logout.do";
+						return "redirect:logout2.do";
 					}else {
+		    			response.setContentType("text/html; charset=UTF-8");
+						PrintWriter out = response.getWriter();
+						out.println("<script>alert('정보를 확인해주세요.'); </script>");
+						out.flush();
+
 						model.addObject("fCount",fCount);
 						return "mypageDelete.do";
 					}
@@ -761,7 +828,13 @@ public class MemberController  {
 	    		
 	            	Member m = (Member) session.getAttribute("loginUser");
 	    			int fCount = mService.fCount(m.getId());
-	    			
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+
+	    			int accCount = mService.accfriendsCount(m.getId());
+	    			model.addObject("accCount",accCount);
+					int postCount = mService.pCount(m.getId());
+					model.addObject("pCount",postCount);
 	    				
 	    				model.addObject("fCount",fCount);
 	    				model.setViewName("/member/mypageDelete");
@@ -775,15 +848,22 @@ public class MemberController  {
 	    		
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int postCount = mService.pCount(m.getId());
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+	    			
 					int fal = mService.refusefriends(m.getId(),deleteid); //내가 db에 내가 들어있는 친구 목록을 다뽑아 asde자리가 로그인을 한 사람의 아이디임
 					ArrayList<Friends> fall = mService.friendsadd(deleteid,m.getId());
 					int fCount = mService.fCount(m.getId());
+
+					int accCount = mService.accfriendsCount(m.getId());
+					model.addObject("accCount",accCount);
 					if(fal > 0) {
 						model.addObject("pCount",postCount);
 						model.addObject("falll",fall);
 						model.addObject("fCount",fCount);
-						model.setViewName("/member/accfriends");
-						
+						model.setViewName("redirect:friends.do");
+					}else{
+						System.out.println("실패");
 					}
 					return model;   	        				
 	    	}
@@ -796,7 +876,10 @@ public class MemberController  {
 	    			Member m = (Member) session.getAttribute("loginUser");
 	    			int postCount = mService.pCount(m.getId());
 	    			int fCount = mService.fCount(m.getId());
-	    	    	String Search = noticeSearch;
+	    			int sharedCount = mService.sCount(m.getId());
+	    			model.addObject("sCount",sharedCount);
+	    			
+	    			String Search = noticeSearch;
 	    			if(Search != null || Search!="") {
 	    				model.addObject("search", Search);	
 	    		    }
@@ -812,7 +895,9 @@ public class MemberController  {
 	    			int listCount = mService.getaddListCount(Search,m.getId());
 	    			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 	    			ArrayList<Member> mb = mService.allMember(m.getId(),Search,pi);//자기 자신을 제외한 나머지 회원을 불러옴
-	    		
+
+	    			int accCount = mService.accfriendsCount(m.getId());
+	    			model.addObject("accCount",accCount);
 	    			if(mb != null) {
 	    				model.addObject("pCount",postCount);
 	    				model.addObject("fCount",fCount);

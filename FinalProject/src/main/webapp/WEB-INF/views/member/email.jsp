@@ -42,6 +42,7 @@
 	</style>
 </head>
 <body>
+	<jsp:include page="../common/header.jsp" />
 	
 	 <br>
      <br>
@@ -61,7 +62,7 @@
   			<input type="hidden" name="member" value=${member.id } />
             <br>
             <div style="font-size: 12px; color: darkgrey">
-            	아이디를 모르시나요?
+            	인증번호를 다시 받으시겠습니까?
             <a href="searchPwd.do">재전송</a>
             </div>
             <br>
@@ -70,7 +71,8 @@
           	 <input class="colorBtn btn" type="submit" value="다음" id="nextbtn" style="font-size: 16px;">
         </form>
 	</div>
-
+<br>
+    <br>
 
 	<script>
 	
@@ -142,6 +144,7 @@
 
 	
 
+<jsp:include page="../common/footer.jsp" />
 
 	
 </body>
