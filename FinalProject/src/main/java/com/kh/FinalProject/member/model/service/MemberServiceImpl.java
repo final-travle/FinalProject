@@ -231,7 +231,7 @@ public class MemberServiceImpl implements MemberService {
 	public int dltfriends(String id, String string) {
 		// TODO Auto-generated method stub
 		Friends fr = new Friends();
-		fr.setfId(id);
+		fr.setfId(id); //내 아이디
 		fr.setUserId(string);
 		return mDao.dltfriends(fr);
 	}
@@ -461,6 +461,13 @@ public class MemberServiceImpl implements MemberService {
 	public int sCount(String id) {
 		// TODO Auto-generated method stub
 		return mDao.sCount(id);
+	}
+
+
+	@Override
+	public int accfriendsCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.accfriendsCount(id);
 	}
 
 

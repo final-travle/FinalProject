@@ -104,5 +104,7 @@ public interface MemberService {
 
 	int sCount(String id);
 
+	int accfriendsCount(String id);
+
 
 }

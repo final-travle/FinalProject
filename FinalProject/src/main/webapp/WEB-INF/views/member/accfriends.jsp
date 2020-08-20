@@ -140,7 +140,7 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
 	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
 	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>

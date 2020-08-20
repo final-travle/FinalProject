@@ -316,6 +316,11 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.sCount",id);
 	}
 
+	public int accfriendsCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("friends.accfriendsCount",id);
+	}
+
 	
 	
 	

@@ -117,7 +117,7 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
 	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
 	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
@@ -125,10 +125,11 @@ text-align: center;
    </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
-
+<br>
+<br>
     <div id="container" class="cf">
         <div id="content">
             
