@@ -45,6 +45,7 @@
 		<id property="co_no" column="CO_NO"/>
 		<result property="myId" column="MY_ID"/>
 		<result property="friendId" column="FRIEND_ID"/>
+		<result property="oto_notice" column="OTO_NOTICE"/>
 	</resultMap>
 	
 	<resultMap type="OneToOneMsg" id="otomsgResultSet">
@@ -113,7 +114,8 @@
 	<insert id="insertOneToOneRoom" parameterType="HashMap">
 		INSERT INTO ONETOONE_ROOM VALUES(SEQ_OTO.NEXTVAL
 																			 , #{myId}
-																			 , #{friendId})
+																			 , #{friendId}
+																			 , null)
 	</insert>
 	
 	<insert id="insertOneToOnemsg" parameterType="HashMap">
@@ -258,6 +260,19 @@
 		FROM ONETOONE_MESSAGE
 		WHERE CO_NO = #{co_no} AND CHAT_ID = #{loginUserid} AND READ_YN='N' AND MESSAGE_CONT != 'null'
 	</select>
+	
+	<update id="updateChatNotice" parameterType="string">
+		UPDATE ONETOONE_ROOM
+		SET OTO_NOTICE=#{notice}
+		WHERE CO_NO = #{co_no}
+	</update>
+	
+	<select id="selectChatNotice" resultType="string">
+		SELECT OTO_NOTICE
+		FROM ONETOONE_ROOM
+		WHERE CO_NO = #{co_no}
+	</select>
+	
 	
 </mapper>
 

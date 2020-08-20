@@ -12,6 +12,7 @@ public class OneToOne implements Serializable{
 	private String co_no;
 	private String myId;
 	private String friendId;
+	private String oto_notice;
 	
 	private String nickname;
 	private String profile;
@@ -22,12 +23,13 @@ public class OneToOne implements Serializable{
 	
 	public OneToOne() {}
 
-	public OneToOne(String co_no, String myId, String friendId, String nickname, String profile, int message_no,
-			String message_cont, String sent_date, int count) {
+	public OneToOne(String co_no, String myId, String friendId, String oto_notice, String nickname, String profile,
+			int message_no, String message_cont, String sent_date, int count) {
 		super();
 		this.co_no = co_no;
 		this.myId = myId;
 		this.friendId = friendId;
+		this.oto_notice = oto_notice;
 		this.nickname = nickname;
 		this.profile = profile;
 		this.message_no = message_no;
@@ -58,6 +60,14 @@ public class OneToOne implements Serializable{
 
 	public void setFriendId(String friendId) {
 		this.friendId = friendId;
+	}
+
+	public String getOto_notice() {
+		return oto_notice;
+	}
+
+	public void setOto_notice(String oto_notice) {
+		this.oto_notice = oto_notice;
 	}
 
 	public String getNickname() {
@@ -110,9 +120,9 @@ public class OneToOne implements Serializable{
 
 	@Override
 	public String toString() {
-		return "OneToOne [co_no=" + co_no + ", myId=" + myId + ", friendId=" + friendId + ", nickname=" + nickname
-				+ ", profile=" + profile + ", message_no=" + message_no + ", message_cont=" + message_cont
-				+ ", sent_date=" + sent_date + ", count=" + count + "]";
+		return "OneToOne [co_no=" + co_no + ", myId=" + myId + ", friendId=" + friendId + ", oto_notice=" + oto_notice
+				+ ", nickname=" + nickname + ", profile=" + profile + ", message_no=" + message_no + ", message_cont="
+				+ message_cont + ", sent_date=" + sent_date + ", count=" + count + "]";
 	}
 	
 }

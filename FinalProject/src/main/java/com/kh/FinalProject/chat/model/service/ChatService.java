@@ -63,4 +63,9 @@ public interface ChatService {
 
 	int ReadYnCount(HashMap<String, Object> dbmap);
 
+	int updateChatNotice(HashMap<String, String> map);
+
+	String selectChatNotice(String co_no);
+
+
 }

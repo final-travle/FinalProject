@@ -173,6 +173,20 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.ReadYnCount(dbmap);
 	}
 
+	@Override
+	public int updateChatNotice(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateChatNotice(map);
+	}
+
+	@Override
+	public String selectChatNotice(String co_no) {
+		// TODO Auto-generated method stub
+		return cDao.selectChatNotice(co_no);
+	}
+
+	
+
 	
 
 
