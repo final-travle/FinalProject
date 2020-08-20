@@ -811,7 +811,7 @@ public class MemberController  {
 						mService.dltmemberfriends(m.getId());
 						mService.dltTime(m.getId());
 						model.addObject("fCount",fCount);
-						return "logout2.do";
+						return "redirect:logout2.do";
 					}else {
 		    			response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out = response.getWriter();

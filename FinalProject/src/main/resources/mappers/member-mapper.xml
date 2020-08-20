@@ -149,7 +149,7 @@
 	
 	<update id="dltmember" parameterType="Member" >
 	UPDATE MEMBER SET WITHD_YN ='Y' 
-					 WHERE USER_ID=#{id} AND USER_PWD=#{pwd} AND WITHD_YN='N'
+					 WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
 	</update>
 	
 	<update id="loginTime" parameterType="string" >
