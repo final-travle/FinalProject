@@ -69,8 +69,170 @@
 				</c:if>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
+         <div class="commentSec">
+             <p class="commCount"></p>
+             <table>
+             <!-- 댓글 입력 테이블 -->
+             </table>
+             <div class="commInsert cf">
+                 <p>댓글 입력</p>
+                 <textarea rows="5" placeholder="리뷰에 예쁜 댓글을 달아주세요 :)"></textarea>
+                 <p class="btn colorBtn">댓글 등록</p>
+             </div>
+         </div><!-- // commentSec end -->
     </div><!-- // container end -->
 <script>
+	$(document).on("ready", function(){
+		commView();
+	});
+	
+	$(".commInsert p.btn").on("click", function(){
+		var commCont = $(".commInsert textarea").val();
+		
+		$.ajax({
+			url : "commInsert.do",
+			data : { "postType" : postType, "postNo" : postNo, "commCont" : commCont},
+			success : function(data){
+				if(data == "success"){
+					$(".commInsert textarea").val("");
+					commView();
+				}
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
+	
+
+	// 리뷰 리스트
+	function commView(){
+		$.ajax({
+			url : "commView.do",
+			data: { "postType" : postType, "postNo" : postNo },
+			dataType : "json",
+			success : function(data){
+				console.log(data[0]);
+				console.log(data[1]);
+				
+				$(".commCount").text("COMMENTS (" + (data[0].length + data[1].length) + ")");
+
+				$(".commentSec table").html("");
+				var $commTable = $(".commentSec table");
+				
+				if(data[0].length > 0){
+					for(var i in data[0]){
+						
+						var $commtr = $("<tr class='comm'>");
+						var $usertd = $("<td>");
+						var $userRound = $("<div class='userRound'>");
+						var $commp = $("<p>");
+						var $commConttd = $("<td>");
+						var $commdatetd = $("<td>");
+						
+						var $reCommTable = $("<table>");
+						
+						$commp.append(data[0][i].cmntWirter);
+						$userRound.append($commp);
+						$usertd.append($userRound);
+						
+						$commConttd.append(data[0][i].cmntContents);
+						
+						var nickname = data[0][i].cmntWirter;
+						
+						if("${loginUser.nickname }" == nickname){
+						var $commModify = $("<span class='commModify'>").text("수정");
+						$commConttd.append($commModify);
+							
+						}
+
+						
+		                <c:if test="${!empty sessionScope.loginUser}">
+						var $reCommt = $("<span class='reCommt'>").text("답글");
+						$commConttd.append($reCommt);
+						</c:if>
+						
+						$commdatetd.append(data[0][i].cmntDate);
+
+						$commtr.attr("id", data[0][i].cmntNo);
+						
+						$commtr.append($usertd);
+						$commtr.append($commConttd);
+						$commtr.append($commdatetd);
+						
+						
+						var $retr = $("<tr>");
+						var $retd = $("<td colspan='3'>");
+						
+						for(var j in data[1]){
+							if(data[1][j].cmntNo == data[0][i].cmntNo){
+								
+								var $recommtr = $("<tr class='reComm'>");
+								var $reusertd = $("<td>");
+								var $reuserRound = $("<div class='userRound'>");
+								var $recommp = $("<p>");
+								var $recommConttd = $("<td>");
+								var $recommdatetd = $("<td>");
+								
+								$recommp.append(data[1][j].rcmntWirter);
+								$reuserRound.append($recommp);
+								$reusertd.append($reuserRound);
+								
+
+								$recommConttd.append(data[1][j].rcmntContents);
+
+
+								var nickname = data[1][j].rcmntWirter;
+								
+								if("${loginUser.nickname }" == nickname){
+								var $recommModify = $("<span class='recommModify'>").text("수정");
+								$recommConttd.append($recommModify);
+								}
+								
+								$recommdatetd.append(data[1][j].rcmntDate);
+								
+
+								$recommtr.attr("id", data[1][j].rcmntNo);
+								
+								$recommtr.append($reusertd);
+								$recommtr.append($recommConttd);
+								$recommtr.append($recommdatetd);
+								
+								
+								
+								//$commTable.append($recommtr);
+								$reCommTable.append($recommtr);
+								$retd.append($reCommTable);
+								$retr.append($retd);
+								
+							}
+
+						}
+						$commTable.append($commtr);
+						$commTable.append($retr);
+					}
+				}else{
+					var $commtr = $("<tr>");
+					var $commtd = $("<td style='text-align:center; padding:20px 0'>").html("아직 댓글이 없어요 &nbsp; :<");
+					
+					$commtr.append($commtd);
+					$commTable.append($commtr);
+					
+					
+				}
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+	                      +"message: " + request.responseText
+	                      +"error: " + errorData);
+			}
+		});
+	}
+
+	
+	
 
 	$(".btns .delete").on("click", function(){
 		var result = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 글이 삭제됩니다.");
@@ -84,7 +246,123 @@
 		    
 		}
 	});
+	
+	// 코멘트 수정 버튼 생성
+	$(document).on("click", ".comm .commModify", function(){
+		var commCont = $(this).parent().text().replace("수정", "").replace("답글", "");
+				
+		var cmntBtn = $("<span class='cmntBtn'>").text("댓글 수정");
+		
+		var $insertTdArea = $("<textarea class='insertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(commCont);
+		
+		
+		var $thistr = $(this).closest("tr");
 
+		$thistr.children("td").eq(1).html($insertTdArea).append(cmntBtn);
+	});
+
+	// 코멘트 수정
+	$(document).on("click", ".comm .cmntBtn", function(){
+		var commCont = $(this).prev(".insertarea").val();
+
+		var cmntNo = $(this).closest("tr").attr("id");
+		
+		$.ajax({
+			url : "commModify.do",
+			data: { "postType" : postType, "postNo" : postNo, "commCont" : commCont, "cmntNo" : cmntNo },
+			success : function(data){
+				commView();
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
+
+
+	// 리코멘트 답글 버튼 생성
+	$(document).on("click", ".comm .reCommt", function(){
+		$(".recommtr").remove();
+		var $recommArea = $("<textarea class='recommArea'>").css({"width": "90%", "height" : "50px", "resize" : "none"});
+		var $recommtr = $("<tr class='recommtr'>");
+		var $recommtd = $("<td colspan='2'>").css("text-align", "center");
+
+		var $recmntBtn = $("<span class='recmntBtn'>").text("답글 달기");
+		var $trcmnttd = $("<td>").css("vertical-align", "middle");
+		
+		var $thistr = $(this).closest("tr");
+		
+		
+		$recommtd.append($recommArea);
+		$trcmnttd.append($recmntBtn);
+		$recommtr.append($recommtd);
+		$recommtr.append($trcmnttd);
+		$thistr.after($recommtr);
+		
+	});
+	
+	// 리코멘트 인서트
+	$(document).on("click", ".recommtr .recmntBtn", function(){
+		var recommCont = $(this).parent("td").prev("td").children(".recommArea").val();
+		var cmntNo = $(this).closest(".recommtr").prev(".comm").attr("id");
+		
+		$.ajax({
+			url : "recommentInsert.do",
+			data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo },
+			success : function(data){
+				if(data == "success"){
+					commView();
+				}
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
+
+	// 리코멘트 수정 버튼 생성
+	$(document).on("click", ".reComm .recommModify", function(){
+		var recommCont = $(this).parent().text().replace("수정", "");
+		var recmntBtn = $("<span class='recmntBtn'>").text("답글 수정");
+		
+		var $reinsertTdArea = $("<textarea class='reinsertarea'>").css({"width": "100%", "height" : "50px", "resize" : "none"}).text(recommCont);
+		
+
+		var $thistr = $(this).closest("tr");
+
+		$thistr.children("td").eq(1).html($reinsertTdArea).append(recmntBtn);
+	});
+
+	// 리코멘트 수정
+	$(document).on("click", ".reComm .recmntBtn", function(){
+		var recommCont = $(this).prev(".reinsertarea").val();
+
+		var recmntNo = $(this).closest("tr").attr("id");
+		
+		var cmntNo = $(this).closest("tr").parents("tr").prev().attr("id");
+
+		console.log(recmntNo);
+		console.log(cmntNo);
+		
+		
+		$.ajax({
+			url : "recommModify.do",
+			data: { "postType" : postType, "postNo" : postNo, "recommCont" : recommCont, "cmntNo" : cmntNo, "recmntNo" : recmntNo},
+			success : function(data){
+				commView();
+			},
+			error : function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+                          +"message: " + request.responseText
+                          +"error: " + errorData);
+			}
+		});
+	});
+	
 	userId = "${loginUser.id}";
 	postNo = ${board.postNo };
 	like = "${liked.likeYn }";

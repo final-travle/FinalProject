@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public Member searchId(Member m) {
+	public ArrayList<Member> searchId(Member m) {
 		// TODO Auto-generated method stub
 		return mDao.searchId(m);
 	}
@@ -214,7 +214,7 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return mDao.okfriendsCount(string);
 	}
-
+	
 
 	@Override
 	public ArrayList<Friends> friendsacc(String id, String string) {
@@ -231,7 +231,7 @@ public class MemberServiceImpl implements MemberService {
 	public int dltfriends(String id, String string) {
 		// TODO Auto-generated method stub
 		Friends fr = new Friends();
-		fr.setfId(id);
+		fr.setfId(id); //내 아이디
 		fr.setUserId(string);
 		return mDao.dltfriends(fr);
 	}
@@ -267,9 +267,9 @@ public class MemberServiceImpl implements MemberService {
 			FriendsPage fp = new FriendsPage();
 			fp.setSearch(search);
 			fp.setUserId(id);
-			al =mDao.realfriends(fp);			
+			al =mDao.realfriends(fp,pi);			
 		}else {
-			al=mDao.realfriends(id);
+			al=mDao.realfriends(id,pi);
 		}
 		
 		return al;
@@ -445,6 +445,29 @@ public class MemberServiceImpl implements MemberService {
 	public int pCount(String id) {
 		// TODO Auto-generated method stub
 		return mDao.pCount(id);
+	}
+
+
+
+
+	@Override
+	public void deleteShar(Integer postNo) {
+		// TODO Auto-generated method stub
+		mDao.deleteShar(postNo);
+	}
+
+
+	@Override
+	public int sCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.sCount(id);
+	}
+
+
+	@Override
+	public int accfriendsCount(String id) {
+		// TODO Auto-generated method stub
+		return mDao.accfriendsCount(id);
 	}
 
 

@@ -46,10 +46,14 @@
 		WHERE USER_ID=#{id} AND EMAIL = #{email}
 	</select>
 	
+	
+	
+	
 	<select id="pCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM POST
 		WHERE USER_ID=#{id}
+		AND POST_DEL_YN = 'N'
 	</select>
 	
 	
@@ -97,6 +101,14 @@
 		WHERE USER_ID=#{id} AND WITHD_YN='N'
 	</select>
 	
+	<select id="sCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM SHARED
+		WHERE SHARE_ID = #{id}
+	</select>
+	
+	
+	
 	<insert id="insertTtype" parameterType="Ttype">
 		INSERT INTO PREF_STYLE
 		VALUES(#{sye},#{id}) 
@@ -137,7 +149,7 @@
 	
 	<update id="dltmember" parameterType="Member" >
 	UPDATE MEMBER SET WITHD_YN ='Y' 
-					 WHERE USER_ID=#{id} AND USER_PWD=#{pwd} AND WITHD_YN='N'
+					 WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
 	</update>
 	
 	<update id="loginTime" parameterType="string" >
@@ -174,6 +186,12 @@
 	<delete id="deleteTtype" parameterType="string">
 	DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
 	</delete>
+	
+	<delete id="deleteShar" parameterType="_int">
+	DELETE FROM SHARED WHERE POST_NO=#{postNo} AND POST_TYPE='3'
+	</delete>
+	
+	
 	
 	<update id="adminMemberDelete" parameterType="string" >
 	UPDATE MEMBER SET WITHD_YN ='Y'  

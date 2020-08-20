@@ -171,11 +171,15 @@ text-align: center;
 	    <div class="menuSide"><p><a href="memberChange.do">내 정보 수정</a></p></div>
 	    <div class="menuSide"><p><a href="friends.do">친구정보</a></p></div>
 	    <div class="menuSide"><p><a href="friendsadd.do">친구추가</a></p></div>
-	    <div class="menuSide"><p><a href="accfriends.do">친구수락</a></p></div>
+	    <div class="menuSide"><p><a href="accfriends.do">친구수락(<span style="color: red;">${ accCount}</span>)</a></p></div>
 	    <div class="menuSide"><p><a href="mypageDelete.do">회원탈퇴</a></p></div>
+	    <c:if test="${sessionScope.loginUser.id ne 'master'}">
+	    <div class="menuSide"><p><a href="planList.do">플랜</a></p></div>
+	    <div class="menuSide"><p><a href="reviewListView.do">리뷰</a></p></div>
+   </c:if>
 	    <c:if test="${sessionScope.loginUser.id eq 'master'}">
 	    <div class="menuSide"><p><a href="adminMember.do">회원관리</a></p></div>
-	    <div class="menuSide"><p><a href="#">회원 글 관리</a></p></div>
+	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
    <div id="friendsbody"> 
@@ -187,7 +191,7 @@ text-align: center;
    </div>          
            <div id="friendsbodyInfo"> 
             <table id="friendstable" align="center" width="600" border="1">
-                    <tr>
+                    <tr  bgcolor="#bd9dec">
                         <th>ID</th> <th>이름</th> <th>닉네임</th> <th>연락처</th> <th>삭제</th>
                     </tr>
 
@@ -205,7 +209,7 @@ text-align: center;
             <c:url value="adminMemberinfo.do" var="url2">
 				<c:param name="id" value="${n.id }" />
 			</c:url>
-           <a href="${url2}"> ${n.id }</a></td>
+           <a href="#" onclick="window.open('${url2}','_blank','width=800, height=600'); return flase"> ${n.id }</a></td>
             <td align="center">${n.name }</td>
             <td align="center">${n.nickname }</td>
             <td align="center">${n.phone }</td>

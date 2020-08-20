@@ -360,6 +360,8 @@
 			
 			console.log(firstImg);
 		});
+
+		tcode = 0;
 		
          $(document).on("click", ".travelAWrap .rTravel li", function() {
         	 // dayNight 의 마지막 li의 값을 뽑아온다
@@ -368,7 +370,7 @@
 			var tvDataTit = $(this).find(".title").text();
 			XP = parseFloat($(this).find(".xpoint").val());
 			YP = parseFloat($(this).find(".ypoint").val());
-			tcode = $(this).find(".tcode").val();
+			//tcode = $(this).find(".tcode").val();
 
 			
 			var $li = $("<li>");

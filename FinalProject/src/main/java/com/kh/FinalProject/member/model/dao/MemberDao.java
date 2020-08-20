@@ -38,9 +38,9 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.searchPwd",m);
 	}
 
-	public Member searchId(Member m) {
+	public ArrayList<Member> searchId(Member m) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("memberMapper.searchId",m);
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.searchId",m);
 	}
 
 	public int change(Member m) {
@@ -176,14 +176,19 @@ public class MemberDao {
 
 	
 	
-	public ArrayList<Friends> realfriends(FriendsPage fp) {
+	public ArrayList<Friends> realfriends(FriendsPage fp,PageInfo pi) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp);
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends",fp,rowBounds);
 	}
 
-	public ArrayList<Friends> realfriends(String id) {
+	public ArrayList<Friends> realfriends(String id,PageInfo pi) {
+		
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends2",id);
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("friends.realfriends2",id,rowBounds);
 	}
 
 	public int loginTime(String id) {
@@ -298,6 +303,22 @@ public class MemberDao {
 	public int pCount(String id) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("memberMapper.pCount",id);
+	}
+
+
+	public void deleteShar(Integer postNo) {
+		// TODO Auto-generated method stub
+		sqlSessionTemplate.delete("memberMapper.deleteShar",postNo);
+	}
+
+	public int sCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.sCount",id);
+	}
+
+	public int accfriendsCount(String id) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("friends.accfriendsCount",id);
 	}
 
 	

@@ -162,6 +162,7 @@
 		FROM TRAVEL
 		WHERE POST_TYPE = '4'
 		AND POST_NO = #{postNo}
+		ORDER BY T_CODE
 	</select>
 	
 	<select id="getPostTagList" parameterType="_int" resultMap="postTagResultSet">

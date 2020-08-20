@@ -141,4 +141,20 @@ public class ChatDao {
 		return sqlSessionTemplate.insert("chatmapper.insertOpenchatSendImage",dbmap);
 	}
 
+	public int ReadYnCount(HashMap<String, Object> dbmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("chatmapper.ReadYnCount",dbmap);
+	}
+
+	public int updateChatNotice(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateChatNotice",map);
+	}
+
+	public String selectChatNotice(String co_no) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("chatmapper.selectChatNotice", co_no);
+	}
+
+
 }

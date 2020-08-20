@@ -20,7 +20,7 @@
         <div class="footerCont">
             <p>회사명:IREVIEW / 대표:조성균 / 개인정보관리책임자:조한솔 / 고객센터:010-8478-5134 / 이메일:&nbsp;loveJMOOD@rotate(800deg).com</p>
             <p>사업자등록번호:419-87-00807 / 통신판매업신고:제 2017-서울강남-2273호 / 주소: NULL</p>
-            <p class="copyright">Copyright 2020 name All Rights Reserved. Design by SEO-YOON</p>
+            <p class="copyright">Copyright 2020 IREVIEW All Rights Reserved. Design by SEO-YOON</p>
 
         </div> <!-- // footerCont end -->
     </footer>

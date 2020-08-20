@@ -313,7 +313,10 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 <input type="checkbox" id="modal1" checked>
 <div class="friend_modal">
 	<div class="text">
- 
+		 <div id="backArea" style="position:absolute;top:10px;left:10px;width:40px;height:40px;background:white;border-radius:50%;">
+				<img src="${pageContext.request.contextPath}/resources/images/back.png" title="나가기"
+								 style='width:40px;height:40px;cursor:pointer;' onclick="history.go(-1);">
+			</div>
 <div id="container">
 	<div id="chat" class="chat">
 	
@@ -341,14 +344,14 @@ input#SendImage_modal[type=checkbox]:checked ~ .SendImage_modal {
 					<div class='interval'>
 						<img src="${pageContext.request.contextPath}/resources/profile/${crmsg.profile}"
 						style='width:40px;height:40px;border-radius:40%;float:left;'>
-						<p style='margin-top:-5px;float:left;'>&nbsp;${crmsg.nickname }</p>
+						<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;${crmsg.nickname }</p>
 						<c:if test="${crmsg.sent_image ne null }">
-							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<strong class='a' style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
 							<img src="${pageContext.request.contextPath }/resources/ChatroomSendImage/${crmsg.sent_image}"
-							style="width:150px;height:150px;margin-top:10px;">&nbsp;</strong>&nbsp;
+							style="width:150px;margin-top:10px;cursor:pointer;">&nbsp;</strong>&nbsp;
 						</c:if>
 						<c:if test="${crmsg.sent_image eq null }">
-							<strong class='a' style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
+							<strong class='a' style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;
 							${crmsg.chat_content }&nbsp;</strong>&nbsp;
 						</c:if>
 					</div>
@@ -565,10 +568,10 @@ function submit_SendImage_modal(){
 					printHTML += "<div class='interval'>";
 					printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 											+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
-											+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-											+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+											+"<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+											+"<strong class='a'style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 											+"<img src='${pageContext.request.contextPath}/resources/OpenChatroomSendImage/" + image 
-											+ "' style='width:150px;height:150px;margin-top:10px;'>"
+											+ "' style='width:150px;margin-top:10px;cursor:pointer;'>"
 											+"&nbsp;</strong>";
 					printHTML += "</div>";
 					printHTML += "</div>";
@@ -634,8 +637,8 @@ function submit_SendImage_modal(){
 				printHTML += "<div class='interval'>";
 				printHTML += "<img src='${pageContext.request.contextPath}/resources/profile/"+ profile
 										+"' style='width:40px;height:40px;border-radius:40%;float:left;'>" 
-										+"<p style='margin-top:-5px;float:left;'>&nbsp;&nbsp;"+ sessionid +"</p>"
-										+"<strong class='a'style='margin-left:-23px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
+										+"<p style='margin-top:-5px;float:left;width:23px;overflow:visible;white-space:nowrap;'>&nbsp;&nbsp;"+ sessionid +"</p>"
+										+"<strong class='a'style='margin-left:-10px;float:left;margin-top:15px;max-width:200px;' id='othermsg'>&nbsp;"
 										+message+"&nbsp;&nbsp;</strong>";
 				printHTML += "</div>";
 				printHTML += "</div>";

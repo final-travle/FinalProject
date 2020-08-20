@@ -120,7 +120,7 @@
 <body>
 <jsp:include page="../common/header.jsp" />
 
-   <form id="joinForm" method="post" action="minsert.do">
+   <form id="joinForm" name="join" method="post" action="minsert.do">
             <h2 id="h2">JOIN MEMBER</h2>
             <h5 id="hh5">*은 반드시 적어야 하는 항목</h5>
             <table id="logintable">
@@ -366,7 +366,7 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check1" name = "agree_chk" class="infoBox">
                         <label>(필수)이용약관</label>
-                        <lable><a href="javascript:windowopenPopup();">전체보기</a></lable>
+                        <lable><a href="javascript:windowopenPopup();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                
@@ -374,7 +374,7 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check2" name="agree_chk" class="infoBox">
                         <label>(필수)개인정보 수집 및 이용</label>
-                        <lable><a href="javascript:windowopenPopup2();">전체보기</a></lable>
+                        <lable><a href="javascript:windowopenPopup2();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                    
@@ -382,19 +382,19 @@
                     <li style="list-style: none;">
                         <input type="checkbox" id="check3" name="agree_chk" class="infoBox" >
                         <label>(필수)14세 이상입니다. *회원가입은 만 14세 이상부터 가능합니다.</label>
-                         <lable><a href="javascript:windowopenPopup3();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup3();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check4" value="N" name="alarm_YN" class="infoBox">
                         <label>(선택)정보/이벤트 메일 수신에 동의합니다.</label>
-                         <lable><a href="javascript:windowopenPopup4();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup4();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <li style="list-style: none;">
                         <input type="checkbox" id="check5" value="N" name="agree_chk" class="infoBox">
                         <label>(선택)정보/이벤트 SMS 수신에 동의합니다.</label>
-                         <lable><a href="javascript:windowopenPopup5();">전체보기</a></lable>
+                         <lable><a href="javascript:windowopenPopup5();" style="color:#bd9dec; ">전체보기</a></lable>
                     </li>
                     <br>
                     <dev style="font-size: 10px; color: lightgray;">*선택 약관 미동의시 포인트, 할인 혜택 등 추가 정보 수신 불가</dev>
@@ -402,11 +402,14 @@
             </ul>
             <br><br><br><br><br>
             <div style="text-align: center;">
-                <input type="button" value="회원가입" id="submit_btn" style="width: 90px; height: 40px; color: white; background: darkgrey; border-radius: 7px;" onclick="check();">
+                <input class="colorBtn btn" type="button" value="회원가입" id="submit_btn"  onclick="check();">
                 
-                <input type="button" value="취소" id="cancel" onclick=cancle(); style="width: 90px; height: 40px; color: black; background-color: lightgray; border-radius: 7px;">
+                <input class="colorBtn btn" type="button" value="취소" id="cancel" onclick="location.href='home.do'" >
             </div>        
         </form>
+        
+     <jsp:include page="../common/footer.jsp" />
+        
         <script>
         $(function(){
          $("#userId").on("keyup",function(){
@@ -417,8 +420,7 @@
                $("#idDuplicateCheck").val(0);
                
                return;   
-               // 애초에 4글자가 안되게 아이디를 쓰면 ajax가 실행되지 않고
-            
+               // 애초에 4글자가 안되게 아이디를 쓰면 ajax가 실행되지 않고        
             }
             
             $.ajax({
@@ -472,7 +474,103 @@
            
            // 필수동의 체크 여부
             function check(){
-              
+            	var f = document.join;
+         	   
+            	if (f.pwd.value == "") {
+                    alert("비밀번호를 입력해주십시오");
+                    f.pwd.focus();
+                    
+                    return false;
+                }
+
+	if (f.pwd.value != f.pwd_check.value) {
+           		 alert("비빌번호를 다르게 입력했습니다.");
+            		f.pwd_check.select();
+ 	           return false;
+        }
+        	   
+        	   
+            	if (f.name.value == "") {
+                    alert("이름를 입력해주십시오");
+                    f.name.focus();
+                    
+                    return false;
+                }
+        	if (f.nickname.value == "") {
+                    alert("별명을 입력해주십시오");
+                    f.nickname.focus();
+                    
+                    return false;
+                }
+
+        	  
+        	var objWrite3 = document.getElementsByName("tType");
+        	var count = 0;
+        	for(var i=0;i<objWrite3.length;i++){
+        	    if(objWrite3[i].checked == true){
+        	        count++;
+        	    }
+        	}
+        	if(count<=0){
+        	    alert("여행스타일을 설정해주십시오.");
+        	    return false;
+        	}
+
+        	
+        	var objWrite4 = document.getElementsByName("gender");
+        	var count = 0;
+        	for(var i=0;i<objWrite4.length;i++){
+        	    if(objWrite4[i].checked == true){
+        	        count++;
+        	    }
+        	}
+        	if(count<=0){
+        	    alert("성별을 설정해주십시오.");
+        	    return false;
+        	}
+
+        	
+
+   if (f.job.value == "") {
+                    alert("직업을 입력해주십시오");
+                    f.job.focus();
+                    
+                    return false;
+                }
+if (f.email.value == "") {
+                    alert("이메일을 입력해주십시오");
+                    f.job.focus();
+                    
+                    return false;
+                }
+if (f.phone.value == "") {
+                    alert("핸드폰을 입력해주십시오");
+                    f.phone.focus();
+                    
+                    return false;
+                }
+
+if ($("select[name=year]").val() == "년") {
+                    alert("생년월일을 입력해주십시오");
+                    f.year.focus();
+                    
+                    return false;
+                }
+if ($("select[name=mon]").val() == "월") {
+                    alert("생년월일을 입력해주십시오");
+                    f.mon.focus();
+                    
+                    return false;
+                }
+if ($("select[name=day]").val() == "일") {
+                    alert("생년월일을 입력해주십시오");
+                    f.day.focus();
+                    
+                    return false;
+                }
+
+
+        	   
             if($("#idDuplicateCheck").val()==0){
                 alert("사용 가능한 아이디를 입력해 주세요.");
                 $("#userId").focus();   
@@ -482,7 +580,6 @@
                    $("#joinForm").submit();
                 }
             }
-            // 회원가입 실패
              <%--  <%if(msg != null){%>
                alert("<%=msg%>");
              <%}%>
@@ -542,7 +639,7 @@
                     var value = $("#userPwd").val();
                     var reg = /^[a-z0-9]{6,18}$/;
                     if(!reg.test(value)){
-                        alert("영문자와 숫자로 6글자 이상 12글자 이하여야 합니다.");
+                        alert("영문자와 숫자로 6글자 이상 18글자 이하여야 합니다.");
                         $("#userPwd").focus().val('');
                     }
                 });
@@ -593,7 +690,7 @@
         
                  });   
               
-
+        
                 
                
                    

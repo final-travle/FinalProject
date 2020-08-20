@@ -3,6 +3,7 @@ package com.kh.FinalProject.chat.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -346,8 +348,12 @@ public class ChatController {
 					  otomsg=cService.selectMessageList(oto.getCo_no());
 					  System.out.println("메시지목록 = " + otomsg);
 					  
+					  String notice = cService.selectChatNotice(oto.getCo_no());
+					  System.out.println("insertonetooneChatroom.do 에서의 notice = " + notice);
+					  
 					  session.setAttribute("co_no", oto.getCo_no());
 					  session.setAttribute("friendId", oto.getFriendId());
+					  mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg).setViewName("chat/oneToOneDetail");
 				  }else if(oto == null) {
@@ -355,8 +361,12 @@ public class ChatController {
 					  otomsg2=cService.selectMessageList2(oto2.getCo_no());
 					  System.out.println("메시지목록 = " + otomsg2);
 					  
+					  String notice = cService.selectChatNotice(oto2.getCo_no());
+					  System.out.println("insertonetooneChatroom.do 에서의 notice = " + notice);
+					  
 					  session.setAttribute("co_no", oto2.getCo_no());
 					  session.setAttribute("friendId", oto2.getFriendId());
+					  mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 					  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg2).setViewName("chat/oneToOneDetail");
 				  }
@@ -384,11 +394,13 @@ public class ChatController {
 			  otomsg=cService.selectMessageList(co_no);
 			  System.out.println("메시지목록 = " + otomsg);
 			  
+			  String notice = cService.selectChatNotice(co_no);
 			  
 			  oto.setCo_no(co_no);
 			  oto.setFriendId(friendId);
 				System.out.println("방번호  : " + oto.getCo_no());
 				
+				mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 				mv.addObject("oto", oto).setViewName("chat/oneToOneDetail");
 				mv.addObject("otomsg",otomsg).setViewName("chat/oneToOneDetail");
 				
@@ -462,6 +474,7 @@ public class ChatController {
 	  @RequestMapping("SaveSendImage.do")
 		  public void SaveSendImage(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
 				@RequestParam(value="ChatroomSendImage", required=false) MultipartFile file) throws IOException {
+		  
 		  
 		String sendImageName = saveFile2(file, request);
 		
@@ -583,7 +596,34 @@ public class ChatController {
 			return sendImageName;
 		}
 	  
-	  
+	  @RequestMapping(value = "updateChatNotice.do",produces ="application/text; charset=utf8")
+	  public void updateChatNotice(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+				@RequestParam(value="notice", required=false) String notice, String co_no) throws IOException {
+		  
+		  System.out.println("공지방번호 = " + co_no);
+		  System.out.println("공지내용 = " + notice);
+		  
+		  HashMap <String, String> map = new HashMap<>();
+		  map.put("co_no", co_no);
+		  map.put("notice", notice);
+		  
+		  int updateNotice = cService.updateChatNotice(map);
+		  
+		  PrintWriter out = response.getWriter();
+		  
+		  if(updateNotice > 0) {
+			  	String currentNotice = cService.selectChatNotice(co_no);
+			  	URLEncoder.encode(currentNotice , "UTF-8");
+			  	out.print(currentNotice);
+				out.flush();
+				out.close();
+		  }else {
+			  out.print("공지 등록 실패");
+				out.flush();
+				out.close();
+		  }
+		  
+	  }
 	  
 	  
 }
