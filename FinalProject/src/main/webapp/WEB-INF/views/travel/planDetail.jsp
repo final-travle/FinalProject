@@ -58,15 +58,16 @@
             </div><!-- // leftSelBox -->
             <div class="rightBox">
 				<div id="map"></div>
+				<div class="btns">
             	<c:if test="${loginUser.id eq board.userId}">
 					<c:url var="planModifyForm" value="planModifyForm.do">
 						<c:param name="postNo" value="${board.postNo }"/>
 					</c:url>
-				<div class="btns">
 					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
 					<a href="#none" class="btn delete">삭제</a>
-				</div>
 				</c:if>
+					<a onclick="setBounds()" class="btn allViewBtn">전체보기</a>
+				</div>
             </div><!-- // rightMapBox -->
         </div><!-- // wrap end -->
          <div class="commentSec">
@@ -502,6 +503,19 @@
 		});
 	});
 
+	
+
+	
+    mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+    mapOption = { 
+        center: new kakao.maps.LatLng(37.497978, 127.027524), // 지도의 중심좌표
+        level: 7 // 지도의 확대 레벨
+    };
+
+    map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+    bounds = new kakao.maps.LatLngBounds();  
+	
+	
 	$(document).on("ready", function(){
       	// 마커를 표시할 위치와 title 객체 배열입니다 
      	var positions = [];
@@ -537,27 +551,13 @@
 				case '5' : pef.push(str); break;
 				case '6' : peg.push(str); break;
 			}
-			
-        
+		
 			positions.push(str);
 
 		</c:forEach>
 
-		console.log(posex);
-       
-       
-		
 		colors = ['#bc2626', '#9726bc', '#5726bc', '#263ebc', '#267ebc', '#26bcac', '#3bbc26'];
 
-		
-           var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-           mapOption = { 
-               center: new kakao.maps.LatLng(37.497978, 127.027524), // 지도의 중심좌표
-               level: 7 // 지도의 확대 레벨
-           };
-
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-         
 
         // 마커 이미지의 이미지 주소입니다
         var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -584,6 +584,7 @@
 			    linePath = [];
 				   for(var k = 0; k < posex[i].length; k++){
 					   linePath.push(posex[i][k].latlng);
+					   bounds.extend(posex[i][k].latlng);
 				   }
 				
 				 // 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
@@ -605,6 +606,13 @@
 		}
 
           });
+	
+
+	function setBounds() {
+	    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+	    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+	    map.setBounds(bounds);
+	}
 </script>
             
 <jsp:include page="../common/footer.jsp" />
