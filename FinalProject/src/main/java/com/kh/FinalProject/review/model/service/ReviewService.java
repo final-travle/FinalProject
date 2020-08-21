@@ -9,6 +9,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 public interface ReviewService {
 
@@ -55,5 +56,7 @@ public interface ReviewService {
 	int ModifyTag(PostTag tg);
 
 	int reviewDelete(int postNo);
+
+	Vote voteView(LikedPost lp);
 
 }

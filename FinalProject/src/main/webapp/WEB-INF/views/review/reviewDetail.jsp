@@ -23,6 +23,7 @@
 	.reviewContents {  border-top:1px solid #ddd; box-sizing:border-box; line-height:1.8; margin-bottom:30px; }
 	.reviewContents img { margin:10px 0; max-width: 1200px; }
 	.reviewContents .rvTitle { font-size:26px; background:#bd9dec; color:#fff; text-align:center; padding:10px 0; margin-bottom:30px; }
+	.commInsert .not_login { text-align:center; padding:30px 0 20px; border-top:1px solid #666; }
 </style>
 </head>
 <body>
@@ -86,9 +87,15 @@
              <!-- 댓글 입력 테이블 -->
              </table>
              <div class="commInsert cf">
-                 <p>댓글 입력</p>
+                 <c:if test="${!empty sessionScope.loginUser}">
+                 <p>댓글 입력</p>                 
                  <textarea rows="5" placeholder="리뷰에 예쁜 댓글을 달아주세요 :)"></textarea>
                  <p class="btn colorBtn">댓글 등록</p>
+                 </c:if>
+                 
+                 <c:if test="${empty sessionScope.loginUser}">
+                 <p class="not_login">로그인을 하시면 댓글을 달 수 있습니다.</p>
+                 </c:if>
              </div>
          </div><!-- // commentSec end -->
     </div><!-- // container end -->
@@ -102,6 +109,32 @@ console.log(postType);
 $(document).on("ready", function(){
 	commView();
 });
+
+// 300자 넘어가면 자르는 함수
+$(document).on("keyup", ".commInsert", function() {
+	var commVal = $(".commInsert textarea").val();
+	var commCount = commVal.length;
+
+	var cut = 300 - commCount;
+	if(commCount > 300){
+		var cutStr = commVal.slice(0, cut);
+		$(".commInsert textarea").val(cutStr);
+		alert("댓글은 300자까지 입력 가능합니다.");
+	}
+});
+
+$(document).on("keyup", ".insertarea, .recommArea, .reinsertarea", function() {
+	var commVal = $(this).val();
+	var commCount = commVal.length;
+
+	var cut = 300 - commCount;
+	if(commCount > 300){
+		var cutStr = commVal.slice(0, cut);
+		$(this).val(cutStr);
+		alert("댓글은 300자까지 입력 가능합니다.");
+	}
+});
+
 
 $(".commInsert p.btn").on("click", function(){
 	var commCont = $(".commInsert textarea").val();
@@ -154,7 +187,7 @@ function commView(){
 					$userRound.append($commp);
 					$usertd.append($userRound);
 					
-					$commConttd.append(data[0][i].cmntContents);
+					$commConttd.text(data[0][i].cmntContents);
 					
 					var nickname = data[0][i].cmntWirter;
 					
@@ -197,7 +230,7 @@ function commView(){
 							$reusertd.append($reuserRound);
 							
 
-							$recommConttd.append(data[1][j].rcmntContents);
+							$recommConttd.text(data[1][j].rcmntContents);
 
 
 							var nickname = data[1][j].rcmntWirter;

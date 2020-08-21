@@ -54,6 +54,12 @@
 		<result property="likeYn" column="LIKE_YN" />
 	</resultMap>
 
+	<resultMap type="Vote" id="votePostResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="userId" column="USER_ID" />
+		<result property="postYn" column="POST_YN" />
+	</resultMap>
 	
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -233,4 +239,11 @@
 		AND POST_NO = #{postNo}
 	</update>
 	
+	<select id="voteView" parameterType="Vote" resultMap="votePostResultSet">
+		SELECT *
+		FROM VOTE
+		WHERE POST_TYPE = '4'
+		AND POST_NO = #{postNo}
+        AND USER_ID = #{userId}
+	</select>
 </mapper>
