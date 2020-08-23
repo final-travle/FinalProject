@@ -46,13 +46,11 @@ ul.grid li .total:after { position:absolute; display:block; content:""; clear:bo
 	                    	<c:forEach var="mb" items = "${mb }">
 		                    	<c:if test = "${mb.postNo eq liPostNo}">
 		                    		<p class="total">
-			                    		<i class='xi-heart'></i> <c:out value="${mb.voteTotal } " />
-			                    		<i class='xi-star'></i> <c:out value="${mb.likeTotal } " />
+			                    		<i class='xi-heart'></i> <c:out value="${mb.likeTotal } " />
+			                    		<i class='xi-star'></i> <c:out value="${mb.voteTotal } " />
 		                    		</p>
 		                    	</c:if>
                     		</c:forEach>
-	                    
-	                    
 	                    </p>
 	                </li>
                 </c:forEach>
