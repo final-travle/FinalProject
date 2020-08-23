@@ -68,11 +68,13 @@ public class TravelController {
 		
 		ArrayList<Board> list = ts.selectList(pi2);
 		ArrayList<PostTag> tl = ts.selectListTag();
+		ArrayList<MapBoard> mb = ts.likeVoteView();
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
 			mv.addObject("list", list);
 			mv.addObject("pi", pi2);
+			mv.addObject("mb", mb);
 			mv.setViewName("travel/planListView");
 		}else {
 			
@@ -444,7 +446,7 @@ public class TravelController {
 		// 로그인 된 유저 아이디 가져온다.
 		Member mb = (Member) session.getAttribute("loginUser");
 		
-		String userId = mb.getId();
+		String userId = mb.getNickname();
 		
 		
 		// json에 붙어 온 firstImg 를 저장한다.

@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+ul.grid li { position:relative; }
+ul.grid li .total { position:absolute; top:0; right:0; background:#bd9dec; color:#fff; padding:10px; }
+ul.grid li .total:before { position:absolute; display:block; content:""; clear:both; border-left:10px solid transparent; border-top:10px solid #bd9dec; border-right:10px solid #bd9dec; border-bottom:10px solid transparent; top:0; left:-20px; }
+ul.grid li .total:after { position:absolute; display:block; content:""; clear:both; border-left:10px solid transparent; border-top:10px solid transparent; border-right:10px solid #bd9dec; border-bottom:10px solid #bd9dec; top:21px; left:-20px; }
+</style>
 <body>
 <jsp:include page="../common/header.jsp" />
 
@@ -28,13 +34,21 @@
 	                    <p class="img">
 	                        <a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
 	                    </p>
-	                    <p class="title">${pl.title }</p>
-	                    <p>${pl.userId }</p>
+	                    <p class="title"><a href="${planDetail }">${pl.title }</a></p>
+	                    <p class="userName">${pl.userId }</p>
 	                    <p class="cont">
 	                    	<c:set var="liPostNo" value="${pl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
 		                    	<c:if test = "${tl.postNo eq liPostNo}">
 			                    		<c:out value="# ${tl.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>
+	                    	<c:forEach var="mb" items = "${mb }">
+		                    	<c:if test = "${mb.postNo eq liPostNo}">
+		                    		<p class="total">
+			                    		<i class='xi-heart'></i> <c:out value="${mb.voteTotal } " />
+			                    		<i class='xi-star'></i> <c:out value="${mb.likeTotal } " />
+		                    		</p>
 		                    	</c:if>
                     		</c:forEach>
 	                    

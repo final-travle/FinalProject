@@ -59,4 +59,6 @@ public interface ReviewService {
 
 	Vote voteView(LikedPost lp);
 
+	ArrayList<MapBoard> likeVoteView();
+
 }

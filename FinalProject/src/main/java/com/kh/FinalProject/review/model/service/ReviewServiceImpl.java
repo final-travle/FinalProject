@@ -136,5 +136,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return rd.likeVoteView(lp);
 	}
 
+	@Override
+	public ArrayList<MapBoard> likeVoteView() {
+		return rd.likeVoteView();
+	}
+
 
 }

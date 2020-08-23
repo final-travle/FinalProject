@@ -246,4 +246,10 @@
 		AND POST_NO = #{postNo}
         AND USER_ID = #{userId}
 	</select>
+	
+	<select id="likeViewList" resultMap="mapBoardResultSet">
+		SELECT *
+		FROM MAP_BOARD
+		WHERE POST_TYPE = '4'
+	</select>
 </mapper>

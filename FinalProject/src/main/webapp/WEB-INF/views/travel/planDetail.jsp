@@ -96,11 +96,11 @@
 	// 300자 넘어가면 자르는 함수
 	$(document).on("keyup", ".commInsert", function() {
 		var commVal = $(".commInsert textarea").val();
-		var commCount = commVal.length;
+		commCount = commVal.length;
 
 		var cut = 300 - commCount;
 		if(commCount > 300){
-			var cutStr = commVal.slice(0, cut);
+			cutStr = commVal.slice(0, cut);
 			$(".commInsert textarea").val(cutStr);
 			alert("댓글은 300자까지 입력 가능합니다.");
 		}
@@ -108,11 +108,11 @@
 
 	$(document).on("keyup", ".insertarea, .recommArea, .reinsertarea", function() {
 		var commVal = $(this).val();
-		var commCount = commVal.length;
+		commCount = commVal.length;
 
 		var cut = 300 - commCount;
 		if(commCount > 300){
-			var cutStr = commVal.slice(0, cut);
+			cutStr = commVal.slice(0, cut);
 			$(this).val(cutStr);
 			alert("댓글은 300자까지 입력 가능합니다.");
 		}
@@ -121,6 +121,10 @@
 
 	$(".commInsert p.btn").on("click", function(){
 		var commCont = $(".commInsert textarea").val();
+		
+		if(commCount > 300){
+			commCont = cutStr;
+		}
 		
 		$.ajax({
 			url : "commInsert.do",
@@ -297,6 +301,7 @@
 	// 코멘트 수정
 	$(document).on("click", ".comm .cmntBtn", function(){
 		var commCont = $(this).prev(".insertarea").val();
+		console.log("commCont : " + commCont);
 
 		var cmntNo = $(this).closest("tr").attr("id");
 		

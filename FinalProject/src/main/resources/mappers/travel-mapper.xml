@@ -508,6 +508,11 @@
 		AND R_CMNT_NO = #{rcmntNo}
 	</update>
 	
+	<select id="likeViewList" resultMap="mapBoardResultSet">
+		SELECT *
+		FROM MAP_BOARD
+		WHERE POST_TYPE = '3'
+	</select>
 </mapper>
 	
 	

@@ -65,11 +65,13 @@ public class ReviewController {
 		
 		ArrayList<Board> list = rs.selectList(pi2);
 		ArrayList<PostTag> tl = rs.selectListTag();
+		ArrayList<MapBoard> mb = rs.likeVoteView();
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
 			mv.addObject("list", list);
 			mv.addObject("pi", pi2);
+			mv.addObject("mb", mb);
 			mv.setViewName("review/reviewListView");
 		}else {
 			
@@ -220,7 +222,7 @@ public class ReviewController {
 		// 로그인 된 유저 아이디 가져온다.
 		Member mb = (Member) session.getAttribute("loginUser");
 		
-		String userId = mb.getId();
+		String userId = mb.getNickname();
 		
 		String contents = (String) posex.remove(10);
 //		
