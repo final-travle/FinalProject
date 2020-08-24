@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mainMapper">
+	<resultMap type="Board" id="boardResultSet">
+		<id property="postNo" column="POST_NO"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="thumbnail" column="THUMBNAIL" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="postContents" column="POST_CONTENTS" />
+		<result property="hits" column="HITS" />
+		<result property="wirteDate" column="WRITE_DATE" />
+		<result property="postDelYn" column="POST_DEL_YN" />
+		<result property="FileName" column="FILE_NAME" />
+	</resultMap>
+	
+	<resultMap type="Travel" id="travelResultSet">
+		<id property="tCode" column="T_CODE"/>
+		
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+		<result property="night" column="NIGHT" />
+		<result property="tName" column="T_NAME" />
+		<result property="txpoint" column="T_XPOINT" />
+		<result property="typoint" column="T_YPOINT" />
+	
+	</resultMap>
+
+	<resultMap type="Tag" id="tagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+	</resultMap>
+	
+	<resultMap type="PostTag" id="postTagResultSet">
+		<id property="tagName" column="TAG_NAME"/>
+		<result property="tagType" column="TAG_TYPE" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="postNo" column="POST_NO" />
+	</resultMap>
+	
+	
+	<resultMap type="MapBoard" id="mapBoardResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="voteTotal" column="VOTE_TOTAL" />
+		<result property="likeTotal" column="LIKE_TOTAL" />
+	</resultMap>
+
+	<resultMap type="PostBoard" id="postBoardResultSet">
+		<id property="postNo" column="POST_NO" />
+		<result property="postType" column="POST_TYPE" />
+		<result property="thumbnail" column="THUMBNAIL" />
+		<result property="userId" column="USER_ID" />
+		<result property="title" column="TITLE" />
+		<result property="voteTotal" column="VOTE_TOTAL" />
+		<result property="likeTotal" column="LIKE_TOTAL" />
+	</resultMap>
+
+
+	<select id="selectPlanList" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '3'
+		AND ROWNUM <![CDATA[ < ]]> 7
+        ORDER BY POST_NO DESC
+	</select>
+	
+	<select id="selectPostTag" resultMap="postTagResultSet">
+		SELECT *
+		FROM POST_TAG
+	</select>
+	
+	<select id="selectReviewList" resultMap="boardResultSet">
+		SELECT *
+		FROM POST
+		WHERE POST_TYPE = '4'
+		AND ROWNUM <![CDATA[ < ]]> 7
+        ORDER BY POST_NO DESC
+	</select>
+	
+	<select id="selectMonthReview" resultMap="postBoardResultSet">
+		SELECT *
+		FROM POST_BOARD
+		WHERE ROWNUM <![CDATA[ <= ]]> 10
+		ORDER BY VOTE_TOTAL DESC
+	</select>
+</mapper>
+	
+	
+	
+	
+	
+	

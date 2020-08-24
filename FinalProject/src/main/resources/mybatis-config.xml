@@ -34,6 +34,9 @@
 		<typeAlias type="com.kh.FinalProject.search.model.vo.Board" alias="Boardd"/>
 		
 		<typeAlias type="com.kh.FinalProject.notice.model.vo.Notice" alias="Notice"/>
+		
+		<typeAlias type="com.kh.FinalProject.common.model.vo.PostBoard" alias="PostBoard"/>
+		
 	</typeAliases>
 	
 	<mappers>
@@ -44,5 +47,6 @@
 		<mapper resource="/mappers/review-mapper.xml"/>
 		<mapper resource="/mappers/search-mapper.xml"/>
 		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/main-mapper.xml"/>
 	</mappers>
 </configuration>

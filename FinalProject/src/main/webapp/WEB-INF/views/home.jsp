@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
 	<title>Home</title>
@@ -94,56 +95,36 @@
 
             <!-- PLAN -->
             <h2 class="title">계획 짜기 힘들었다면? <span class="color">이미 여기 준비되어 있어요!</span></h2>
-            
             <ul class="grid grid3 cf">
+            	<c:forEach var="mpl" items="${mpl }" varStatus="status">
+					<c:url var="planDetail" value="planDetail.do">
+						<c:param name="postNo" value="${mpl.postNo }" />
+						<c:param name="postType" value="${mpl.postType }" />
+						<c:param name="page" value="${bi.currentPage }" />						
+					</c:url>
                 <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">서울</p>
-                    <p class="cont">#2박3일 #힐링 #호캉스</p>
+	                    <p class="img">
+	                        <a href="${planDetail }"><img src="${mpl.thumbnail }" /></a>
+	                    </p>
+	                    <p class="title"><a href="${planDetail }">${mpl.title }</a></p>
+	                    <!-- p class="userName">${mpl.userId }</p -->
+	                    <p class="cont">
+	                    	<c:set var="liPostNo" value="${mpl.postNo }" />
+	                    	<c:forEach var="pt" items = "${pt }">
+		                    	<c:if test = "${pt.postNo eq liPostNo}">
+			                    		<c:out value="# ${pt.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>
+                   		</p>
                 </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">제주</p>
-                    <p class="cont">#호캉스 #바다 #여자끼리</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">전주</p>
-                    <p class="cont">#당일치기 #돼지파티</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">전주</p>
-                    <p class="cont">#당일치기 #돼지파티</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">서울</p>
-                    <p class="cont">#2박3일 #힐링 #호캉스</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">제주</p>
-                    <p class="cont">#호캉스 #바다 #여자끼리</p>
-                </li>
+                </c:forEach>
+            	
             </ul>
-            <p class="more colorBtn btn"><a href="#none">MORE PLAN ></a></p>
+            <p class="more colorBtn btn"><a href="planList.do">MORE PLAN ></a></p>
             <!-- // PLAN -->
 
         </div><!-- // content end -->
-        <!-- month rev include -->        
+        <!-- month rev include -->
    		<jsp:include page="common/monthRev.jsp" />
         
         <div id="content">
@@ -152,50 +133,30 @@
             <h2 class="title"><span class="color">주목해야 할 여행지!</span> 아직도 안 가봤어요?</h2>
             
             <ul class="grid grid3 cf">
+            	<c:forEach var="mrl" items="${mrl }" varStatus="status">
+					<c:url var="reviewDetail" value="reviewDetail.do">
+						<c:param name="postNo" value="${mrl.postNo }" />
+						<c:param name="postType" value="${mrl.postType }" />
+						<c:param name="page" value="${bi.currentPage }" />						
+					</c:url>
                 <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">서울</p>
-                    <p class="cont">#2박3일 #힐링 #호캉스</p>
+	                    <p class="img">
+	                        <a href="${reviewDetail }"><img src="${mrl.thumbnail }" /></a>
+	                    </p>
+	                    <p class="title"><a href="${reviewDetail }">${mrl.title }</a></p>
+	                    <!-- p class="userName">${mrl.userId }</p -->
+	                    <p class="cont">
+	                    	<c:set var="liPostNo" value="${mrl.postNo }" />
+	                    	<c:forEach var="pt" items = "${pt }">
+		                    	<c:if test = "${pt.postNo eq liPostNo}">
+			                    		<c:out value="# ${pt.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>
+                   		</p>
                 </li>
-                <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">제주</p>
-                    <p class="cont">#호캉스 #바다 #여자끼리</p>
-                </li>
-                <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">전주</p>
-                    <p class="cont">#당일치기 #돼지파티</p>
-                </li>
-                <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">전주</p>
-                    <p class="cont">#당일치기 #돼지파티</p>
-                </li>
-                <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">서울</p>
-                    <p class="cont">#2박3일 #힐링 #호캉스</p>
-                </li>
-                <li>
-                    <p class="img">
-                  		<a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">제주</p>
-                    <p class="cont">#호캉스 #바다 #여자끼리</p>
-                </li>
+                </c:forEach>
             </ul>
-            <p class="more colorBtn btn"><a href="#none">MORE REVIEW ></a></p>
+            <p class="more colorBtn btn"><a href="reviewListView.do">MORE REVIEW ></a></p>
             <!-- // Review -->
 
         </div><!-- // content end -->

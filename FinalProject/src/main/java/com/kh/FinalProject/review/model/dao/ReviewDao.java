@@ -122,5 +122,6 @@ public class ReviewDao {
 	public ArrayList<MapBoard> likeVoteView() {
 		return (ArrayList) sqlSessionTemplate.selectList("reviewMapper.likeViewList");
 	}
+
 	
 }
