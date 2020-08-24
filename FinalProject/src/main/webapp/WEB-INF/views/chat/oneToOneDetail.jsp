@@ -151,7 +151,7 @@ body {
         #chat {
             height: 80%;
             word-break:break-all;
-            background-image: url("${pageContext.request.contextPath}/resources/images/b.jpg");
+            background-image: url("${pageContext.request.contextPath}/resources/chatroomBackground/b.jpg");
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -254,7 +254,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
 .SendImage_modal {
    position:absolute;
   display:block;
-  z-index:92;
+  z-index:97;
   width:300px;
   top:5%;
   left:15%;
@@ -555,7 +555,11 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 				<br clear='both'>
 			</c:if>
 	</c:forEach>
-	
+	<c:forEach  var="otoBackgroundInfo" items="${otoBackgroundInfo }">
+		<input type="hidden" value="${otoBackgroundInfo.myId }" id="myid">
+		<input type="hidden" value="${otoBackgroundInfo.oto_mybackground }" id="otoMyBackground">
+		<input type="hidden" value="${otoBackgroundInfo.oto_frbackground }" id="otoFrBackground">
+	</c:forEach>
 
 		<div id="chatdata">
 			<input type="hidden" value="${loginUser.id }" id="userid">
@@ -564,6 +568,7 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 			<input type="hidden" value="${oto.friendId}" id="friendid" >
 			<input type="hidden" value="${loginUser.profile }" id="profile">
 			<input type="hidden" value="${notice }" id="OnetoOneChatroomNotice">
+			
 		</div>
 	</div>
 	<div id="chatForm">
@@ -581,9 +586,6 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 				<img src="${pageContext.request.contextPath}/resources/images/notice.jpeg" onclick="updateChatNotice();"
 				style="width:45px;height:40px;cursor:pointer;float:left;maring-left:20px;" title="공지글 작성">
 				
-			<img src="${pageContext.request.contextPath}/resources/images/emoticon.jpg" onclick="sendEmoticon();"
-				style="width:35px;height:30px;cursor:pointer;float:left;margin-left:10px;margin-top:6px;" title="이모티콘">
-				
 			<img src="${pageContext.request.contextPath}/resources/images/background.png" onclick="changeChatroomBackground();"
 				style="width:35px;height:35px;cursor:pointer;float:left;margin-left:13px;margin-top:6px;" title="배경화면">
 	</div>
@@ -592,61 +594,146 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
+
+<script type="text/javascript">
+	var myid = $("#myid").val();
+	var userid = $("#userid").val();
+	var otoMyBackground = $("#otoMyBackground").val();
+	var otoFrBackground = $("#otoFrBackground").val();
+	
+	console.log("배경_myid" + myid);
+	console.log("배경_userid" + userid);
+	console.log("배경_otoMyBackground" + otoMyBackground);
+	console.log("배경_otoFrBackground" + otoFrBackground);
+	
+	$(document).ready(function(){
+		$("#chat").scrollTop($("#chat")[0].scrollHeight);
+		if(myid != undefined){
+			if(myid == userid){
+				$("#chat").css({"background":"url(${pageContext.request.contextPath}/resources/chatroomBackground/"+ otoMyBackground +")"});
+				$("#chat").css({"background-size":"cover"});
+				$("#chat").css({"background-repeat":"no-repeat"});
+			}else{
+				$("#chat").css({"background":"url(${pageContext.request.contextPath}/resources/chatroomBackground/"+ otoFrBackground +")"});
+				$("#chat").css({"background-size":"cover"});
+				$("#chat").css({"background-repeat":"no-repeat"});
+			}
+		}else{
+			$("#chat").css({"background":"url(${pageContext.request.contextPath}/resources/chatroomBackground/b.jpg)"});
+			$("#chat").css({"background-size":"cover"});
+			$("#chat").css({"background-repeat":"no-repeat"});
+		}
+	});
+</script>
+
+
 <input type="checkbox" id="selectBackground_modal">
-<div class="selectBackground_modal" style="display:flex;flex-wrap:wrap;">
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/airplane.png" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/beach.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/blue.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/city.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/moon.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/paint.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sea.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
-	</div>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sky.jpg" 
-				style="width:90px;height:150px;"class="backgroundImages">
+<div class="selectBackground_modal">
+	<div style="display:flex;flex-wrap:wrap;">
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/airplane.png" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/beach.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/blue.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/city.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/moon.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/paint.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sea.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
+		<div style="margin-top:5px;margin-left:5px;">
+			<img src="${pageContext.request.contextPath}/resources/chatroomBackground/sky.jpg" 
+					style="width:90px;height:150px;cursor:pointer;"class="backgroundImages">
+		</div>
 	</div>
 	<hr>
-	<div style="margin-top:5px;margin-left:5px;cursor:pointer;">
-		<img src="${pageContext.request.contextPath}/resources/images/addbackground.png" 
-				style="width:90px;height:150px;" onclick="enrollBackgroundImage();">
+	<div style="display:flex;flex-wrap:wrap;">
+		<div style="margin-top:5px;margin-left:5px;">
+			<label for="enrollBackground">
+				<img src="${pageContext.request.contextPath}/resources/images/addbackground.png" 
+						style="width:90px;height:150px;cursor:pointer;" title="배경사진 등록" >
+			</label>
+			<form id="enrollBackgroundForm" name="enrollBackgroundForm" enctype="multipart/form-data">
+					<input id="enrollBackground" name="enrollBackground" type="file" style="display:none;"accept="image/*">
+			</form>
+		</div>
 	</div>
 </div>
 <script>
-	function enrollBackgroundImage(){
-		
-	}
+$(function(){
+	$("#enrollBackground").on("change",function(){
+	var co_no = $("#chatroom_no").val();
+	var friendid = $("#friendid").val();
+	
+	var form = $("#enrollBackgroundForm")[0];
+	var formData = new FormData(form);
+	
+	console.log("co_no = " + co_no);
+	console.log("friendid = " +friendid);
+	console.log("확인" + form);
+	
+		$.ajax({
+			type:"post",
+			enctype:"multipart/form-data",
+			url:"enrollBackground.do?co_no="+co_no+"&friendid="+friendid,
+			data:formData,
+			contentType : false,
+	        processData : false,
+	        success:function(result){
+	        	$("#chat").css({"background":"url(${pageContext.request.contextPath}/resources/chatroomBackground/"+ result +")"});
+				$("#chat").css({"background-size":"cover"});
+				$("#chat").css({"background-repeat":"no-repeat"});
+	        },
+	        error:function(result){
+	        }
+	        });
+		});
+});
 </script>
 
 <script type="text/javascript">
 	$(function(){
 		$(".backgroundImages").on("click",function(){
+			var co_no = $("#chatroom_no").val();
+			var friendid = $("#friendid").val();
+			
 			var background = $(this).attr("src");
 			console.log("맞아? "+background);
+			var backgroundname = background.substring(background.lastIndexOf("/")+1);
+			console.log("이름 맞아?" + backgroundname)
+			var data = "backgroundname="+backgroundname;
 			
 			$("#chat").css({"background":"url("+ background +")"});
 			$("#chat").css({"background-size":"cover"});
 			$("#chat").css({"background-repeat":"no-repeat"});
+			
+			$.ajax({
+				type:"post",
+				enctype:"multipart/form-data",
+				url:"selectBaseBackground.do?co_no="+co_no+"&friendid="+friendid,
+				data:data,
+		        success:function(result){
+		        },
+		        error:function(result){
+		        }
+		        });
 		})
 	})
 </script>
@@ -831,7 +918,6 @@ input#selectBackground_modal[type=checkbox]:checked ~ .selectBackground_modal {
 			$("input:checkbox[id='sentImage_detail_modal']").prop("checked", true);	
 			$("#sentImage_detail_modal").prop("checked", true);
 		}
-		
 	</script>
 	<input type="checkbox" id="sentImage_detail_modal">
 	<div class="sentImage_detail_modal">
@@ -920,10 +1006,10 @@ function submit_SendImage_modal(){
 			style="width:300px;">
 			
 	<img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
-						style='width:50px;height:40px;float:left;margin-left:20px;cursor:pointer;' onclick="close_SendImage_modal();">
+						style='width:50px;height:40px;float:left;margin-left:30px;cursor:pointer;' onclick="close_SendImage_modal();">
 						
 	<img src="${pageContext.request.contextPath}/resources/images/submitImage.png" onclick="submit_SendImage_modal();"
-						style="width:40px;height:30px;float:left;margin-left:130px;margin-top:5px;cursor:pointer;" title="전송">
+						style="width:40px;height:30px;float:left;margin-left:140px;margin-top:5px;cursor:pointer;" title="전송">
  </div> 
 <script>
 	function close_SendImage_modal(){
@@ -990,7 +1076,6 @@ function submit_SendImage_modal(){
 		            co_no : $("#chatroom_no").val(),
 		            msg : $("#message").val()
 		      };
-		 
 
 		var jsonData = JSON.stringify(msgData);//JSON.stringify란 자바스크립트의 값을 JSON 문자열로 변환한다. 
 		 var jsonData2 = JSON.stringify(msgData2);
@@ -1095,24 +1180,24 @@ function submit_SendImage_modal(){
 				$(".readyn").text('');
 			}
 			/* userEnter(); */
-			var printHTML = "<div>";
+			/* var printHTML = "<div>"; */
 			/* printHTML += "<div class='intervalgreet'>";
 			printHTML += "<strong class='a' id='enterdiv'>&nbsp;[ "+sessionid +" ]님께서 입장하셨습니다   "+"&nbsp;</strong>";
 			printHTML += "</div>"; */
-			printHTML += "</div>";
-			$("#chat").append(printHTML);
+			/* printHTML += "</div>";
+			$("#chat").append(printHTML); */
 			return 0;
 		}
 		
 		if(message == "믜댜퇴장듀틔"){
-			userEnter();
+			/* userEnter();
 			var printHTML = "<div>";
 			printHTML += "<div class='interval'>";
 			printHTML += "<strong class='a'>[ "+sessionid +" ]님께서 퇴장하셨습니다   "+"</strong>";
 			printHTML += "</div>";
 			printHTML += "</div>";
 		
-			$("#chat").append(printHTML);
+			$("#chat").append(printHTML); */
 			return 0;
 		}
 		

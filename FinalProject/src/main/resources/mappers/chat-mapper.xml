@@ -31,6 +31,9 @@
 		<result property="creater" column="CR_ID"/>
 		<result property="current_no" column="CR_CURRENT"/>
 		<result property="createdate" column="CR_CREATE_DATE"/>
+		<result property="open_notice" column="OPEN_NOTICE"/>
+		<result property="open_background" column="OPEN_BACKGROUND"/>
+		<result property="open_frbackground" column="OPEN_FRBACKGROUND"/>
 	</resultMap>
 	
 	<resultMap type="ChatroomMsg" id="chatroommessageResultSet">
@@ -46,6 +49,8 @@
 		<result property="myId" column="MY_ID"/>
 		<result property="friendId" column="FRIEND_ID"/>
 		<result property="oto_notice" column="OTO_NOTICE"/>
+		<result property="oto_mybackground" column="OTO_MYBACKGROUND"/>
+		<result property="oto_frbackground" column="OTO_FRBACKGROUND"/>
 	</resultMap>
 	
 	<resultMap type="OneToOneMsg" id="otomsgResultSet">
@@ -85,7 +90,10 @@
   								, #{chatroomdetail}
   								, #{creater}
   								, 0
-  								, SYSDATE)
+  								, SYSDATE
+  								, null
+  								, DEFAULT
+  								, DEFAULT)
 	</insert>
 	
 	 <select id="selectOpenChatroom" parameterType="string" resultMap="chatroomResultSet">
@@ -115,7 +123,9 @@
 		INSERT INTO ONETOONE_ROOM VALUES(SEQ_OTO.NEXTVAL
 																			 , #{myId}
 																			 , #{friendId}
-																			 , null)
+																			 , null
+																			 , DEFAULT
+																			 , DEFAULT)
 	</insert>
 	
 	<insert id="insertOneToOnemsg" parameterType="HashMap">
@@ -136,6 +146,7 @@
 		WHERE ORM.MY_ID = #{id} AND OM.MESSAGE_NO IN(
 		SELECT MAX(MESSAGE_NO)
 		FROM ONETOONE_MESSAGE 
+		WHERE MESSAGE_CONT != 'null'
 		GROUP BY CO_NO
 		)
 		UNION
@@ -146,6 +157,7 @@
 		WHERE ORM.FRIEND_ID = #{id}  AND OM.MESSAGE_NO IN(
 		SELECT MAX(MESSAGE_NO)
 		FROM ONETOONE_MESSAGE 
+		WHERE MESSAGE_CONT != 'null'
 		GROUP BY CO_NO
 		)
 		ORDER BY MESSAGE_NO DESC 
@@ -261,7 +273,7 @@
 		WHERE CO_NO = #{co_no} AND CHAT_ID = #{loginUserid} AND READ_YN='N' AND MESSAGE_CONT != 'null'
 	</select>
 	
-	<update id="updateChatNotice" parameterType="string">
+	<update id="updateChatNotice" parameterType="HashMap">
 		UPDATE ONETOONE_ROOM
 		SET OTO_NOTICE=#{notice}
 		WHERE CO_NO = #{co_no}
@@ -273,6 +285,70 @@
 		WHERE CO_NO = #{co_no}
 	</select>
 	
+	<update id="updateMyBackgroundImage">
+		UPDATE ONETOONE_ROOM
+		SET OTO_MYBACKGROUND = #{image}
+		WHERE MY_ID=#{myId} AND CO_NO=#{co_no}
+	</update>
+	
+	<update id="updateFrBackgroundImage">
+		UPDATE ONETOONE_ROOM
+		SET OTO_FRBACKGROUND = #{image}
+		WHERE FRIEND_ID =#{myId} AND CO_NO=#{co_no}
+	</update>
+	
+	<select id="selectOtoBackgroundInfo" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE CO_NO = #{co_no} AND MY_ID = #{id}
+	</select>
+	
+	
+	<select id="selectOtoBackgroundInfo2" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE CO_NO = #{co_no} AND MY_ID = #{friendId}
+	</select>
+	
+	
+	<select id="selectOtoBackgroundInfo3" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE  MY_ID = #{myId} AND FRIEND_ID = #{friendId}
+	</select>
+	
+	
+	<select id="selectOtoBackgroundInfo4" resultMap="otoResultSet">
+		SELECT *
+		FROM ONETOONE_ROOM
+		WHERE  MY_ID = #{friendId} AND FRIEND_ID = #{myId}
+	</select>
+	
+	
+	<update id="updateOpenChatNotice" parameterType="HashMap">
+		UPDATE CHATROOM
+		SET OPEN_NOTICE=#{notice}
+		WHERE CR_NO = #{co_no}
+	</update>
+	
+	
+	<select id="selectOpenChatNotice" resultType="string">
+		SELECT OPEN_NOTICE
+		FROM CHATROOM
+		WHERE CR_NO = #{chatroomnumber}
+	</select>
+	
+	<update id="updateOpenBackgroundImage">
+		UPDATE CHATROOM
+		SET OPEN_BACKGROUND = #{image}
+		WHERE CR_NO=#{cr_no}
+	</update>
+	
+	<select id="selectOpenChatroomBackground" resultMap="chatroomResultSet">
+		SELECT OPEN_BACKGROUND	, CR_ID
+		FROM CHATROOM
+		WHERE CR_NO = #{chatroomnumber}
+	</select>
 	
 </mapper>
 

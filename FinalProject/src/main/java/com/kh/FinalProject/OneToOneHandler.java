@@ -142,13 +142,7 @@ public class OneToOneHandler extends TextWebSocketHandler {
 	                  if(sessionList.size() == 1) {
 	                	  int result = cService.insertOneToOnemsg(dbmap);//db저장 -> 나혼자 들어가있을때
 	                	  
-		                  if( result >0) {
-				                  String jsonStr2 = co_no + "|" + profile +"|" +loginNickname+ "|" + mapReceive.get("msg"); 
-				
-				                  System.out.println("디비저장 성공 : " + jsonStr2);
-		                  }else {
-			                	  System.out.println("db저장 실패");
-		                  }
+		                  
 	                  }else {
 	                	  int result = cService.insertOneToOnemsg2(dbmap);//db저장 -> 둘다 들어와있을때
 	                	  

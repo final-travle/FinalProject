@@ -156,5 +156,57 @@ public class ChatDao {
 		return sqlSessionTemplate.selectOne("chatmapper.selectChatNotice", co_no);
 	}
 
+	public int updateMyBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateMyBackgroundImage", map);
+	}
+
+	public int updateFrBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateFrBackgroundImage", map);
+	}
+
+	public ArrayList<OneToOne> selectOtoBackgroundInfo(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOtoBackgroundInfo", map);
+	}
+
+	public ArrayList<OneToOne> selectOtoBackgroundInfo2(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOtoBackgroundInfo2", map);
+	}
+
+	public ArrayList<OneToOne> selectOtoBackgroundInfo3(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOtoBackgroundInfo3", map);
+	}
+
+	public ArrayList<OneToOne> selectOtoBackgroundInfo4(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOtoBackgroundInfo4", map);
+	}
+
+	public int updateOpenChatNotice(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateOpenChatNotice", map);
+	}
+
+	public String selectOpenChatNotice(String chatroomnumber) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("chatmapper.selectOpenChatNotice", chatroomnumber);
+	}
+
+	public int updateOpenBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("chatmapper.updateOpenBackgroundImage", map);
+	}
+
+	public ArrayList<Chatroom> selectOpenChatroomBackground(String chatroomnumber) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOpenChatroomBackground", chatroomnumber);
+	}
+
+	
+
 
 }
