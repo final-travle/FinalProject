@@ -1,17 +1,22 @@
 package com.kh.FinalProject;
 
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.FinalProject.common.model.service.MainService;
+import com.kh.FinalProject.travel.model.vo.Board;
+import com.kh.FinalProject.travel.model.vo.PostTag;
 
 /**
  * Handles requests for the application home page.
@@ -30,10 +35,28 @@ public class HomeController {
         
         return "member/kLogin";
     }
+
 	
+	 @Autowired
+	 MainService ms;
+	 
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String home123(Locale locale, Model model, HttpSession session) {	
-		return "home";
+	public ModelAndView homeList(ModelAndView mv, Locale locale, Model model, HttpSession session) {
+		ArrayList<Board> mpl = ms.selectPlanList();
+		ArrayList<Board> mrl = ms.selectReviewList();
+		ArrayList<Board> brl = ms.selectMonthReview();
+		
+		ArrayList<PostTag> pt = ms.selectPostTag();
+		
+		System.out.println(brl);
+		
+		mv.addObject("mpl", mpl);
+		mv.addObject("mrl", mrl);
+		mv.addObject("brl", brl);
+		mv.addObject("pt", pt);
+		mv.setViewName("home");
+		
+		return mv;
 	}
 	
 	

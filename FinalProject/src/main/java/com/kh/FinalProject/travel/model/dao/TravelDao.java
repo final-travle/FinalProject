@@ -180,6 +180,10 @@ public class TravelDao {
 		return sqlSessionTemplate.update("travelMapper.recommentModify", recmnt);
 	}
 
+	public ArrayList<MapBoard> likeVoteView() {
+		return (ArrayList) sqlSessionTemplate.selectList("travelMapper.likeViewList");
+	}
+
 
 
 }

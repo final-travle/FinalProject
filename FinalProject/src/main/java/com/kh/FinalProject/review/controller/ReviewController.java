@@ -41,6 +41,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Controller
 public class ReviewController {
@@ -64,11 +65,13 @@ public class ReviewController {
 		
 		ArrayList<Board> list = rs.selectList(pi2);
 		ArrayList<PostTag> tl = rs.selectListTag();
+		ArrayList<MapBoard> mb = rs.likeVoteView();
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
 			mv.addObject("list", list);
 			mv.addObject("pi", pi2);
+			mv.addObject("mb", mb);
 			mv.setViewName("review/reviewListView");
 		}else {
 			
@@ -219,7 +222,7 @@ public class ReviewController {
 		// 로그인 된 유저 아이디 가져온다.
 		Member mb = (Member) session.getAttribute("loginUser");
 		
-		String userId = mb.getId();
+		String userId = mb.getNickname();
 		
 		String contents = (String) posex.remove(10);
 //		
@@ -371,6 +374,7 @@ public class ReviewController {
 		
 		}
 		LikedPost liked = rs.likedView(lp);
+		Vote voted = rs.voteView(lp);
 		
 		System.out.println(liked);
 		
@@ -395,6 +399,7 @@ public class ReviewController {
 				.addObject("currentPage", currentPage)
 				.addObject("dayNum", dayNum)
 				.addObject("liked", liked)
+				.addObject("voted", voted)
 				.addObject("mapList", mb)
 				.setViewName("review/reviewDetail");
 				
@@ -660,4 +665,5 @@ public class ReviewController {
 		return "redirect:reviewListView.do";
 		
 	}
+	
 }

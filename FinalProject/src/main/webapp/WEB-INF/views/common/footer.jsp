@@ -14,7 +14,7 @@
                 <li><a href="#none">이용약관</a></li>
                 <li><a href="#none"><b>개인정보처리방침</b></a></li>
                 <li><a href="#none">이용안내</a></li>
-                <li><a href="#none">광고/제휴문의</a></li>
+                <li><a href="https://docs.google.com/forms/d/1M1JNHT-g8ZBhT5j0iDyhz8cP_sbi2ozQNCWrDhWL8bQ/edit?usp=forms_home&ths=true">광고/제휴문의</a></li>
             </ul>
         </div><!-- // footerMenu end -->
         <div class="footerCont">

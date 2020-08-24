@@ -14,6 +14,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Repository("rd")
 public class ReviewDao {
@@ -113,5 +114,14 @@ public class ReviewDao {
 	public int reviewDelete(int postNo) {
 		return sqlSessionTemplate.update("reviewMapper.reviewDelete", postNo);
 	}
+
+	public Vote likeVoteView(LikedPost lp) {
+		return sqlSessionTemplate.selectOne("reviewMapper.voteView", lp);
+	}
+
+	public ArrayList<MapBoard> likeVoteView() {
+		return (ArrayList) sqlSessionTemplate.selectList("reviewMapper.likeViewList");
+	}
+
 	
 }

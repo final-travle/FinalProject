@@ -13,6 +13,7 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 import com.kh.FinalProject.travel.model.vo.Tag;
 import com.kh.FinalProject.travel.model.vo.Travel;
+import com.kh.FinalProject.travel.model.vo.Vote;
 
 @Service("rs")
 public class ReviewServiceImpl implements ReviewService {
@@ -128,6 +129,16 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int reviewDelete(int postNo) {
 		return rd.reviewDelete(postNo);
+	}
+
+	@Override
+	public Vote voteView(LikedPost lp) {
+		return rd.likeVoteView(lp);
+	}
+
+	@Override
+	public ArrayList<MapBoard> likeVoteView() {
+		return rd.likeVoteView();
 	}
 
 

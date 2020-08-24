@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+ul.grid li { position:relative; }
+ul.grid li .total { position:absolute; top:0; right:0; background:#bd9dec; color:#fff; padding:10px; }
+ul.grid li .total:before { position:absolute; display:block; content:""; clear:both; border-left:10px solid transparent; border-top:10px solid #bd9dec; border-right:10px solid #bd9dec; border-bottom:10px solid transparent; top:0; left:-20px; }
+ul.grid li .total:after { position:absolute; display:block; content:""; clear:both; border-left:10px solid transparent; border-top:10px solid transparent; border-right:10px solid #bd9dec; border-bottom:10px solid #bd9dec; top:21px; left:-20px; }
+</style>
 <body>
 <jsp:include page="../common/header.jsp" />
     <div id="container" class="cf">
@@ -26,8 +32,8 @@
 	                    <p class="img">
 	                        <a href="${reviewDetail }"><img src="${rl.thumbnail }" /></a>
 	                    </p>
-	                    <p class="title">${rl.title }</p>
-	                    <p>${rl.userId }</p>
+	                    <p class="title"><a href="${reviewDetail }">${rl.title }</a></p>
+	                    <p class="userName">${rl.userId }</p>
 	                    <p class="cont">
 	                    	<c:set var="liPostNo" value="${rl.postNo }" />
 	                    	<c:forEach var="tl" items = "${tl }">
@@ -35,8 +41,14 @@
 			                    		<c:out value="# ${tl.tagName } " />
 		                    	</c:if>
                     		</c:forEach>
-	                    
-	                    
+	                    	<c:forEach var="mb" items = "${mb }">
+		                    	<c:if test = "${mb.postNo eq liPostNo}">
+		                    		<p class="total">
+			                    		<i class='xi-heart'></i> <c:out value="${mb.likeTotal } " />
+			                    		<i class='xi-star'></i> <c:out value="${mb.voteTotal } " />
+		                    		</p>
+		                    	</c:if>
+                    		</c:forEach>
 	                    </p>
 	                </li>
                 </c:forEach>

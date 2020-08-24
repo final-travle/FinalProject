@@ -94,5 +94,7 @@ public interface TravelService {
 
 	int recommentModify(ReComments recmnt);
 
+	ArrayList<MapBoard> likeVoteView();
+
 
 }

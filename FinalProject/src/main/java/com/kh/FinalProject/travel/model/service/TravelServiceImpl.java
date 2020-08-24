@@ -212,5 +212,10 @@ public class TravelServiceImpl implements TravelService {
 		return td.recommentModify(recmnt);
 	}
 
+	@Override
+	public ArrayList<MapBoard> likeVoteView() {
+		return td.likeVoteView();
+	}
+
 
 }
