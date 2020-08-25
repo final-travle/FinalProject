@@ -305,9 +305,6 @@
 			// 클릭시 색깔 바뀜
 			$(".dayNight .dayTit").css({"background" : "transparent"});
 			$(this).css({"background" : "#ddd"});
-			
-
-			
 		});
 		
 		// 누른 값의 첫번째만 실행되는 함수 // 처음 누른 값의 이미지만 뽑는다.
@@ -326,8 +323,6 @@
 			var tvDataTit = $(this).find(".title").text();
 			XP = parseFloat($(this).find(".xpoint").val());
 			YP = parseFloat($(this).find(".ypoint").val());
-			//tcode = $(this).find(".tcode").val();
-
 			
 			var $li = $("<li>");
 			
@@ -335,8 +330,6 @@
 			var str = {title: tvDataTit, latlng: new kakao.maps.LatLng(YP, XP), tcode : tcode};
 			
 			colors = ['#bc2626', '#9726bc', '#5726bc', '#263ebc', '#267ebc', '#26bcac', '#3bbc26'];
-
-			
 			
 			// dayNight 의 마지막 li의 title과 방금 누른 title을 비교하는 식 
 			if(lastli == tvDataTit){

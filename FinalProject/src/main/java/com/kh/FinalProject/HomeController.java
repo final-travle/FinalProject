@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.FinalProject.common.model.service.MainService;
+import com.kh.FinalProject.common.model.vo.AD;
+import com.kh.FinalProject.common.model.vo.PrefStyle;
+import com.kh.FinalProject.member.model.vo.Member;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 
@@ -47,8 +50,55 @@ public class HomeController {
 		ArrayList<Board> brl = ms.selectMonthReview();
 		
 		ArrayList<PostTag> pt = ms.selectPostTag();
+
+		// 로그인 된 유저 아이디 가져온다.
+		Member mb = (Member) session.getAttribute("loginUser");
 		
-		System.out.println(brl);
+		
+		if(mb != null) {
+			String userId = mb.getId();
+			
+			ArrayList<PrefStyle> adList = ms.getPrefStyle(userId);
+			
+			System.out.println(adList);
+			
+			if(adList != null) {
+				for(int i = 0; i < adList.size(); i ++) {
+					String prefTagName = adList.get(i).getTravStyle();
+					System.out.println(prefTagName);
+					
+					ArrayList<AD> al = ms.getAdList(prefTagName);
+					
+					System.out.println(al);
+					
+					if(al != null) {
+						System.out.println("있음");
+						mv.addObject("al", al);
+					}else {
+						System.out.println("없음");
+					}
+					
+				}
+			}
+			
+			
+		}else {
+			System.out.println("로그인 정보 없음");
+			ArrayList<AD> al = ms.getAdList();
+			ArrayList<AD> aln = new ArrayList<AD>();
+			
+			for(int i = 0; i < 4; i ++) {
+				int ran = (int)(Math.random() * 40) + 1;
+				
+				
+				AD adList = al.get(ran);
+				
+				aln.add(adList);
+				
+			}
+			mv.addObject("al", aln);
+		}
+		
 		
 		mv.addObject("mpl", mpl);
 		mv.addObject("mrl", mrl);

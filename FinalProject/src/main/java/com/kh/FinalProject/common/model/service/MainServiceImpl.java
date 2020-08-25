@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.FinalProject.common.model.dao.MainDao;
+import com.kh.FinalProject.common.model.vo.AD;
+import com.kh.FinalProject.common.model.vo.PrefStyle;
 import com.kh.FinalProject.travel.model.vo.Board;
 import com.kh.FinalProject.travel.model.vo.PostTag;
 
@@ -32,6 +34,21 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public ArrayList<Board> selectMonthReview() {
 		return md.selectMonthReview();
+	}
+
+	@Override
+	public ArrayList<PrefStyle> getPrefStyle(String userId) {
+		return md.getPrefStyle(userId);
+	}
+
+	@Override
+	public ArrayList<AD> getAdList(String prefTagName) {
+		return md.getAdList(prefTagName);
+	}
+
+	@Override
+	public ArrayList<AD> getAdList() {
+		return md.getAdList();
 	}
 
 }
