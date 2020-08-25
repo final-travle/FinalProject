@@ -213,7 +213,7 @@ text-align: center;
 			            <td align="center">${n.gender }</td>
 			            <td align="center">${n.id }</td>
 			            <td align="center">${n.time }</td>
-			            <td>
+			            <td style="text-align : center;">
 					            <c:url value="refusefriends.do" var="url">
 								<c:param name="deleteid" value="${n.id }" />
 								</c:url>

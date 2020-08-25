@@ -66,7 +66,7 @@ text-align: center;
   width: 0;
 }
 
-
+.img { width:100%; height:210px; overflow:hidden; }
 .menuSide p a { position:relative; }
 
 .menuSide p a:before { left: 0; bottom:-4px; }
@@ -120,7 +120,8 @@ text-align: center;
    </c:if>
     </div>
 
-
+<br>
+<br>
 
     <div id="container" class="cf">
         <div id="content">

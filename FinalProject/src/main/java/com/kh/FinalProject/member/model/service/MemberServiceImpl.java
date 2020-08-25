@@ -471,6 +471,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public ArrayList<String> mtype(String id) {
+		// TODO Auto-generated method stub
+		return mDao.mtype(id);
+	}
+
+
+	@Override
+	public int changepass(Member m) {
+		// TODO Auto-generated method stub
+		return mDao.changepass(m);
+	}
+
+
 	
 
 	}

@@ -6,6 +6,43 @@
 <head>
 	<title>Home</title>
 </head>
+<style>
+	.1modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .1modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */                          
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+	
+	</style>
 <body>
 <c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 <jsp:include page="common/header.jsp" />
@@ -154,6 +191,16 @@
             </p>
         </div>
     </div><!-- // container end -->
+    <div id="myModal" class="1modal">
+      <!-- Modal content -->
+      <div class="1modal-content">
+        <span class="close">&times;</span>                                                               
+        <c:if test="${!empty sessionScope.loginUser }">
+                	<img src="asdf.jsp"/>
+		</c:if>
+      </div>
+    </div>
+    
     <script>
     	function openChat(name){
     		var url = "friendList.do";
@@ -161,6 +208,55 @@
     		window.open(url, name, options);
     	}
     </script>
+   
+   
+   
+      <script> 
+   $(document).ready(function(){
+	   var modal = document.getElementById('myModal');
+	   var btn = document.getElementById("myBtn");
+	   var span = document.getElementsByClassName("close")[0];                                          
+		span.onclick = function() {
+           modal.style.display = "none";
+       }
+
+       // When the user clicks anywhere outside of the modal, close it
+       window.onclick = function(event) {
+           if (event.target == modal) {
+               modal.style.display = "none";
+           }
+       }
+
+	   span.onclick = function() {
+           modal.style.display = "none";
+       }
+        	   if($("#ttype").val() == "호캉스") {
+  	    	     window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');             
+        	      }else if ($("#ttype").val() == "FLEX"){
+        	    	     window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');    
+        	      }else if ($("#ttype").val() == "힐링"){
+     	    	     window.open('ex2.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
+        	      }else if ($("#ttype").val() == "효도관광"){
+     	    	     window.open('ex3.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
+        	      }else if ($("#ttype").val() == "이벤트"){
+     	    	     window.open('ex4.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
+        	      }else if ($("#ttype").val() == "직장인휴가"){
+        	        alert("직장인휴가");
+        	      }else if ($("#ttype").val() == "문화제탐방"){
+        	        alert("문화재탐방");
+        	      }else if ($("#ttype").val() == "짠내투어"){
+        	        alert("짠내투어");
+        	      }else if ($("#ttype").val() == "쇼핑관광"){
+        	        alert("쇼핑관광");
+        	      }else if ($("#ttype").val() == "한달살이"){
+        	        alert("한달살이");
+        	      }else{
+        	    	  modal.style.display = "block";
+        	      }
+        	   })
+        	   
+        
+   </script>    
    
    
    

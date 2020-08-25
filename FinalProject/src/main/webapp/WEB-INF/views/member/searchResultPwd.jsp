@@ -28,7 +28,7 @@
             height:300px;
             padding:0;
             margin:0;
-            line-height:300px;
+            line-height:100px;
             border-color: gray;
             border-style: solid;
            
@@ -43,17 +43,46 @@
 <jsp:include page="../common/header.jsp" />
 
     <div id="hansol1">
-    <h1 id="h1">SEARCH RESULT</h2>
-    <div id="hansol2">
-       <h3 id="h3"> <c:out value="${result.name }님의 비밀번호는 ${result.pwd}입니다"/></h3>
-    </div>
-    <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button> <button class="colorBtn btn" id="searchId" onclick="location.href='searchId.do'">아이디찾기 </button>
+    <h1 id="h1">SEARCH RESULT</h1>
     
+        <form id="joinForm" name="join" method="post" action="changepass.do">
+    <div id="hansol2">
+       <br>
+       <h3 id="h3">
+        
+           변경할 비밀먼호 :  <input type="password" id="userPwd" name="pass" style="width: 200px; height: 30px;  " placeholder="변경할 비밀번호를 적어주세요">
+            <input type="hidden" value=${result } name="result" >
+                
+            </h3>
+            <br>
+    </div>
+    
+    <button id="home" class="colorBtn btn" onclick="location.href='home.do'">홈으로 </button>
+      <input type="submit" class="colorBtn btn" value="변경" id="searchId"  name="pwd" style="font-size: 16px;">
+    </form>
     </div>
     <br>
     <br>
    <jsp:include page="../common/footer.jsp" />
    
+   <script>
+   $(function(){
+	   $("#userPwd").change(function(){
+           var value = $("#userPwd").val();
+           var reg = /^[a-z0-9]{6,18}$/;
+           if(!reg.test(value)){
+               alert("영문자와 숫자로 6글자 이상 18글자 이하여야 합니다.");
+              
+           }else{
+           	
+           }
+       });
+  
+	   
+	   
+	   
+   })
+   </script>
 </body>
 
 </html>

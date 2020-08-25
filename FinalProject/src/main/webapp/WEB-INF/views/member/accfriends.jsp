@@ -176,9 +176,9 @@ text-align: center;
 					<c:url value="dltaccfriends.do" var="urldt">
 					  <c:param name="id" value="${n.id }" />
 					</c:url>
-					<td>
+					<td style="text-align: center;">
 		            <a href="${url}">승낙하기</a></td>
-		            <td><a href="${urldt}">거절하기</a></td>
+		            <td style="text-align: center;"><a href="${urldt}">거절하기</a></td>
         </tr>   
       </c:forEach>
                 </c:if>   
