@@ -332,13 +332,14 @@ input#myprofile_detail_modal[type=checkbox]:checked ~ .myprofile_detail_modal {
   -ms-transform: scale(1, 1);
   transform: scale(1, 1);
 }
+
 .saveprofile_modal {
   position:absolute;
   display:block;
   z-index:93;
   width:80px;
-  top:67%;
-  left:43%;
+  bottom:0px;
+  left:110px;
  /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
 background-color:transparent;
  border:0px;
@@ -350,7 +351,7 @@ background-color:transparent;
   -webkit-transition: all .0s ease;
   transition: all .0s ease;
   -webkit-transform: scale(0, 0);
-  -ms-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);	
   transform: scale(0, 0);
 }
 input#saveprofile_modal[type=checkbox]:checked ~ .saveprofile_modal {
@@ -482,6 +483,52 @@ textarea:focus{
 		    width: 0px;
 }
 
+.myOpenChatroomlist_modal {
+  position:absolute;
+  display:block;
+  z-index:92;
+  width:300px;
+  height:400px;
+  top:20%;
+  left:20%;
+ /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
+ background:white;
+  border:1px solid gray;
+  border-radius:3%;
+  overflow:hidden;
+  overflow-y:auto;
+
+  visibility: collapse;
+  opacity: 1;
+  filter: alpha(opacity=60);
+  -webkit-transition: all .0s ease;
+  transition: all .0s ease;
+  -webkit-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_modal {
+  visibility: visible;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+}
+
+.myOpenChatroomlist_modal::-webkit-scrollbar {
+		    width: 0px;
+ }
+.myOpenChatroomlist_modal::-webkit-scrollbar-thumb {
+		    background-color: #2f3542;
+		    border-radius: 10px;
+		    background-clip: padding-box;
+		    border: 2px solid transparent;
+}
+ .myOpenChatroomlist_modal::-webkit-scrollbar-track {
+		    background-color: grey;
+		    border-radius: 10px;
+		    box-shadow: inset 0px 0px 5px white;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -592,6 +639,10 @@ textarea:focus{
   	  <img src="${pageContext.request.contextPath}/resources/images/closeprofilemodal.png" title="닫기"
   	  style="width:60px;height:50px;margin-left:36px;cursor:pointer;" onclick="close_myprofile_detail();">
   	  
+  	   <input type="checkbox" id="saveprofile_modal" style="display:none;">
+		 <div class="saveprofile_modal">
+		 	<button type="submit" onclick="updateprofile_submit();" id="saveprofile_button" style="cursor:pointer;margin-bottom:-10px;"><h1>저장</h1></button>
+		 </div>
   	  
   	  <label for="update_myprofile">
   	  <img src="${pageContext.request.contextPath}/resources/images/addprofile.png" title="프로필 등록"
@@ -605,10 +656,7 @@ textarea:focus{
   	  </form>
  </div>
  
- <input type="checkbox" id="saveprofile_modal">
- <div class="saveprofile_modal">
- 	<button type="submit" onclick="updateprofile_submit();" id="saveprofile_button" style="cursor:pointer;"><h1>저장</h1></button>
- </div>
+
  
 
  <script>
@@ -624,6 +672,8 @@ textarea:focus{
  		
  		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", false);	
  		$("#myprofile_detail_modal").prop("checked", false);
+ 		$("input:checkbox[id='saveprofile_modal']").prop("checked", false);	
+ 		$("#saveprofile_modal").prop("checked", false);
  	}
  </script>
  <script>
@@ -666,11 +716,66 @@ textarea:focus{
  	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
  	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
  	onclick="makeOpenChatroom();" title="새로운 오픈채팅">
+ 	
+ 	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
+ 	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
+ 	onclick="myOpenChatroom();" title="내가 만든 채팅방">
  	</td>
  	</tr>
  	</table>
   	  <input type="text" id="chatroomSearch"  placeholder="채팅방 이름 검색">
   	  <br>
+ </div>
+ <script>
+ 	function myOpenChatroom(){
+ 		$("input:checkbox[id='myOpenChatroomlist_modal']").prop("checked", true);
+ 		$("#myOpenChatroomlist_modal").prop("checked", true);
+ 	}
+ </script>
+ <input type="checkbox" id="myOpenChatroomlist_modal">
+ <div class="myOpenChatroomlist_modal">
+ 	<div class="container">
+	
+		<table class="table table-striped table-bordered table-hover">
+		
+		<c:forEach var="chatroomList" items="${chatroomList }">
+			<tr>
+				<td align="left" style="width:200px;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+					<c:url var="chatroomDelete" value="chatroomDelete.do">
+						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
+					</c:url>
+				<p style="font-size:30px;margin-left:10px;">
+				<a href="${chatroomDelete }" 
+				style="color:black;text-decoration:none;" >${chatroomList.chatroomname}</a>
+				</p>
+				<p style="font-size:15px;margin-top:-30px;margin-right:60px;word-break:break-all;">
+				<img src="${pageContext.request.contextPath}/resources/images/openchatroomdetail.png"
+				style="width:25px;height:20px;margin-left:20px;">
+				${chatroomList.chatroomdetail }</p>
+				</td>
+				
+				<td>
+					<c:url var="chatroomUpdate" value="chatroomUpdate.do">
+						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
+					</c:url>
+					<p style="font-size:15px;word-break:break-all;float:left;">
+						<a href="${chatroomUpdate }" 
+						style="color:black;text-decoration:none;" >수정</a>
+					</p>
+					
+					<c:url var="chatroomDelete" value="chatroomDelete.do">
+						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
+					</c:url>
+					<p style="font-size:15px;margin-left:20px;word-break:break-all;float:left;">
+						<a href="${chatroomDelete }" 
+						style="color:black;text-decoration:none;" >삭제</a>
+					</p>
+					
+				</td>
+			</tr>
+			</c:forEach>
+	</table>
+</div>
  </div>
  
  <input type="checkbox" id="makeopenchat_modal">
@@ -877,9 +982,9 @@ textarea:focus{
 						style="color:black;text-decoration:none;" class="enterOneToOneChatroom" >${onetooneList.nickname }
 						</a>
 					</p>
-					<p style="margin-top:-30px;margin-left:20px;" id="Message_Content${onetooneList.co_no }">
-						${onetooneList.message_cont }
-					</p>
+						<p style="margin-top:-30px;margin-left:20px;" id="Message_Content${onetooneList.co_no }">
+							${onetooneList.message_cont }
+						</p>
 				</div>
 				<div>
 					<p id="ReadYNCount${onetooneList.co_no }" style="color:red;font-weight:800;">
@@ -937,9 +1042,11 @@ textarea:focus{
 		console.log("myid = " + myid);
 		
 		
-		
-			$("#ReadYNCount"+co_no).text(count);
-			$("#Message_Content"+co_no).text(message);
+		$("#ReadYNCount"+co_no).text(count);
+			
+			if(message != 'null'){
+				$("#Message_Content"+co_no).text(message);
+			}
 		
 		
 	}
@@ -959,7 +1066,7 @@ textarea:focus{
 						<c:param name="chatroomname" value="${chatroomList.chatroomname }"/>
 					</c:url>
 				<p style="font-size:30px;margin-left:10px;">
-				<a href="${chatroom }" <%-- onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" --%> 
+				<a href="${chatroom }" 
 				style="color:black;text-decoration:none;" >${chatroomList.chatroomname} </a>
 				</p>
 				<p style="font-size:15px;margin-top:-30px;margin-right:60px;word-break:break-all;">

@@ -87,8 +87,9 @@ public class OneToOneChatlistHandler extends TextWebSocketHandler {
             //메세지 뿌려주기
             System.out.println("sessionList 확인..123.:" + sessionList);
             
-            int count = cService.ReadYnCount(dbmap);
-                        System.out.println("안읽은 메시지 갯수 ==== " + count);
+            int dbcount = cService.ReadYnCount(dbmap);
+                        System.out.println("안읽은 메시지 갯수 ==== " + dbcount);
+                        int count = dbcount + 1;
          
                      for(int i=0;i<sessionList.size();i++) {
                         Map<String, Object> mapSessionList = sessionList.get(i);

@@ -126,50 +126,85 @@ public class ChatController {
 	 @RequestMapping("openChatroomList.do") 
 	 public ModelAndView openChatroomList(ModelAndView mv,HttpSession session) {
 		 
-		Member m =  (Member)session.getAttribute("loginUser");
-		String id =  m.getId();
-		
-		 System.out.println(id);
-//		 ArrayList<Member> friendList = new ArrayList();
-//		 friendList = cService.friendList(id);
-//		 System.out.println("친구 목록 : " + friendList);
-		 ArrayList<Friends> friendList = new ArrayList();
-		 friendList = cService.friendList(id);
-		 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
-			for(int i=0;i<friendList.size();i++) {
-				if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
-					al.add(friendList.get(i).getUserId());
-				}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
-					al.add(friendList.get(i).getfId());
+		 Member m =  (Member)session.getAttribute("loginUser");
+			String id =  m.getId();
+			
+			
+			System.out.println("111" + id);
+//			 ArrayList<Member> friendList = new ArrayList();
+//			 friendList = cService.friendList(id);
+//			 System.out.println("친구 목록 : " + friendList);
+			 ArrayList<Friends> friendList = new ArrayList();
+			 friendList = cService.friendList(id);
+			 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+				for(int i=0;i<friendList.size();i++) {
+					if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+						al.add(friendList.get(i).getUserId());
+					}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+						al.add(friendList.get(i).getfId());
+					}
 				}
-			}
-			ArrayList<Member> mal =new ArrayList<Member>();
-			for(int i =0;i<al.size();i++) {
-				mal.add(cService.friendsInfo(al.get(i)));
-			}
-		 
-		 ArrayList<Chatroom> chatroomList = new ArrayList();
-		 chatroomList = cService.selectChatroomList();
-		 System.out.println("채팅방 목록 : ");
-		 
-		 if(mal != null) {
-			 mv.addObject("friendList", mal);
-			 mv.setViewName("chat/openChatroomList");
-		 }else {
-			 mv.addObject("friendList", mal);
-			 mv.setViewName("chat/openChatroomList");
-		 }
-		 
-		 if(chatroomList != null) {
-				mv.addObject("chatroomList",chatroomList);
-				mv.setViewName("chat/openChatroomList");
-			}else {
-				mv.addObject("chatroomList",chatroomList);
-				mv.setViewName("chat/openChatroomList");
-			}
-		 
-		 
-		 return mv;
+				ArrayList<Member> mal =new ArrayList<Member>();
+				for(int i =0;i<al.size();i++) {
+					mal.add(cService.friendsInfo(al.get(i)));
+				}
+				System.out.println("친구 정보" + mal);
+			 
+			 ArrayList<Chatroom> chatroomList = new ArrayList();
+			 chatroomList = cService.selectChatroomList();
+			 
+			 ArrayList<OneToOne> onetooneList = new ArrayList();
+			 onetooneList = cService.OneToOneList(id);
+			 System.out.println("1대1 채팅방 목록 = " + onetooneList);
+			 
+			 ArrayList<OneToOneMsg> readynCountList = new ArrayList();
+			 readynCountList = cService.ReadYNCountList();
+			 System.out.println("안읽은 메시지 갯수 = " + readynCountList);
+			 
+			 for(int i = 0; i < onetooneList.size(); i++) {
+				 for(int j = 0; j < readynCountList.size(); j++) {
+					 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
+						 if(!m.getId().equals(readynCountList.get(j).getChatId())) {
+							 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
+						 }
+					 }
+				 }
+			 }
+			 
+			 if(mal != null) {
+				 mv.addObject("friendList", mal);
+				 mv.setViewName("chat/friendList");
+			 }else {
+				 mv.addObject("friendList", mal);
+				 mv.setViewName("chat/friendList");
+			 }
+			 
+			 if(chatroomList != null) {
+					mv.addObject("chatroomList",chatroomList);
+					mv.setViewName("chat/friendList");
+				}else {
+					mv.addObject("chatroomList",chatroomList);
+					mv.setViewName("chat/friendList");
+				}
+			 
+			 if(onetooneList != null) {
+				 mv.addObject("onetooneList", onetooneList);
+				 mv.setViewName("chat/friendList");
+			 }else {
+				 mv.addObject("onetooneList", onetooneList);
+				 mv.setViewName("chat/friendList");
+			 }
+			 
+			 if(readynCountList != null) {
+				 mv.addObject("readynCountList", readynCountList);
+				 mv.setViewName("chat/friendList");
+			 }else {
+				 mv.addObject("readynCountList", readynCountList);
+				 mv.setViewName("chat/friendList");
+			 }
+			 
+			 
+			 return mv;
 	 }
 	 
 	 
@@ -184,11 +219,18 @@ public class ChatController {
 			System.out.println("방번호  : " + cr.getChatroom_no());
 			System.out.println("방 이름 : " + cr.getChatroomname());
 			
+			String notice = cService.selectOpenChatNotice(chatroomnumber);
+			
 			ArrayList<ChatroomMsg> crmsg = new ArrayList();
 			crmsg = cService.selectOpenMessageList(chatroomnumber);
 			
+			ArrayList<Chatroom> openChatroomBackground = new ArrayList();
+			openChatroomBackground = cService.selectOpenChatroomBackground(chatroomnumber);
+			
+			mv.addObject("notice", notice).setViewName("chat/chatroomdetail");
 			mv.addObject("cr", cr).setViewName("chat/chatroomdetail");
 			mv.addObject("crmsg", crmsg).setViewName("chat/chatroomdetail");
+			mv.addObject("openChatroomBackground", openChatroomBackground).setViewName("chat/chatroomdetail");
 			
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			loginUser.setChatroom_no(chatroomnumber);
@@ -210,7 +252,6 @@ public class ChatController {
 				cr = cService.selectOpenChatroom(cr.getChatroomname());
 				System.out.println("번호까지 다조회해와서 " + cr);
 				mv.addObject("cr", cr).setViewName("redirect:openChatroomList.do");
-				mv.addObject("<script>window.close();</script>");
 				
 				Member loginUser = (Member)session.getAttribute("loginUser");
 				session.setAttribute("userId", loginUser.getId());
@@ -315,6 +356,7 @@ public class ChatController {
 			  HashMap <String, String> map = new HashMap<>();
 			  map.put("myId", loginUser.getId());
 			  map.put("friendId", friendId);
+			  System.out.println("인서트 시 배경화면정보 = " + loginUser.getId() + ", " + friendId);
 			  
 			  OneToOne oto = new OneToOne();
 			  oto = cService.selectOneToOneRoom(map);
@@ -348,6 +390,9 @@ public class ChatController {
 					  otomsg=cService.selectMessageList(oto.getCo_no());
 					  System.out.println("메시지목록 = " + otomsg);
 					  
+					  ArrayList<OneToOne> otoBackgroundInfo3 = new ArrayList();
+					  otoBackgroundInfo3 = cService.selectOtoBackgroundInfo3(map);
+					  
 					  String notice = cService.selectChatNotice(oto.getCo_no());
 					  System.out.println("insertonetooneChatroom.do 에서의 notice = " + notice);
 					  
@@ -356,10 +401,14 @@ public class ChatController {
 					  mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 					  mv.addObject("oto",oto).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg).setViewName("chat/oneToOneDetail");
+					  mv.addObject("otoBackgroundInfo", otoBackgroundInfo3).setViewName("chat/oneToOneDetail");
 				  }else if(oto == null) {
 					  ArrayList<OneToOneMsg> otomsg2 = new ArrayList();
 					  otomsg2=cService.selectMessageList2(oto2.getCo_no());
 					  System.out.println("메시지목록 = " + otomsg2);
+					  
+					  ArrayList<OneToOne> otoBackgroundInfo4 = new ArrayList();
+					  otoBackgroundInfo4 = cService.selectOtoBackgroundInfo4(map);
 					  
 					  String notice = cService.selectChatNotice(oto2.getCo_no());
 					  System.out.println("insertonetooneChatroom.do 에서의 notice = " + notice);
@@ -369,6 +418,7 @@ public class ChatController {
 					  mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 					  mv.addObject("oto",oto2).setViewName("chat/oneToOneDetail");
 					  mv.addObject("otomsg", otomsg2).setViewName("chat/oneToOneDetail");
+					  mv.addObject("otoBackgroundInfo", otoBackgroundInfo4).setViewName("chat/oneToOneDetail");
 				  }
 			  }
 			  
@@ -384,11 +434,20 @@ public class ChatController {
 			  HashMap <String, String> map = new HashMap<>();
 			  map.put("id", loginUser.getId());
 			  map.put("co_no", co_no);
+			  map.put("friendId", friendId);
+			  
+			  System.out.println("배경관련 확인 - " + loginUser.getId() + friendId);
 			  
 			  int result = cService.updateReadYN(map);
 			  
 			  OneToOne oto = new OneToOne();
 			  
+			  ArrayList<OneToOne> otoBackgroundInfo = new ArrayList();
+			  ArrayList<OneToOne> otoBackgroundInfo2 = new ArrayList();
+			  otoBackgroundInfo = cService.selectOtoBackgroundInfo(map);
+			  otoBackgroundInfo2 = cService.selectOtoBackgroundInfo2(map);
+			  System.out.println("배경정보 : " + otoBackgroundInfo);
+			  System.out.println("배경정보 : " + otoBackgroundInfo2);
 			  
 			  ArrayList<OneToOneMsg>  otomsg = new ArrayList();
 			  otomsg=cService.selectMessageList(co_no);
@@ -400,9 +459,15 @@ public class ChatController {
 			  oto.setFriendId(friendId);
 				System.out.println("방번호  : " + oto.getCo_no());
 				
+				if(otoBackgroundInfo.size() != 0) {
+						mv.addObject("otoBackgroundInfo", otoBackgroundInfo).setViewName("chat/oneToOneDetail");
+				}else {
+						mv.addObject("otoBackgroundInfo", otoBackgroundInfo2).setViewName("chat/oneToOneDetail");
+				}
 				mv.addObject("notice", notice).setViewName("chat/oneToOneDetail");
 				mv.addObject("oto", oto).setViewName("chat/oneToOneDetail");
 				mv.addObject("otomsg",otomsg).setViewName("chat/oneToOneDetail");
+				
 				
 				loginUser.setChatroom_no(co_no);
 				
@@ -626,6 +691,226 @@ public class ChatController {
 	  }
 	  
 	  
+	  @RequestMapping("enrollBackground.do")
+	  public void enrollBackground(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+				@RequestParam(value="enrollBackground", required=false) MultipartFile file,
+				@RequestParam(value="co_no", required=false)String co_no,
+				@RequestParam(value="friendid",required=false)String friendid) throws IOException {
+		  
+		  System.out.println("값이 잘 넘어오나?" +co_no + "," + friendid );
+		  
+		  String sendImageName = saveBackgroundFile(file, request);
+		  
+		  Member loginUser = (Member)session.getAttribute("loginUser");
+		  String myId = loginUser.getId();
+		  System.out.println("내아이디?" + myId);
+		  
+		  HashMap <String, String> map = new HashMap<>();
+		  map.put("co_no", co_no);
+		  map.put("myId", myId);
+		  map.put("image", sendImageName);
+		
+
+			int result = cService.updateMyBackgroundImage(map);
+			int result2 = cService.updateFrBackgroundImage(map);
+			
+			PrintWriter out = response.getWriter();
+			
+			if(!sendImageName.equals("")) {
+				out.print(sendImageName);
+				out.flush();
+				out.close();
+			}else {
+				out.append("실패");
+				out.flush();
+				out.close();
+			}
+		  
+	  }
+
+	private String saveBackgroundFile(MultipartFile file, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		String savePath = root + "//chatroomBackground";
+		
+		double dValue = Math.random();
+		char cValue = (char)((dValue * 26) + 97);
+		
+		double dValue2 = Math.random();
+		char cValue2 = (char)((dValue2 * 26) + 97);
+		
+		double dValue3 = Math.random();
+		int iValue = (int)(dValue3 * 1000);
+		
+		File folder = new File(savePath);
+		//java.io.File로 import 하자
+		
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename();
+		String sendImageName = "background" + cValue + iValue + cValue2 +  sdf.format(new java.sql.Date(System.currentTimeMillis()))+
+				"." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+		
+		String filePath = folder + "\\" + sendImageName;
+		
+		try {
+			file.transferTo(new File(filePath));		//이 때 파일이 저장된다.
+			//이 상태로는 파일 업로드가 되지 않는다.
+			//왜냐하면 파일 제한크기에 대한 설정이 없기 때문이다.
+			//그래서 파일 크기 지정을 root-context.xml에서 해준다.
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러" + e.getMessage());
+		}	
+		
+		
+		return sendImageName;
+	}
+	  
+	
+	@RequestMapping("selectBaseBackground.do")
+	public void selectBaseBackground(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+			@RequestParam(value="backgroundname", required=false) String backgroundname,
+			@RequestParam(value="co_no", required=false)String co_no,
+			@RequestParam(value="friendid",required=false)String friendid) {
+		
+		System.out.println("값 넘어와? " + backgroundname + co_no + friendid);
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		  String myId = loginUser.getId();
+		
+		HashMap <String, String> map = new HashMap<>();
+		  map.put("co_no", co_no);
+		  map.put("myId", myId);
+		  map.put("image", backgroundname);
+		
+
+		  int result = cService.updateMyBackgroundImage(map);
+		  int result2 = cService.updateFrBackgroundImage(map);
+		  
+	}
+	
+	
+	@RequestMapping("updateOpenChatNotice.do")
+	 public void updateOpenChatNotice(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+				@RequestParam(value="notice", required=false) String notice, String co_no) throws IOException {
+		  
+		  System.out.println("오픈공지방번호 = " + co_no);
+		  System.out.println("오픈공지내용 = " + notice);
+		  
+		  HashMap <String, String> map = new HashMap<>();
+		  map.put("co_no", co_no);
+		  map.put("notice", notice);
+		  
+		  int updateNotice = cService.updateOpenChatNotice(map);
+		  
+		  PrintWriter out = response.getWriter();
+		  
+		  if(updateNotice > 0) {
+			  	String currentNotice = cService.selectOpenChatNotice(co_no);
+			  	URLEncoder.encode(currentNotice , "UTF-8");
+			  	out.print(currentNotice);
+				out.flush();
+				out.close();
+		  }else {
+			  out.print("공지 등록 실패");
+				out.flush();
+				out.close();
+		  }
+		  
+	  }
+	
+	@RequestMapping("enrollOpenBackground.do")
+	public void enrollOpenBackground(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+			@RequestParam(value="enrollBackground", required=false) MultipartFile file,
+			@RequestParam(value="cr_no", required=false)String cr_no) throws IOException {
+	  
+	  System.out.println("값이 잘 넘어오나?" +cr_no);
+	  
+	  String sendImageName = saveOpenBackgroundFile(file, request);
+	  
+	  HashMap <String, String> map = new HashMap<>();
+	  map.put("cr_no", cr_no);
+	  map.put("image", sendImageName);
+	
+
+		int result = cService.updateOpenBackgroundImage(map);
+		
+		PrintWriter out = response.getWriter();
+		
+		if(!sendImageName.equals("")) {
+			out.print(sendImageName);
+			out.flush();
+			out.close();
+		}else {
+			out.append("실패");
+			out.flush();
+			out.close();
+		}
+	  
+  }
+	
+private String saveOpenBackgroundFile(MultipartFile file, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		String savePath = root + "//openChatroomBackground";
+		
+		double dValue = Math.random();
+		char cValue = (char)((dValue * 26) + 97);
+		
+		double dValue2 = Math.random();
+		char cValue2 = (char)((dValue2 * 26) + 97);
+		
+		double dValue3 = Math.random();
+		int iValue = (int)(dValue3 * 1000);
+		
+		File folder = new File(savePath);
+		//java.io.File로 import 하자
+		
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String originFileName = file.getOriginalFilename();
+		String sendImageName = "openbackground" + cValue + iValue + cValue2 +  sdf.format(new java.sql.Date(System.currentTimeMillis()))+
+				"." + originFileName.substring(originFileName.lastIndexOf(".") + 1);
+		
+		String filePath = folder + "\\" + sendImageName;
+		
+		try {
+			file.transferTo(new File(filePath));		//이 때 파일이 저장된다.
+			//이 상태로는 파일 업로드가 되지 않는다.
+			//왜냐하면 파일 제한크기에 대한 설정이 없기 때문이다.
+			//그래서 파일 크기 지정을 root-context.xml에서 해준다.
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러" + e.getMessage());
+		}	
+		
+		
+		return sendImageName;
+	}
+	
+
+	@RequestMapping("selectOpenBaseBackground.do")
+	public void selectOpenBaseBackground(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+			@RequestParam(value="backgroundname", required=false) String backgroundname,
+			@RequestParam(value="cr_no", required=false)String cr_no) {
+		
+		System.out.println("값 넘어와? " + backgroundname + cr_no);
+		
+		HashMap <String, String> map = new HashMap<>();
+		  map.put("cr_no", cr_no);
+		  map.put("image", backgroundname);
+		
+
+		  int result = cService.updateOpenBackgroundImage(map);
+		  
+	}
 }
 
 

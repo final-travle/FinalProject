@@ -22,5 +22,11 @@ public interface SearchService {
 	ArrayList<Board> selectThumbnail(Choice choice);
 
 
+	ArrayList<PostTag> selectListTag1();
+
+
+
+
+
 
 }

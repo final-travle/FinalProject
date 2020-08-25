@@ -185,6 +185,68 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.selectChatNotice(co_no);
 	}
 
+	@Override
+	public int updateMyBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateMyBackgroundImage(map);
+	}
+
+	@Override
+	public int updateFrBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateFrBackgroundImage(map);
+	}
+
+	@Override
+	public ArrayList<OneToOne> selectOtoBackgroundInfo(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOtoBackgroundInfo(map);
+	}
+
+	@Override
+	public ArrayList<OneToOne> selectOtoBackgroundInfo2(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOtoBackgroundInfo2(map);
+	}
+
+	@Override
+	public ArrayList<OneToOne> selectOtoBackgroundInfo3(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOtoBackgroundInfo3(map);
+	}
+
+	@Override
+	public ArrayList<OneToOne> selectOtoBackgroundInfo4(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.selectOtoBackgroundInfo4(map);
+	}
+
+	@Override
+	public int updateOpenChatNotice(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateOpenChatNotice(map);
+	}
+
+	@Override
+	public String selectOpenChatNotice(String chatroomnumber) {
+		// TODO Auto-generated method stub
+		return cDao.selectOpenChatNotice(chatroomnumber);
+	}
+
+	@Override
+	public int updateOpenBackgroundImage(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return cDao.updateOpenBackgroundImage(map);
+	}
+
+	@Override
+	public ArrayList<Chatroom> selectOpenChatroomBackground(String chatroomnumber) {
+		// TODO Auto-generated method stub
+		return cDao.selectOpenChatroomBackground(chatroomnumber);
+	}
+
+	
+
 	
 
 	

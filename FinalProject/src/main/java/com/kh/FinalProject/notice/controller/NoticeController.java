@@ -118,7 +118,7 @@ public class NoticeController {
 				// 폴더가 없으면 만들라는 뜻
 			}
 			
-			// 공지글은 굳이 파일명 중복 제거는 신경쓰지 않고 게시판에서 파일명 rename하는 걸 해보자 
+			// 공지글  파일명 중복 제거 x
 			String filePath = folder + "\\" + file.getOriginalFilename();
 			// 실제 저장 될 파일 경로 + 파일명 
 			
@@ -182,10 +182,8 @@ public class NoticeController {
 			if(n.getFileName() != null) {
 				deleteFile(n.getFileName(), request);
 			}
-			
 		}
 		
-		// 새로 업로드 된 파일은 새로 저장해 주고 
 		String savePath = saveFile(reuploadFile, request);
 		
 		if(savePath != null) { // 잘 저장 되었다면 

@@ -41,7 +41,7 @@ li { list-style: none; padding:0; margin:0; }
         <section class="content_wrap">
         <h3 class="form-title">공지사항 글쓰기</h3>
         
-        	<form action="nupdate.do" class="nform" method="POST" enctype="Multipart/form-data" accept-charset="UTF-8">
+        <form action="nupdate.do" class="nform" method="POST" enctype="Multipart/form-data" accept-charset="UTF-8">
         	<input type="hidden" name="page" value="${currentPage }">
         	<input type="hidden" name="postNo" value="${notice.postNo }">
         	<input type="hidden" name="reuploadFile" value="${notice.fileName }">
@@ -63,15 +63,15 @@ li { list-style: none; padding:0; margin:0; }
                          <textarea id="ntContent" rows="5" name="postContents" ><c:out value="${notice.postContents }"/></textarea>
                        </span>
                      </li>
-                     <li>
+                       <li>
                         <label for="email">첨부</label>
-                        <span class="textbox"><input type="file" id="file" name="reuploadFile">
-                        		<c:if test="${!empty notice.fileName }">
+                        <span class="textbox"><input type="file" id="fileName" name="reuploadFile">
+                          		<c:if test="${!empty notice.fileName }">
                         			<br>현재 업로드 파일:
-                        				<img src="${contextPath }/resources/nuploadFiles/${notice.fileName}">
-                        		</c:if>
+                        				<img src="${contextPath }/resources/nuploadFiles/${notice.fileName}">               					
+                        		</c:if>  
                         </span>
-                      </li>
+                      </li>  
                    </ul>
                    <br><br>
                    <div class="btn_box">
@@ -84,6 +84,8 @@ li { list-style: none; padding:0; margin:0; }
         </section>
     </div>
     
+
+    
     	<p align="center">
     		<a href="home.do">Home</a>
     		<a href="nlist.do">공지사항</a>
@@ -93,6 +95,8 @@ li { list-style: none; padding:0; margin:0; }
 
 
     <br><br><br>
-
+		
+		
+			<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

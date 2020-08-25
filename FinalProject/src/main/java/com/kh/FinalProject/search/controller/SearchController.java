@@ -36,22 +36,24 @@ public class SearchController {
 public ModelAndView planListView(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
 		
 		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
+			if(page != null) {
+				currentPage = page;
+			}
 		
 		int listCount = sService.getListCount();
 //		System.out.println("탐색 게시판에 존재하는 플랜 게시판 리스트 갯수 : " + listCount);
 		
+		
 		PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
+		
+
 		
 		ArrayList<Board> list = sService.selectList(pi2);
 		
 		ArrayList<PostTag> tl = sService.selectListTag();
 		
-//		System.out.println("PostTag의 리스트 : " + tl);
-//		System.out.println("Board의 리스트 " + list);
-		
+
+			
 		
 		if(list != null) {
 			mv.addObject("tl", tl);
@@ -61,10 +63,13 @@ public ModelAndView planListView(ModelAndView mv, @RequestParam(value="page", re
 		}else {
 			
 		}
+
 		
 		return mv;
 		
 	}
+	
+
 	
 	
 	@RequestMapping(value="conditioncheck.do", method=RequestMethod.POST)
@@ -73,14 +78,16 @@ public ModelAndView planListView(ModelAndView mv, @RequestParam(value="page", re
 		choice.setCity(city);
 		choice.setMonth(month);
 		choice.setTheNumber(theNumber);
-
+		
+		
+		JSONArray jarr = new JSONArray();
 
 		
 		
 		System.out.println("city : " + city + ", month : " + month + ", theNumber : " + theNumber);
 		
 		 ArrayList<PostTag> cList = sService.selectChoiceList(choice);
-		 System.out.println("라디오 버튼에서 선택된 값들 : " + choice);
+		 System.out.println("라디오 버튼에서 선택된 해당 결과값들 : " + choice);
 		 
 		 
 		 System.out.println("cList : " + cList);
@@ -89,11 +96,22 @@ public ModelAndView planListView(ModelAndView mv, @RequestParam(value="page", re
 		 
 		 ArrayList<Board> bList = sService.selectThumbnail(choice);
 		 System.out.println("bList : " + bList);
+		 
+		 ArrayList<PostTag> tl1 = sService.selectListTag1();
+		 
+		 System.out.println(tl1);
+		 
+		 jarr.add(bList);
+		 jarr.add(tl1);
 		 	
-		response.setContentType("application/json;charset=utf-8");
+		 response.setContentType("application/json;charset=utf-8");
  		 
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(bList, response.getWriter());
+		 Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		 gson.toJson(jarr, response.getWriter());
+		
+
+
+
 				 
 	}
 

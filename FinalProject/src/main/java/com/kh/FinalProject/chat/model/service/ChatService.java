@@ -67,5 +67,26 @@ public interface ChatService {
 
 	String selectChatNotice(String co_no);
 
+	int updateMyBackgroundImage(HashMap<String, String> map);
+
+	int updateFrBackgroundImage(HashMap<String, String> map);
+
+	ArrayList<OneToOne> selectOtoBackgroundInfo(HashMap<String, String> map);
+
+	ArrayList<OneToOne> selectOtoBackgroundInfo2(HashMap<String, String> map);
+
+	ArrayList<OneToOne> selectOtoBackgroundInfo3(HashMap<String, String> map);
+
+	ArrayList<OneToOne> selectOtoBackgroundInfo4(HashMap<String, String> map);
+
+	int updateOpenChatNotice(HashMap<String, String> map);
+
+	String selectOpenChatNotice(String chatroomnumber);
+
+	int updateOpenBackgroundImage(HashMap<String, String> map);
+
+	ArrayList<Chatroom> selectOpenChatroomBackground(String chatroomnumber);
+
+	
 
 }

@@ -13,6 +13,8 @@ public class OneToOne implements Serializable{
 	private String myId;
 	private String friendId;
 	private String oto_notice;
+	private String oto_mybackground;
+	private String oto_frbackground;
 	
 	private String nickname;
 	private String profile;
@@ -23,13 +25,16 @@ public class OneToOne implements Serializable{
 	
 	public OneToOne() {}
 
-	public OneToOne(String co_no, String myId, String friendId, String oto_notice, String nickname, String profile,
-			int message_no, String message_cont, String sent_date, int count) {
+	public OneToOne(String co_no, String myId, String friendId, String oto_notice, String oto_mybackground,
+			String oto_frbackground, String nickname, String profile, int message_no, String message_cont,
+			String sent_date, int count) {
 		super();
 		this.co_no = co_no;
 		this.myId = myId;
 		this.friendId = friendId;
 		this.oto_notice = oto_notice;
+		this.oto_mybackground = oto_mybackground;
+		this.oto_frbackground = oto_frbackground;
 		this.nickname = nickname;
 		this.profile = profile;
 		this.message_no = message_no;
@@ -68,6 +73,22 @@ public class OneToOne implements Serializable{
 
 	public void setOto_notice(String oto_notice) {
 		this.oto_notice = oto_notice;
+	}
+
+	public String getOto_mybackground() {
+		return oto_mybackground;
+	}
+
+	public void setOto_mybackground(String oto_mybackground) {
+		this.oto_mybackground = oto_mybackground;
+	}
+
+	public String getOto_frbackground() {
+		return oto_frbackground;
+	}
+
+	public void setOto_frbackground(String oto_frbackground) {
+		this.oto_frbackground = oto_frbackground;
 	}
 
 	public String getNickname() {
@@ -121,8 +142,9 @@ public class OneToOne implements Serializable{
 	@Override
 	public String toString() {
 		return "OneToOne [co_no=" + co_no + ", myId=" + myId + ", friendId=" + friendId + ", oto_notice=" + oto_notice
-				+ ", nickname=" + nickname + ", profile=" + profile + ", message_no=" + message_no + ", message_cont="
-				+ message_cont + ", sent_date=" + sent_date + ", count=" + count + "]";
+				+ ", oto_mybackground=" + oto_mybackground + ", oto_frbackground=" + oto_frbackground + ", nickname="
+				+ nickname + ", profile=" + profile + ", message_no=" + message_no + ", message_cont=" + message_cont
+				+ ", sent_date=" + sent_date + ", count=" + count + "]";
 	}
 	
 }
