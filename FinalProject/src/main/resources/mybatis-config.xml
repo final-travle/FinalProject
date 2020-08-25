@@ -36,6 +36,9 @@
 		<typeAlias type="com.kh.FinalProject.notice.model.vo.Notice" alias="Notice"/>
 		
 		<typeAlias type="com.kh.FinalProject.common.model.vo.PostBoard" alias="PostBoard"/>
+		<typeAlias type="com.kh.FinalProject.common.model.vo.PrefStyle" alias="PrefStyle"/>
+		<typeAlias type="com.kh.FinalProject.common.model.vo.AD" alias="AD"/>
+		
 		
 	</typeAliases>
 	

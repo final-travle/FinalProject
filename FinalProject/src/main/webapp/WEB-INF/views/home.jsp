@@ -61,36 +61,19 @@
             <c:if test="${empty sessionScope.loginUser}">
             <h2 class="title"><span class="color">여긴 어때요?</span> 여행지 추천 드려요!</h2>
             </c:if>
+            
             <ul class="grid grid4 cf">
+            <c:forEach var="al" items="${al }" end="3">
                 <li>
                     <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
+                        <a href="${al.adLink }"><img src="<c:url value='${al.adImg }'/>" /></a>
                     </p>
-                    <p class="title">혼저옵서예!</p>
-                    <p class="cont">이번 달! 제주 여행 어때요?</p>
+                    <p class="title"><a href="${al.adLink }">${al.adTitle }</a></p>
+                    <p class="cont">${al.adContents }</p>
                 </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">여름엔 역시 부산이죠?</p>
-                    <p class="cont">인스타에서 가장 힙한 카페!</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">혼저옵서예!</p>
-                    <p class="cont">이번 달! 제주 여행 어때요?</p>
-                </li>
-                <li>
-                    <p class="img">
-                        <a href="#none"><img src="<c:url value="/resources/images/adImg.jpg" />" /></a>
-                    </p>
-                    <p class="title">여름엔 역시 부산이죠?</p>
-                    <p class="cont">인스타에서 가장 힙한 카페!</p>
-                </li>
+             </c:forEach>
             </ul>
+            
             <!-- // AD -->
 
             <!-- PLAN -->

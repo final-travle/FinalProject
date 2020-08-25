@@ -56,7 +56,22 @@
 		<result property="voteTotal" column="VOTE_TOTAL" />
 		<result property="likeTotal" column="LIKE_TOTAL" />
 	</resultMap>
+	
+	<resultMap type="PrefStyle" id="prefStyleResultSet">
+		<id property="userId" column="USER_ID"/>
+		<result property="travStyle" column="TRAV_STYLE" />
+	</resultMap>
+	
 
+	<resultMap type="AD" id="adResultSet">
+		<id property="adNo" column="AD_NO" />
+		<result property="adTitle" column="AD_TITLE" />
+		<result property="adContents" column="AD_CONTENTS" />
+		<result property="adImg" column="AD_IMG_SRC" />
+		<result property="adLink" column="AD_LINK" />
+		<result property="tagName" column="TAG_NAME" />
+		<result property="tagType" column="TAG_TYPE" />
+	</resultMap>
 
 	<select id="selectPlanList" resultMap="boardResultSet">
 		SELECT *
@@ -84,6 +99,23 @@
 		FROM POST_BOARD
 		WHERE ROWNUM <![CDATA[ <= ]]> 10
 		ORDER BY VOTE_TOTAL DESC
+	</select>
+	
+	<select id="getPrefStyle" parameterType="string" resultMap="prefStyleResultSet">
+		SELECT *
+		FROM PREF_STYLE
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="getAdList" parameterType="string" resultMap="adResultSet">
+		SELECT *
+		FROM AD
+		WHERE TAG_NAME = #{prefTagName}
+	</select>
+	
+	<select id="getAdListNull" resultMap="adResultSet">
+		SELECT *
+		FROM AD
 	</select>
 </mapper>
 	
