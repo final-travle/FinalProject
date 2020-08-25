@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.FinalProject.chat.model.service.ChatService;
 import com.kh.FinalProject.chat.model.vo.Chatroom;
 import com.kh.FinalProject.chat.model.vo.ChatroomMsg;
@@ -64,11 +65,93 @@ public class ChatController {
 			for(int i =0;i<al.size();i++) {
 				mal.add(cService.friendsInfo(al.get(i)));
 			}
-			System.out.println("친구 정보" + mal);
 		 
-		 ArrayList<Chatroom> chatroomList = new ArrayList();
-		 chatroomList = cService.selectChatroomList();
+//		 ArrayList<Chatroom> chatroomList = new ArrayList();
+//		 chatroomList = cService.selectChatroomList();
+//		 
+//		 ArrayList<OneToOne> onetooneList = new ArrayList();
+//		 onetooneList = cService.OneToOneList(id);
+//		 System.out.println("1대1 채팅방 목록 = " + onetooneList);
+//		 
+//		 ArrayList<OneToOneMsg> readynCountList = new ArrayList();
+//		 readynCountList = cService.ReadYNCountList();
+//		 System.out.println("안읽은 메시지 갯수 = " + readynCountList);
+//		 
+//		 for(int i = 0; i < onetooneList.size(); i++) {
+//			 for(int j = 0; j < readynCountList.size(); j++) {
+//				 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
+//					 if(!m.getId().equals(readynCountList.get(j).getChatId())) {
+//						 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
+//					 }
+//				 }
+//			 }
+//		 }
 		 
+		 if(mal != null) {
+			 mv.addObject("friendList", mal);
+			 mv.setViewName("chat/friendList");
+		 }else {
+			 mv.addObject("friendList", mal);
+			 mv.setViewName("chat/friendList");
+		 }
+		 
+//		 if(chatroomList != null) {
+//				mv.addObject("chatroomList",chatroomList);
+//				mv.setViewName("chat/friendList");
+//			}else {
+//				mv.addObject("chatroomList",chatroomList);
+//				mv.setViewName("chat/friendList");
+//			}
+//		 
+//		 if(onetooneList != null) {
+//			 mv.addObject("onetooneList", onetooneList);
+//			 mv.setViewName("chat/friendList");
+//		 }else {
+//			 mv.addObject("onetooneList", onetooneList);
+//			 mv.setViewName("chat/friendList");
+//		 }
+//		 
+//		 if(readynCountList != null) {
+//			 mv.addObject("readynCountList", readynCountList);
+//			 mv.setViewName("chat/friendList");
+//		 }else {
+//			 mv.addObject("readynCountList", readynCountList);
+//			 mv.setViewName("chat/friendList");
+//		 }
+//		 
+//		 
+		 return mv;
+	 }
+	 
+	 @RequestMapping("otoList.do") 
+	 public ModelAndView otoList(ModelAndView mv,HttpSession session) {
+		 
+		Member m =  (Member)session.getAttribute("loginUser");
+		String id =  m.getId();
+		
+		
+//		System.out.println("111" + id);
+//		 ArrayList<Member> friendList = new ArrayList();
+//		 friendList = cService.friendList(id);
+//		 System.out.println("친구 목록 : " + friendList);
+//		 ArrayList<Friends> friendList = new ArrayList();
+//		 friendList = cService.friendList(id);
+//		 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+//			for(int i=0;i<friendList.size();i++) {
+//				if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+//					al.add(friendList.get(i).getUserId());
+//				}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+//					al.add(friendList.get(i).getfId());
+//				}
+//			}
+//			ArrayList<Member> mal =new ArrayList<Member>();
+//			for(int i =0;i<al.size();i++) {
+//				mal.add(cService.friendsInfo(al.get(i)));
+//			}
+		 
+//		 ArrayList<Chatroom> chatroomList = new ArrayList();
+//		 chatroomList = cService.selectChatroomList();
+//		 
 		 ArrayList<OneToOne> onetooneList = new ArrayList();
 		 onetooneList = cService.OneToOneList(id);
 		 System.out.println("1대1 채팅방 목록 = " + onetooneList);
@@ -87,39 +170,39 @@ public class ChatController {
 			 }
 		 }
 		 
-		 if(mal != null) {
-			 mv.addObject("friendList", mal);
-			 mv.setViewName("chat/friendList");
-		 }else {
-			 mv.addObject("friendList", mal);
-			 mv.setViewName("chat/friendList");
-		 }
+//		 if(mal != null) {
+//			 mv.addObject("friendList", mal);
+//			 mv.setViewName("chat/friendList");
+//		 }else {
+//			 mv.addObject("friendList", mal);
+//			 mv.setViewName("chat/friendList");
+//		 }
 		 
-		 if(chatroomList != null) {
-				mv.addObject("chatroomList",chatroomList);
-				mv.setViewName("chat/friendList");
-			}else {
-				mv.addObject("chatroomList",chatroomList);
-				mv.setViewName("chat/friendList");
-			}
-		 
+//		 if(chatroomList != null) {
+//				mv.addObject("chatroomList",chatroomList);
+//				mv.setViewName("chat/friendList");
+//			}else {
+//				mv.addObject("chatroomList",chatroomList);
+//				mv.setViewName("chat/friendList");
+//			}
+//		 
 		 if(onetooneList != null) {
 			 mv.addObject("onetooneList", onetooneList);
-			 mv.setViewName("chat/friendList");
+			 mv.setViewName("chat/oneToOneList");
 		 }else {
 			 mv.addObject("onetooneList", onetooneList);
-			 mv.setViewName("chat/friendList");
+			 mv.setViewName("chat/oneToOneList");
 		 }
 		 
 		 if(readynCountList != null) {
 			 mv.addObject("readynCountList", readynCountList);
-			 mv.setViewName("chat/friendList");
+			 mv.setViewName("chat/oneToOneList");
 		 }else {
 			 mv.addObject("readynCountList", readynCountList);
-			 mv.setViewName("chat/friendList");
+			 mv.setViewName("chat/oneToOneList");
 		 }
-		 
-		 
+//		 
+//		 
 		 return mv;
 	 }
 	 
@@ -134,74 +217,74 @@ public class ChatController {
 //			 ArrayList<Member> friendList = new ArrayList();
 //			 friendList = cService.friendList(id);
 //			 System.out.println("친구 목록 : " + friendList);
-			 ArrayList<Friends> friendList = new ArrayList();
-			 friendList = cService.friendList(id);
-			 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
-				for(int i=0;i<friendList.size();i++) {
-					if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
-						al.add(friendList.get(i).getUserId());
-					}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
-						al.add(friendList.get(i).getfId());
-					}
-				}
-				ArrayList<Member> mal =new ArrayList<Member>();
-				for(int i =0;i<al.size();i++) {
-					mal.add(cService.friendsInfo(al.get(i)));
-				}
-				System.out.println("친구 정보" + mal);
+//			 ArrayList<Friends> friendList = new ArrayList();
+//			 friendList = cService.friendList(id);
+//			 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+//				for(int i=0;i<friendList.size();i++) {
+//					if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+//						al.add(friendList.get(i).getUserId());
+//					}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+//						al.add(friendList.get(i).getfId());
+//					}
+//				}
+//				ArrayList<Member> mal =new ArrayList<Member>();
+//				for(int i =0;i<al.size();i++) {
+//					mal.add(cService.friendsInfo(al.get(i)));
+//				}
+//				System.out.println("친구 정보" + mal);
 			 
 			 ArrayList<Chatroom> chatroomList = new ArrayList();
 			 chatroomList = cService.selectChatroomList();
 			 
-			 ArrayList<OneToOne> onetooneList = new ArrayList();
-			 onetooneList = cService.OneToOneList(id);
-			 System.out.println("1대1 채팅방 목록 = " + onetooneList);
+//			 ArrayList<OneToOne> onetooneList = new ArrayList();
+//			 onetooneList = cService.OneToOneList(id);
+//			 System.out.println("1대1 채팅방 목록 = " + onetooneList);
+//			 
+//			 ArrayList<OneToOneMsg> readynCountList = new ArrayList();
+//			 readynCountList = cService.ReadYNCountList();
+//			 System.out.println("안읽은 메시지 갯수 = " + readynCountList);
+//			 
+//			 for(int i = 0; i < onetooneList.size(); i++) {
+//				 for(int j = 0; j < readynCountList.size(); j++) {
+//					 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
+//						 if(!m.getId().equals(readynCountList.get(j).getChatId())) {
+//							 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
+//						 }
+//					 }
+//				 }
+//			 }
 			 
-			 ArrayList<OneToOneMsg> readynCountList = new ArrayList();
-			 readynCountList = cService.ReadYNCountList();
-			 System.out.println("안읽은 메시지 갯수 = " + readynCountList);
-			 
-			 for(int i = 0; i < onetooneList.size(); i++) {
-				 for(int j = 0; j < readynCountList.size(); j++) {
-					 if(onetooneList.get(i).getCo_no().equals(readynCountList.get(j).getCo_no())) {
-						 if(!m.getId().equals(readynCountList.get(j).getChatId())) {
-							 onetooneList.get(i).setCount(readynCountList.get(j).getCount());
-						 }
-					 }
-				 }
-			 }
-			 
-			 if(mal != null) {
-				 mv.addObject("friendList", mal);
-				 mv.setViewName("chat/friendList");
-			 }else {
-				 mv.addObject("friendList", mal);
-				 mv.setViewName("chat/friendList");
-			 }
+//			 if(mal != null) {
+//				 mv.addObject("friendList", mal);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }else {
+//				 mv.addObject("friendList", mal);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }
 			 
 			 if(chatroomList != null) {
 					mv.addObject("chatroomList",chatroomList);
-					mv.setViewName("chat/friendList");
+					mv.setViewName("chat/openChatroomList");
 				}else {
 					mv.addObject("chatroomList",chatroomList);
-					mv.setViewName("chat/friendList");
+					mv.setViewName("chat/openChatroomList");
 				}
 			 
-			 if(onetooneList != null) {
-				 mv.addObject("onetooneList", onetooneList);
-				 mv.setViewName("chat/friendList");
-			 }else {
-				 mv.addObject("onetooneList", onetooneList);
-				 mv.setViewName("chat/friendList");
-			 }
-			 
-			 if(readynCountList != null) {
-				 mv.addObject("readynCountList", readynCountList);
-				 mv.setViewName("chat/friendList");
-			 }else {
-				 mv.addObject("readynCountList", readynCountList);
-				 mv.setViewName("chat/friendList");
-			 }
+//			 if(onetooneList != null) {
+//				 mv.addObject("onetooneList", onetooneList);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }else {
+//				 mv.addObject("onetooneList", onetooneList);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }
+//			 
+//			 if(readynCountList != null) {
+//				 mv.addObject("readynCountList", readynCountList);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }else {
+//				 mv.addObject("readynCountList", readynCountList);
+//				 mv.setViewName("chat/openChatroomList");
+//			 }
 			 
 			 
 			 return mv;
@@ -267,7 +350,7 @@ public class ChatController {
 	 
 	 @RequestMapping("updateprofile.do")
 	 public String updateProfile(HttpServletRequest request,Member m, HttpSession session,
-			 									@RequestParam(value="update_myprofile", required=false) MultipartFile file) {
+			 									@RequestParam(value="update_myprofile", required=false) MultipartFile file, String nickname) {
 		 
 		 System.out.println("사진 = " + m.getProfile());
 		 
@@ -287,6 +370,7 @@ public class ChatController {
 		 Member m2 = (Member) session.getAttribute("loginUser");
 		 
 		 m2.setProfile(profileFileName);
+		 m2.setNickname(nickname);
 		 
 		 session.setAttribute("loginUser", m2);
 		 
@@ -911,6 +995,56 @@ private String saveOpenBackgroundFile(MultipartFile file, HttpServletRequest req
 		  int result = cService.updateOpenBackgroundImage(map);
 		  
 	}
+	
+//	@RequestMapping("friendSearch.do")
+//	public void friendSearch(HttpServletRequest request,HttpServletResponse response,  HttpSession session,
+//															@RequestParam(value="words", required=false) String words) {
+//		
+//		System.out.println("친구검색 검색어 = " + words);
+//		
+//		Member m =  (Member)session.getAttribute("loginUser");
+//		String id =  m.getId();
+//		
+//		ArrayList<Friends> friendList = new ArrayList();
+//		 friendList = cService.friendList(id);
+//		 ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
+//			for(int i=0;i<friendList.size();i++) {
+//				if(friendList.get(i).getfId().equals(m.getId())) {//친구 아이디 컬럼에 로그인된 아이디랑 같으면 userid에 있는 것을 가져와라
+//					al.add(friendList.get(i).getUserId());
+//				}else if(friendList.get(i).getUserId().equals(m.getId())) {//userId 컬럼와 로그인된 아이디가 같으면 fid에있는것을 al에 넣어라
+//					al.add(friendList.get(i).getfId());
+//				}
+//			}
+//			ArrayList<Member> mal =new ArrayList<Member>();
+//			for(int i =0;i<al.size();i++) {
+//				mal.add(cService.friendsInfo(al.get(i)));
+//			}
+//			System.out.println("친구 정보" + mal);
+//			
+//			ArrayList<Member> list = new ArrayList<Member>();
+//			
+//			for(int i = 0; i < mal.size(); i++) {
+//				if(mal.get(i).getNickname().contains(words)) {
+//					list.add(mal.get(i));
+//				}
+//			}
+//			System.out.println("뽑음...." + list);
+//			Gson gson = new Gson();
+//			String jsonPlace = gson.toJson(list);
+//			
+//			response.setContentType("text/html; charset=UTF-8");
+//            PrintWriter out;
+//			try {
+//				out = response.getWriter();
+//				out.println(jsonPlace);
+//				out.flush();
+//				out.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		
+//	}
+	
 }
 
 

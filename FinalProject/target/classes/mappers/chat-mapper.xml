@@ -350,6 +350,7 @@
 		WHERE CR_NO = #{chatroomnumber}
 	</select>
 	
+	
 </mapper>
 
 

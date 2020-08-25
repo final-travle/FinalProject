@@ -40,7 +40,7 @@ body {
   right:0;
   text-align:center;
   background:#f0f0f0;
-background: -webkit-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -webkit-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -webkit-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -webkit-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
+   background: -webkit-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -webkit-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -webkit-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -webkit-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
   background: -ms-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -ms-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -ms-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -ms-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
   background: linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
 }
@@ -598,9 +598,9 @@ $(document).ready(function(){
   	  	<img src="${pageContext.request.contextPath}/resources/images/updatenickname.png" onclick="updateNickname();"
   	  	style="width:30px;height:30px;float:left;margin-top:-12px;margin-left:2px;cursor:pointer;">
   	  </div>
- </div>
+ </div> --%>
  
- <input type="checkbox" id="updateNickname">
+<%--  <input type="checkbox" id="updateNickname">
  <div class="updateNickname">
  	<p style="text-align:center;font-size:20px;margin-bottom:5px;">변경할 닉네임</p>
  	<form action="updateNickname.do" name="updateNicknameForm" id="updateNicknameForm">
@@ -742,24 +742,24 @@ $(document).ready(function(){
  	<h1 style="margin-top:30px; margin-left:10px;">채팅</h1>
  	</td>
  	<td>
- 	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
+ 	<%-- <img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
  	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
- 	onclick="makeOpenChatroom();" title="새로운 오픈채팅">
+ 	onclick="makeOpenChatroom();" title="새로운 오픈채팅"> --%>
  	</td>
  	</tr>
  	</table>
  	<hr>
   	  <br>
  </div>
- <script>
+<!--  <script>
  	function myOpenChatroom(){
  		$("input:checkbox[id='myOpenChatroomlist_modal']").prop("checked", true);
  		$("#myOpenChatroomlist_modal").prop("checked", true);
  	}
- </script>
+ </script> -->
  
  
- <input type="checkbox" id="makeopenchat_modal">
+<%--  <input type="checkbox" id="makeopenchat_modal">
  <div class="makeOpenchatForm_modal">
  	<h1 style="text-align:center;">오픈채팅방 생성</h1>
 <form name="makeOpenChatroomForm" action="makeOpenChatroom.do" method="post">
@@ -819,7 +819,7 @@ $(document).ready(function(){
  		
  	}
  </script>
- 
+  --%>
  
  
 
@@ -900,7 +900,11 @@ $(document).ready(function(){
   	  </script> --%>
   	  
   	  
- </div>
+  	  <%-- <form action="insertOneToOneChatroom.do" name="insertOneToOneForm">
+  	  		<input type="hidden" name="myId" value="${loginUser.id }">
+  	  		<input type="hidden" name="friendId" value="">
+  	  </form> 
+ </div>--%>
  
  <%-- <input type="checkbox" id="friend_profile_detail2">
  <div class="friend_profile_detail2"> 
@@ -933,9 +937,9 @@ $(document).ready(function(){
  	$('#friend_profile').click(function(){
  	   $(this).attr
  	});
- </script>
+ </script> --%>
 
-<input type="checkbox" id="modal2">
+<input type="checkbox" id="modal2" checked>
 <div class="chatroom_modal">
 	<div class="container">
 	
@@ -955,7 +959,7 @@ $(document).ready(function(){
 						<c:param name="friendId" value="${onetooneList.friendId }"/>
 					</c:url>
 					<p style="font-size:30px;margin-left:20px;margin-top:-6px;">
-						<a href="${chatroom }" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
+						<a href="${chatroom }" <%-- onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" --%> 
 						style="color:black;text-decoration:none;" class="enterOneToOneChatroom" >${onetooneList.nickname }
 						</a>
 					</p>
@@ -1027,9 +1031,9 @@ $(document).ready(function(){
 		
 		
 	}
-</script> --%>
+</script>
 
-<input type="checkbox" id="modal3" checked>
+<%-- <input type="checkbox" id="modal3">
 <div class="openchatroom_modal">
 	<div class="container">
 	
@@ -1057,11 +1061,11 @@ $(document).ready(function(){
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
-</div>
+</div> --%>
 
 <script>
 function openFriendListModal(){
-	location.href="friendList.do";
+location.href="friendList.do";
 	
 	/* $("input:checkbox[id='modal1']").prop("checked", true);	
 	$("#modal1").prop("checked", true);
@@ -1093,7 +1097,8 @@ location.href="otoList.do";
 }
 
 function openOpenChatroomListModal(){
-	location.href="openChatroomList.do";
+location.href="openChatroomList.do";
+	
 	/* $("input:checkbox[id='modal3']").prop("checked", true);	
 	$("#modal3").prop("checked", true);
 	$("input:checkbox[id='head_modal2']").prop("checked", true);	

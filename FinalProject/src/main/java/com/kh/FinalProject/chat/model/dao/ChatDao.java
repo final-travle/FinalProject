@@ -206,7 +206,6 @@ public class ChatDao {
 		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOpenChatroomBackground", chatroomnumber);
 	}
 
-	
 
 
 }

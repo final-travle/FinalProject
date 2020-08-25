@@ -40,7 +40,7 @@ body {
   right:0;
   text-align:center;
   background:#f0f0f0;
-  background: -webkit-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -webkit-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -webkit-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -webkit-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
+ background: -webkit-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -webkit-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -webkit-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -webkit-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
   background: -ms-linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), -ms-linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), -ms-linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), -ms-linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%); 
   background: linear-gradient(45deg, hsl(48, 95%, 66%) 0%, transparent 70%), linear-gradient(135deg, hsl(325, 97%, 73%) 10%, transparent 80%), linear-gradient(225deg, hsl(72, 100%, 68%) 10%, transparent 80%), linear-gradient(315deg, hsl(165, 97%, 69%) 50%, transparent 100%);
 }
@@ -52,7 +52,7 @@ body {
   display:block;
   width:100%;
   height:100%;
-  top:190px;
+  top:160px;
   left:75px;
   background:#FFFFFF;
   border:1px solid #386980;
@@ -81,7 +81,7 @@ input#modal1[type=checkbox]:checked ~ .friend_modal {
   display:block;
   width:100%;
   height:100%;	
-  top:150px;
+  top:120px;
   left:75px;
   background:#FFFFFF;
   border:1px solid #386980;
@@ -111,7 +111,7 @@ input#modal2[type=checkbox]:checked ~ .chatroom_modal {
   display:block;
   width:100%;
   height:100%;
-  top:150px;
+  top:120px;
   left:75px;
   background:#FFFFFF;
   border:1px solid #386980;
@@ -193,7 +193,7 @@ input#chatmenumodal[type=checkbox]:checked ~ .menu_modal {
   position:fixed;
   display:block;
   width:100%;
-  height:190px;
+  height:160px;
   top:0px;
   left:75px;
   background:#FFFFFF;
@@ -222,7 +222,7 @@ input#head_modal1[type=checkbox]:checked ~ .friendmodalheader {
   position:fixed;
   display:block;
   width:100%;
-  height:150px;
+  height:120px;
   top:0px;
   left:75px;
   background:#FFFFFF;
@@ -484,6 +484,7 @@ textarea:focus{
 }
 
 
+
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -513,24 +514,64 @@ textarea:focus{
 	<img src="${pageContext.request.contextPath}/resources/images/openchatroomlist.png"  
 	style="height:60px; width:60px; margin-left:5px; margin-top:20px;cursor:pointer;"
 	onclick="openOpenChatroomListModal();" title="오픈채팅">
-	
-	
 </div>
+
+<!-- <input type="checkbox" id="friendSearchResult_modal">
+<div class="friendSearchResult_modal">
+	<table id="friendSearchResultTable">
+		
+	</table>
+	<br><br><br><br><br>
+	<br><br><br><br>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#friendSearch").on("keyup",function(){
+		var words = $("#friendSearch").val();
+		if(words != ''){
+		$("input:checkbox[id='friendSearchResult_modal']").prop("checked", true);
+		$("#friendSearchResult_modal").prop("checked", true);
+			$.ajax({
+				type:"POST",
+				url:"friendSearch.do",
+				data:{words:words},
+				dataType:"json",
+				success:function(data){
+					var str = '<tr>';
+				 	for(var i=0; i<data.length;i++){
+						str += '<td>' + data[i].profile + '</td>' + '<td>' + data[i].nickname + '</td>'
+						str += '</tr>'
+				 	}
+					$("#friendSearchResultTable").append(str);
+					return data;
+				},
+				error:function(error){
+					alert("콰욱" + error);
+				}
+			});
+		}else{
+			$("input:checkbox[id='friendSearchResult_modal']").prop("checked", false);
+			$("#friendSearchResult_modal").prop("checked", false);
+		}
+	});
+});
+</script> -->
 
 <input type="checkbox" id="head_modal1" checked>
 <div class="friendmodalheader">
  		<h1 style="margin-top:30px; margin-left:10px;">친구</h1>
-  	  <input type="text" id="friendSearch"  placeholder="친구 검색">
   	  <br>
   	  <div id="myprofile">
   	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" onclick="myprofile_detail();" id="savedMyProfile"
-  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:10px;margin-left:13px;float:left;cursor:pointer;">
+  	  	style="width:50px;height:50px;border-radius:45%; margin-bottom:-10px;margin-top:-20px;margin-left:13px;float:left;cursor:pointer;">
   	  	
-  	  	<p style="font-size:20px;margin-left:15px;float:left">${loginUser.nickname}</p>
+  	  	<p style="font-size:20px;margin-left:15px;float:left;margin-top:-10px;">${loginUser.nickname}</p>
   	  	<img src="${pageContext.request.contextPath}/resources/images/updatenickname.png" onclick="updateNickname();"
-  	  	style="width:30px;height:30px;float:left;margin-top:12px;margin-left:2px;cursor:pointer;">
+  	  	style="width:30px;height:30px;float:left;margin-top:-12px;margin-left:2px;cursor:pointer;">
   	  </div>
  </div>
+ 
  <input type="checkbox" id="updateNickname">
  <div class="updateNickname">
  	<p style="text-align:center;font-size:20px;margin-bottom:5px;">변경할 닉네임</p>
@@ -611,6 +652,7 @@ textarea:focus{
 	  </label>
   	  <form name="updateProfileForm" action ="updateprofile.do" method="post" enctype="multipart/form-data">
   	  	<input type="hidden" name="id" value="${loginUser.id }" id="id2">
+  	  	<input type="hidden" name="nickname" value="${loginUser.nickname } ">
   	  	<input type="hidden" name="profile" value="${loginUser.profile }">
 	  	  <input id="update_myprofile" name="update_myprofile" type="file" style="display:none;" accept="image/*">
 	  	  
@@ -624,7 +666,7 @@ textarea:focus{
  	function myprofile_detail(){
  		 var inputprofile = $("#update_myprofile").value;
  		 console.log(inputprofile);
- 		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", true);	
+ 		$("input:checkbox[id='myprofile_detail_modal']").prop("checked", true);
  		$("#myprofile_detail_modal").prop("checked", true);
  	}
  	function close_myprofile_detail(){
@@ -665,7 +707,7 @@ textarea:focus{
  </script>
  
  
- <input type="checkbox" id="head_modal2">
+<%--  <input type="checkbox" id="head_modal2">
  <div class="chatmodalheader">
  <table style="width:100%">
  <tr>
@@ -673,26 +715,18 @@ textarea:focus{
  	<h1 style="margin-top:30px; margin-left:10px;">채팅</h1>
  	</td>
  	<td>
- 	
  	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
  	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
  	onclick="makeOpenChatroom();" title="새로운 오픈채팅">
- 	
  	</td>
  	</tr>
  	</table>
-  	  <input type="text" id="chatroomSearch"  placeholder="채팅방 이름 검색">
+ 	<hr>
   	  <br>
- </div>
- <script>
- 	function myOpenChatroom(){
- 		$("input:checkbox[id='myOpenChatroomlist_modal']").prop("checked", true);
- 		$("#myOpenChatroomlist_modal").prop("checked", true);
- 	}
- </script>
+ </div> --%>
  
  
- <input type="checkbox" id="makeopenchat_modal">
+<%--  <input type="checkbox" id="makeopenchat_modal">
  <div class="makeOpenchatForm_modal">
  	<h1 style="text-align:center;">오픈채팅방 생성</h1>
 <form name="makeOpenChatroomForm" action="makeOpenChatroom.do" method="post">
@@ -752,7 +786,7 @@ textarea:focus{
  		
  	}
  </script>
- 
+  --%>
  
  
 
@@ -872,7 +906,7 @@ textarea:focus{
  	});
  </script>
 
-<input type="checkbox" id="modal2">
+<%-- <input type="checkbox" id="modal2">
 <div class="chatroom_modal">
 	<div class="container">
 	
@@ -892,7 +926,7 @@ textarea:focus{
 						<c:param name="friendId" value="${onetooneList.friendId }"/>
 					</c:url>
 					<p style="font-size:30px;margin-left:20px;margin-top:-6px;">
-						<a href="${chatroom }" <%-- onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" --%> 
+						<a href="${chatroom }" onclick="window.open('${chatroom}','openchatroom','top=100, left=300, width=400, height=500, status=no, menubar=no')" 
 						style="color:black;text-decoration:none;" class="enterOneToOneChatroom" >${onetooneList.nickname }
 						</a>
 					</p>
@@ -918,9 +952,9 @@ textarea:focus{
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
-</div>
+</div> --%>
 
-<script>
+<!-- <script>
 
 	let sock2 = new SockJS("<c:url value='/echolist'/>");
 	
@@ -964,22 +998,22 @@ textarea:focus{
 		
 		
 	}
-</script>
+</script> -->
 
-<input type="checkbox" id="modal3">
+<%-- <input type="checkbox" id="modal3">
 <div class="openchatroom_modal">
 	<div class="container">
 	
 		<table class="table table-striped table-bordered table-hover">
 		
 		<c:forEach var="chatroomList" items="${chatroomList }">
-			<tr>
+			<tr style="margin-top:0px;">
 				<td align="left" style="width:500px;">
 					<c:url var="chatroom" value="chatroomjoin.do">
 						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
 						<c:param name="chatroomname" value="${chatroomList.chatroomname }"/>
 					</c:url>
-				<p style="font-size:30px;margin-left:10px;">
+				<p style="font-size:30px;margin-left:10px;margin-top:10px;">
 				<a href="${chatroom }" 
 				style="color:black;text-decoration:none;" >${chatroomList.chatroomname} </a>
 				</p>
@@ -994,11 +1028,13 @@ textarea:focus{
 	<br><br><br><br><br>
 	<br><br><br><br>
 </div>
-</div>
+</div> --%>
 
 <script>
 function openFriendListModal(){
-	$("input:checkbox[id='modal1']").prop("checked", true);	
+	location.href="friendList.do";
+	
+	/* $("input:checkbox[id='modal1']").prop("checked", true);	
 	$("#modal1").prop("checked", true);
 	$("input:checkbox[id='head_modal1']").prop("checked", true);	
 	$("#head_modal1").prop("checked", true);
@@ -1008,11 +1044,13 @@ function openFriendListModal(){
 	$("input:checkbox[id='modal3']").prop("checked", false);
 	$("#modal3").prop("checked", false);
 	$("input:checkbox[id='head_modal2']").prop("checked", false);	
-	$("#head_modal2").prop("checked", false);
+	$("#head_modal2").prop("checked", false); */
 }
 
 function openChatroomListModal(){
-	$("input:checkbox[id='modal2']").prop("checked", true);	
+	location.href="otoList.do";
+	
+	/* $("input:checkbox[id='modal2']").prop("checked", true);	
 	$("#modal2").prop("checked", true);
 	$("input:checkbox[id='head_modal2']").prop("checked", true);	
 	$("#head_modal2").prop("checked", true);
@@ -1022,11 +1060,13 @@ function openChatroomListModal(){
 	$("input:checkbox[id='modal3']").prop("checked", false);
 	$("#modal3").prop("checked", false);
 	$("input:checkbox[id='head_modal1']").prop("checked", false);	
-	$("#head_modal1").prop("checked", false);
+	$("#head_modal1").prop("checked", false); */
 }
 
 function openOpenChatroomListModal(){
-	$("input:checkbox[id='modal3']").prop("checked", true);	
+	location.href="openChatroomList.do";
+	
+	/* $("input:checkbox[id='modal3']").prop("checked", true);	
 	$("#modal3").prop("checked", true);
 	$("input:checkbox[id='head_modal2']").prop("checked", true);	
 	$("#head_modal2").prop("checked", true);
@@ -1036,7 +1076,7 @@ function openOpenChatroomListModal(){
 	$("input:checkbox[id='modal2']").prop("checked", false);
 	$("#modal2").prop("checked", false);
 	$("input:checkbox[id='head_modal1']").prop("checked", false);	
-	$("#head_modal1").prop("checked", false);
+	$("#head_modal1").prop("checked", false); */
 }
 
 function makeOpenChatroom(){
