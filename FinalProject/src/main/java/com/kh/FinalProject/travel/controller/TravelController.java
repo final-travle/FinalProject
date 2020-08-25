@@ -446,7 +446,7 @@ public class TravelController {
 		// 로그인 된 유저 아이디 가져온다.
 		Member mb = (Member) session.getAttribute("loginUser");
 		
-		String userId = mb.getNickname();
+		String userId = mb.getId();
 		
 		
 		// json에 붙어 온 firstImg 를 저장한다.
