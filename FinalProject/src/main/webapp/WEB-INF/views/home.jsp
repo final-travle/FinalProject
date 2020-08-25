@@ -7,7 +7,7 @@
 	<title>Home</title>
 </head>
 <style>
-	.1modal {
+	.modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
             z-index: 1; /* Sit on top */
@@ -21,12 +21,14 @@
         }
     
         /* Modal Content/Box */
-        .1modal-content {
+        .modal-content {
+        	z-index: 10;
             background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
+            margin: 7% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 50%; /* Could be more or less, depending on screen size */                          
+            width: 50%; /* Could be more or less, depending on screen size */
+            float : left;                          
         }
         /* The Close Button */
         .close {
@@ -191,11 +193,13 @@
             </p>
         </div>
     </div><!-- // container end -->
-    <div id="myModal" class="1modal">
+    <div id="myModal" class="modal">
       <!-- Modal content -->
-      <div class="1modal-content">
+      <div class="modal-content">
         <span class="close">&times;</span>                                                           
-         <a href="${adsel.adLink }"><img src="<c:url value='${adsel.adImg }'/>" /></a>            
+         <a href="${adsel.adLink }"><img src="<c:url value='${adsel.adImg }'/>" /></a>
+          <p class="title"><a href="${adsel.adLink }">${adsel.adTitle }</a></p>
+                    <p class="cont">${adsel.adContents }</p>            
       </div>
     </div>
     
