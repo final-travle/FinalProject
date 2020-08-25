@@ -119,7 +119,8 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp" />
-
+<br>
+<br>
    <form id="joinForm" name="join" method="post" action="minsert.do">
             <h2 id="h2">JOIN MEMBER</h2>
             <h5 id="hh5">*은 반드시 적어야 하는 항목</h5>

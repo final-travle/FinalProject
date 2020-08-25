@@ -2,6 +2,7 @@ package com.kh.FinalProject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,11 +73,20 @@ public class HomeController {
 					String prefTagName = adList.get(i).getTravStyle();
 					
 					ArrayList<AD> al = ms.getAdList(prefTagName);
-					
 					for(int j = 0; j < al.size(); j ++) {
 						AD alparts = al.get(j);
 						ali.add(alparts);
-					}					
+					}
+					Random rand = new Random();
+					AD adsel = al.get(rand.nextInt(al.size()));
+					System.out.println(al);
+					if(al != null) {
+						System.out.println("있음");
+						mv.addObject("adsel", adsel);
+						mv.addObject("al", al);
+					}else {
+						System.out.println("없음");
+					}
 				}
 				
 				// 랜덤수 구하는 식
@@ -114,6 +124,7 @@ public class HomeController {
 			// 중복값 제거를 위한 배열 선언
 			int check[] = new int[4];
 			
+			int box[] = new int[4];
 			for(int i = 0; i < 4; i ++) {
 				int ran = (int)(Math.random() * 40) + 1;
 
@@ -123,7 +134,25 @@ public class HomeController {
 					if(check[i] == check[j]) {
 						i --;
 					}
-				}				
+				}
+				box[i] = ran;
+				System.out.println(box[i]);
+				if(i==0) {
+					AD adList = al.get(ran);				
+					aln.add(adList);
+				}
+				for(int j=0;j<i;j++) {
+					if(box[i]==box[j]) {
+						i--;
+						break;
+					}else {
+						if(i-1==j) {
+							AD adList = al.get(ran);				
+							aln.add(adList);
+						}
+						
+					}
+				}
 			}
 
 			for(int k = 0; k < 4; k ++) {
@@ -131,8 +160,11 @@ public class HomeController {
 				aln.add(adList);
 			}
 			
-			
+			Random rand = new Random();
+			AD adsel = al.get(rand.nextInt(al.size()));
+			System.out.println(aln);
 			mv.addObject("al", aln);
+			mv.addObject("adsel", adsel);
 		}
 		
 		

@@ -81,14 +81,14 @@ text-align: center;
           transition: all 0.2s ease;
 }
 
-
+	.snip1368 img{width:100%; height:210px; overflow:hidden;}
 	.snip1368 {position:relative; overflow:hidden; }
 	.snip13 { -webkit-transition: 0.2s; position:absolute; top:0; bottom:0; width:100%; height:100%; background:rgba(0,0,0,.7); display:none; }
 	.snip1368:hover .snip13 { display:block; }
 	.snip13 .icon:after { display:block; content:""; clear:both;  }
-	.snip13 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left; height:160px; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	.snip13 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left; height:50%; line-height:105px; text-align:center; color:#fff; text-decoration:none; }
 	.snip131 .icon1:after { display:block; content:""; clear:both;  }
-	.snip131 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left;  height:100%; line-height:160px; text-align:center; color:#fff; text-decoration:none; }
+	.snip131 a {  display:inline-block; width:50%; box-sizing:border-box;  float:left;  height:100%; line-height:105px; text-align:center; color:#fff; text-decoration:none; }
 	
 	
 </style>
@@ -126,7 +126,8 @@ text-align: center;
 	    <div class="menuSide"><p><a href="adminPostmanager.do">회원 글 관리</a></p></div>
    </c:if>
     </div>
-
+<br>
+<br>
     <div id="container" class="cf">
         <div id="content">
             <c:if test="${empty list }">

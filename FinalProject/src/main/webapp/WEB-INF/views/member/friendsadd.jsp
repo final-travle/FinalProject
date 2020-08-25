@@ -204,14 +204,14 @@ text-align: center;
 					<c:if test="${nb.userId eq n.id}">
 					<c:choose>
 						<c:when test="${nb.acceptYn eq 'Y'}">
-							<td>
+							<td style="text-align: center;">
 								<c:set var="loop_flag" value="true" />
 					            <c:out value="이미친구" />
 					            <c:set var="loop" value="true" />
 				            </td>
 						</c:when>
 						<c:when test="${nb.acceptYn eq 'N'}">
-							<td>
+							<td style="text-align: center;">
 								<c:set var="loop_flag" value="true" />
 					            <c:out value="응답대기중" />
 					            <c:set var="loop" value="true" />
@@ -222,7 +222,7 @@ text-align: center;
 				</c:if>
 				</c:forEach>
 				<c:if test="${not loop }">
-		            <td>
+		            <td style="text-align: center;">
 		            <c:url value="hansolhansol.do" var="url">
 					  <c:param name="id" value="${n.id }" />
 					</c:url>

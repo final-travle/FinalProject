@@ -213,7 +213,7 @@ text-align: center;
             <td align="center">${n.name }</td>
             <td align="center">${n.nickname }</td>
             <td align="center">${n.phone }</td>
-           <td>
+           <td style="text-align : center;">
 		            <c:url value="adminMemberDelete.do" var="url">
 					  <c:param name="id" value="${n.id }" />
 					</c:url>

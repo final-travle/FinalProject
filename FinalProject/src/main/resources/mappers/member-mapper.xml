@@ -56,6 +56,11 @@
 		AND POST_DEL_YN = 'N'
 	</select>
 	
+	<select id="mtype" parameterType="string" resultType="string">
+		SELECT TRAV_STYLE
+		FROM PREF_STYLE
+		WHERE USER_ID=#{id}
+	</select>
 	
 	
 	
@@ -77,6 +82,14 @@
 		FROM MEMBER
 		WHERE USER_ID=#{id} AND WITHD_YN='N'
 	</select>
+	
+	
+	
+	
+	<update id="changepass" parameterType="Member" >
+	UPDATE MEMBER SET PWD = #{pwd}	 WHERE USER_ID=#{id}
+	</update>
+	
 	
 	<update id="change" parameterType="Member" >
 	UPDATE MEMBER SET USER_ID = #{id},

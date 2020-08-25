@@ -40,8 +40,7 @@ import com.kh.FinalProject.member.model.vo.Ttype;
 import net.sf.json.JSONObject;
 
 
-@SessionAttributes("loginUser")
-
+@SessionAttributes({"loginUser","tttype"})
 
 
 @Controller
@@ -102,8 +101,11 @@ public class MemberController  {
 		success=mService.setloginTime(m.getId());
 		}
 		
-		System.out.println(loginUser);
 		if(loginUser != null) {
+			ArrayList<String> sal = mService.mtype(loginUser.getId());
+			Random rand = new Random();
+			String ty = sal.get(rand.nextInt(sal.size()));
+			model.addAttribute("tttype",ty);
 			model.addAttribute("loginUser",loginUser);
 			return "redirect:index.jsp";
 		}else {
@@ -194,6 +196,7 @@ public class MemberController  {
             mv.addObject("dice", dice);
             mv.addObject("member",mService.searchPwd(m));
             
+
  
             response_email.setContentType("text/html; charset=UTF-8");
             PrintWriter out_email = response_email.getWriter();
@@ -320,8 +323,8 @@ public class MemberController  {
 	            mv.setViewName("member/searchResultPwd");
 	            
 	            mv.addObject("e_mail",email_injeung);
-	            mv.addObject("result",mService.search(member));
-	            
+//	            mv.addObject("result",mService.search(member));
+	            mv.addObject("result",member);
 	            //만약 인증번호가 같다면 이메일을 회원가입 페이지로 같이 넘겨서 이메일을
 	            //한번더 입력할 필요가 없게 한다.
 	            
@@ -362,8 +365,8 @@ public class MemberController  {
 		
 		// 이제 서비스로 넘기자
 			ArrayList<Member> result = mService.searchId(m);
-		
-			if(result != null) {
+			
+			if(result.size()>0) {
 				model.addAttribute("result",result);
 				return "member/searchResultId";
 			}else {
@@ -377,7 +380,20 @@ public class MemberController  {
 		
 		
 	}
-		
+
+		@RequestMapping("changepass.do")	
+		public String changepass(String result,String pass, Model model,HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException {
+			 Member m = new Member();
+			 m.setId(result);
+			 m.setPwd(pass);
+			int rslt = mService.changepass(m);
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('정보가 변경되었습니다.'); </script>");
+			out.flush();
+			return "member/login";
+		}
+
 		
 		@RequestMapping("memberChange.do")
 		public String memberChange(Model model,HttpSession session,HttpServletResponse response) throws IOException {
@@ -388,7 +404,9 @@ public class MemberController  {
 			int postCount = mService.pCount(mb.getId());
 			int sharedCount = mService.sCount(mb.getId());
 			model.addAttribute("sCount",sharedCount);
-
+			model.addAttribute("year",mb.getBirth().substring(0,4));
+			model.addAttribute("mon",mb.getBirth().substring(5,7));
+			model.addAttribute("day",mb.getBirth().substring(8,10));
 			int accCount = mService.accfriendsCount(mb.getId());
 			model.addAttribute("accCount",accCount);
 			if(loginUser != null) {
@@ -433,18 +451,21 @@ public class MemberController  {
 			mService.deleteTtype(mb.getId());
 			int fCount = mService.fCount(mb.getId());
 			
-
+			
 			int accCount = mService.accfriendsCount(m.getId());
 			model.addAttribute("accCount",accCount);
 			
 			for(int i=0; i<request.getParameterValues("tType").length;i++) {
 				mService.insertTtype(mb.getId(),request.getParameterValues("tType")[i],tp);
 				}
+			Member loginUser = mService.loginMember(m);
+			
 			System.out.println(result);
 				if(result > 0) {
 					model.addAttribute("result",result);
 					model.addAttribute("fCount",fCount);
-					return "home";
+					model.addAttribute("loginUser",loginUser);					
+					return "member/friends";
 				}else {
 					model.addAttribute("member",mb);
 					model.addAttribute("sCount",sharedCount);
@@ -487,7 +508,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "redirect:index.jsp";
+			return "redirect:home.do";
 		}
 	    
 	    @RequestMapping(value="logout2.do", method=RequestMethod.GET)
@@ -495,7 +516,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}
 	   	   
 	    

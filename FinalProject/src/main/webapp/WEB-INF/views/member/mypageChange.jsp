@@ -454,11 +454,9 @@ text-align: center;
           <td id="inp" class="ltd">
            
             <label for="sex">남</label>
-            <input type="radio" name="gender" id="sex" value="M">
+            <input type="radio" name="gender" id="sex" value="M" <c:if test="${member.gender eq 'M'}">checked</c:if>>
             <label for="sex">여</label>
-            <input type="radio" name="gender" id="sex" value="Y">
-           
-            
+            <input type="radio" name="gender" id="sex" value="Y" <c:if test="${member.gender eq 'Y'}">checked</c:if>>          
         </td>
       </tr>
        <tr>
@@ -467,8 +465,9 @@ text-align: center;
          <input class="colorBtn btn" type="button" value="제출" id="submit_btn"  onclick="check();">
                 </div>
             </td>
-            <td></td>
-       </tr>
+            <td>
+       </td>
+  </tr>
    
 </tbody>
 </table>
@@ -507,10 +506,6 @@ $(document).ready(function(){
     	
     });
     
-        
-    
-    
-       
 });
 
 
@@ -607,6 +602,7 @@ if(count<=0){
 }
 
 </script>
+
 
    <jsp:include page="../common/footer.jsp" />
  

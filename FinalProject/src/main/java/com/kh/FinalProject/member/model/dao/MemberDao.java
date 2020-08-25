@@ -321,6 +321,16 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("friends.accfriendsCount",id);
 	}
 
+	public ArrayList<String> mtype(String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.mtype",id);
+	}
+
+	public int changepass(Member m) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.changepass",m);
+		}
+
 	
 	
 	

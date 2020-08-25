@@ -106,5 +106,9 @@ public interface MemberService {
 
 	int accfriendsCount(String id);
 
+	ArrayList<String> mtype(String id);
+
+	int changepass(Member m);
+
 
 }

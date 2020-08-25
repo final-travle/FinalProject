@@ -56,7 +56,7 @@ margin-bottom: 15px;
 	margin:20px 0 20px;
 }
 
-input[type=text]{
+input[type=password]{
 height: 36px;
  width: 200px;
 }
@@ -196,7 +196,7 @@ bottom:-435px;
 	  
 	  <form method="post" action="dltmember.do">
 	  	<ul id="logintable">
-	  		<li><span  style="color: black;">비밀번호 : </span><input type="text" id="userPwd" name="pwd" required=""></li>
+	  		<li><span  style="color: black;">비밀번호 : </span><input type="password" id="userPwd" name="pwd" required=""></li>
 	  		<li><button type="submit" id="idCheck" class="colorBtn btn"  style="width: 70px; background: darkgrey; color: white;">제출</button></li>
 	  	</ul>
 	</form>
