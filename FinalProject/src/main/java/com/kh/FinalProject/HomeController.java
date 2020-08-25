@@ -2,6 +2,7 @@ package com.kh.FinalProject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -68,11 +69,12 @@ public class HomeController {
 					System.out.println(prefTagName);
 					
 					ArrayList<AD> al = ms.getAdList(prefTagName);
-					
+					Random rand = new Random();
+					AD adsel = al.get(rand.nextInt(al.size()));
 					System.out.println(al);
-					
 					if(al != null) {
 						System.out.println("있음");
+						mv.addObject("adsel", adsel);
 						mv.addObject("al", al);
 					}else {
 						System.out.println("없음");
@@ -87,6 +89,10 @@ public class HomeController {
 			ArrayList<AD> al = ms.getAdList();
 			ArrayList<AD> aln = new ArrayList<AD>();
 			
+			Random rand = new Random();
+			AD adsel = al.get(rand.nextInt(al.size())-1);
+			
+			
 			for(int i = 0; i < 4; i ++) {
 				int ran = (int)(Math.random() * 40) + 1;
 				
@@ -97,6 +103,7 @@ public class HomeController {
 				
 			}
 			mv.addObject("al", aln);
+			mv.addObject("adsel", adsel);
 		}
 		
 		

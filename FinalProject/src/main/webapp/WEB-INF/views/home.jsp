@@ -194,10 +194,8 @@
     <div id="myModal" class="1modal">
       <!-- Modal content -->
       <div class="1modal-content">
-        <span class="close">&times;</span>                                                               
-        <c:if test="${!empty sessionScope.loginUser }">
-                	<img src="asdf.jsp"/>
-		</c:if>
+        <span class="close">&times;</span>                                                           
+         <a href="${adsel.adLink }"><img src="<c:url value='${adsel.adImg }'/>" /></a>            
       </div>
     </div>
     
@@ -219,7 +217,7 @@
 		span.onclick = function() {
            modal.style.display = "none";
        }
-
+		 modal.style.display = "block";
        // When the user clicks anywhere outside of the modal, close it
        window.onclick = function(event) {
            if (event.target == modal) {
@@ -230,31 +228,8 @@
 	   span.onclick = function() {
            modal.style.display = "none";
        }
-        	   if($("#ttype").val() == "호캉스") {
-  	    	     window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');             
-        	      }else if ($("#ttype").val() == "FLEX"){
-        	    	     window.open('ex1.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');    
-        	      }else if ($("#ttype").val() == "힐링"){
-     	    	     window.open('ex2.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
-        	      }else if ($("#ttype").val() == "효도관광"){
-     	    	     window.open('ex3.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
-        	      }else if ($("#ttype").val() == "이벤트"){
-     	    	     window.open('ex4.do', 'window팝업', 'width=600, height=600, menubar=no, status=no, toolbar=no, resizable=no');
-        	      }else if ($("#ttype").val() == "직장인휴가"){
-        	        alert("직장인휴가");
-        	      }else if ($("#ttype").val() == "문화제탐방"){
-        	        alert("문화재탐방");
-        	      }else if ($("#ttype").val() == "짠내투어"){
-        	        alert("짠내투어");
-        	      }else if ($("#ttype").val() == "쇼핑관광"){
-        	        alert("쇼핑관광");
-        	      }else if ($("#ttype").val() == "한달살이"){
-        	        alert("한달살이");
-        	      }else{
-        	    	  modal.style.display = "block";
-        	      }
-        	   })
-        	   
+
+   })    	   
         
    </script>    
    
