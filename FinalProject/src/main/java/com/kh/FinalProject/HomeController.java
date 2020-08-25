@@ -89,19 +89,33 @@ public class HomeController {
 			ArrayList<AD> al = ms.getAdList();
 			ArrayList<AD> aln = new ArrayList<AD>();
 			
-			Random rand = new Random();
-			AD adsel = al.get(rand.nextInt(al.size())-1);
-			
-			
+			int box[] = new int[4];
 			for(int i = 0; i < 4; i ++) {
 				int ran = (int)(Math.random() * 40) + 1;
-				
-				
-				AD adList = al.get(ran);
-				
-				aln.add(adList);
+				box[i] = ran;
+				System.out.println(box[i]);
+				if(i==0) {
+					AD adList = al.get(ran);				
+					aln.add(adList);
+				}
+				for(int j=0;j<i;j++) {
+					if(box[i]==box[j]) {
+						i--;
+						break;
+					}else {
+						if(i-1==j) {
+							AD adList = al.get(ran);				
+							aln.add(adList);
+						}
+						
+					}
+				}
 				
 			}
+
+			Random rand = new Random();
+			AD adsel = al.get(rand.nextInt(al.size()));
+			System.out.println(aln);
 			mv.addObject("al", aln);
 			mv.addObject("adsel", adsel);
 		}
