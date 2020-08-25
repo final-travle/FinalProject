@@ -59,25 +59,39 @@ public class HomeController {
 			String userId = mb.getId();
 			
 			ArrayList<PrefStyle> adList = ms.getPrefStyle(userId);
+
+			ArrayList<AD> ali = new ArrayList<>();
 			
-			System.out.println(adList);
+			ArrayList<AD> all = new ArrayList<>();
 			
 			if(adList != null) {
 				for(int i = 0; i < adList.size(); i ++) {
 					String prefTagName = adList.get(i).getTravStyle();
-					System.out.println(prefTagName);
 					
 					ArrayList<AD> al = ms.getAdList(prefTagName);
 					
-					System.out.println(al);
-					
-					if(al != null) {
-						System.out.println("있음");
-						mv.addObject("al", al);
-					}else {
-						System.out.println("없음");
+					for(int j = 0; j < al.size(); j ++) {
+						AD alparts = al.get(j);
+						ali.add(alparts);
 					}
 					
+
+					System.out.println("ali : " + ali);
+					System.out.println("ali : " + ali.size());
+					
+				}
+				
+				for(int k = 0; k < 4; k ++) {
+					int ran = (int)(Math.random() * (ali.size()));
+					
+					AD adli = ali.get(ran);
+					all.add(adli);
+					
+				}
+				
+				if(all != null) {
+					System.out.println(all);
+					mv.addObject("al", all);
 				}
 			}
 			
