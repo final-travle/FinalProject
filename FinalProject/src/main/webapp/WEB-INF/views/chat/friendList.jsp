@@ -483,51 +483,6 @@ textarea:focus{
 		    width: 0px;
 }
 
-.myOpenChatroomlist_modal {
-  position:absolute;
-  display:block;
-  z-index:92;
-  width:300px;
-  height:400px;
-  top:20%;
-  left:20%;
- /*  background-image: url("${pageContext.request.contextPath}/resources/images/makechat_background.jpg"); */
- background:white;
-  border:1px solid gray;
-  border-radius:3%;
-  overflow:hidden;
-  overflow-y:auto;
-
-  visibility: collapse;
-  opacity: 1;
-  filter: alpha(opacity=60);
-  -webkit-transition: all .0s ease;
-  transition: all .0s ease;
-  -webkit-transform: scale(0, 0);
-  -ms-transform: scale(0, 0);
-  transform: scale(0, 0);
-}
-input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_modal {
-  visibility: visible;
-  -webkit-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-
-.myOpenChatroomlist_modal::-webkit-scrollbar {
-		    width: 0px;
- }
-.myOpenChatroomlist_modal::-webkit-scrollbar-thumb {
-		    background-color: #2f3542;
-		    border-radius: 10px;
-		    background-clip: padding-box;
-		    border: 2px solid transparent;
-}
- .myOpenChatroomlist_modal::-webkit-scrollbar-track {
-		    background-color: grey;
-		    border-radius: 10px;
-		    box-shadow: inset 0px 0px 5px white;
-}
 
 </style>
 <meta charset="UTF-8">
@@ -578,12 +533,17 @@ input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_moda
  </div>
  <input type="checkbox" id="updateNickname">
  <div class="updateNickname">
- 	<p style="text-align:center;">변경할 닉네임</p>
+ 	<p style="text-align:center;font-size:20px;margin-bottom:5px;">변경할 닉네임</p>
  	<form action="updateNickname.do" name="updateNicknameForm" id="updateNicknameForm">
- 		<input type="text" id="inputNickname" name="inputNickname" autocomplete="off" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);">
+ 		<input type="text" id="inputNickname" name="inputNickname" autocomplete="off" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+ 		style="background:transparent;border:2px dashed #BE81F7;;outline:0;border-radius:5px;margin-left:68px;">
  		<br>
- 		<button type="button" onclick="close_updateNicknameForm();">취소</button>
- 		<button type="button" onclick="submit_updateNicknameForm();">확인</button>
+ 		<button type="button" onclick="close_updateNicknameForm();"
+ 		style="background:transparent;border:0;outline:0;">
+ 		<p style="font-size:20px;margin-top:5px;margin-left:50px;cursor:pointer;">취소</p></button>
+ 		<button type="button" onclick="submit_updateNicknameForm();"
+ 		style="background:transparent;border:0;outline:0;">
+ 		<p style="font-size:20px;margin-top:5px;margin-left:100px;cursor:pointer;">확인</p></button>
  	</form>
  </div>
  <script>
@@ -598,6 +558,7 @@ input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_moda
  	function updateNickname(){
  		$("input:checkbox[id='updateNickname']").prop("checked", true);	
  		$("#updateNickname").prop("checked", true);
+ 		$("#inputNickname").focus();
  	}
  	function close_updateNicknameForm(){
  		$("#inputNickname").val('');
@@ -717,9 +678,6 @@ input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_moda
  	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
  	onclick="makeOpenChatroom();" title="새로운 오픈채팅">
  	
- 	<img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
- 	style="width:55px;height:40px;float:right;margin-top:15px;margin-right:80px;cursor:pointer;"
- 	onclick="myOpenChatroom();" title="내가 만든 채팅방">
  	</td>
  	</tr>
  	</table>
@@ -732,51 +690,7 @@ input#myOpenChatroomlist_modal[type=checkbox]:checked ~ .myOpenChatroomlist_moda
  		$("#myOpenChatroomlist_modal").prop("checked", true);
  	}
  </script>
- <input type="checkbox" id="myOpenChatroomlist_modal">
- <div class="myOpenChatroomlist_modal">
- 	<div class="container">
-	
-		<table class="table table-striped table-bordered table-hover">
-		
-		<c:forEach var="chatroomList" items="${chatroomList }">
-			<tr>
-				<td align="left" style="width:200px;display:inline-block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-					<c:url var="chatroomDelete" value="chatroomDelete.do">
-						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
-					</c:url>
-				<p style="font-size:30px;margin-left:10px;">
-				<a href="${chatroomDelete }" 
-				style="color:black;text-decoration:none;" >${chatroomList.chatroomname}</a>
-				</p>
-				<p style="font-size:15px;margin-top:-30px;margin-right:60px;word-break:break-all;">
-				<img src="${pageContext.request.contextPath}/resources/images/openchatroomdetail.png"
-				style="width:25px;height:20px;margin-left:20px;">
-				${chatroomList.chatroomdetail }</p>
-				</td>
-				
-				<td>
-					<c:url var="chatroomUpdate" value="chatroomUpdate.do">
-						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
-					</c:url>
-					<p style="font-size:15px;word-break:break-all;float:left;">
-						<a href="${chatroomUpdate }" 
-						style="color:black;text-decoration:none;" >수정</a>
-					</p>
-					
-					<c:url var="chatroomDelete" value="chatroomDelete.do">
-						<c:param name="chatroomnumber" value="${chatroomList.chatroom_no}"/>
-					</c:url>
-					<p style="font-size:15px;margin-left:20px;word-break:break-all;float:left;">
-						<a href="${chatroomDelete }" 
-						style="color:black;text-decoration:none;" >삭제</a>
-					</p>
-					
-				</td>
-			</tr>
-			</c:forEach>
-	</table>
-</div>
- </div>
+ 
  
  <input type="checkbox" id="makeopenchat_modal">
  <div class="makeOpenchatForm_modal">
