@@ -64,6 +64,9 @@ public class HomeController {
 			
 			ArrayList<AD> all = new ArrayList<>();
 			
+			// 중복값 제거를 위한 배열 선언
+			int check[] = new int[4];
+			
 			if(adList != null) {
 				for(int i = 0; i < adList.size(); i ++) {
 					String prefTagName = adList.get(i).getTravStyle();
@@ -73,26 +76,33 @@ public class HomeController {
 					for(int j = 0; j < al.size(); j ++) {
 						AD alparts = al.get(j);
 						ali.add(alparts);
-					}
-					
-
-					System.out.println("ali : " + ali);
-					System.out.println("ali : " + ali.size());
-					
+					}					
 				}
 				
+				// 랜덤수 구하는 식
 				for(int k = 0; k < 4; k ++) {
 					int ran = (int)(Math.random() * (ali.size()));
 					
-					AD adli = ali.get(ran);
-					all.add(adli);
+					check[k] = ran;
 					
+					for(int l = 0; l < k; l ++) {
+						if(check[k] == check[l]) {
+							k --;
+						}
+					}
+				}
+				
+				for(int m = 0; m < 4; m ++) {
+					
+					AD adli = ali.get(check[m]);
+					all.add(adli);
 				}
 				
 				if(all != null) {
-					System.out.println(all);
 					mv.addObject("al", all);
 				}
+				
+				
 			}
 			
 			
@@ -100,16 +110,28 @@ public class HomeController {
 			System.out.println("로그인 정보 없음");
 			ArrayList<AD> al = ms.getAdList();
 			ArrayList<AD> aln = new ArrayList<AD>();
+
+			// 중복값 제거를 위한 배열 선언
+			int check[] = new int[4];
 			
 			for(int i = 0; i < 4; i ++) {
 				int ran = (int)(Math.random() * 40) + 1;
+
+				check[i] = ran;
 				
-				
-				AD adList = al.get(ran);
-				
-				aln.add(adList);
-				
+				for(int j = 0; j < i; j ++) {
+					if(check[i] == check[j]) {
+						i --;
+					}
+				}				
 			}
+
+			for(int k = 0; k < 4; k ++) {
+				AD adList = al.get(check[k]);				
+				aln.add(adList);
+			}
+			
+			
 			mv.addObject("al", aln);
 		}
 		
