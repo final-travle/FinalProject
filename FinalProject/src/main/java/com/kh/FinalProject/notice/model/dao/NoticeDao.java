@@ -38,6 +38,11 @@ public class NoticeDao {
 
 		return sqlSessionTemplate.selectOne("noticeMapper.selectOne", postNo);
 	}
+	
+	public Notice selectNotice2(int postNo) {
+		return sqlSessionTemplate.selectOne("noticeMapper.selectOne2", postNo);
+	}
+	
 
 	public int updateNotice(Notice n) {
 			
@@ -62,6 +67,8 @@ public class NoticeDao {
 		
 		return sqlSessionTemplate.selectList("noticeMapper.selectList", null, row);
 	}
+
+
 
 
 	

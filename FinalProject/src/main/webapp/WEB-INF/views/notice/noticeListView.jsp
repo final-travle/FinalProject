@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>공지사항 글 목록</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+
 <style>
 
 * {
@@ -80,6 +82,19 @@ a {
     width: 10%;
 }
 
+   .box-radio-input input[type="button"]{
+    display:inline-block;
+    background:none;
+    border:1px solid #dfdfdf;
+    border-radius:5px;    
+    padding:0px 10px;
+    text-align:center;
+    height:35px;
+    line-height:33px;
+    font-weight:500;
+    cursor:pointer;		
+   }
+
 </style>
 </head>
 <body>
@@ -129,15 +144,17 @@ a {
 			</c:forEach>
 		
 			<br>
+<%-- 			  <div>
 				<form align="center" method="get" name="listForm" action="nlist.do">
 	 				<input type="hidden" name="page" value="${currentPage }">
-	 				<input name="keyword" value="${keyword}">
+	 				<input type="text" name="keyword" placeholder="제목만 검색 가능합니다.">
 	 				<input type="submit" value="검색">
 	 			</form>
-	 			
+	 		  </div> --%>
+	 		  	
 	 			<div align = "right">
 	 				<c:if test="${loginUser.id eq 'master'}">
-						<button onclick="location.href='nWriterView.do'">글쓰기</button>
+		<label class="box-radio-input"><input type="button" value="글쓰기" onclick="location.href='nWriterView.do'"></label>
 					</c:if>
 					<c:if test="${loginUser.id ne 'master' }">						
 					</c:if>
@@ -149,29 +166,27 @@ a {
 	<table align="center" cellspacing="0" width="500" id="td">
 	
 		<tr align="center" height="10">
-			<td colspan="5">
-			<!-- [이전] -->
-			<c:if test="${currentPage <= 1 }">
-				[이전]&nbsp;
+			<td colspan="5"><c:if test="${currentPage<=1}">
+				[prev]&nbsp;
 			</c:if>
 			
 			<c:if test="${currentPage > 1 }">
 				<c:url var="nlistBack" value="nlist.do">
 					<c:param name="page" value="${currentPage-1 }"/>
 				</c:url>
-				<a href="${nlistBack }">[이전]</a>
+				<a href="${nlistBack }">[prev]</a>
 			</c:if>
 			
 			<!-- [번호들] -->
 		  <c:set var="endPage" value="${maxPage }"/>
 			<c:forEach var="p" begin="${startPage + 1}" end="${endPage }">
 				<c:if test="${p eq currentPage }">
-					<font color="blue" size="4"><b>[${p }]</b></font>
+					<font color="#bd9dec" size="4"><b>[${p}]</b></font>
 				</c:if>
 				
 				<c:if test="${p ne currentPage }">
 					<c:url var="nlistCheck" value="nlist.do">
-						<c:param name="page" value="${p }"/>
+						<c:param name="page" value="${p}"/>
 					</c:url>
 					<a href="${nlistCheck }">${p }</a>
 				</c:if>
@@ -180,14 +195,14 @@ a {
 			
 			<!-- [다음] -->			
 			<c:if test="${currentPage >= maxPage }">
-				[다음]
+				[next]
 			</c:if>
 			
 			<c:if test="${currentPage < maxPage }">
 				<c:url var="nlistEnd" value="nlist.do">
 					<c:param name="page" value="${currentPage + 1 }"/>
 				</c:url>
-				<a href="${nlistEnd }">[다음]</a>
+				<a href="${nlistEnd }">[next]</a>
 			</c:if>
 			
 		</td>
@@ -209,12 +224,14 @@ a {
 			      
        	<p align="center">
 			<c:url var="home" value="home.do"/>
-			<a href="${home }">메인 페이지로 이동</a>&nbsp;
+			<em><a href="${home }">메인 페이지로 이동</a>&nbsp;</em>
 			<c:url var="nlist" value="nlist.do"/>
-			<a href="${nlist }">목록 전체 보기</a>
+			<em><a href="${nlist }">목록 전체 보기</a></em>
 		</p>
 		<br><br>
 		
 			<jsp:include page="../common/footer.jsp"/>
+					
+			
 </body>
 </html>

@@ -22,11 +22,12 @@
 			WHERE POST_TYPE='1'
 	</select>
 	
-	<select id="selectList" resultMap="noticeResultSet">
+	<select id="selectList" resultType="arraylist" resultMap="noticeResultSet">
 			SELECT *
-			FROM POST
-			WHERE POST_TYPE='1'
-			ORDER BY POST_NO DESC
+			FROM POST 
+			WHERE TITLE LIKE '%' ||#{keyword}|| '%'
+					AND POST_TYPE='1'
+				ORDER BY POST_NO DESC	
 	</select>
 	
 	
@@ -60,6 +61,15 @@
 				AND POST_DEL_YN='N'
 	</select>
 	
+	<select id="selectOne2" parameterType="_int" resultMap="noticeResultSet">
+		SELECT * 
+		FROM POST
+		WHERE POST_TYPE='1'
+			AND POST_NO=#{postNo}
+				AND POST_DEL_YN='N'				
+	</select>
+	
+	
 	<update id="updateNotice">
 		UPDATE POST
 		SET TITLE = #{title}
@@ -85,5 +95,7 @@
 				ORDER BY POST_NO DESC	
 			
 	</select>
+	
+
 
 </mapper>

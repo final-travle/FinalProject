@@ -80,6 +80,10 @@ p {
  div{
      display: block;
  }
+ img {
+  max-width: 100%;
+  height: auto;
+}
 </style>
         
 </head>
@@ -149,6 +153,11 @@ p {
 						<c:url var="nupView" value="nupView.do">
 							<c:param name="postNo" value="${notice.postNo }"/>
 							<c:param name="page" value="${currentPage }"/>
+						</c:url>
+						
+						<c:url var="nupView2" value="nupView2.do">
+							<c:param name="postNo" value="${notice.postNo }"/>
+							<c:param name="page" value="${currentPage }"/>
 						</c:url>		
 		
 						<c:url var="ndelete" value="ndelete.do">
@@ -160,17 +169,25 @@ p {
 						</c:url>
 	
 				
-						<c:if test="${loginUser.id eq 'master' }">		
+						<c:if test="${loginUser.id eq 'master' && !empty notice.fileName }">		
 							<ul class="actions">
-								<li><a href="${nupView }">글 수정하기</a></li>
-								<li><a href="${ndelete }">글 삭제하기</a></li>
-								<li><a href="nlist.do">목록으로</a></li>
+								<li><em><a href="${nupView }">글 수정하기</a></em></li>
+								<li><em><a href="${ndelete }" onClick="alert('삭제되었습니다.')">글 삭제하기</a></em></li>
+								<li><em><a href="nlist.do">목록으로</a></em></li>
 							</ul>
+						</c:if>
+						
+						<c:if test="${loginUser.id eq 'master' && empty notice.fileName }">
+							<ul class="actions">
+								<li><em><a href="${nupView2 }">글 수정하기</a></em></li>
+								<li><em><a href="${ndelete }" onClick="alert('삭제되었습니다.')">글 삭제하기</a></em></li>
+								<li><em><a href="nlist.do">목록으로</a></em></li>
+							</ul>	
 						</c:if>
 						
 						<c:if test="${empty loginUser.id }">		
 							<ul class="actions">
-								<li><a href="nlist.do">목록으로</a></li>
+								<li><em><a href="nlist.do">목록으로</a></em></li>
 							</ul>
 						</c:if>
 						

@@ -68,13 +68,7 @@ public class SearchDao {
 		return sqlSessionTemplate.selectOne("searchMapper.getListCount");
 	}
 
-	public ArrayList<Board> selectList(PageInfo pi2) {
-		int offset = (pi2.getCurrentPage() - 1) * pi2.getBoardLimit();
-		
-		RowBounds rowBounds = new RowBounds(offset, pi2.getBoardLimit());
-		
-		return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectList", null, rowBounds);
-	}
+
 
 
 	public ArrayList<Board> selectThumbnail(Choice choice) {
@@ -116,14 +110,22 @@ public class SearchDao {
 		
 	}
 
-
-
-
-
 	public ArrayList<PostTag> selectListTag1() {
 
 		return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectListTag1");
 	}
+
+
+	public ArrayList<Board> selectList(PageInfo pi2) {
+	
+		int offset = (pi2.getCurrentPage() - 1) * pi2.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi2.getBoardLimit());
+				
+		return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectList", null, rowBounds);
+	}
+
+
 
 
 

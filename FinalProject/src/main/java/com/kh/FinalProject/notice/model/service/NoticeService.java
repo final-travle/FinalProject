@@ -17,6 +17,8 @@ public interface NoticeService {
 
 	Notice selectNotice(int postNo);
 
+	Notice selectNotice2(int postNo);
+	
 	int updateNotice(Notice n);
 
 	int deleteNotice(int postNo);
@@ -24,6 +26,7 @@ public interface NoticeService {
 	List<Notice> selectSearch(String keyword);
 	
 	List<Notice> selectList(int startPage, int limit);
+
 
 
 

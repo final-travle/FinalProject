@@ -17,6 +17,7 @@
 	.formlist ul li .textbox { display:inline-block; width:70%; } 
 	.formlist ul li .textbox input,
 	.formlist ul li .textbox textarea { width:100%; box-sizing: border-box; resize: none; }
+	.formlist ul li .textbox1 input { max-width:100%; height:auto;}
 
 	li { list-style: none; padding:0; margin:0; }
 
@@ -48,7 +49,7 @@
                        <label for="name" >작성자 <sup>*</sup></label>
                        <span class="textbox"><input type="text" id="userId" name="userId" readonly value="${loginUser.id }" /></span>
                      </li>
-                   <!-- jsp페이지에 <textarea>, <input type="text">와 같은 곳 위에 선언해주는 코드. -->
+                     <!-- jsp페이지에 <textarea>, <input type="text">와 같은 곳 위에 선언해주는 코드. -->
                      <script>
                      	$('#text').val().replace(/\n/g, "<br>")
                      </script>
@@ -61,7 +62,7 @@
                      
                      <li>
                         <label for="email">첨부</label>
-                        <span class="textbox"><input type="file" id="file" name="uploadFile"></span>
+                        <span class="textbox1"><input type="file" id="file" name="uploadFile"></span>
                       </li>
                    </ul>
                    <br><br>
@@ -77,8 +78,8 @@
     	
     	<br><br>
     	<p align="center">
-    		<a href="home.do">Home</a>
-    		<a href="nlist.do">공지사항</a>
+    		<em><a href="home.do">Home&nbsp;&nbsp;</a></em>
+    		<em><a href="nlist.do">공지사항</a></em>
     	</p>
 </section>
 

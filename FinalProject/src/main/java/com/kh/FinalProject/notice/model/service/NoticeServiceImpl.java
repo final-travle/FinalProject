@@ -40,6 +40,12 @@ public class NoticeServiceImpl implements NoticeService {
 	
 		return nDao.selectNotice(postNo);
 	}
+	
+	@Override
+	public Notice selectNotice2(int postNo) {
+		
+		return nDao.selectNotice2(postNo);
+	}
 
 	@Override
 	public int updateNotice(Notice n) {
@@ -65,6 +71,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 		return nDao.selectList(startPage, limit);
 	}
+
+
 
 	
 

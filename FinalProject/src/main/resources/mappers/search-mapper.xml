@@ -35,6 +35,7 @@
 				WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
         										FROM POST_TAG
         								 			WHERE TAG_NAME = #{city})
+        								 			
 	</select>
 	
 	<select id="selectChoiceList1" parameterType="Search" resultMap="searchResultSet">
@@ -109,6 +110,9 @@
         			WHERE TAG_NAME = #{theNumber})		
 	</select>
 	
+
+	
+	
 	
 	<select id="selectListTag" resultMap="searchResultSet">
 		SELECT *
@@ -119,15 +123,12 @@
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM POST
-		WHERE POST_TYPE = '3'
-		AND POST_DEL_YN = 'N'
 	</select>
 	
 	<select id="selectList" resultMap="boardResultSet">
 		SELECT *
 		FROM POST
-		WHERE POST_TYPE = '3'		
-		AND POST_DEL_YN = 'N'
+		WHERE POST_DEL_YN = 'N'
 		ORDER BY POST_NO DESC
 	</select>
 	
@@ -137,8 +138,7 @@
     		FROM POST
 		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{city}
-						 AND POST.POST_TYPE = '3'
-						 	
+				ORDER BY POST_NO DESC		 	
 	</select>
 	
 	<select id="selectThumbnail1" parameterType="Search" resultMap="boardResultSet">
@@ -146,7 +146,7 @@
     		FROM POST
 		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{month}
-						 AND POST.POST_TYPE = '3'
+				ORDER BY POST_NO DESC			 
 						 	
 	</select>
 	
@@ -155,7 +155,7 @@
     		FROM POST
 		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{theNumber}
-						 AND POST.POST_TYPE = '3'
+				ORDER BY POST_NO DESC	
 						 	
 						 
 	</select>
@@ -166,15 +166,15 @@
     		FROM POST
 				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{city}
-						 AND POST.POST_TYPE = '3'
+				
 						 	
 	INTERSECT 
     	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
        		 FROM POST
             	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
                 	WHERE TAG_NAME = #{month}
-                		 AND POST.POST_TYPE = '3'
-                		 	
+
+                ORDER BY POST_NO DESC			 	
 	</select>
 	
 	<select id="selectThumbnail4" parameterType="Search" resultMap="boardResultSet">
@@ -182,15 +182,14 @@
     		FROM POST
 				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{city}
-						 AND POST.POST_TYPE = '3'
+
 						 	
 	INTERSECT 
     	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
        		 FROM POST
             	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
                 	WHERE TAG_NAME = #{theNumber}
-                		 AND POST.POST_TYPE = '3'
-                		 	
+                ORDER BY POST_NO DESC			 	
 	</select>
 	
 	<select id="selectThumbnail5" parameterType="Search" resultMap="boardResultSet">
@@ -198,15 +197,15 @@
     		FROM POST
 				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{month}
-						 AND POST.POST_TYPE = '3'
+
 						 	
 	INTERSECT 
     	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
        		 FROM POST
             	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
                 	WHERE TAG_NAME = #{theNumber}
-                		 AND POST.POST_TYPE = '3'
-                		 	
+
+                ORDER BY POST_NO DESC			 	
 	</select>
 	
     <select id="selectThumbnail6" parameterType="Search" resultMap="boardResultSet">
@@ -214,31 +213,33 @@
     		FROM POST
 				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
 					WHERE TAG_NAME = #{city}
-						 AND POST.POST_TYPE = '3'
+
 						 	
 	INTERSECT 
     	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
         	FROM POST
             	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
                 	WHERE TAG_NAME = #{month}
-                		 AND POST.POST_TYPE = '3'
+
                 		 
     INTERSECT 
     	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
         	FROM POST
             	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
                 	WHERE TAG_NAME = #{theNumber}   
-                		 AND POST.POST_TYPE = '3'   
+ 			ORDER BY POST_NO DESC	
                 		 	
-	</select>			
+	</select>	
+	
+
+			
 				
 	
 	<select id="selectListTag1" resultMap="searchResultSet">
 		SELECT *
 		FROM POST_TAG
-		WHERE POST_TYPE = '3'
-		ORDER BY POST_NO DESC
+		
 	</select>
-
+	
 	
 </mapper>

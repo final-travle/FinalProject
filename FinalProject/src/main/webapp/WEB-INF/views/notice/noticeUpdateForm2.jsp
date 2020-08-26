@@ -27,7 +27,7 @@ li { list-style: none; padding:0; margin:0; }
 
 
 
-        </style>
+</style>
         
     </head>
 <body>
@@ -44,7 +44,7 @@ li { list-style: none; padding:0; margin:0; }
         <section class="content_wrap">
         <h3 class="form-title">공지사항 글쓰기</h3>
         
-        <form action="nupdate.do" name="sub" class="nform" method="POST" enctype="Multipart/form-data" accept-charset="UTF-8">
+        <form action="nupdate.do" class="nform" method="POST" enctype="Multipart/form-data" accept-charset="UTF-8">
         	<input type="hidden" name="page" value="${currentPage }">
         	<input type="hidden" name="postNo" value="${notice.postNo }">
         	<input type="hidden" name="reuploadFile" value="${notice.fileName }">
@@ -68,19 +68,15 @@ li { list-style: none; padding:0; margin:0; }
                      </li>
                        <li>
                         <label for="email">첨부</label>
-                        <span class="textbox">
-                        	<input type="file" id="fileName" name="reuploadFile" required>
-                          		<c:if test="${!empty notice.fileName }">
-                        			<br>현재 업로드 파일:
-                        				<img src="${contextPath }/resources/nuploadFiles/${notice.fileName}">               					
-                        		</c:if>  
+                        <span class="textbox1">
+                        	<input type="file" id="fileName" name="reuploadFile">
                         </span>
                       </li>  
                    </ul>
                    <br><br>
                    <div class="btn_box">
-                       <button type="submit" class="commbtn gray" value="등록하기" onclick="nofile">등록</button>
-                       <button type="reset" class="combtn gray" value="취소하기">취소</button>                       
+                       <button type="submit" class="commbtn gray" value="등록하기">등록</button>
+                       <button type="reset" class="combtn gray" value="취소하기">취소</button>
                    </div>
                  </div>
              </fieldset>
@@ -91,7 +87,7 @@ li { list-style: none; padding:0; margin:0; }
 	<br>
     
     	<p align="center">
-    		<em><a href="home.do">Home&nbsp;&nbsp;</a></em>
+    		<em><a href="home.do">Home&nbsp;&nbsp;&nbsp;</a></em>
     		<em><a href="nlist.do">공지사항&nbsp;&nbsp;</a></em>
     		<em><a href="javascript:history.go(-1);">이전 페이지로 이동&nbsp;&nbsp;</a></em>
     	</p>
@@ -105,6 +101,6 @@ li { list-style: none; padding:0; margin:0; }
 			
 
 
-						
+			
 </body>
 </html>

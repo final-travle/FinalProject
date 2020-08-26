@@ -36,11 +36,6 @@ public class SearchServiceImpl implements SearchService {
 		return sDao.getListCount();
 	}
 
-	@Override
-	public ArrayList<Board> selectList(PageInfo pi2) {
-
-		return sDao.selectList(pi2);
-	}
 
 	@Override
 	public ArrayList<Board> selectThumbnail(Choice choice) {
@@ -52,6 +47,13 @@ public class SearchServiceImpl implements SearchService {
 	public ArrayList<PostTag> selectListTag1() {
 
 		return sDao.selectListTag1();
+	}
+
+
+	@Override
+	public ArrayList<Board> selectList(PageInfo pi2) {
+
+		return sDao.selectList(pi2);
 	}
 
 
