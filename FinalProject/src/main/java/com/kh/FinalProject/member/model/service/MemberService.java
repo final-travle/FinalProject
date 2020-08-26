@@ -110,5 +110,7 @@ public interface MemberService {
 
 	int changepass(Member m);
 
+	String sid(String search);
+
 
 }

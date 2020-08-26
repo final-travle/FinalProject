@@ -508,7 +508,7 @@ public class MemberController  {
 			
 			status.setComplete();
 			
-			return "redirect:home.do";
+			return "redirect:index.jsp";
 		}
 	    
 	    @RequestMapping(value="logout2.do", method=RequestMethod.GET)

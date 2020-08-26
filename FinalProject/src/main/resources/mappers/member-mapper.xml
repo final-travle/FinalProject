@@ -84,6 +84,11 @@
 	</select>
 	
 	
+	<select id="sid" parameterType="string" resultType="string">
+		SELECT USER_ID
+		FROM MEMBER
+		WHERE NAME=#{search} 
+	</select>
 	
 	
 	<update id="changepass" parameterType="Member" >

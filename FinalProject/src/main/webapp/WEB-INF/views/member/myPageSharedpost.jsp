@@ -51,10 +51,16 @@ height: 36px;
 </head>
 <body id="friendsbody">
 <div id="friendsIdSearch" >
+
+			<c:url var="memberplanListShared" value="memberplanListShared.do"> <!-- 이게 공유라고 가정하고 쿼리스트링 써야됨  -->
+						<c:param name="postNo" value="${postNo }" />
+						<c:param name="postType" value="${postType }" />
+					</c:url>
+
+
 	<form id="memberplanListShared"  method="post" action="memberplanListShared.do">
 		<label for="searchInput">이름검색 : </label><input type="text" id="searchInput" name="searchInput">
 		<input type="submit" class="colorBtn btn" value="SEARCH">
-			
 			<input type="hidden" name="postNo" value="${postNo }"/>
 			<input type="hidden" name="page" value="${pi.currentPage }"/>
 			<input type="hidden" name="postType" value="${postType }"/>

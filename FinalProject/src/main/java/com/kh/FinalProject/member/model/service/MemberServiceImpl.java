@@ -485,6 +485,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public String sid(String search) {
+		// TODO Auto-generated method stub
+		return mDao.sid(search);
+	}
+
+
 	
 
 	}

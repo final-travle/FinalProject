@@ -10,12 +10,12 @@
 	.modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
+            z-index: 300; /* Sit on top */
             left: 0;
             top: 0;
             width: 100%; /* Full width */
             height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
+            overflow: hidden; /* Enable scroll if needed */
             background-color: rgb(0,0,0); /* Fallback color */
             background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
@@ -27,15 +27,24 @@
             margin: 7% auto; /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 50%; /* Could be more or less, depending on screen size */
-            float : left;                          
+            box-sizing:border-box;
+            width:540px;
+            position:relative;
+            line-height:2;
+                                      
         }
+        .modal-content img { max-width:500px; }
+        .modal-content .title { margin-top:20px; }
+        .modal-content .title a { font-size:24px; font-weight:700; } 
+        
         /* The Close Button */
         .close {
             color: #aaa;
-            float: right;
-            font-size: 28px;
+            font-size: 48px;
             font-weight: bold;
+            position:absolute;
+            bottom:0px;
+            right:20px;
         }
         .close:hover,
         .close:focus {
