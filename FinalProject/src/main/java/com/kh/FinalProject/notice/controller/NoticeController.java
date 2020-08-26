@@ -27,43 +27,40 @@ public class NoticeController {
 	@Autowired
 	NoticeService nService;	
 	
-	public static final int LIMIT = 10;
+	public static final int LIMIT = 5;
 	
 		
 	@RequestMapping(value="nlist.do", method=RequestMethod.GET)
-	public ModelAndView boardListService(
-				@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+	public ModelAndView noticeListService(
+				@RequestParam(name = "page",  required = false, defaultValue="1") int page,
 				@RequestParam(name = "keyword", required = false) String keyword, 
 								ModelAndView mv ) {
 		
-		
-				int currentPage = 1;
-				if(page != null) {
-				  currentPage = page;
-				}
-				
-		
-		
+		try {
+			
+			
+			int currentPage = page;
 				
 			int listCount = nService.totalCount();
 			int maxPage = (int)((double)listCount/LIMIT + 0.9);
 						
 	
-			
-			
-			if(keyword != null && !keyword.equals(""))
-				mv.addObject("list", nService.selectSearch(keyword));			
-			else	
+						
+			if(keyword != null) 
+				mv.addObject("list", nService.selectSearch(keyword))
+				  .addObject("currentPage", page)
+				  .addObject("listCount", listCount)
+				  .setViewName("notice/noticeListView");
+			else 	
 				mv.addObject("list", nService.selectList(currentPage, LIMIT));
-				mv.addObject("currentPage", currentPage);
-				mv.addObject("maxPage", maxPage);
+				mv.addObject("currentPage", page);
+				mv.addObject("maxPage", maxPage); 
 				mv.addObject("listCount", listCount);
 				mv.setViewName("notice/noticeListView");
-			
-			
-				/* ArrayList<Notice> srList = nService.SearchResultList(keyword); */
-
-
+		  }catch(Exception e) {
+			  mv.addObject("msg", e.getMessage());
+		  }
+				
 		return mv;
 	}
 	
@@ -127,7 +124,7 @@ public class NoticeController {
 				// 단, 이상태로는 파일 업로드가 되지 않는다. 왜냐하면 파일 제한크기에 대한 설정이 없기 때문에 
 				// 그래서 파일 크기 지정을 root-context.xml에서 해준다. 				
 			} catch (Exception e) {			
-				System.out.println("파일 전송 에러 : " + e.getMessage());
+				
 			} 
 						
 			return filePath;
@@ -173,6 +170,17 @@ public class NoticeController {
 		return mv;
 	}
 	
+	@RequestMapping("nupView2.do")
+	public ModelAndView noticeUpdateView2(ModelAndView mv, int postNo, 
+											@RequestParam("page") Integer page) {
+		
+			mv.addObject("notice", nService.selectNotice2(postNo))
+			.addObject("currentPage", page)
+			.setViewName("notice/noticeUpdateForm2");
+		
+		return mv;
+	}
+	
 	@RequestMapping("nupdate.do")
 	public String noticeUpdate(HttpServletRequest request, Notice n, 
 									@RequestParam(value="reuploadFile", required=false)
@@ -180,7 +188,7 @@ public class NoticeController {
 		
 		if(reuploadFile != null) { // 새로 업로드한 파일이 있다면 
 			if(n.getFileName() != null) {
-				deleteFile(n.getFileName(), request);
+				deleteFile(n.getFileName(), request); 
 			}
 		}
 		

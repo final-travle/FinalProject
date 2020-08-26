@@ -15,7 +15,6 @@ public interface SearchService {
 
 	int getListCount();
 
-	ArrayList<Board> selectList(PageInfo pi2);
 
 	ArrayList<PostTag> selectChoiceList(Choice choice);
 	
@@ -23,6 +22,9 @@ public interface SearchService {
 
 
 	ArrayList<PostTag> selectListTag1();
+
+
+	ArrayList<Board> selectList(PageInfo pi2);
 
 
 
