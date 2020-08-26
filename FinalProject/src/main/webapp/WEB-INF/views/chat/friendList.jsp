@@ -557,10 +557,17 @@ $(document).ready(function(){
 	});
 });
 </script> -->
+<script type="text/javascript">
+	function addFriendPage(){
+		opener.location.href="friendsadd.do";
+	}
+</script>
 
 <input type="checkbox" id="head_modal1" checked>
 <div class="friendmodalheader">
  		<h1 style="margin-top:30px; margin-left:10px;">친구</h1>
+	 		<img src="${pageContext.request.contextPath}/resources/images/goaddfriend.png" onclick="addFriendPage();"
+		 	style="width:50px;height:50px;float:right;margin-top:-65px;margin-right:120px;cursor:pointer;" title="친구 추가">
   	  <br>
   	  <div id="myprofile">
   	  	<img src="${pageContext.request.contextPath}/resources/profile/${loginUser.profile}" onclick="myprofile_detail();" id="savedMyProfile"

@@ -739,7 +739,7 @@ $(document).ready(function(){
  <table style="width:100%">
  <tr>
  <td>
- 	<h1 style="margin-top:30px; margin-left:10px;">채팅</h1>
+ 	<h1 style="margin-top:30px; margin-left:10px;">1:1 채팅</h1>
  	</td>
  	<td>
  	<%-- <img src="${pageContext.request.contextPath}/resources/images/addopenchatroom2.png"
@@ -860,7 +860,7 @@ $(document).ready(function(){
  				friend_profile_detail();
  			})
  		})
- 	</script>
+ 	</script>--%>
  	<script>
  		var friendId=""
  		
@@ -875,7 +875,7 @@ $(document).ready(function(){
  		})
  	</script>
 
-<input type="checkbox" id="friend_profile_detail">
+<%--<input type="checkbox" id="friend_profile_detail">
  <div class="friend_profile_detail"> 
  	
 	<img class="friendsprofile_detail" src="" 
@@ -906,7 +906,7 @@ $(document).ready(function(){
   	  </form> 
  </div>--%>
  
- <%-- <input type="checkbox" id="friend_profile_detail2">
+ <input type="checkbox" id="friend_profile_detail2">
  <div class="friend_profile_detail2"> 
  	
 	<img class="friendsprofile_detail" src="" 
@@ -917,14 +917,14 @@ $(document).ready(function(){
  </div>
  
  <script>
- 	function friend_profile_detail(){
+ 	/* function friend_profile_detail(){
  		$("input:checkbox[id='friend_profile_detail']").prop("checked", true);	
  		$("#friend_profile_detail").prop("checked", true);
  	}
  	function close_friend_profile_detail(){
  		$("input:checkbox[id='friend_profile_detail']").prop("checked", false);	
  		$("#friend_profile_detail").prop("checked", false);
- 	}
+ 	} */
  	function friend_profile_detail2(){
  		$("input:checkbox[id='friend_profile_detail2']").prop("checked", true);	
  		$("#friend_profile_detail2").prop("checked", true);
@@ -937,7 +937,7 @@ $(document).ready(function(){
  	$('#friend_profile').click(function(){
  	   $(this).attr
  	});
- </script> --%>
+ </script> 
 
 <input type="checkbox" id="modal2" checked>
 <div class="chatroom_modal">

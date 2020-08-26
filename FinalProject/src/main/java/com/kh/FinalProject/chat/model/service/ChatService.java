@@ -87,6 +87,8 @@ public interface ChatService {
 
 	ArrayList<Chatroom> selectOpenChatroomBackground(String chatroomnumber);
 
+	ArrayList<Chatroom> searchChatroomListResult(String searchOpenChatroom);
+
 	
 
 }

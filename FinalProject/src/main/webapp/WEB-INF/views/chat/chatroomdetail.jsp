@@ -1303,7 +1303,7 @@ function submit_SendImage_modal(){
 				
 				for(var i in data.list){
 					var $div = $("<div>");
-					var $nickname = $("<strong class='b'>").text(data.list[i].nickname);
+					var $nickname = $("<strong class='a'>").text(data.list[i].nickname);
 					
 					
 					$div.append($nickname);

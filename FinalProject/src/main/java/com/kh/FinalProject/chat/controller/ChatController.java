@@ -290,6 +290,25 @@ public class ChatController {
 			 return mv;
 	 }
 	 
+	 @RequestMapping("searchOpenChatroom.do")
+	 public ModelAndView searchOpenChatroom(ModelAndView mv,HttpSession session,
+			 															@RequestParam(value="searchOpenChatroom",required=false)String searchOpenChatroom) {
+		 
+		 ArrayList<Chatroom> chatroomList = new ArrayList();
+		 chatroomList = cService.searchChatroomListResult(searchOpenChatroom);
+		 
+		 if(chatroomList != null) {
+				mv.addObject("chatroomList",chatroomList);
+				mv.setViewName("chat/searchOpenChatroomList");
+			}else {
+				mv.addObject("chatroomList",chatroomList);
+				mv.setViewName("chat/searchOpenChatroomList");
+			}
+		 
+		 return mv;
+	 }
+	 
+	 
 	 
 	 @RequestMapping("chatroomjoin.do")
 	 public ModelAndView chatroomjoin(ModelAndView mv,HttpSession session,

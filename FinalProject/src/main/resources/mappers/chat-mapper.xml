@@ -351,6 +351,12 @@
 	</select>
 	
 	
+	<select id="searchChatroomListResult" resultMap="chatroomResultSet">
+		SELECT *
+		FROM CHATROOM
+		WHERE (CR_NAME Like '%'|| #{searchOpenChatroom} ||'%' OR CR_DETAIL Like '%'|| #{searchOpenChatroom} ||'%') 
+	</select>
+	
 </mapper>
 
 

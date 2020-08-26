@@ -182,7 +182,7 @@ public class EchoRoomHandler extends TextWebSocketHandler{
                 String nickname = (String)userNicknamemap.get("nickname");
 
 				
-				String jsonStr2 = chatroom_no + "|" + nickname + "|" + "믜댜퇴장듀틔";
+				String jsonStr2 = chatroom_no + "|" +"|"+ nickname + "|" + "믜댜퇴장듀틔";
 				sess.sendMessage(new TextMessage(jsonStr2));
 		}
 }

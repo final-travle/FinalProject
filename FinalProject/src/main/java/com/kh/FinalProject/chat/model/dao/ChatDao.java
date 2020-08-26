@@ -206,6 +206,11 @@ public class ChatDao {
 		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.selectOpenChatroomBackground", chatroomnumber);
 	}
 
+	public ArrayList<Chatroom> searchChatroomListResult(String searchOpenChatroom) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("chatmapper.searchChatroomListResult", searchOpenChatroom);
+	}
+
 
 
 }

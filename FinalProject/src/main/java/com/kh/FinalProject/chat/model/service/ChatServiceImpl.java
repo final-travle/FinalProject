@@ -245,6 +245,12 @@ public class ChatServiceImpl implements ChatService{
 		return cDao.selectOpenChatroomBackground(chatroomnumber);
 	}
 
+	@Override
+	public ArrayList<Chatroom> searchChatroomListResult(String searchOpenChatroom) {
+		// TODO Auto-generated method stub
+		return cDao.searchChatroomListResult(searchOpenChatroom);
+	}
+
 	
 
 	
