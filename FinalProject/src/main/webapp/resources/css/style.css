@@ -227,3 +227,23 @@ h3.tit { font-size:26px; text-align:center; margin:30px 0; }
 .commModify, .reCommt, .recommModify { display:inline-block; margin-left:16px; color:#888; cursor:pointer; }
 .recommModify { color:#eee; }
 .cmntBtn, .recmntBtn, .recmntBtn { display:inline-block; cursor:pointer; width:70px; border-radius:3px; line-height:30px; text-align:center; background:#bd9dec; color:#fff; }
+
+
+
+/* company Info css */
+
+.compHeader { width:100%; height:400px; background:url('../images/compTopImg.jpg') 0 0 no-repeat; color:#fff; background-size: cover; text-align:center; }
+.compHeader h2 { font-size:56px; font-weight:700; letter-spacing: 26px;padding-top:120px; opacity: 0; }
+.compHeader .compCont { padding-top:10px; font-size:20px; opacity:0; }
+
+#content .firstSec,
+#content .secondSec  { position:relative; }
+#content .firstSec .imgSec { position:relative; float:left; opacity:0; }
+#content .secondSec .imgSec { position:relative; float:right; opacity:0; }
+
+#content .firstSec .textSec { position:absolute; top:260px; left:700px; opacity:0; }
+#content .secondSec .textSec { position:absolute; top:240px; left:100px; opacity:0; }
+
+#content .textSec h3 { font-size:42px; font-weight:700; margin-bottom:20px; }
+#content .textSec li { line-height:2; font-size:20px; }
+#content .textSec li span { font-weight:700; color:#666; }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
     <footer id="footer">
         <div class="footerMenu">
             <ul class="cf">
-                <li><a href="#none">회사소개</a></li>
+                <li><a href="${contextPath }/common/companyInfo.jsp">회사소개</a></li>
                 <li><a href="#none">이용약관</a></li>
                 <li><a href="#none"><b>개인정보처리방침</b></a></li>
                 <li><a href="#none">이용안내</a></li>

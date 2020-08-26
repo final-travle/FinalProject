@@ -168,7 +168,7 @@
 		FROM TRAVEL
 		WHERE POST_TYPE = '4'
 		AND POST_NO = #{postNo}
-		ORDER BY T_CODE
+		ORDER BY NIGHT
 	</select>
 	
 	<select id="getPostTagList" parameterType="_int" resultMap="postTagResultSet">

@@ -619,7 +619,7 @@ public class TravelController {
 
 				Travel tLast = t.get(t.size() - 1);
 				
-				System.out.println(tLast.getNight());
+				System.out.println("night : " + tLast.getNight());
 				
 				int dayNum = tLast.getNight();
 				
