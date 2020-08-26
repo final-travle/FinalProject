@@ -62,10 +62,10 @@
 				<div id="map"></div>
 				<div class="btns">
             	<c:if test="${loginUser.id eq board.userId}">
-					<c:url var="planModifyForm" value="planModifyForm.do">
+					<c:url var="reviewModifyForm" value="reviewModifyForm.do">
 						<c:param name="postNo" value="${board.postNo }"/>
 					</c:url>
-					<a href="${planModifyForm }" class="btn colorBtn apply">수정</a>
+					<a href="${reviewModifyForm }" class="btn colorBtn apply">수정</a>
 					<a href="#none" class="btn delete">삭제</a>
 				</c:if>
 					<a onclick="setBounds()" class="btn allViewBtn">전체보기</a>

@@ -254,7 +254,10 @@ public class HomeController {
 		return "member/searchResultPwd";
 	}
 	
-	
+	@RequestMapping("companyInfo.do")
+	public String companyInfo(Locale locale, Model model, HttpSession session) {
+		return "common/companyInfo";
+	}
 	
 	
 }

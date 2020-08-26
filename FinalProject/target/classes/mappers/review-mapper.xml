@@ -79,6 +79,7 @@
 	<select id="selectListTag" resultMap="postTagResultSet">
 		SELECT *
 		FROM POST_TAG
+		WHERE POST_TYPE = '4'
 	</select>
 	
 	<insert id="insertReivew" parameterType="Board">
@@ -168,7 +169,7 @@
 		FROM TRAVEL
 		WHERE POST_TYPE = '4'
 		AND POST_NO = #{postNo}
-		ORDER BY T_CODE
+		ORDER BY NIGHT
 	</select>
 	
 	<select id="getPostTagList" parameterType="_int" resultMap="postTagResultSet">

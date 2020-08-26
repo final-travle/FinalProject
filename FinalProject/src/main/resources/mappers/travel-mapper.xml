@@ -164,6 +164,7 @@
 	<select id="selectListTag" resultMap="postTagResultSet">
 		SELECT *
 		FROM POST_TAG
+		WHERE POST_TYPE = '3'
 	</select>
 	
 	<insert id="insertPlanB" parameterType="Board">
@@ -244,7 +245,7 @@
 		FROM TRAVEL
 		WHERE POST_TYPE = '3'
 		AND POST_NO = #{postNo}
-		ORDER BY T_CODE
+		ORDER BY NIGHT
 	</select>
 	
 	<select id="likeVoteView" parameterType="MapBoard" resultMap="mapBoardResultSet">
