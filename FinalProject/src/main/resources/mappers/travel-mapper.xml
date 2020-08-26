@@ -164,6 +164,7 @@
 	<select id="selectListTag" resultMap="postTagResultSet">
 		SELECT *
 		FROM POST_TAG
+		WHERE POST_TYPE = '3'
 	</select>
 	
 	<insert id="insertPlanB" parameterType="Board">

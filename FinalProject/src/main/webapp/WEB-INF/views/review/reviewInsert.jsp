@@ -23,7 +23,8 @@
 	div.leftSelBox { position:relative; width:10%; }
 	.stateWrap {  width:100%; border-right:1px solid #ddd; box-sizing:border-box; }
 	.stateWrap ul li.title { background:#bd9dec; color:#fff; }
-	.cityWrap { position: absolute; top: 0; left: 100%; z-index: 2; width: 100%; background:#fff; border-right:1px solid #ddd; box-sizing:border-box; }
+	.cityWrap { position: absolute; top: 0; left: 100%; z-index: 2; width: 100%; background:#fff; border-right:1px solid #ddd; box-sizing:border-box; overflow-y: scroll; }
+	.cityWrap::-webkit-scrollbar { width:1px; }
 	.travelAWrap { position: absolute; top: 0; left: 200%; z-index: 2; width: 100%; background:#fff; border-right:1px solid #ddd; box-sizing:border-box; }
 	.stateWrap ul li,
 	.cityWrap ul li,
@@ -41,6 +42,8 @@
 	
 	.dn1 .dayTit { background:#ddd; };
 	.on { background:#bd9dec; color:#fff; font-weight:700; }
+	
+	.bInsertWrap { text-align:center; padding-bottom:20px; }
 </style>
 </head>
 <body>

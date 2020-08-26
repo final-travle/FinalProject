@@ -31,7 +31,7 @@
                 </div>
                 <div class="secondSec cf">
                     <div class="imgSec rightImg">
-                        <img src="${contextPath }/resources/images/compImg01.jpg"/>
+                        <img src="${contextPath }/resources/images/compImg02.jpg"/>
                     </div>
                     <div class="textSec rightText">
                         <h3>REVIEWER?</h3>
