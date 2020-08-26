@@ -11,7 +11,7 @@
     <footer id="footer">
         <div class="footerMenu">
             <ul class="cf">
-                <li><a href="${contextPath }/common/companyInfo.jsp">회사소개</a></li>
+                <li><a href="companyInfo.do">회사소개</a></li>
                 <li><a href="#none">이용약관</a></li>
                 <li><a href="#none"><b>개인정보처리방침</b></a></li>
                 <li><a href="#none">이용안내</a></li>

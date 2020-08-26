@@ -19,7 +19,7 @@
             <div id="content">
                 <div class="firstSec cf">
                     <div class="imgSec leftImg">
-                        <img src="images/compImg01.jpg"/>
+                        <img src="${contextPath }/resources/images/compImg01.jpg"/>
                     </div>
                     <div class="textSec leftText">
                         <h3>I REVIEW HISTORY</h3>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="secondSec cf">
                     <div class="imgSec rightImg">
-                        <img src="images/compImg02.jpg"/>
+                        <img src="${contextPath }/resources/images/compImg01.jpg"/>
                     </div>
                     <div class="textSec rightText">
                         <h3>REVIEWER?</h3>
