@@ -331,6 +331,11 @@ public class MemberDao {
 		return sqlSessionTemplate.update("memberMapper.changepass",m);
 		}
 
+	public String sid(String search) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.sid",search);
+	}
+
 	
 	
 	

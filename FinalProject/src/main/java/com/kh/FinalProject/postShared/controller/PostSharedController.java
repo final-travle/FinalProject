@@ -490,7 +490,13 @@ public class PostSharedController {
 		int fCount = mService.fCount(m.getId());
 		mv.addObject("fCount",fCount);
 		mv.addObject("pCount",postCount);
-		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),search); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
+		System.out.println("한솔 : "+search);
+		String searchId = null; //아이디
+		if(search !=null  || search==""  ) {
+			searchId = mService.sid(search);
+		}
+		System.out.println(searchId);
+		ArrayList<Friends> fal = mService.realfriendsShared(m.getId(),searchId); //내가 db에 내가 들어있는 친구 목록을 다뽑아옴(왼쪽에 내 아이디면 오른쪽 컬럼값 오른쪽 내아이디면 왼쪽컬럼)
 		ArrayList<String> al = new ArrayList<String>();//목록중 친구아이디을 다뽑아옴
 		ArrayList<String> sharedfd = mService.sharedfd(postNo,postType,m.getId()); //공유된 친구 아이디
 		int sharedCount = mService.sCount(m.getId());
