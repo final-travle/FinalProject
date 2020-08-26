@@ -48,18 +48,23 @@
 .img1 { width:100%; height:210px; overflow:hidden; }
 .img1 img { width:100%; }
 .title1 { text-align:left; font-size:20px; font-weight:700; margin-top:14px; }
-.cont1 { text-align:left; margin-top:10px; margin-bottom:14px; }
+.cont1 { text-align:center; margin-top:10px; margin-bottom:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.id1 { text-align:center}
+
 
 .img2 { width:100%; height:210px; overflow:hidden; }
 .img2 img {width:100%; }
 .title2 { text-align:left; font-size:20px; font-weight:700; margin-top:14px; }
-.cont2 { text-align:left; margin-top:10px; margin-bottom:14px; } 
+.cont2 { text-align:center; margin-top:10px; margin-bottom:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.id2 { text-align:center} 
+
 
 .grid.grid5 li { float:left; width:32.8%; box-sizing:border-box; border:1px solid #ddd; text-align:center; padding:10px; margin:0 3px; margin-bottom: 6px; }
 .grid.grid5 li .title1 { text-align:left; font-weight:700; margin-top:14px; }
 .grid.grid5 li .title1 a { font-size:20px; font-weight:700;  }
 .grid.grid5 li .title2 { text-align:left; font-weight:700; margin-top:14px; }
-.grid.grid5 li .title2 a { font-size:20px; font-weight:700;  }
+.grid.grid5 li .title2 a { font-size:20px; font-weight:700;  }  
+
 </style> 
 </head>
 <body>
@@ -163,7 +168,14 @@
 										
 	                <c:if test="${pl.postType eq '3' }">
 	                	 <li>
-
+							<p class="cont1">	                    	
+	                    	  <c:set var="liPostNo" value="${pl.postNo }" />
+	                    		<c:forEach var="tl" items = "${tl }">
+		                    		<c:if test = "${tl.postNo eq liPostNo}">
+			                    		<c:out value="# ${tl.tagName } " />
+		                    			</c:if>
+                    			</c:forEach>	
+	                    	</p>
 	                    	<p class="img1">
 	                        	<a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
 	                    	</p>
@@ -174,14 +186,6 @@
 							
 	                    	<p class="id1">
 	                    		${pl.userId }
-	                    	</p>
-						    <p class="cont1">	                    	
-	                    	  <c:set var="liPostNo" value="${pl.postNo }" />
-	                    		<c:forEach var="tl" items = "${tl }">
-		                    		<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value="# ${tl.tagName } " />
-		                    			</c:if>
-                    			</c:forEach>	
 	                    	</p>	                    	
 	                	  </li>
 	              	</c:if>  	      	                          
@@ -204,8 +208,15 @@
 						<c:param name="page" value="${ri.currentPage }" />
 					</c:url>
 	                	<c:if test="${rl.postType eq '4' }">
-	                <li>
-
+	                <li id="cont222">
+						<p class="cont2">
+	                    	<c:set var="liPostNo" value="${rl.postNo }" />
+	                    	<c:forEach var="tl" items = "${tl }">
+		                    	<c:if test = "${tl.postNo eq liPostNo}">
+			                    		<c:out value="# ${tl.tagName } " />
+		                    	</c:if>
+                    		</c:forEach>	                    	                    
+	                    </p>	
 	                    <p class="img2">
 	                        <a href="${reviewDetail }"><img src="${rl.thumbnail }" /></a>
 	                    </p>
@@ -215,14 +226,6 @@
 	                     <p class="id2">
 	                    	${rl.userId }
 	                    </p>
-				         <p class="cont2">
-	                    	<c:set var="liPostNo" value="${rl.postNo }" />
-	                    	<c:forEach var="tl" items = "${tl }">
-		                    	<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value="# ${tl.tagName } " />
-		                    	</c:if>
-                    		</c:forEach>	                    	                    
-	                    </p>	
 	                  </li>
 	                    </c:if>
                 </c:forEach>
@@ -271,14 +274,14 @@
 					var $title;
 					var $id;
 					var $cont;
-					var $contWrap = $("<p class='tagWrap1'>"); 
+					var $contWrap = $("<p class='tagWrap2'>"); 
 					
-			
+					
   					var $img2;   
 					var $title2;
 					var $id2;
 					var $cont2;
-					var $contWrap2 = $("<p class='tagWrap1'>"); 
+					var $contWrap2 = $("<p class='tagWrap2'>");
 			
 					
    	 		if(data[0].length > 0){	       	 		   	   
@@ -310,8 +313,8 @@
 	    	 	   			     			   
     	 		   for(var j in data[1]){
     	 			   
-/*     	 			   $tagName = data[1][j].tagName;
-    	 			   console.log($tagName); */
+/*      	 			$tagName = data[1][j].tagName;
+    	 			   console.log($tagName);  */
     	 			       	 			   
     	 			   if(data[1][j].postNo == data[0][i].postNo){
     	 				 
@@ -322,9 +325,9 @@
     	 				  $cont = $("<span class='cont1'>").text("#" + data[1][j].tagName +   " ");
 													  
     	 				    
-/*  		    	 		$contWrap.append($cont); 		    	 		    
+   		    	 			$contWrap.append($cont); 		    	 		    
   		    	 		    $li.append($cont);
-		    	 		    $li.append($contWrap); */   
+		    	 		    $li.append($contWrap);     
 		    	 		    
     	   	     	 	   	$aurl.append($img);
     	   	     	 	   	$pimg.append($aurl);
@@ -332,11 +335,8 @@
     	   	     	 	   	$li.append($pimg);     
     		    	 		$li.append($title);
     		    	 		$li.append($id);
-    		    	 		
-		    	 		    $li.append($contWrap); 		    	 		    
-  		    	 		    $li.append($cont);
- 		    	 		    $contWrap.append($cont);
-    		    	 		
+    		    	 		    		    	 		
+ 		    	 		  $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
 
     		    	 	    $ul.append($li);
     	 		
@@ -346,26 +346,26 @@
     	 					$aurl2 = $("<a>").attr("href", "${contextPath}/reviewDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
         	 				
       	 				 	$cont2 = $("<span class='cont2'>").text("#" + data[1][j].tagName +    " ");
-
-/*        	 				$contWrap2.append($cont2);       	 					
+	
+       	 					$contWrap2.append($cont2);       	 					
       	 					$li.append($cont2);
-       	 					$li.append($contWrap2);  */
+       	 					$li.append($contWrap2); 
+       	 					
       	 				 	
       	   	     	 	   	$aurl2.append($img2);
       	   	     	 	   	$pimg2.append($aurl2);
   	 		       	 		   
       	   	     	 	   	$li.append($pimg2);     
       		    	 		$li.append($title2);
+
       		    	 		$li.append($id2);
-      		    	 		
-							
-       	 					
-       	 					$li.append($contWrap2);
-      	 					$li.append($cont2);
-      	 					$contWrap2.append($cont2);
-      		    	 		
+      		    	 		 		    	
+ 		    	 		    $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
+
       		    	 		$ul2.append($li);
+      		    	 		
     	 				 }
+    	 				 
     	 				 
     	 				     		    	 	    	 				   
     	 			   	}

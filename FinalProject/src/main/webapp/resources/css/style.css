@@ -169,7 +169,7 @@ h2.title { text-align:center; font-size:26px; margin-bottom:60px; }
 .rightMapBox .btns { position:absolute; z-index:10; right:100px; bottom: 50px; padding:20px; background:rgba(255,255,255,.7); }
 .rightMapBox img { width:100%; }
 
-.tagWrap { padding:10px 0; border-top:1px solid #ddd; }
+.tagWrap1 { padding:10px 0; border-top:1px solid #ddd; }
 
 /* review insert */
 .textboxSec { width:100%; background:#eee;  border-top:1px solid #aaa; }
