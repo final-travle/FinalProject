@@ -10,21 +10,21 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 
 public interface SearchService {
 
-	ArrayList<PostTag> selectListTag();
+   ArrayList<PostTag> selectListTag();
 
 
-	int getListCount();
+   int getListCount();
 
 
-	ArrayList<PostTag> selectChoiceList(Choice choice);
-	
-	ArrayList<Board> selectThumbnail(Choice choice);
+   ArrayList<PostTag> selectChoiceList(Choice choice);
+   
+   ArrayList<Board> selectThumbnail(Choice choice);
 
 
-	ArrayList<PostTag> selectListTag1();
+   ArrayList<PostTag> selectListTag1();
 
 
-	ArrayList<Board> selectList(PageInfo pi2);
+   ArrayList<Board> selectList(PageInfo pi2);
 
 
 

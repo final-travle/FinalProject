@@ -21,7 +21,7 @@
     height:35px;
     line-height:33px;
     font-weight:500;
-    cursor:pointer;		
+    cursor:pointer;      
    }
 
 .box-radio-input input[type="radio"] + span{
@@ -79,13 +79,13 @@
             <h1 class="titlename">국내 추천 여행지 <font style="font-size:10pt;color:#3ad195">전국 관광지를 조건에 맞게 설정할 수 있어요!</font></h1>
         </div>
         <br>
- 	<div id="searchTag" > 
+    <div id="searchTag" > 
 
-		  <br>
-  	       
+        <br>
+            
         <div class="container">
-        	<em>지역&nbsp;&nbsp;</em>
-        	<label class="box-radio-input"><input type="radio" name="city" value="서울"><span>서울</span></label>
+           <em>지역&nbsp;&nbsp;</em>
+           <label class="box-radio-input"><input type="radio" name="city" value="서울"><span>서울</span></label>
             <label class="box-radio-input"><input type="radio" name="city" value="인천"><span>인천</span></label>
             <label class="box-radio-input"><input type="radio" name="city" value="부산"><span>부산</span></label>
             <label class="box-radio-input"><input type="radio" name="city" value="광주"><span>광주</span></label>
@@ -136,59 +136,59 @@
             <label class="box-radio-input"><input type="radio" name="theNumber" value="자매끼리"><span>자매끼리</span></label>
             <label class="box-radio-input"><input type="radio" name="theNumber" value="형제끼리"><span>형제끼리</span></label>
         </div>        
-		  <br>
-		  
-		<div class="container">
-			<em>조건&nbsp;&nbsp;</em>
-			<label class="box-radio-input"><input type="button" value="전체" onclick="location.href='slist.do'"></label>
-		</div>
-		<br> 
+        <br>
+        
+      <div class="container">
+         <em>조건&nbsp;&nbsp;</em>
+         <label class="box-radio-input"><input type="button" value="전체" onclick="location.href='slist.do'"></label>
+      </div>
+      <br> 
 
-	          
-	</div>
+             
+   </div>
 
   </section>
   
-   	  
+        
           
-  		
-  	<div id="search">  	
-  		<div id="content">		   
-		   <h2 class="title cont-title"><span class="color">주목해야 할 여행지!</span> 아직도 안 가봤어요?</h2>
-           			
+        
+     <div id="search">     
+        <div id="content">         
+         <h2 class="title cont-title"><span class="color">주목해야 할 여행지!</span> 아직도 안 가봤어요?</h2>
+                    
             <ul class="grid grid5 cf">
-				<c:forEach var="pl" items="${list }">
-				
-					<c:url var="planDetail" value="planDetail.do">
-						<c:param name="postNo" value="${pl.postNo }" />
-						<c:param name="postType" value="${pl.postType }" />
-						<c:param name="page" value="${pi.currentPage }" />
-					</c:url>
-					
-										
-	                <c:if test="${pl.postType eq '3' }">
-	                	 <li>
-							<p class="cont1">	                    	
-	                    	  <c:set var="liPostNo" value="${pl.postNo }" />
-	                    		<c:forEach var="tl" items = "${tl }">
-		                    		<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value="# ${tl.tagName } " />
-		                    			</c:if>
-                    			</c:forEach>	
-	                    	</p>
-	                    	<p class="img1">
-	                        	<a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
-	                    	</p>
-							
-						    <p class="title1" id="title1"><a href="${planDetail }">
-						    	${pl.title }</a>
-						    </p>
-							
-	                    	<p class="id1">
-	                    		${pl.userId }
-	                    	</p>	                    	
-	                	  </li>
-	              	</c:if>  	      	                          
+            <c:forEach var="pl" items="${list }">
+            
+               <c:url var="planDetail" value="planDetail.do">
+                  <c:param name="postNo" value="${pl.postNo }" />
+                  <c:param name="postType" value="${pl.postType }" />
+                  <c:param name="page" value="${pi.currentPage }" />
+               </c:url>
+               
+                              
+                   <c:if test="${pl.postType eq '3' }">
+                       <li>
+                     <p class="cont1">                          
+                            <c:set var="liPostNo" value="${pl.postNo }" />
+                             <c:forEach var="tl" items = "${tl }">
+                                <c:if test = "${tl.postNo eq liPostNo}">
+                                   <c:out value="# ${tl.tagName } " />
+                                   </c:if>
+                             </c:forEach>   
+                          </p>
+                          <p class="img1">
+                              <a href="${planDetail }"><img src="${pl.thumbnail }" /></a>
+                          </p>
+                     
+                      <p class="title1" id="title1"><a href="${planDetail }">
+                         ${pl.title }</a>
+                      </p>
+                     
+                          <p class="id1">
+                             ${pl.userId }
+                          </p>                          
+                        </li>
+                    </c:if>                                        
                 </c:forEach>
                </ul>
                
@@ -202,40 +202,40 @@
                <h2 class="title cont-title">어디 갈 지 고민이라면? <span class="color"> 인증된 여행지!</span></h2>
                
                <ul class="grid grid5 cf">
-				<c:forEach var="rl" items="${list }">
-					<c:url var="reviewDetail" value="reviewDetail.do">
-						<c:param name="postNo" value="${rl.postNo }" />
-						<c:param name="page" value="${ri.currentPage }" />
-					</c:url>
-	                	<c:if test="${rl.postType eq '4' }">
-	                <li id="cont222">
-						<p class="cont2">
-	                    	<c:set var="liPostNo" value="${rl.postNo }" />
-	                    	<c:forEach var="tl" items = "${tl }">
-		                    	<c:if test = "${tl.postNo eq liPostNo}">
-			                    		<c:out value="# ${tl.tagName } " />
-		                    	</c:if>
-                    		</c:forEach>	                    	                    
-	                    </p>	
-	                    <p class="img2">
-	                        <a href="${reviewDetail }"><img src="${rl.thumbnail }" /></a>
-	                    </p>
-	                    <p class="title2"><a href="${reviewDetail }">
-	                    	${rl.title }</a>
-	                    </p>
-	                     <p class="id2">
-	                    	${rl.userId }
-	                    </p>
-	                  </li>
-	                    </c:if>
+            <c:forEach var="rl" items="${list }">
+               <c:url var="reviewDetail" value="reviewDetail.do">
+                  <c:param name="postNo" value="${rl.postNo }" />
+                  <c:param name="page" value="${ri.currentPage }" />
+               </c:url>
+                      <c:if test="${rl.postType eq '4' }">
+                   <li id="cont222">
+                  <p class="cont2">
+                          <c:set var="liPostNo" value="${rl.postNo }" />
+                          <c:forEach var="tl" items = "${tl }">
+                             <c:if test = "${tl.postNo eq liPostNo}">
+                                   <c:out value="# ${tl.tagName } " />
+                             </c:if>
+                          </c:forEach>
+                       </p>   
+                       <p class="img2">
+                           <a href="${reviewDetail }"><img src="${rl.thumbnail }" /></a>
+                       </p>
+                       <p class="title2"><a href="${reviewDetail }">
+                          ${rl.title }</a>
+                       </p>
+                        <p class="id2">
+                          ${rl.userId }
+                       </p>
+                     </li>
+                       </c:if>
                 </c:forEach>
                </ul>  
                    
          </div>
        </div>        
     
-      	</div>
-</div>	  
+         </div>
+</div>     
 
 <br><br>
   
@@ -248,138 +248,139 @@
 
 
 <script>
-  	 $("#searchTag input[type='radio']").on("change", function() {
-  		  
-	    	var city = $("input[name='city']:checked").val();
-			var month = $("input[name='month']:checked").val();
-			var theNumber = $("input[name='theNumber']:checked").val();
+      $("#searchTag input[type='radio']").on("change", function() {
+          
+          var city = $("input[name='city']:checked").val();
+         var month = $("input[name='month']:checked").val();
+         var theNumber = $("input[name='theNumber']:checked").val();
 
-			console.log(city, month, theNumber);
-			
-		 $.ajax({
-			   url:"conditioncheck.do",
-			   type:"post",
-			   data: {city:city, month:month, theNumber:theNumber},
-			   dataType:"json",
-			   success:function(data){
-				   
-					$ul = $("#search ul");
-				    $ul2 = $("#search2 ul");
-	    	 	    $ul.html(""); 
-					
-	    	 	    $ul2.html("");
-	    	 	   
-					var $li;
-  					var $img;   
-					var $title;
-					var $id;
-					var $cont;
-					var $contWrap = $("<p class='tagWrap2'>"); 
-					
-					
-  					var $img2;   
-					var $title2;
-					var $id2;
-					var $cont2;
-					var $contWrap2 = $("<p class='tagWrap2'>");
-			
-					
-   	 		if(data[0].length > 0){	       	 		   	   
-				for(var i in data[0]){
-   	     	 	   $postNo = data[0][i].postNo;
-     			   $postType = data[0][i].postType;
-     			   
-     		
-     			   
-     			  						    	 		    
-	     	 	   $li = $("<li>");	
-	     	 	   
-   	     	 	   $pimg = $("<p class='img1'>");    	     	 	   
-   	     	 	   $img = $("<img>").attr("src", data[0][i].thumbnail);   	     	 	       			   
-	    	 	   $title = $("<p class='title1'>").text(data[0][i].title);  
-	    	 	   $id = $("<p class='id1'>").text(data[0][i].userId);
-	    	 	   
-	    	 	   
-    	 		   
-   	     	 	   $pimg2 = $("<p class='img2'>");    	     	 	   
-   	     	 	   $img2 = $("<img>").attr("src", data[0][i].thumbnail);   	     	 	       			   
-	    	 	   $title2 = $("<p class='title2'>").text(data[0][i].title); 	    	 	   
-	    	 	   $id2 = $("<p class='id2'>").text(data[0][i].userId);
-	    	 	   
-	    	 	   
-	    	 	   	
-	    	 	   	
-		    	   
-	    	 	   			     			   
-    	 		   for(var j in data[1]){
-    	 			   
-/*      	 			$tagName = data[1][j].tagName;
-    	 			   console.log($tagName);  */
-    	 			       	 			   
-    	 			   if(data[1][j].postNo == data[0][i].postNo){
-    	 				 
-    	 				 if($postType == '3' ){
-    	 				   
-    	 				  $aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
-    	 				
-    	 				  $cont = $("<span class='cont1'>").text("#" + data[1][j].tagName +   " ");
-													  
-    	 				    
-   		    	 			$contWrap.append($cont); 		    	 		    
-  		    	 		    $li.append($cont);
-		    	 		    $li.append($contWrap);     
-		    	 		    
-    	   	     	 	   	$aurl.append($img);
-    	   	     	 	   	$pimg.append($aurl);
-	 		       	 		   
-    	   	     	 	   	$li.append($pimg);     
-    		    	 		$li.append($title);
-    		    	 		$li.append($id);
-    		    	 		    		    	 		
- 		    	 		  $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
+         console.log(city, month, theNumber);
+         
+       $.ajax({
+            url:"conditioncheck.do",
+            type:"post",
+            data: {city:city, month:month, theNumber:theNumber},
+            dataType:"json",
+            success:function(data){
+               
+               $ul = $("#search ul");
+                $ul2 = $("#search2 ul");
+                  $ul.html(""); 
+               
+                  $ul2.html("");
+                 
+               var $li;
+                 var $img;   
+               var $title;
+               var $id;
+               var $cont;
+               var $contWrap = $("<p class='tagWrap2'>"); 
+               
+               
+                 var $img2;   
+               var $title2;
+               var $id2;
+               var $cont2;
+               var $contWrap2 = $("<p class='tagWrap2'>");
+         
+               
+             if(data[0].length > 0){
+            for(var i in data[0]){
+                     $postNo = data[0][i].postNo;
+                 $postType = data[0][i].postType;
+                 
+           
+                 
+                                                    
+                  $li = $("<li>");   
+                  
+                     $pimg = $("<p class='img1'>");                      
+                     $img = $("<img>").attr("src", data[0][i].thumbnail);                                     
+                 $title = $("<p class='title1'>").text(data[0][i].title);  
+                 $id = $("<p class='id1'>").text(data[0][i].userId);
+                 
+                 
+                 
+                     $pimg2 = $("<p class='img2'>");                      
+                     $img2 = $("<img>").attr("src", data[0][i].thumbnail);                                     
+                 $title2 = $("<p class='title2'>").text(data[0][i].title);                  
+                 $id2 = $("<p class='id2'>").text(data[0][i].userId);
+                 
+                 
+                    
+                    
+                
+                                           
+                 for(var j in data[1]){
+                    
+/*                   $tagName = data[1][j].tagName;
+                    console.log($tagName);  */
+                                        
+                    if(data[1][j].postNo == data[0][i].postNo){
+                     
+                     if($postType == '3' ){
+                       
+                      $aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
+                    
+                      $cont = $("<span class='cont1'>").text("#" + data[1][j].tagName +   " ");
+                                         
+                        
+                          $contWrap.append($cont);                         
+                          $li.append($cont);
+                        $li.append($contWrap);     
+                        
+                               $aurl.append($img);
+                               $pimg.append($aurl);
+                              
+                               $li.append($pimg);     
+                        $li.append($title);
+                        $li.append($id);
+                                                
+                       $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
 
-    		    	 	    $ul.append($li);
-    	 		
-    		    	 		    	 				    	 				   
-    	 				 }else if($postType == '4'){
-    	 					
-    	 					$aurl2 = $("<a>").attr("href", "${contextPath}/reviewDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
-        	 				
-      	 				 	$cont2 = $("<span class='cont2'>").text("#" + data[1][j].tagName +    " ");
-	
-       	 					$contWrap2.append($cont2);       	 					
-      	 					$li.append($cont2);
-       	 					$li.append($contWrap2); 
-       	 					
-      	 				 	
-      	   	     	 	   	$aurl2.append($img2);
-      	   	     	 	   	$pimg2.append($aurl2);
-  	 		       	 		   
-      	   	     	 	   	$li.append($pimg2);     
-      		    	 		$li.append($title2);
+                         $ul.append($li);
+              
+                                                                   
+                     }else if($postType == '4'){
+                       
+                       $aurl2 = $("<a>").attr("href", "${contextPath}/reviewDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
+                        
+                          $cont2 = $("<span class='cont2'>").text("#" + data[1][j].tagName +    " ");
+   
+                        $contWrap2.append($cont2);                          
+                         $li.append($cont2);
+                          $li.append($contWrap2);  
+                          
+                          
+                                 $aurl2.append($img2);
+                                 $pimg2.append($aurl2);
+                                
+                                 $li.append($pimg2);     
+                          $li.append($title2);
 
-      		    	 		$li.append($id2);
-      		    	 		 		    	
- 		    	 		    $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
+                          $li.append($id2);
+                          
+                                        
+                         $li.css({"text-align":"center","margin-top":"10px","margin-bottom":"14px","overflow":"hidden","text-overflow":"ellipsis","white-space":"nowrap"});
 
-      		    	 		$ul2.append($li);
-      		    	 		
-    	 				 }
-    	 				 
-    	 				 
-    	 				     		    	 	    	 				   
-    	 			   	}
-    	 			   
-    	 		  	  }
-				   }   	 		
-   	 	  	 	}
+                          $ul2.append($li);
+                          
+                     }
+                     
+                     
+                                                                 
+                       }
+                    
+                     }
+               }
+                   }
 
-			  				
-			},
-			   error : function(request, status, errorData){
-	               alert("error: " + errorData);
-	            }
-		  }) 
+                       
+         },
+            error : function(request, status, errorData){
+                  alert("error: " + errorData);
+               }
+        });
    });  
       
 </script>

@@ -14,47 +14,47 @@ import com.kh.FinalProject.travel.model.vo.PageInfo;
 
 @Service("sService")
 public class SearchServiceImpl implements SearchService {
-	
-	@Autowired 
-	SearchDao sDao;
+   
+   @Autowired 
+   SearchDao sDao;
 
-	@Override
-	public ArrayList<PostTag> selectChoiceList(Choice choice) {
+   @Override
+   public ArrayList<PostTag> selectChoiceList(Choice choice) {
 
-		return sDao.selectChoiceList(choice);
-	}
+      return sDao.selectChoiceList(choice);
+   }
 
-	@Override
-	public ArrayList<PostTag> selectListTag() {
+   @Override
+   public ArrayList<PostTag> selectListTag() {
 
-		return sDao.selectListTag();
-	}
+      return sDao.selectListTag();
+   }
 
-	@Override
-	public int getListCount() {
+   @Override
+   public int getListCount() {
 
-		return sDao.getListCount();
-	}
-
-
-	@Override
-	public ArrayList<Board> selectThumbnail(Choice choice) {
-
-		return sDao.selectThumbnail(choice);
-	}
-
-	@Override
-	public ArrayList<PostTag> selectListTag1() {
-
-		return sDao.selectListTag1();
-	}
+      return sDao.getListCount();
+   }
 
 
-	@Override
-	public ArrayList<Board> selectList(PageInfo pi2) {
+   @Override
+   public ArrayList<Board> selectThumbnail(Choice choice) {
 
-		return sDao.selectList(pi2);
-	}
+      return sDao.selectThumbnail(choice);
+   }
+
+   @Override
+   public ArrayList<PostTag> selectListTag1() {
+
+      return sDao.selectListTag1();
+   }
+
+
+   @Override
+   public ArrayList<Board> selectList(PageInfo pi2) {
+
+      return sDao.selectList(pi2);
+   }
 
 
 

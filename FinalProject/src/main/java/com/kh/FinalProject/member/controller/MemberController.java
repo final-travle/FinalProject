@@ -102,10 +102,7 @@ public class MemberController  {
 		}
 		
 		if(loginUser != null) {
-			ArrayList<String> sal = mService.mtype(loginUser.getId());
-			Random rand = new Random();
-			String ty = sal.get(rand.nextInt(sal.size()));
-			model.addAttribute("tttype",ty);
+
 			model.addAttribute("loginUser",loginUser);
 			return "redirect:index.jsp";
 		}else {

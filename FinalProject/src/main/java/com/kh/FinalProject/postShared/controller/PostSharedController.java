@@ -201,7 +201,7 @@ public class PostSharedController {
 				mv.addObject("tl", tl);
 				mv.addObject("list", list);
 				mv.addObject("pi", pi2);
-				mv.setViewName("member/myPageMyPost");
+				mv.setViewName("member/adminPostmanager");
 			}else {
 				
 			}

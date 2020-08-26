@@ -1,245 +1,245 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="searchMapper">
-		
- 	 <resultMap id="boardResultSet" type="Boardd">
-		<id property="postType" column="POST_TYPE" />
-		<id property="postNo" column="POST_NO"/>		
-		<result property="thumbnail" column="THUMBNAIL" />
-		<result property="userId" column="USER_ID" />
-		<result property="title" column="TITLE" />
-		<result property="postContents" column="POST_CONTENTS" />
-		<result property="hits" column="HITS" />
-		<result property="wirteDate" column="WRITE_DATE" />
-		<result property="postDelYn" column="POST_DEL_YN" />
-		<result property="FileName" column="FILE_NAME" />
-	</resultMap> 
-	
-	<resultMap id="searchResultSet" type="Search">
-		<id property="tagName" column="TAG_NAME"/>
-		<result property="tagType" column="TAG_TYPE"/>
-		<result property="PostType" column="POST_TYPE"/>
-		<result property="postNo" column="POST_NO"/>	
-	</resultMap>
-	
-	
-	<resultMap id="tagResultSet" type="Tagg">
-		<id property="tagName" column="TAG_NAME"/>
-		<id property="tagType" column="TAG_TYPE"/>
-	</resultMap>
-	
-		
-	<select id="selectChoiceList" parameterType="Search"  resultMap="searchResultSet">
-		SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-			FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
-        										FROM POST_TAG
-        								 			WHERE TAG_NAME = #{city})
-        								 			
-	</select>
-	
-	<select id="selectChoiceList1" parameterType="Search" resultMap="searchResultSet">
-	 	SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-		FROM POST 
-		WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
-        								FROM POST_TAG
-        								 	WHERE TAG_NAME = #{month})
-	</select>
-	
-	
-	<select id="selectChoiceList2" parameterType="Search" resultMap="searchResultSet">
-	 	SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-			FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
-        										FROM POST_TAG
-        								 			WHERE TAG_NAME = #{theNumber})
-	</select>
-	
-	
-	<select id="selectChoiceList3" parameterType="Search" resultMap="searchResultSet">
- 		                        
-		SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-				FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
-        											FROM POST_TAG
-        												WHERE TAG_NAME = #{city}
-		INTERSECT        
-			SELECT POST_TYPE, POST_NO
-        		FROM POST_TAG
-        		WHERE TAG_NAME = #{month})
-	</select>
-	
-	
-	<select id="selectChoiceList4" parameterType="Search" resultMap="searchResultSet">
-		SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-				FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
-        											FROM POST_TAG
-        												WHERE TAG_NAME = #{city}
-		INTERSECT        
-			SELECT POST_TYPE, POST_NO
-        		FROM POST_TAG
-        		WHERE TAG_NAME = #{theNumber})
-	</select>
-	
-	<select id="selectChoiceList5" parameterType="Search" resultMap="searchResultSet">
-		SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-				FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
-        											FROM POST_TAG
-        												WHERE TAG_NAME = #{month}
-		INTERSECT        
-			SELECT POST_TYPE, POST_NO
-        		FROM POST_TAG
-        		WHERE TAG_NAME = #{theNumber})
-	</select>
-	
-	<select id="selectChoiceList6" parameterType="Search" resultMap="boardResultSet">
-		SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
-			FROM POST 
-				WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
-        											FROM POST_TAG
-        												WHERE TAG_NAME = #{city}
-			INTERSECT        
-				SELECT POST_TYPE, POST_NO
-        		FROM POST_TAG
-        			WHERE TAG_NAME = #{month}
-			INTERSECT        
-			SELECT POST_TYPE, POST_NO
-        		FROM POST_TAG
-        			WHERE TAG_NAME = #{theNumber})		
-	</select>
-	
+      
+     <resultMap id="boardResultSet" type="Boardd">
+      <id property="postType" column="POST_TYPE" />
+      <id property="postNo" column="POST_NO"/>      
+      <result property="thumbnail" column="THUMBNAIL" />
+      <result property="userId" column="USER_ID" />
+      <result property="title" column="TITLE" />
+      <result property="postContents" column="POST_CONTENTS" />
+      <result property="hits" column="HITS" />
+      <result property="wirteDate" column="WRITE_DATE" />
+      <result property="postDelYn" column="POST_DEL_YN" />
+      <result property="FileName" column="FILE_NAME" />
+   </resultMap> 
+   
+   <resultMap id="searchResultSet" type="Search">
+      <id property="tagName" column="TAG_NAME"/>
+      <result property="tagType" column="TAG_TYPE"/>
+      <result property="PostType" column="POST_TYPE"/>
+      <result property="postNo" column="POST_NO"/>   
+   </resultMap>
+   
+   
+   <resultMap id="tagResultSet" type="Tagg">
+      <id property="tagName" column="TAG_NAME"/>
+      <id property="tagType" column="TAG_TYPE"/>
+   </resultMap>
+   
+      
+   <select id="selectChoiceList" parameterType="Search"  resultMap="searchResultSet">
+      SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+         FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
+                                      FROM POST_TAG
+                                          WHERE TAG_NAME = #{city})
+                                          
+   </select>
+   
+   <select id="selectChoiceList1" parameterType="Search" resultMap="searchResultSet">
+       SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+      FROM POST 
+      WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
+                                FROM POST_TAG
+                                    WHERE TAG_NAME = #{month})
+   </select>
+   
+   
+   <select id="selectChoiceList2" parameterType="Search" resultMap="searchResultSet">
+       SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+         FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN(SELECT POST_TYPE, POST_NO
+                                      FROM POST_TAG
+                                          WHERE TAG_NAME = #{theNumber})
+   </select>
+   
+   
+   <select id="selectChoiceList3" parameterType="Search" resultMap="searchResultSet">
+                               
+      SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+            FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
+                                         FROM POST_TAG
+                                            WHERE TAG_NAME = #{city}
+      INTERSECT        
+         SELECT POST_TYPE, POST_NO
+              FROM POST_TAG
+              WHERE TAG_NAME = #{month})
+   </select>
+   
+   
+   <select id="selectChoiceList4" parameterType="Search" resultMap="searchResultSet">
+      SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+            FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
+                                         FROM POST_TAG
+                                            WHERE TAG_NAME = #{city}
+      INTERSECT        
+         SELECT POST_TYPE, POST_NO
+              FROM POST_TAG
+              WHERE TAG_NAME = #{theNumber})
+   </select>
+   
+   <select id="selectChoiceList5" parameterType="Search" resultMap="searchResultSet">
+      SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+            FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
+                                         FROM POST_TAG
+                                            WHERE TAG_NAME = #{month}
+      INTERSECT        
+         SELECT POST_TYPE, POST_NO
+              FROM POST_TAG
+              WHERE TAG_NAME = #{theNumber})
+   </select>
+   
+   <select id="selectChoiceList6" parameterType="Search" resultMap="boardResultSet">
+      SELECT THUMBNAIL, USER_ID, POST_TYPE, POST_NO
+         FROM POST 
+            WHERE (POST_TYPE, POST_NO) IN( SELECT POST_TYPE, POST_NO
+                                         FROM POST_TAG
+                                            WHERE TAG_NAME = #{city}
+         INTERSECT        
+            SELECT POST_TYPE, POST_NO
+              FROM POST_TAG
+                 WHERE TAG_NAME = #{month}
+         INTERSECT        
+         SELECT POST_TYPE, POST_NO
+              FROM POST_TAG
+                 WHERE TAG_NAME = #{theNumber})      
+   </select>
+   
 
-	
-	
-	
-	<select id="selectListTag" resultMap="searchResultSet">
-		SELECT *
-		FROM POST_TAG
-	</select>
-	
-	
-	<select id="getListCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM POST
-	</select>
-	
-	<select id="selectList" resultMap="boardResultSet">
-		SELECT *
-		FROM POST
-		WHERE POST_DEL_YN = 'N'
-		ORDER BY POST_NO DESC
-	</select>
-	
-	
-	<select id="selectThumbnail" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{city}
-				ORDER BY POST_NO DESC		 	
-	</select>
-	
-	<select id="selectThumbnail1" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{month}
-				ORDER BY POST_NO DESC			 
-						 	
-	</select>
-	
-	<select id="selectThumbnail2" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-		  		JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{theNumber}
-				ORDER BY POST_NO DESC	
-						 	
-						 
-	</select>
-	
-	
-	<select id="selectThumbnail3" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{city}
-				
-						 	
-	INTERSECT 
-    	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-       		 FROM POST
-            	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-                	WHERE TAG_NAME = #{month}
+   
+   
+   
+   <select id="selectListTag" resultMap="searchResultSet">
+      SELECT *
+      FROM POST_TAG
+   </select>
+   
+   
+   <select id="getListCount" resultType="_int">
+      SELECT COUNT(*)
+      FROM POST
+   </select>
+   
+   <select id="selectList" resultMap="boardResultSet">
+      SELECT *
+      FROM POST
+      WHERE POST_DEL_YN = 'N'
+      ORDER BY POST_NO DESC
+   </select>
+   
+   
+   <select id="selectThumbnail" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+              JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{city}
+            ORDER BY POST_NO DESC          
+   </select>
+   
+   <select id="selectThumbnail1" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+              JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{month}
+            ORDER BY POST_NO DESC          
+                      
+   </select>
+   
+   <select id="selectThumbnail2" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+              JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{theNumber}
+            ORDER BY POST_NO DESC   
+                      
+                   
+   </select>
+   
+   
+   <select id="selectThumbnail3" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+            JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{city}
+            
+                      
+   INTERSECT 
+       SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+              FROM POST
+               JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+                   WHERE TAG_NAME = #{month}
 
-                ORDER BY POST_NO DESC			 	
-	</select>
-	
-	<select id="selectThumbnail4" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{city}
+                ORDER BY POST_NO DESC             
+   </select>
+   
+   <select id="selectThumbnail4" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+            JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{city}
 
-						 	
-	INTERSECT 
-    	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-       		 FROM POST
-            	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-                	WHERE TAG_NAME = #{theNumber}
-                ORDER BY POST_NO DESC			 	
-	</select>
-	
-	<select id="selectThumbnail5" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{month}
+                      
+   INTERSECT 
+       SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+              FROM POST
+               JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+                   WHERE TAG_NAME = #{theNumber}
+                ORDER BY POST_NO DESC             
+   </select>
+   
+   <select id="selectThumbnail5" parameterType="Search" resultMap="boardResultSet">
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+            JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{month}
 
-						 	
-	INTERSECT 
-    	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-       		 FROM POST
-            	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-                	WHERE TAG_NAME = #{theNumber}
+                      
+   INTERSECT 
+       SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+              FROM POST
+               JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+                   WHERE TAG_NAME = #{theNumber}
 
-                ORDER BY POST_NO DESC			 	
-	</select>
-	
+                ORDER BY POST_NO DESC             
+   </select>
+   
     <select id="selectThumbnail6" parameterType="Search" resultMap="boardResultSet">
-		SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-    		FROM POST
-				JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-					WHERE TAG_NAME = #{city}
+      SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+          FROM POST
+            JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+               WHERE TAG_NAME = #{city}
 
-						 	
-	INTERSECT 
-    	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-        	FROM POST
-            	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-                	WHERE TAG_NAME = #{month}
+                      
+   INTERSECT 
+       SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+           FROM POST
+               JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+                   WHERE TAG_NAME = #{month}
 
-                		 
+                       
     INTERSECT 
-    	SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
-        	FROM POST
-            	JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
-                	WHERE TAG_NAME = #{theNumber}   
- 			ORDER BY POST_NO DESC	
-                		 	
-	</select>	
-	
+       SELECT POST.POST_TYPE, POST.POST_NO, THUMBNAIL, USER_ID, TITLE
+           FROM POST
+               JOIN  POST_TAG ON (POST.POST_NO = POST_TAG.POST_NO)
+                   WHERE TAG_NAME = #{theNumber}   
+          ORDER BY POST_NO DESC   
+                          
+   </select>   
+   
 
-			
-				
-	
-	<select id="selectListTag1" resultMap="searchResultSet">
-		SELECT *
-		FROM POST_TAG
-		
-	</select>
-	
-	
+         
+            
+   
+   <select id="selectListTag1" resultMap="searchResultSet">
+      SELECT *
+      FROM POST_TAG
+      
+   </select>
+   
+   
 </mapper>
