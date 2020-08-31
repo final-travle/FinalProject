@@ -19,7 +19,7 @@ input, textarea, button, a{font-family:'Noto Sans Korean','Malgun Gothic','ÎßëÏù
 .formlist ul li .textbox { display:inline-block; width:70%; } 
 .formlist ul li .textbox input,
 .formlist ul li .textbox textarea { width:100%; box-sizing: border-box; resize: none; }
-.formlist ul li .textbox1 input #fileName{ max-width:100%; height:auto;}
+.formlist ul li .textbox img { max-width:500px; height:auto;}
 
 li { list-style: none; padding:0; margin:0; }
 

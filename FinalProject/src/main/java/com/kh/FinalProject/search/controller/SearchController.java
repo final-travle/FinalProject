@@ -44,21 +44,18 @@ public ModelAndView planListView(ModelAndView mv, @RequestParam(value="page", re
 //      System.out.println("탐색 게시판에 존재하는 플랜 게시판 리스트 갯수 : " + listCount);
       
       
-      PageInfo pi2 = Pagination2.getPageInfo2(currentPage, listCount);
       
-
-      
-      ArrayList<Board> list = sService.selectList(pi2);
+      ArrayList<Board> list = sService.selectList();
       
       ArrayList<PostTag> tl = sService.selectListTag();
       
+      System.out.println("확인-----" + list);
 
          
       
       if(list != null) {
          mv.addObject("tl", tl);
          mv.addObject("list", list);
-         mv.addObject("pi", pi2);
          mv.setViewName("search/searchList");
       }else {
          

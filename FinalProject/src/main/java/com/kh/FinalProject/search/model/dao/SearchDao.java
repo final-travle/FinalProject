@@ -116,13 +116,8 @@ public class SearchDao {
    }
 
 
-   public ArrayList<Board> selectList(PageInfo pi2) {
-   
-      int offset = (pi2.getCurrentPage() - 1) * pi2.getBoardLimit();
-      
-      RowBounds rowBounds = new RowBounds(offset, pi2.getBoardLimit());
-            
-      return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectList", null, rowBounds);
+   public ArrayList<Board> selectList() {
+      return (ArrayList)sqlSessionTemplate.selectList("searchMapper.selectList");
    }
 
 

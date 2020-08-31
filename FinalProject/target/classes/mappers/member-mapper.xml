@@ -2,221 +2,221 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 
-	<resultMap type="Member" id="memberResultSet">
-		<id property="id" column="USER_ID"/>
-		<result property="pwd" column="PWD"/>
-		<result property="name" column="NAME"/>
-		<result property="nickname" column="NICKNAME"/>
-		<result property="birth" column="BIRTH"/>
-		<result property="gender" column="GENDER"/>
-		<result property="job" column="JOB"/>
-		<result property="email" column="EMAIL"/>
-		<result property="phone" column="PHONE"/>
-		<result property="withd_yn" column="WITHD_YN"/>
-		<result property="join_date" column="JOIN_DATE"/>
-		<result property="field" column="FIELD"/>
-		<result property="profile" column="PROFILE"/>
-	</resultMap>
-	
-	
-	
-	<insert id="insertMember" parameterType="Member">
-		INSERT INTO MEMBER
-		VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{birth}, #{email},#{phone},#{gender}, #{job}
-				, #{withd_yn}, SYSDATE, SYSDATE,DEFAULT)
-	</insert>
-	
-	
-	<select id="selectMember" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID=#{id} AND PWD= #{pwd} AND WITHD_YN='N'
-	</select>
-	
-	<select id="search" parameterType="string" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID=#{member}
-	</select>
-	
-	
-	<select id="membercount" parameterType="Member" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USER_ID=#{id} AND EMAIL = #{email}
-	</select>
-	
-	
-	
-	
-	<select id="pCount" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM POST
-		WHERE USER_ID=#{id}
-		AND POST_DEL_YN = 'N'
-	</select>
-	
-	<select id="mtype" parameterType="string" resultType="string">
-		SELECT TRAV_STYLE
-		FROM PREF_STYLE
-		WHERE USER_ID=#{id}
-	</select>
-	
-	
-	
-	
-	<select id="searchPwd" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID=#{id} AND EMAIL=#{email} AND WITHD_YN='N'
-	</select>
-	
-	<select id="searchId" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE NAME=#{name} AND EMAIL=#{email}  AND WITHD_YN='N'
-	</select>
-	
-	<select id="memberinfo" parameterType="string" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID=#{id} AND WITHD_YN='N'
-	</select>
-	
-	
-	<select id="sid" parameterType="string" resultType="string">
-		SELECT USER_ID
-		FROM MEMBER
-		WHERE NAME=#{search} 
-	</select>
-	
-	
-	<update id="changepass" parameterType="Member" >
-	UPDATE MEMBER SET PWD = #{pwd}	 WHERE USER_ID=#{id}
-	</update>
-	
-	
-	<update id="change" parameterType="Member" >
-	UPDATE MEMBER SET USER_ID = #{id},
-					 PWD = #{pwd},
-					 NAME = #{name},
-					 NICKNAME = #{nickname},
-					 BIRTH = #{birth},
-					 GENDER = #{gender},
-					 JOB = #{job},
-					 EMAIL = #{email},
-					 PHONE = #{phone},
-					 WITHD_YN = #{withd_yn},
-					 JOIN_DATE = #{join_date},
-					 FIELD = SYSDATE 
-					 WHERE USER_ID=#{id}
-	</update>
-	
-	
-	<select id="checkIdDup" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USER_ID=#{id} AND WITHD_YN='N'
-	</select>
-	
-	<select id="sCount" parameterType="string" resultType="_int">
-		SELECT COUNT(*)
-		FROM SHARED
-		WHERE SHARE_ID = #{id}
-	</select>
-	
-	
-	
-	<insert id="insertTtype" parameterType="Ttype">
-		INSERT INTO PREF_STYLE
-		VALUES(#{sye},#{id}) 
-	</insert>
-	
-	
-	
-	<select id="friendsInfo" parameterType="string" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID=#{string} AND WITHD_YN='N'
-	</select>
-	
-	
-	<select id="allMember" parameterType="FriendsPage" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID != #{userId} AND NAME = #{search} AND WITHD_YN='N'
-	</select>
-	
-	<select id="allMember2" parameterType="string" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE USER_ID != #{string} AND WITHD_YN='N'
-	</select>
-	
-	<select id="allMemberCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER
-		WHERE USER_ID != #{string} AND WITHD_YN='N'
-	</select>
-	
-	<select id="allMemberCount2" parameterType="FriendsPage" resultType="_int">
-		SELECT COUNT(*)
-		FROM MEMBER WHERE NAME =#{search} AND USER_ID != #{userId} AND WITHD_YN='N'
-	</select>
-	
-	
-	<update id="dltmember" parameterType="Member" >
-	UPDATE MEMBER SET WITHD_YN ='Y' 
-					 WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
-	</update>
-	
-	<update id="loginTime" parameterType="string" >
-	UPDATE TIME SET USER_LOGIN_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-					 WHERE USER_ID=#{id} 
-	</update>
-	
-	   <insert id="setloginTime" parameterType="string">
+   <resultMap type="Member" id="memberResultSet">
+      <id property="id" column="USER_ID"/>
+      <result property="pwd" column="PWD"/>
+      <result property="name" column="NAME"/>
+      <result property="nickname" column="NICKNAME"/>
+      <result property="birth" column="BIRTH"/>
+      <result property="gender" column="GENDER"/>
+      <result property="job" column="JOB"/>
+      <result property="email" column="EMAIL"/>
+      <result property="phone" column="PHONE"/>
+      <result property="withd_yn" column="WITHD_YN"/>
+      <result property="join_date" column="JOIN_DATE"/>
+      <result property="field" column="FIELD"/>
+      <result property="profile" column="PROFILE"/>
+   </resultMap>
+   
+   
+   
+   <insert id="insertMember" parameterType="Member">
+      INSERT INTO MEMBER
+      VALUES(#{id}, #{pwd}, #{name}, #{nickname}, #{birth}, #{email},#{phone},#{gender}, #{job}
+            , #{withd_yn}, SYSDATE, SYSDATE,DEFAULT)
+   </insert>
+   
+   
+   <select id="selectMember" parameterType="Member" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID=#{id} AND PWD= #{pwd} AND WITHD_YN='N'
+   </select>
+   
+   <select id="search" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID=#{member}
+   </select>
+   
+   
+   <select id="membercount" parameterType="Member" resultType="_int">
+      SELECT COUNT(*)
+      FROM MEMBER
+      WHERE USER_ID=#{id} AND EMAIL = #{email}
+   </select>
+   
+   
+   
+   
+   <select id="pCount" parameterType="string" resultType="_int">
+      SELECT COUNT(*)
+      FROM POST
+      WHERE USER_ID=#{id}
+      AND POST_DEL_YN = 'N'
+   </select>
+   
+   <select id="mtype" parameterType="string" resultType="string">
+      SELECT TRAV_STYLE
+      FROM PREF_STYLE
+      WHERE USER_ID=#{id}
+   </select>
+   
+   
+   
+   
+   <select id="searchPwd" parameterType="Member" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID=#{id} AND EMAIL=#{email} AND WITHD_YN='N'
+   </select>
+   
+   <select id="searchId" parameterType="Member" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE NAME=#{name} AND EMAIL=#{email}  AND WITHD_YN='N'
+   </select>
+   
+   <select id="memberinfo" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID=#{id} AND WITHD_YN='N'
+   </select>
+   
+   
+   <select id="sid" parameterType="string" resultType="string">
+      SELECT USER_ID
+      FROM MEMBER
+      WHERE NAME=#{search} 
+   </select>
+   
+   
+   <update id="changepass" parameterType="Member" >
+   UPDATE MEMBER SET PWD = #{pwd}    WHERE USER_ID=#{id}
+   </update>
+   
+   
+   <update id="change" parameterType="Member" >
+   UPDATE MEMBER SET USER_ID = #{id},
+                PWD = #{pwd},
+                NAME = #{name},
+                NICKNAME = #{nickname},
+                BIRTH = #{birth},
+                GENDER = #{gender},
+                JOB = #{job},
+                EMAIL = #{email},
+                PHONE = #{phone},
+                WITHD_YN = #{withd_yn},
+                JOIN_DATE = #{join_date},
+                FIELD = SYSDATE 
+                WHERE USER_ID=#{id}
+   </update>
+   
+   
+   <select id="checkIdDup" parameterType="string" resultType="_int">
+      SELECT COUNT(*)
+      FROM MEMBER
+      WHERE USER_ID=#{id} AND WITHD_YN='N'
+   </select>
+   
+   <select id="sCount" parameterType="string" resultType="_int">
+      SELECT COUNT(*)
+      FROM SHARED
+      WHERE SHARE_ID = #{id}
+   </select>
+   
+   
+   
+   <insert id="insertTtype" parameterType="Ttype">
+      INSERT INTO PREF_STYLE
+      VALUES(#{sye},#{id}) 
+   </insert>
+   
+   
+   
+   <select id="friendsInfo" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID=#{string} AND WITHD_YN='N'
+   </select>
+   
+   
+   <select id="allMember" parameterType="FriendsPage" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID != #{userId} AND NAME = #{search} AND WITHD_YN='N'
+   </select>
+   
+   <select id="allMember2" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER
+      WHERE USER_ID != #{string} AND WITHD_YN='N'
+   </select>
+   
+   <select id="allMemberCount" resultType="_int">
+      SELECT COUNT(*)
+      FROM MEMBER
+      WHERE USER_ID != #{string} AND WITHD_YN='N'
+   </select>
+   
+   <select id="allMemberCount2" parameterType="FriendsPage" resultType="_int">
+      SELECT COUNT(*)
+      FROM MEMBER WHERE NAME =#{search} AND USER_ID != #{userId} AND WITHD_YN='N'
+   </select>
+   
+   
+   <update id="dltmember" parameterType="Member" >
+   UPDATE MEMBER SET WITHD_YN ='Y' 
+                WHERE USER_ID=#{id} AND PWD=#{pwd} AND WITHD_YN='N'
+   </update>
+   
+   <update id="loginTime" parameterType="string" >
+   UPDATE TIME SET USER_LOGIN_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+                WHERE USER_ID=#{id} 
+   </update>
+   
+      <insert id="setloginTime" parameterType="string">
       INSERT INTO TIME
       VALUES(#{id},TO_CHAR(SYSDATE-1,'YYYYMMDDHH24MISS'),TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')) 
    </insert>
-	
-	<update id="logoutTime" parameterType="string" >
-		UPDATE TIME SET USER_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
-					 WHERE USER_ID=#{id} 
-	</update>
-	
-	<select id="friendsTime" parameterType="string" resultType="_int">
-		SELECT TRUNC((TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),'YYYYMMDDHH24MISS')-TO_DATE(USER_TIME,'YYYYMMDDHH24MISS'))*24*60) FROM TIME WHERE USER_ID = #{id}  
-	</select>
-	
-	<select id="friendsLoginTime" parameterType="string" resultType="_int">
-		SELECT TRUNC((TO_DATE(USER_TIME,'YYYYMMDDHH24MISS')-TO_DATE(USER_LOGIN_TIME,'YYYYMMDDHH24MISS'))*24*60*60) FROM TIME WHERE USER_ID = #{id}  
-	</select>
-	
-	
-	
-		<update id="changeTtype" parameterType="Ttype" >
-	UPDATE PREF_STYLE SET 
-					 TRAV_STYLE = #{sye} 
-					 WHERE USER_ID=#{id} 
-	</update>
-	
-	<delete id="deleteTtype" parameterType="string">
-	DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
-	</delete>
-	
-	<delete id="deleteShar" parameterType="_int">
-	DELETE FROM SHARED WHERE POST_NO=#{postNo} AND POST_TYPE='3'
-	</delete>
-	
-	
-	
-	<update id="adminMemberDelete" parameterType="string" >
-	UPDATE MEMBER SET WITHD_YN ='Y'  
-					 WHERE USER_ID=#{id} AND WITHD_YN='N'
-	</update>
-	
-	<select id="memberinfoType" parameterType="string" resultType="string">
-	SELECT * FROM	PREF_STYLE WHERE USER_ID =#{id}  
-	</select>		
+   
+   <update id="logoutTime" parameterType="string" >
+      UPDATE TIME SET USER_TIME =TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+                WHERE USER_ID=#{id} 
+   </update>
+   
+   <select id="friendsTime" parameterType="string" resultType="_int">
+      SELECT TRUNC((TO_DATE(TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS'),'YYYYMMDDHH24MISS')-TO_DATE(USER_TIME,'YYYYMMDDHH24MISS'))*24*60) FROM TIME WHERE USER_ID = #{id}  
+   </select>
+   
+   <select id="friendsLoginTime" parameterType="string" resultType="_int">
+      SELECT TRUNC((TO_DATE(USER_TIME,'YYYYMMDDHH24MISS')-TO_DATE(USER_LOGIN_TIME,'YYYYMMDDHH24MISS'))*24*60*60) FROM TIME WHERE USER_ID = #{id}  
+   </select>
+   
+   
+   
+      <update id="changeTtype" parameterType="Ttype" >
+   UPDATE PREF_STYLE SET 
+                TRAV_STYLE = #{sye} 
+                WHERE USER_ID=#{id} 
+   </update>
+   
+   <delete id="deleteTtype" parameterType="string">
+   DELETE FROM PREF_STYLE WHERE USER_ID=#{id}
+   </delete>
+   
+   <delete id="deleteShar" parameterType="_int">
+   DELETE FROM SHARED WHERE POST_NO=#{postNo} AND POST_TYPE='3'
+   </delete>
+   
+   
+   
+   <update id="adminMemberDelete" parameterType="string" >
+   UPDATE MEMBER SET WITHD_YN ='Y'  
+                WHERE USER_ID=#{id} AND WITHD_YN='N'
+   </update>
+   
+   <select id="memberinfoType" parameterType="string" resultType="string">
+   SELECT * FROM   PREF_STYLE WHERE USER_ID =#{id}  
+   </select>      
 </mapper>

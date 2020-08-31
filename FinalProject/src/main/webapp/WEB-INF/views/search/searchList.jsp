@@ -320,7 +320,7 @@
                      
                      if($postType == '3' ){
                        
-                      $aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
+                      $aurl = $("<a>").attr("href", "${contextPath}/planDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="); 
                     
                       $cont = $("<span class='cont1'>").text("#" + data[1][j].tagName +   " ");
                                          
@@ -343,7 +343,7 @@
                                                                    
                      }else if($postType == '4'){
                        
-                       $aurl2 = $("<a>").attr("href", "${contextPath}/reviewDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="+${pi.currentPage }); 
+                       $aurl2 = $("<a>").attr("href", "${contextPath}/reviewDetail.do?postNo="+$postNo+"&postType="+$postType+"&page="); 
                         
                           $cont2 = $("<span class='cont2'>").text("#" + data[1][j].tagName +    " ");
    

@@ -24,7 +24,7 @@ public interface SearchService {
    ArrayList<PostTag> selectListTag1();
 
 
-   ArrayList<Board> selectList(PageInfo pi2);
+   ArrayList<Board> selectList();
 
 
 

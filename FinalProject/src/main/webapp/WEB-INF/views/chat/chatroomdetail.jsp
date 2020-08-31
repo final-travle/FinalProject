@@ -860,8 +860,8 @@ $(function(){
 <div class="updateNotice_modal">
 	<p style="text-align:center;font-size:20px;">공지사항</p>
 	<textarea id="updateChatNotice" name="updateChatNotice" cols="35" rows="6" wrap="hard" style="resize:none;margin-left:14px;"></textarea>
-	<button type="button" onclick="close_updateChatNotice_modal();">취소</button>
-	<button type="button" onclick="submit_updateChatNotice_modal();">등록</button>
+	<button type="button" onclick="close_updateChatNotice_modal();" style="background:transparent;margin-left:50px;border:0px;outline:0px;cursor:pointer;font-size:15px;"><p>취소</p></button>
+	<button type="button" onclick="submit_updateChatNotice_modal();"style="background:transparent;margin-left:115px;border:0px;outline:0px;cursor:pointer;font-size:15px;"><p>등록</p></button>
 </div>
 <script>
 	function close_updateChatNotice_modal(){

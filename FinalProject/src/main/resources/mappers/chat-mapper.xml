@@ -80,7 +80,7 @@
 	<select id="chatroomList" resultMap="chatroomResultSet">
 		SELECT *
   		FROM CHATROOM
-  		ORDER BY CR_NO ASC
+  		ORDER BY CR_CREATE_DATE DESC
 	</select>
 	
 	<insert id="makeOpenChatroom" parameterType="Chatroom">

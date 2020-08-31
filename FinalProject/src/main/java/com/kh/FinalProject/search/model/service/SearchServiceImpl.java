@@ -51,9 +51,9 @@ public class SearchServiceImpl implements SearchService {
 
 
    @Override
-   public ArrayList<Board> selectList(PageInfo pi2) {
+   public ArrayList<Board> selectList() {
 
-      return sDao.selectList(pi2);
+      return sDao.selectList();
    }
 
 

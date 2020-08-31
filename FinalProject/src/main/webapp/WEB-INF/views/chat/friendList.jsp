@@ -631,6 +631,7 @@ $(document).ready(function(){
  		})
  	})
  	function submit_updateNicknameForm(){
+ 		var nickname = $("#inputNickname").val();
  		if(nickname == ""){
 				alert("새로운 별명을 입력해주세요");
 			}else{

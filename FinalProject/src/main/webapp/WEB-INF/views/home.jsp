@@ -63,9 +63,9 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img01.jpg" />" /></div>
-                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img01.jpg" />" /></div>
-                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img01.jpg" />" /></div>
-                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img01.jpg" />" /></div>
+                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img02.jpg" />" /></div>
+                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img03.jpg" />" /></div>
+                <div class="swiper-slide exImg"><img src="<c:url value="/resources/images/main_img04.jpg" />" /></div>
             </div>
             
             <!-- Add Pagination -->
@@ -75,10 +75,10 @@
             <div class="swiper-button-prev"></div>
             
         </div>
-        <div class="searchWrap">
+       <!--  <div class="searchWrap">
             <i class="xi-search xi-2x"></i>
             <input type="search" id="search" name="search" placeholder="원하시는 여행 키워드를 검색해 보세요! ex) 힐링, 커플, 가족, 서울, 부산..." />
-        </div>
+        </div> -->
     </div>
     <script>
         
